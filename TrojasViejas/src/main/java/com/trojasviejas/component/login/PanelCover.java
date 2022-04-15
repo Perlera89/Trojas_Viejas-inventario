@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -17,8 +18,10 @@ import net.miginfocom.swing.MigLayout;
 public class PanelCover extends javax.swing.JPanel {
     
     private final DecimalFormat df = new DecimalFormat("##0.###");
+    final ImageIcon imagenLogo = new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/isotipo.png");
     private ActionListener event;
     private MigLayout layout;
+    private JLabel lblLogo;
     private JLabel title;
     private JLabel description;
     private JLabel slogan;
@@ -29,7 +32,7 @@ public class PanelCover extends javax.swing.JPanel {
     public PanelCover() {
         initComponents();
         setOpaque(false);
-        layout = new MigLayout("wrap, fill", "[center]","push[]10[]25[]75[]push");
+        layout = new MigLayout("wrap, fill", "[center]","push[]10[]10[]20[]10[]push");
         setLayout(layout);
         init();
         btnCloseActionPerformed();
@@ -48,6 +51,11 @@ public class PanelCover extends javax.swing.JPanel {
     }
     
     private void init(){
+        lblLogo = new JLabel();
+        lblLogo.setSize(200, 200);
+        lblLogo.setIcon(new ImageIcon(imagenLogo.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH)));
+        add(lblLogo);
+        
         title = new JLabel("Trojas Viejas");
         title.setFont(new Font("Norwester", 1, 40));
         title.setForeground(new Color(232, 241, 242));
@@ -79,6 +87,7 @@ public class PanelCover extends javax.swing.JPanel {
         btnClose = new Button();
         btnClose.setBackground(Color.red);
         btnClose.setForeground(Color.white);
+        btnClose.setFont(new Font("Roboto", 1, 14));
         btnClose.setText("Salir");
         btnClose.addActionListener(new ActionListener() {
             @Override
@@ -87,7 +96,7 @@ public class PanelCover extends javax.swing.JPanel {
             }
         });
         
-        add(btnClose, "w 60%, h 40");
+        add(btnClose, "w 30%, h 10");
     }
 
     @SuppressWarnings("unchecked")
