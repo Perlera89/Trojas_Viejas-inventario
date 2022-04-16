@@ -1,6 +1,6 @@
 package com.trojasviejas.component.login;
 
-import com.trojasviejas.models.User;
+import com.trojasviejas.models.UserModel;
 import com.trojasviejas.swing.login.Button;
 import com.trojasviejas.swing.login.MyPasswordField;
 import com.trojasviejas.swing.login.MyTextField;
@@ -14,9 +14,9 @@ import net.miginfocom.swing.MigLayout;
 
 public class PanelLogin extends javax.swing.JLayeredPane {
     
-    private User user;
+    private UserModel user;
     
-    public User getUser(){
+    public UserModel getUser(){
         return user;
     }
     
@@ -37,17 +37,17 @@ public class PanelLogin extends javax.swing.JLayeredPane {
         pnlRegister.add(title);
         
         MyTextField txtUser = new MyTextField();
-        txtUser.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/user.png"));
+        txtUser.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/user.png"));
         txtUser.setHint("Nombre");
         pnlRegister.add(txtUser, "w 60%");
         
         MyPasswordField txtPass = new MyPasswordField();
-        txtPass.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/pass.png"));
+        txtPass.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/pass.png"));
         txtPass.setHint("Contrase\u00f1a");
         pnlRegister.add(txtPass, "w 60%");
         
         MyPasswordField txtConfirmPass = new MyPasswordField();
-        txtConfirmPass.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/pass.png"));
+        txtConfirmPass.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/pass.png"));
         txtConfirmPass.setHint("Confirmar contrase\u00f1a");
         pnlRegister.add(txtConfirmPass, "w 60%");
         
@@ -75,12 +75,12 @@ public class PanelLogin extends javax.swing.JLayeredPane {
         pnlLogin.add(title);
         
         MyTextField txtLoginUser = new MyTextField();
-        txtLoginUser.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/user.png"));
+        txtLoginUser.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/user.png"));
         txtLoginUser.setHint("Nombre");
         pnlLogin.add(txtLoginUser, "w 60%");
         
         MyPasswordField txtLoginPass = new MyPasswordField();
-        txtLoginPass.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/pass.png"));
+        txtLoginPass.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/pass.png"));
         txtLoginPass.setHint("Contrase\u00f1a");
         pnlLogin.add(txtLoginPass, "w 60%");
         

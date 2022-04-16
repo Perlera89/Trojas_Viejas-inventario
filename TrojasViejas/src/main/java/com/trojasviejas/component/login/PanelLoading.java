@@ -23,7 +23,7 @@ public class PanelLoading extends javax.swing.JPanel {
         lblLoading = new javax.swing.JLabel();
 
         lblLoading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLoading.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/loading.gif")); // NOI18N
+        lblLoading.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/loading.gif")); // NOI18N
         lblLoading.setPreferredSize(new java.awt.Dimension(50, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

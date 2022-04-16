@@ -1,8 +1,8 @@
 package com.trojasviejas.component.login;
 
+import com.trojasviejas.demo.FrmLogin;
 import com.trojasviejas.swing.login.Button;
 import com.trojasviejas.swing.login.ButtonOutline;
-import com.trojasviejas.swing.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GradientPaint;
@@ -18,7 +18,7 @@ import net.miginfocom.swing.MigLayout;
 public class PanelCover extends javax.swing.JPanel {
     
     private final DecimalFormat df = new DecimalFormat("##0.###");
-    final ImageIcon imagenLogo = new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/isotipo.png");
+    final ImageIcon imagenLogo = new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/isotipo.png");
     private ActionListener event;
     private MigLayout layout;
     private JLabel lblLogo;
@@ -35,19 +35,6 @@ public class PanelCover extends javax.swing.JPanel {
         layout = new MigLayout("wrap, fill", "[center]","push[]10[]10[]20[]10[]push");
         setLayout(layout);
         init();
-        btnCloseActionPerformed();
-    }
-    
-    private void btnCloseActionPerformed(){
-        ActionListener eventoAccion = new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Aqui va ir el codigo de accion
-            }
-            
-        };
-        
-        btnClose.addActionListener(eventoAccion);
     }
     
     private void init(){
@@ -92,7 +79,15 @@ public class PanelCover extends javax.swing.JPanel {
         btnClose.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                //System.exit(0);
+                MessageDialog dialogResult = new MessageDialog(new FrmLogin());
+                dialogResult.showMessage("Salir del programa", "¿Estas seguro de cerrar el programa? Asegurate de revisar los cambios");
+                
+                if(dialogResult.getMessageType() == MessageDialog.MessageType.OK){
+                    System.exit(0);
+                } else{
+                    JOptionPane.showMessageDialog(null, "En espera");
+                }
             }
         });
         

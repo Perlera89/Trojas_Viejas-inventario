@@ -29,9 +29,9 @@ public class PanelMessage extends javax.swing.JPanel {
         this.messageType = messageType;
         lblMessage.setText(message);
         if (messageType == MessageType.SUCCESS) {
-            lblMessage.setIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/success.png"));
+            lblMessage.setIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/success.png"));
         } else {
-            lblMessage.setIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/error.png"));
+            lblMessage.setIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/error.png"));
         }
     }
 
@@ -41,7 +41,7 @@ public class PanelMessage extends javax.swing.JPanel {
 
         lblMessage = new javax.swing.JLabel();
 
-        lblMessage.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        lblMessage.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         lblMessage.setForeground(new java.awt.Color(248, 248, 248));
         lblMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMessage.setText("Mensaje");
@@ -54,7 +54,7 @@ public class PanelMessage extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(lblMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

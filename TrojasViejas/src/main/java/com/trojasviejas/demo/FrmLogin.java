@@ -4,7 +4,7 @@ import com.trojasviejas.component.login.PanelCover;
 import com.trojasviejas.component.login.PanelLoading;
 import com.trojasviejas.component.login.PanelLogin;
 import com.trojasviejas.component.login.PanelMessage;
-import com.trojasviejas.models.User;
+import com.trojasviejas.models.UserModel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +16,6 @@ import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class FrmLogin extends javax.swing.JFrame {
-
     private MigLayout layout;
     private PanelCover cover;
     private PanelLogin login;
@@ -116,9 +115,9 @@ public class FrmLogin extends javax.swing.JFrame {
     }
     
     private void register(){
-        User user = login.getUser();
+        //User user = login.getUser();
         showMessage(PanelMessage.MessageType.SUCCESS, "Probando mensaje");
-        //loading.setVisible(true);
+        loading.setVisible(true);
         
     }
     
