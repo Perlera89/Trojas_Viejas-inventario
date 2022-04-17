@@ -1,4 +1,4 @@
-package com.trojasviejas.swing.login;
+package com.trojasviejas.swing;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
