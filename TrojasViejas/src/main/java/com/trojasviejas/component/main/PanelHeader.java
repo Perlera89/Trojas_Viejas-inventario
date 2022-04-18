@@ -36,6 +36,8 @@ public class PanelHeader extends javax.swing.JPanel {
         btnSearch.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnSearch.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/search.png")); // NOI18N
 
+        txtSearch.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+
         btnOption.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnOption.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/option.png")); // NOI18N
 

@@ -25,13 +25,13 @@ public class PanelMenu extends javax.swing.JPanel {
         lstMenu.addItem(new MenuModel("item", "Articulos", MenuModel.MenuType.MENU));
         lstMenu.addItem(new MenuModel("invoice", "Facturas", MenuModel.MenuType.MENU));
         lstMenu.addItem(new MenuModel("inventory", "Inventario", MenuModel.MenuType.MENU));
-        lstMenu.addItem(new MenuModel("home", "Reportes", MenuModel.MenuType.MENU));
+        lstMenu.addItem(new MenuModel("reports", "Reportes", MenuModel.MenuType.MENU));
         lstMenu.addItem(new MenuModel("", "", MenuModel.MenuType.EMPTY));
         
         lstMenu.addItem(new MenuModel("", "Perfil", MenuModel.MenuType.TITLE));
         lstMenu.addItem(new MenuModel("", "", MenuModel.MenuType.EMPTY));
         lstMenu.addItem(new MenuModel("user", "Usuarios", MenuModel.MenuType.MENU));
-        lstMenu.addItem(new MenuModel("home", "Ajustes", MenuModel.MenuType.MENU));
+        lstMenu.addItem(new MenuModel("setting", "Ajustes", MenuModel.MenuType.MENU));
         lstMenu.addItem(new MenuModel("", "", MenuModel.MenuType.EMPTY));
     }
 

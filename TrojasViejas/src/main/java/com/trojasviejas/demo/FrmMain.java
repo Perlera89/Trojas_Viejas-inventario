@@ -1,5 +1,6 @@
 package com.trojasviejas.demo;
 
+import com.trojasviejas.swing.ScrollBar;
 import java.awt.*;
 
 public class FrmMain extends javax.swing.JFrame {
@@ -8,6 +9,7 @@ public class FrmMain extends javax.swing.JFrame {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
         pnlMenu.initMoving(this);
+        scroll.setVerticalScrollBar(new ScrollBar());
     }
 
     @SuppressWarnings("unchecked")
@@ -17,6 +19,8 @@ public class FrmMain extends javax.swing.JFrame {
         pnlContainer = new com.trojasviejas.swing.PanelBorder();
         pnlMenu = new com.trojasviejas.component.main.PanelMenu();
         panelHeader1 = new com.trojasviejas.component.main.PanelHeader();
+        scroll = new javax.swing.JScrollPane();
+        frmHome1 = new com.trojasviejas.demo.FrmHome();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -24,22 +28,31 @@ public class FrmMain extends javax.swing.JFrame {
         pnlContainer.setBackground(new java.awt.Color(232, 241, 242));
         pnlContainer.setForeground(new java.awt.Color(255, 255, 255));
 
+        scroll.setBorder(null);
+        scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.setViewportView(frmHome1);
+
         javax.swing.GroupLayout pnlContainerLayout = new javax.swing.GroupLayout(pnlContainer);
         pnlContainer.setLayout(pnlContainerLayout);
         pnlContainerLayout.setHorizontalGroup(
             pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlContainerLayout.createSequentialGroup()
-                .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(panelHeader1, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE))
+                .addGroup(pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlContainerLayout.createSequentialGroup()
+                        .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 1086, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addComponent(panelHeader1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         pnlContainerLayout.setVerticalGroup(
             pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlContainerLayout.createSequentialGroup()
-                .addGroup(pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelHeader1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(panelHeader1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
+                .addGap(6, 6, 6))
+            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -90,8 +103,10 @@ public class FrmMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.trojasviejas.demo.FrmHome frmHome1;
     private com.trojasviejas.component.main.PanelHeader panelHeader1;
     private com.trojasviejas.swing.PanelBorder pnlContainer;
     private com.trojasviejas.component.main.PanelMenu pnlMenu;
+    private javax.swing.JScrollPane scroll;
     // End of variables declaration//GEN-END:variables
 }
