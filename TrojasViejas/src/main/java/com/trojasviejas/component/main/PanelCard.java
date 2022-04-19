@@ -1,6 +1,6 @@
 package com.trojasviejas.component.main;
 
-import com.trojasviejas.models.CardModel;
+import com.trojasviejas.models.utility.CardModel;
 import java.awt.*;
 
 public class PanelCard extends javax.swing.JPanel {

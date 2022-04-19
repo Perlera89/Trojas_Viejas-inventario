@@ -1,9 +1,9 @@
 package com.trojasviejas.component.login;
 
-import com.trojasviejas.models.UserModel;
-import com.trojasviejas.swing.Button;
-import com.trojasviejas.swing.MyPasswordField;
-import com.trojasviejas.swing.MyTextField;
+import com.trojasviejas.models.utility.UserModel;
+import com.trojasviejas.swing.buttons.Button;
+import com.trojasviejas.swing.fields.MyPasswordField;
+import com.trojasviejas.swing.fields.MyTextField;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Cursor;

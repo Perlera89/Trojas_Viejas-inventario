@@ -1,9 +1,15 @@
 package com.trojasviejas.component.main;
 
+import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.demo.form.FrmLogin;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 public class PanelHeader extends javax.swing.JPanel {
 
@@ -28,8 +34,9 @@ public class PanelHeader extends javax.swing.JPanel {
     private void initComponents() {
 
         btnSearch = new javax.swing.JLabel();
-        txtSearch = new com.trojasviejas.swing.SearchText();
-        btnOption = new javax.swing.JLabel();
+        txtSearch = new com.trojasviejas.swing.fields.SearchText();
+        btnOption1 = new javax.swing.JLabel();
+        btnClose = new com.trojasviejas.swing.Buttons.ActionButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -38,8 +45,22 @@ public class PanelHeader extends javax.swing.JPanel {
 
         txtSearch.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
-        btnOption.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnOption.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/option.png")); // NOI18N
+        btnOption1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnOption1.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/option.png")); // NOI18N
+        btnOption1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnOption1MouseClicked(evt);
+            }
+        });
+
+        btnClose.setForeground(new java.awt.Color(200, 0, 20));
+        btnClose.setText("X");
+        btnClose.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -48,22 +69,39 @@ public class PanelHeader extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
+                .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                .addGap(92, 92, 92)
+                .addComponent(btnOption1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOption, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-            .addComponent(btnOption, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnOption1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnOption1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOption1MouseClicked
+
+    }//GEN-LAST:event_btnOption1MouseClicked
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnCloseActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btnOption;
+    private com.trojasviejas.swing.Buttons.ActionButton btnClose;
+    private javax.swing.JLabel btnOption1;
     private javax.swing.JLabel btnSearch;
-    private com.trojasviejas.swing.SearchText txtSearch;
+    private com.trojasviejas.swing.fields.SearchText txtSearch;
     // End of variables declaration//GEN-END:variables
 }

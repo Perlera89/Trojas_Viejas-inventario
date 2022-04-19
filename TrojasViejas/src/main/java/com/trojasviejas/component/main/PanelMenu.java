@@ -1,6 +1,7 @@
 package com.trojasviejas.component.main;
 
-import com.trojasviejas.models.MenuModel;
+import com.trojasviejas.component.main.event.IEventMenuSelected;
+import com.trojasviejas.models.utility.MenuModel;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,6 +10,13 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class PanelMenu extends javax.swing.JPanel {
+    
+    private IEventMenuSelected event;
+    
+    public void addEventMenuSelected(IEventMenuSelected event){
+        this.event = event;
+        lstMenu.addEventMenuSelected(event);
+    }
 
     public PanelMenu() {
         initComponents();
@@ -18,6 +26,7 @@ public class PanelMenu extends javax.swing.JPanel {
     }
     
     private void init(){
+        //Agregando elementos del menu
 //        DefaultListCellRenderer cellRenderer = (DefaultListCellRenderer)lstMenu.getCellRenderer();
 //        cellRenderer.setHorizontalAlignment(SwingConstants .CENTER);
         lstMenu.addItem(new MenuModel("home", "Inicio", MenuModel.MenuType.MENU));

@@ -1,13 +1,13 @@
 package com.trojasviejas.swing;
 
-import com.trojasviejas.models.MenuModel;
+import com.trojasviejas.models.utility.MenuModel;
 import java.awt.*;
 import javax.swing.SwingConstants;
 
 public class MenuItem extends javax.swing.JPanel {
 
     private boolean isSelected;
-    
+    private boolean isOver;
     public MenuItem(MenuModel data) {
         initComponents();
         setOpaque(false);
@@ -28,6 +28,11 @@ public class MenuItem extends javax.swing.JPanel {
     
     public void setSelected(boolean isSelected){
         this.isSelected = isSelected;
+        repaint();
+    }
+    
+    public void setOver(boolean isOver){
+        this.isOver = isOver;
         repaint();
     }
 
@@ -64,10 +69,14 @@ public class MenuItem extends javax.swing.JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        if(isSelected){
+        if(isSelected || isOver){
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(new Color(255, 255, 255, 80));
+            if(isSelected){
+                g2.setColor(new Color(255, 255, 255, 80));
+            } else{
+                g2.setColor(new Color(255, 255, 255, 20));
+            }
             g2.fillRoundRect(10, 0, getWidth() - 20, getHeight(), 5, 5);
         }
         super.paintComponent(g);

@@ -1,6 +1,6 @@
 package com.trojasviejas.swing;
 
-import com.trojasviejas.models.ProviderType;
+import com.trojasviejas.models.utility.ProviderType;
 
 public class CellStatus extends javax.swing.JPanel {
 
@@ -13,7 +13,7 @@ public class CellStatus extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        status = new com.trojasviejas.swing.TableStatus();
+        status = new com.trojasviejas.swing.tables.ProvidersStatus();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -40,6 +40,6 @@ public class CellStatus extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.TableStatus status;
+    private com.trojasviejas.swing.tables.ProvidersStatus status;
     // End of variables declaration//GEN-END:variables
 }

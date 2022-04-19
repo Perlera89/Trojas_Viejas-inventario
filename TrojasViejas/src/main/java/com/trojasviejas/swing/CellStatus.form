@@ -39,7 +39,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="com.trojasviejas.swing.TableStatus" name="status">
+    <Component class="com.trojasviejas.swing.tables.ProvidersStatus" name="status">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="tableStatus1"/>

@@ -1,6 +1,6 @@
 package com.trojasviejas.component.login;
 
-import com.trojasviejas.demo.FrmLogin;
+import com.trojasviejas.demo.form.FrmLogin;
 import com.trojasviejas.swing.Glass;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -107,8 +107,8 @@ public class MessageDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         backgroundDialog1 = new com.trojasviejas.swing.BackgroundDialog();
-        btnOk = new com.trojasviejas.swing.ButtonCustom();
-        btnCancel = new com.trojasviejas.swing.ButtonCustom();
+        btnOk = new com.trojasviejas.swing.buttons.ButtonCustom();
+        btnCancel = new com.trojasviejas.swing.buttons.ButtonCustom();
         jLabel1 = new javax.swing.JLabel();
         lblTitle = new javax.swing.JLabel();
         lblContent = new javax.swing.JTextPane();
@@ -215,8 +215,8 @@ public class MessageDialog extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.BackgroundDialog backgroundDialog1;
-    private com.trojasviejas.swing.ButtonCustom btnCancel;
-    private com.trojasviejas.swing.ButtonCustom btnOk;
+    private com.trojasviejas.swing.buttons.ButtonCustom btnCancel;
+    private com.trojasviejas.swing.buttons.ButtonCustom btnOk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextPane lblContent;
     private javax.swing.JLabel lblTitle;

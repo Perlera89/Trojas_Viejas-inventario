@@ -1,8 +1,8 @@
 package com.trojasviejas.component.login;
 
-import com.trojasviejas.demo.FrmLogin;
-import com.trojasviejas.swing.Button;
-import com.trojasviejas.swing.ButtonOutline;
+import com.trojasviejas.demo.form.FrmLogin;
+import com.trojasviejas.swing.buttons.Button;
+import com.trojasviejas.swing.buttons.ButtonOutline;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GradientPaint;
@@ -79,9 +79,8 @@ public class PanelCover extends javax.swing.JPanel {
         btnClose.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //System.exit(0);
                 MessageDialog dialogResult = new MessageDialog(new FrmLogin());
-                dialogResult.showMessage("Salir del programa", "¿Estas seguro de cerrar el programa? Asegurate de revisar los cambios");
+                dialogResult.showMessage("Salir del programa", "¿Estas seguro de cerrar el programa? Pulsa ok para confirmar");
                 
                 if(dialogResult.getMessageType() == MessageDialog.MessageType.OK){
                     System.exit(0);
