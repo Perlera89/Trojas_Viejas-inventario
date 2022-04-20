@@ -5,9 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.*;
 
-public class Action extends javax.swing.JPanel {
+public class ProviderAction extends javax.swing.JPanel {
 
-    public Action(ProviderActionModel data) {
+    public ProviderAction(ProviderActionModel data) {
         initComponents();
         btnEdit.addActionListener(new ActionListener() {
             @Override

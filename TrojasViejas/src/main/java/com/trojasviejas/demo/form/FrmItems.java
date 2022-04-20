@@ -1,12 +1,14 @@
 package com.trojasviejas.demo.form;
 
-import com.trojasviejas.component.main.event.IEventAction;
+import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
+import com.trojasviejas.component.main.event.IProviderEventAction;
+import com.trojasviejas.models.entity.ItemModel;
 
 public class FrmItems extends javax.swing.JPanel {
 
@@ -24,27 +26,27 @@ public class FrmItems extends javax.swing.JPanel {
     
     private void initTableData(){
         //Agregar registro
-        IEventAction eventAction = new IEventAction() {
+        IItemEventAction eventAction = new IItemEventAction() {
             @Override
-            public void update(ProviderModel entity) {
+            public void update(ItemModel entity) {
                 System.out.println("Editar a " + entity.getName());
             }
 
             @Override
-            public void delete(ProviderModel entity) {
+            public void delete(ItemModel entity) {
                 System.out.println("Eliminar a " + entity.getName());
             }
         };
         
-        jScrollPane1.setVerticalScrollBar(new ScrollBar());
-        jScrollPane1.getVerticalScrollBar().setBackground(Color.white);
+        scroll.setVerticalScrollBar(new ScrollBar());
+        scroll.getVerticalScrollBar().setBackground(Color.white);
         JPanel panel = new JPanel();
         panel.setBackground(Color.white);
-        jScrollPane1.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
-        jScrollPane1.getViewport().setBackground(Color.white);
+        scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
+        scroll.getViewport().setBackground(Color.white);
         
-        //itemsTable1.addRow(new ProviderModel("Tubo PVC", "Categoria", "20", "Barrio el carmen").toRowTable(eventAction));
-        //itemsTable1.addRow(new ProviderModel("Arena", "Categoria", "25", "Barrio el carmen").toRowTable(eventAction));
+        tblItems.addRow(new ItemModel("Tubo PVC", 20, "Sin descripcion", CategoryType.GALVANIZADO).toRowTable(eventAction));
+        tblItems.addRow(new ItemModel("Arena", 25, "Sin descripcion", CategoryType.PVC).toRowTable(eventAction));
     }
 
     @SuppressWarnings("unchecked")
@@ -57,8 +59,8 @@ public class FrmItems extends javax.swing.JPanel {
         pnlTable = new com.trojasviejas.swing.panels.PanelBorder();
         lblProviders = new javax.swing.JLabel();
         btnNew = new com.trojasviejas.swing.Buttons.ActionButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        itemsTable1 = new com.trojasviejas.swing.tables.ItemsTable();
+        scroll = new javax.swing.JScrollPane();
+        tblItems = new com.trojasviejas.swing.tables.item.ItemsTable();
 
         setBackground(new java.awt.Color(232, 241, 242));
 
@@ -90,12 +92,12 @@ public class FrmItems extends javax.swing.JPanel {
             }
         });
 
-        itemsTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nombre", "Categoria", "Cantidad minima", "Descripcion", "Acciones"
+                "Nombre", "Cantidad minima", "Descripcion", "Categoria", "Acciones"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -106,7 +108,7 @@ public class FrmItems extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(itemsTable1);
+        scroll.setViewportView(tblItems);
 
         javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
         pnlTable.setLayout(pnlTableLayout);
@@ -117,8 +119,8 @@ public class FrmItems extends javax.swing.JPanel {
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblProviders)
                     .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         pnlTableLayout.setVerticalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,7 +130,7 @@ public class FrmItems extends javax.swing.JPanel {
                 .addGap(27, 27, 27)
                 .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
 
@@ -162,12 +164,12 @@ public class FrmItems extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.Buttons.ActionButton btnNew;
-    private com.trojasviejas.swing.tables.ItemsTable itemsTable1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblProviders;
     private com.trojasviejas.component.main.PanelCard pnlCard1;
     private com.trojasviejas.component.main.PanelCard pnlCard2;
     private javax.swing.JLayeredPane pnlContainer;
     private com.trojasviejas.swing.panels.PanelBorder pnlTable;
+    private javax.swing.JScrollPane scroll;
+    private com.trojasviejas.swing.tables.item.ItemsTable tblItems;
     // End of variables declaration//GEN-END:variables
 }

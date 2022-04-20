@@ -1,12 +1,12 @@
 package com.trojasviejas.demo.form;
 
-import com.trojasviejas.component.main.event.IEventAction;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
+import com.trojasviejas.component.main.event.IProviderEventAction;
 
 public class FrmInventory extends javax.swing.JPanel {
 
@@ -24,7 +24,7 @@ public class FrmInventory extends javax.swing.JPanel {
     
     private void initTableData(){
         //Agregar registro
-        IEventAction eventAction = new IEventAction() {
+        IProviderEventAction eventAction = new IProviderEventAction() {
             @Override
             public void update(ProviderModel entity) {
                 System.out.println("Editar a " + entity.getName());

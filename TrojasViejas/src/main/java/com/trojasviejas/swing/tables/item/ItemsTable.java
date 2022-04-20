@@ -1,8 +1,9 @@
-package com.trojasviejas.swing.tables;
+package com.trojasviejas.swing.tables.item;
 
-import com.trojasviejas.models.utility.ProviderActionModel;
-import com.trojasviejas.models.utility.ProviderType;
-import com.trojasviejas.swing.CellStatus;
+import com.trojasviejas.models.utility.CategoryType;
+import com.trojasviejas.models.utility.ItemActionModel;
+import com.trojasviejas.swing.CategoryCellStatus;
+import com.trojasviejas.swing.tables.TableHeader;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.*;
@@ -23,7 +24,7 @@ public class ItemsTable extends JTable {
         getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
-                ProvidersHeader header = new ProvidersHeader(o + "");
+                TableHeader header = new TableHeader(o + "");
                 if (i1 == 3) {
                     header.setHorizontalAlignment(JLabel.LEFT);
                 }
@@ -33,9 +34,21 @@ public class ItemsTable extends JTable {
         setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean selected, boolean bln1, int i, int i1) {
-                if (o instanceof ProviderActionModel) {
-                    ProviderActionModel data = (ProviderActionModel) o;
-                    Action cell = new Action(data);
+                if (o instanceof CategoryType) {
+                    CategoryType type = (CategoryType) o;
+                    CategoryCellStatus cell = new CategoryCellStatus(type);
+                    
+                    if (selected) {
+                        cell.setBackground(new Color(239, 244, 255));
+                    } else {
+                        cell.setBackground(Color.WHITE);
+                    }
+                    
+                    return cell;
+
+                } else if (o instanceof ItemActionModel) {
+                    ItemActionModel data = (ItemActionModel) o;
+                    ItemAction cell = new ItemAction(data);
                     if (selected) {
                         cell.setBackground(new Color(239, 244, 255));
                     } else {
@@ -61,7 +74,7 @@ public class ItemsTable extends JTable {
     @Override
     public TableCellEditor getCellEditor(int row, int col) {
         if (col == 5) {
-            return new ProviderCellAction();
+            return new ItemCellAction();
         } else {
             return super.getCellEditor(row, col);
         }

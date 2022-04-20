@@ -1,7 +1,7 @@
 package com.trojasviejas.models.utility;
 
-import com.trojasviejas.component.main.event.IEventAction;
 import com.trojasviejas.models.entity.ProviderModel;
+import com.trojasviejas.component.main.event.IProviderEventAction;
 
 public class ProviderActionModel {
 
@@ -13,15 +13,15 @@ public class ProviderActionModel {
         this.provider = provider;
     }
 
-    public IEventAction getEvent() {
+    public IProviderEventAction getEvent() {
         return event;
     }
 
-    public void setEvent(IEventAction event) {
+    public void setEvent(IProviderEventAction event) {
         this.event = event;
     }
 
-    public ProviderActionModel(ProviderModel provider, IEventAction event) {
+    public ProviderActionModel(ProviderModel provider, IProviderEventAction event) {
         this.provider = provider;
         this.event = event;
     }
@@ -30,5 +30,5 @@ public class ProviderActionModel {
     }
 
     private ProviderModel provider;
-    private IEventAction event;
+    private IProviderEventAction event;
 }

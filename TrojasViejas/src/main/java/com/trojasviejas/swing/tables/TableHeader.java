@@ -6,9 +6,9 @@ import java.awt.Graphics;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
-public class ProvidersHeader extends JLabel {
+public class TableHeader extends JLabel {
 
-    public ProvidersHeader(String text) {
+    public TableHeader(String text) {
         super(text);
         setOpaque(true);
         setBackground(Color.WHITE);

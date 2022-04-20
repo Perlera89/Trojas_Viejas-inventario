@@ -1,10 +1,10 @@
 package com.trojasviejas.models.entity;
 
-import com.trojasviejas.component.main.event.IEventAction;
 import com.trojasviejas.models.utility.ProviderActionModel;
 import com.trojasviejas.models.utility.ProviderType;
 import java.text.DecimalFormat;
 import javax.swing.Icon;
+import com.trojasviejas.component.main.event.IProviderEventAction;
 
 public class ProviderModel {
     private String name;
@@ -24,7 +24,7 @@ public class ProviderModel {
     public ProviderModel() {
     }
     
-    public Object[] toRowTable(IEventAction event) {
+    public Object[] toRowTable(IProviderEventAction event) {
         return new Object[]{name, numberPhone, email, address, type, new ProviderActionModel(this, event)};
     }
 

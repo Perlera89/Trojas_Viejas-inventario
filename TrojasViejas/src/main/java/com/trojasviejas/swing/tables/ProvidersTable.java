@@ -2,7 +2,7 @@ package com.trojasviejas.swing.tables;
 
 import com.trojasviejas.models.utility.ProviderActionModel;
 import com.trojasviejas.models.utility.ProviderType;
-import com.trojasviejas.swing.CellStatus;
+import com.trojasviejas.swing.TypeCellStatus;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.*;
@@ -23,7 +23,7 @@ public class ProvidersTable extends JTable {
         getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
-                ProvidersHeader header = new ProvidersHeader(o + "");
+                TableHeader header = new TableHeader(o + "");
                 if (i1 == 4) {
                     header.setHorizontalAlignment(JLabel.LEFT);
                 }
@@ -47,7 +47,7 @@ public class ProvidersTable extends JTable {
 //                } else {
 //                    if (o instanceof ProviderActionModel) {
 //                        ProviderActionModel data = (ProviderActionModel) o;
-//                        Action cell = new Action(data);
+//                        ProviderAction cell = new ProviderAction(data);
 //                        if (selected) {
 //                            cell.setForeground(new Color(15, 89, 140));
 //                        } else {
@@ -57,13 +57,13 @@ public class ProvidersTable extends JTable {
 //                        return cell;
 //                    } else {
 //                        ProviderType type = (ProviderType) o;
-//                        CellStatus cell = new CellStatus(type);
+//                        TypeCellStatus cell = new TypeCellStatus(type);
 //                        return cell;
 //                    }
 //                }
                 if (o instanceof ProviderType) {
                     ProviderType type = (ProviderType) o;
-                    CellStatus cell = new CellStatus(type);
+                    TypeCellStatus cell = new TypeCellStatus(type);
                     
                     if (selected) {
                         cell.setBackground(new Color(239, 244, 255));
@@ -75,7 +75,7 @@ public class ProvidersTable extends JTable {
 
                 } else if (o instanceof ProviderActionModel) {
                     ProviderActionModel data = (ProviderActionModel) o;
-                    Action cell = new Action(data);
+                    ProviderAction cell = new ProviderAction(data);
                     if (selected) {
                         cell.setBackground(new Color(239, 244, 255));
                     } else {

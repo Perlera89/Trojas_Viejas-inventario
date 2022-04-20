@@ -17,7 +17,7 @@ public class ProviderCellAction extends DefaultCellEditor{
     @Override
     public Component getTableCellEditorComponent(JTable jtable, Object o, boolean bln, int i, int i1) {
         data = (ProviderActionModel) o;
-        Action cell = new Action(data);
+        ProviderAction cell = new ProviderAction(data);
         cell.setBackground(new Color(239, 244, 255));
         return cell;
     }
