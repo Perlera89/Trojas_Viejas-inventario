@@ -1,15 +1,16 @@
 package com.trojasviejas.models.utility;
 
 import com.trojasviejas.models.entity.*;
-import com.trojasviejas.component.main.event.IItemEventAction;
+import com.trojasviejas.component.main.event.*;
 
 public class ItemActionModel {
-        public ItemModel getItem() {
+
+    public ItemModel getItem() {
         return item;
     }
 
-    public void setItem(ItemModel provider) {
-        this.item = provider;
+    public void setItem(ItemModel item) {
+        this.item = item;
     }
 
     public IItemEventAction getEvent() {

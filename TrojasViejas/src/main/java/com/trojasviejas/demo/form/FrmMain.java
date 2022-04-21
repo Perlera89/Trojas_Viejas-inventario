@@ -44,7 +44,7 @@ public class FrmMain extends javax.swing.JFrame {
                 } else if(index == 9){
                     setForm(users);
                 } else if(index == 10){
-                    
+                    setForm(users);
                 }
             }
         });

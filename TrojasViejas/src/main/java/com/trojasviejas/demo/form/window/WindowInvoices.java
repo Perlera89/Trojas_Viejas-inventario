@@ -4,9 +4,16 @@ import com.trojasviejas.demo.form.*;
 import com.trojasviejas.component.main.event.IEventMenuSelected;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class WindowInvoices extends javax.swing.JFrame {
 
@@ -15,7 +22,30 @@ public class WindowInvoices extends javax.swing.JFrame {
     public WindowInvoices() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
-        
+        initMoving(this);
+        cbbProvider.requestFocus();
+    }
+
+    private int x;
+    private int y;
+
+    public void initMoving(JFrame window) {
+        pnlHeader.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                x = e.getX();
+                y = e.getY();
+            }
+
+        });
+
+        pnlHeader.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                window.setLocation(e.getXOnScreen() - x, e.getYOnScreen() - y);
+            }
+
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -27,15 +57,14 @@ public class WindowInvoices extends javax.swing.JFrame {
         panelBorder1 = new com.trojasviejas.swing.panels.PanelBorder();
         btnClose = new com.trojasviejas.swing.Buttons.ActionButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        pnlHeader = new javax.swing.JLabel();
         panelBorder2 = new com.trojasviejas.swing.panels.PanelBorder();
-        txtName = new com.trojasviejas.swing.fields.LinearTextField();
-        comboBox1 = new com.trojasviejas.swing.ComboBox();
-        txtEmail = new com.trojasviejas.swing.fields.LinearTextField();
-        txtPhone = new com.trojasviejas.swing.fields.LinearTextField();
-        txtAddress = new com.trojasviejas.swing.fields.LinearTextField();
+        cbbProvider = new com.trojasviejas.swing.ComboBox();
+        txtTotal = new com.trojasviejas.swing.fields.LinearTextField();
         btnAdd = new com.trojasviejas.swing.buttons.Button();
         btnCancel = new com.trojasviejas.swing.buttons.Button();
+        lblImage = new com.trojasviejas.swing.buttons.ButtonOutline();
+        txtDate = new com.toedter.calendar.JDateChooser();
 
         txtProveedor1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtProveedor1.setLabelText("Nombre");
@@ -57,11 +86,11 @@ public class WindowInvoices extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/isotipoSmall.png")); // NOI18N
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Norwester", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Agregar proveedor");
+        pnlHeader.setBackground(new java.awt.Color(255, 255, 255));
+        pnlHeader.setFont(new java.awt.Font("Norwester", 0, 24)); // NOI18N
+        pnlHeader.setForeground(new java.awt.Color(255, 255, 255));
+        pnlHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pnlHeader.setText("Agregar factura");
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -70,7 +99,7 @@ public class WindowInvoices extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -82,7 +111,7 @@ public class WindowInvoices extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -99,23 +128,19 @@ public class WindowInvoices extends javax.swing.JFrame {
             .addGap(0, 60, Short.MAX_VALUE)
         );
 
-        txtName.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtName.setLabelText("Nombre");
+        cbbProvider.setForeground(new java.awt.Color(100, 100, 100));
+        cbbProvider.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tipo", "Vendedores", "Donadores" }));
+        cbbProvider.setSelectedIndex(-1);
+        cbbProvider.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        cbbProvider.setLabeText("Proveedor");
 
-        comboBox1.setForeground(new java.awt.Color(100, 100, 100));
-        comboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tipo", "Vendedores", "Donadores" }));
-        comboBox1.setSelectedIndex(-1);
-        comboBox1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        comboBox1.setLabeText("Tipo");
-
-        txtEmail.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtEmail.setLabelText("Nombre");
-
-        txtPhone.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtPhone.setLabelText("Telefono");
-
-        txtAddress.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtAddress.setLabelText("Nombre");
+        txtTotal.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtTotal.setLabelText("Total");
+        txtTotal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTotalKeyTyped(evt);
+            }
+        });
 
         btnAdd.setBackground(new java.awt.Color(0, 184, 82));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
@@ -124,6 +149,30 @@ public class WindowInvoices extends javax.swing.JFrame {
         btnCancel.setBackground(new java.awt.Color(255, 5, 0));
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancelar");
+
+        lblImage.setForeground(new java.awt.Color(150, 150, 150));
+        lblImage.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/image.png")); // NOI18N
+        lblImage.setText("  Agrega una imagen");
+        lblImage.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        lblImage.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblImageMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblImageMouseExited(evt);
+            }
+        });
+        lblImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lblImageActionPerformed(evt);
+            }
+        });
+
+        txtDate.setBackground(new java.awt.Color(255, 255, 255));
+        txtDate.setForeground(new java.awt.Color(100, 100, 100));
+        txtDate.setDateFormatString("dd/MM/yyyy");
+        txtDate.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout pnlHomeLayout = new javax.swing.GroupLayout(pnlHome);
         pnlHome.setLayout(pnlHomeLayout);
@@ -134,16 +183,15 @@ public class WindowInvoices extends javax.swing.JFrame {
             .addGroup(pnlHomeLayout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addGroup(pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(comboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(84, 84, 84)
+                    .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbbProvider, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                    .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGap(50, 50, 50))
         );
         pnlHomeLayout.setVerticalGroup(
             pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,24 +199,21 @@ public class WindowInvoices extends javax.swing.JFrame {
                 .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlHomeLayout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(cbbProvider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
-                        .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(comboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                        .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlHomeLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(102, 102, 102))))
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(50, 50, 50)
+                .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -187,8 +232,40 @@ public class WindowInvoices extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void lblImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblImageActionPerformed
+        String ruta = "";
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        fileChooser.setFileFilter(filtrado);
+
+        int respuesta = fileChooser.showOpenDialog(this);
+
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            ruta = fileChooser.getSelectedFile().getPath();
+            lblImage.setFont(new Font("Roboto", 0, 12));
+            lblImage.setText(ruta);
+            //Image imagen = new ImageIcon(ruta).getImage();
+            //ImageIcon icono = new ImageIcon(imagen.getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+            //lblImage.setIcon(icono);
+        }
+    }//GEN-LAST:event_lblImageActionPerformed
+
+    private void lblImageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImageMouseEntered
+        lblImage.setForeground(new Color(100, 100, 100));
+    }//GEN-LAST:event_lblImageMouseEntered
+
+    private void lblImageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImageMouseExited
+        lblImage.setForeground(new Color(150, 150, 150));
+    }//GEN-LAST:event_lblImageMouseExited
+
+    private void txtTotalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyTyped
+        char car = evt.getKeyChar();
+        if ((car < '0' || car > '9') && (car < ',' || car > '.'))
+            evt.consume();
+    }//GEN-LAST:event_txtTotalKeyTyped
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -234,16 +311,15 @@ public class WindowInvoices extends javax.swing.JFrame {
     private com.trojasviejas.swing.buttons.Button btnAdd;
     private com.trojasviejas.swing.buttons.Button btnCancel;
     private com.trojasviejas.swing.Buttons.ActionButton btnClose;
-    private com.trojasviejas.swing.ComboBox comboBox1;
+    private com.trojasviejas.swing.ComboBox cbbProvider;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private com.trojasviejas.swing.buttons.ButtonOutline lblImage;
     private com.trojasviejas.swing.panels.PanelBorder panelBorder1;
     private com.trojasviejas.swing.panels.PanelBorder panelBorder2;
+    private javax.swing.JLabel pnlHeader;
     private com.trojasviejas.swing.panels.PanelRound pnlHome;
-    private com.trojasviejas.swing.fields.LinearTextField txtAddress;
-    private com.trojasviejas.swing.fields.LinearTextField txtEmail;
-    private com.trojasviejas.swing.fields.LinearTextField txtName;
-    private com.trojasviejas.swing.fields.LinearTextField txtPhone;
+    private com.toedter.calendar.JDateChooser txtDate;
     private com.trojasviejas.swing.fields.LinearTextField txtProveedor1;
+    private com.trojasviejas.swing.fields.LinearTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

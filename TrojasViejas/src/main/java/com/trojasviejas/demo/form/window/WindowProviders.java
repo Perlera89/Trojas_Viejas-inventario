@@ -4,9 +4,13 @@ import com.trojasviejas.demo.form.*;
 import com.trojasviejas.component.main.event.IEventMenuSelected;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 
 public class WindowProviders extends javax.swing.JFrame {
 
@@ -15,7 +19,30 @@ public class WindowProviders extends javax.swing.JFrame {
     public WindowProviders() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
+        initMoving(this);
+        txtName.requestFocus();
+    }
+    
+    private int x;
+    private int y;
+    
+    public void initMoving(JFrame window){
+        pnlHeader.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e) {
+                x = e.getX();
+                y = e.getY();
+            }
+            
+        });
         
+        pnlHeader.addMouseMotionListener(new MouseMotionAdapter(){
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                window.setLocation(e.getXOnScreen() - x, e.getYOnScreen() - y);
+            }
+            
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -27,10 +54,10 @@ public class WindowProviders extends javax.swing.JFrame {
         panelBorder1 = new com.trojasviejas.swing.panels.PanelBorder();
         btnClose = new com.trojasviejas.swing.Buttons.ActionButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        pnlHeader = new javax.swing.JLabel();
         panelBorder2 = new com.trojasviejas.swing.panels.PanelBorder();
         txtName = new com.trojasviejas.swing.fields.LinearTextField();
-        comboBox1 = new com.trojasviejas.swing.ComboBox();
+        cbbType = new com.trojasviejas.swing.ComboBox();
         txtEmail = new com.trojasviejas.swing.fields.LinearTextField();
         txtPhone = new com.trojasviejas.swing.fields.LinearTextField();
         txtAddress = new com.trojasviejas.swing.fields.LinearTextField();
@@ -57,11 +84,11 @@ public class WindowProviders extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/isotipoSmall.png")); // NOI18N
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Norwester", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Agregar proveedor");
+        pnlHeader.setBackground(new java.awt.Color(255, 255, 255));
+        pnlHeader.setFont(new java.awt.Font("Norwester", 0, 24)); // NOI18N
+        pnlHeader.setForeground(new java.awt.Color(255, 255, 255));
+        pnlHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pnlHeader.setText("Agregar proveedor");
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -70,7 +97,7 @@ public class WindowProviders extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -82,7 +109,7 @@ public class WindowProviders extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -102,20 +129,20 @@ public class WindowProviders extends javax.swing.JFrame {
         txtName.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtName.setLabelText("Nombre");
 
-        comboBox1.setForeground(new java.awt.Color(100, 100, 100));
-        comboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tipo", "Vendedores", "Donadores" }));
-        comboBox1.setSelectedIndex(-1);
-        comboBox1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        comboBox1.setLabeText("Tipo");
+        cbbType.setForeground(new java.awt.Color(100, 100, 100));
+        cbbType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tipo", "Vendedores", "Donadores" }));
+        cbbType.setSelectedIndex(-1);
+        cbbType.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        cbbType.setLabeText("Tipo");
 
         txtEmail.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtEmail.setLabelText("Nombre");
+        txtEmail.setLabelText("Correo");
 
         txtPhone.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtPhone.setLabelText("Telefono");
 
         txtAddress.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtAddress.setLabelText("Nombre");
+        txtAddress.setLabelText("Direccion");
 
         btnAdd.setBackground(new java.awt.Color(0, 184, 82));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
@@ -138,7 +165,7 @@ public class WindowProviders extends javax.swing.JFrame {
                     .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(comboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbbType, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(84, 84, 84)
                 .addGroup(pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -160,7 +187,7 @@ public class WindowProviders extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
-                        .addComponent(comboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                         .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlHomeLayout.createSequentialGroup()
@@ -230,11 +257,11 @@ public class WindowProviders extends javax.swing.JFrame {
     private com.trojasviejas.swing.buttons.Button btnAdd;
     private com.trojasviejas.swing.buttons.Button btnCancel;
     private com.trojasviejas.swing.Buttons.ActionButton btnClose;
-    private com.trojasviejas.swing.ComboBox comboBox1;
+    private com.trojasviejas.swing.ComboBox cbbType;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private com.trojasviejas.swing.panels.PanelBorder panelBorder1;
     private com.trojasviejas.swing.panels.PanelBorder panelBorder2;
+    private javax.swing.JLabel pnlHeader;
     private com.trojasviejas.swing.panels.PanelRound pnlHome;
     private com.trojasviejas.swing.fields.LinearTextField txtAddress;
     private com.trojasviejas.swing.fields.LinearTextField txtEmail;

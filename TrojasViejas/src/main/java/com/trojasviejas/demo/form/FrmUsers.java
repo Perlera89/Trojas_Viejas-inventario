@@ -1,12 +1,12 @@
 package com.trojasviejas.demo.form;
 
 import com.trojasviejas.demo.form.window.WindowProviders;
-import com.trojasviejas.models.entity.ProviderModel;
+import com.trojasviejas.models.entity.*;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
-import com.trojasviejas.component.main.event.IProviderEventAction;
+import com.trojasviejas.component.main.event.*;
 
 public class FrmUsers extends javax.swing.JPanel {
 
@@ -18,21 +18,20 @@ public class FrmUsers extends javax.swing.JPanel {
     }
     
     private void initCard(){
-        pnlCard1.setData(new CardModel(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/seller.png"), "Total Vendedores", "21", "Incremento un 10%"));
-        pnlCard2.setData(new CardModel(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/donor.png"), "Total Donadores", "$8", "Incremento un 45%"));
+        pnlCard1.setData(new CardModel(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/user.png"), "Total Usuarios", "4", "Sin descripcion"));
     }
     
     private void initTableData(){
         //Agregar registro
-        IProviderEventAction eventAction = new IProviderEventAction() {
+        IUserEventAction eventAction = new IUserEventAction() {
             @Override
-            public void update(ProviderModel entity) {
-                System.out.println("Editar a " + entity.getName());
+            public void update(UserModel entity) {
+                System.out.println("Editar a " + entity.getUsername());
             }
 
             @Override
-            public void delete(ProviderModel entity) {
-                System.out.println("Eliminar a " + entity.getName());
+            public void delete(UserModel entity) {
+                System.out.println("Eliminar a " + entity.getUsername());
             }
         };
         
@@ -43,8 +42,8 @@ public class FrmUsers extends javax.swing.JPanel {
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
         
-        tblProviders.addRow(new ProviderModel("Manuel Perlera", "7738-8921", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.VENDEDOR).toRowTable(eventAction));
-        tblProviders.addRow(new ProviderModel("Maria Pineda", "7738-8921", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.DONADOR).toRowTable(eventAction));
+        tblUsers.addRow(new UserModel("Manuel Perlera", "elwapoperlera").toRowTable(eventAction));
+        tblUsers.addRow(new UserModel("Wilian Mirada", "elfeomiranda").toRowTable(eventAction));
     }
 
     @SuppressWarnings("unchecked")
@@ -53,12 +52,11 @@ public class FrmUsers extends javax.swing.JPanel {
 
         pnlContainer = new javax.swing.JLayeredPane();
         pnlCard1 = new com.trojasviejas.component.main.PanelCard();
-        pnlCard2 = new com.trojasviejas.component.main.PanelCard();
         pnlTable = new com.trojasviejas.swing.panels.PanelBorder();
         lblProviders = new javax.swing.JLabel();
-        scroll = new javax.swing.JScrollPane();
-        tblProviders = new com.trojasviejas.swing.tables.ProvidersTable();
         btnNew = new com.trojasviejas.swing.Buttons.ActionButton();
+        scroll = new javax.swing.JScrollPane();
+        tblUsers = new com.trojasviejas.swing.tables.user.UsersTable();
 
         setBackground(new java.awt.Color(232, 241, 242));
 
@@ -68,36 +66,11 @@ public class FrmUsers extends javax.swing.JPanel {
         pnlCard1.setColor2(new java.awt.Color(2, 62, 125));
         pnlContainer.add(pnlCard1);
 
-        pnlCard2.setColor1(new java.awt.Color(255, 123, 0));
-        pnlCard2.setColor2(new java.awt.Color(255, 136, 0));
-        pnlContainer.add(pnlCard2);
-
         pnlTable.setBackground(new java.awt.Color(255, 255, 255));
 
         lblProviders.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         lblProviders.setForeground(new java.awt.Color(127, 127, 127));
-        lblProviders.setText("Proveedores");
-
-        scroll.setBorder(null);
-
-        tblProviders.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nombre", "Telefono", "Email", "Direccion", "Tipo", "Acciones"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblProviders.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        scroll.setViewportView(tblProviders);
+        lblProviders.setText("Usuarios");
 
         btnNew.setBackground(new java.awt.Color(0, 184, 82));
         btnNew.setForeground(new java.awt.Color(255, 255, 255));
@@ -111,6 +84,27 @@ public class FrmUsers extends javax.swing.JPanel {
             }
         });
 
+        scroll.setBorder(null);
+
+        tblUsers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Usuario", "Contraseña", "Acciones"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblUsers.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        scroll.setViewportView(tblUsers);
+
         javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
         pnlTable.setLayout(pnlTableLayout);
         pnlTableLayout.setHorizontalGroup(
@@ -118,16 +112,10 @@ public class FrmUsers extends javax.swing.JPanel {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(scroll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE)
-                            .addGroup(pnlTableLayout.createSequentialGroup()
-                                .addComponent(lblProviders)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(20, 20, 20))))
+                    .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblProviders)
+                    .addComponent(scroll))
+                .addGap(21, 21, 21))
         );
         pnlTableLayout.setVerticalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,9 +124,9 @@ public class FrmUsers extends javax.swing.JPanel {
                 .addComponent(lblProviders)
                 .addGap(27, 27, 27)
                 .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -159,13 +147,12 @@ public class FrmUsers extends javax.swing.JPanel {
                 .addComponent(pnlContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        WindowProviders formulario = new WindowProviders();
-        formulario.setVisible(true);
+
     }//GEN-LAST:event_btnNewActionPerformed
 
 
@@ -173,10 +160,9 @@ public class FrmUsers extends javax.swing.JPanel {
     private com.trojasviejas.swing.Buttons.ActionButton btnNew;
     private javax.swing.JLabel lblProviders;
     private com.trojasviejas.component.main.PanelCard pnlCard1;
-    private com.trojasviejas.component.main.PanelCard pnlCard2;
     private javax.swing.JLayeredPane pnlContainer;
     private com.trojasviejas.swing.panels.PanelBorder pnlTable;
     private javax.swing.JScrollPane scroll;
-    private com.trojasviejas.swing.tables.ProvidersTable tblProviders;
+    private com.trojasviejas.swing.tables.user.UsersTable tblUsers;
     // End of variables declaration//GEN-END:variables
 }

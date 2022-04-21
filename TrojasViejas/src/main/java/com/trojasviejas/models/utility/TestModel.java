@@ -1,6 +1,6 @@
 package com.trojasviejas.models.utility;
 
-public class UserModel {
+public class TestModel {
 
     public int getUserId() {
         return userId;
@@ -34,18 +34,18 @@ public class UserModel {
         this.verifyPassword = verifyPassword;
     }
     
-    public UserModel(){
+    public TestModel(){
         
     }
 
-    public UserModel(int userId, String userName, String password, String verifyPassword) {
+    public TestModel(int userId, String userName, String password, String verifyPassword) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
         this.verifyPassword = verifyPassword;
     }
     
-    public UserModel(int userId, String userName, String password) {
+    public TestModel(int userId, String userName, String password) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;

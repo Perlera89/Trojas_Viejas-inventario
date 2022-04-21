@@ -1,8 +1,6 @@
 package com.trojasviejas.swing.tables.item;
 
 import com.trojasviejas.models.utility.ItemActionModel;
-import com.trojasviejas.swing.tables.*;
-import com.trojasviejas.models.utility.ProviderActionModel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.*;

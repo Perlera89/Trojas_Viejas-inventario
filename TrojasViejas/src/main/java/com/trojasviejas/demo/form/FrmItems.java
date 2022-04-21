@@ -2,12 +2,10 @@ package com.trojasviejas.demo.form;
 
 import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.demo.form.window.*;
-import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
-import com.trojasviejas.component.main.event.IProviderEventAction;
 import com.trojasviejas.models.entity.ItemModel;
 
 public class FrmItems extends javax.swing.JPanel {
@@ -91,6 +89,8 @@ public class FrmItems extends javax.swing.JPanel {
                 btnNewActionPerformed(evt);
             }
         });
+
+        scroll.setBorder(null);
 
         tblItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

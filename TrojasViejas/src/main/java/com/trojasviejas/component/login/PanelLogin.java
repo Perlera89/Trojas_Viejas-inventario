@@ -1,6 +1,6 @@
 package com.trojasviejas.component.login;
 
-import com.trojasviejas.models.utility.UserModel;
+import com.trojasviejas.models.utility.TestModel;
 import com.trojasviejas.swing.buttons.Button;
 import com.trojasviejas.swing.fields.MyPasswordField;
 import com.trojasviejas.swing.fields.MyTextField;
@@ -14,9 +14,9 @@ import net.miginfocom.swing.MigLayout;
 
 public class PanelLogin extends javax.swing.JLayeredPane {
     
-    private UserModel user;
+    private TestModel user;
     
-    public UserModel getUser(){
+    public TestModel getUser(){
         return user;
     }
     
@@ -64,6 +64,8 @@ public class PanelLogin extends javax.swing.JLayeredPane {
                 System.out.println("Registrado");
             }
         });
+        
+        txtUser.requestFocus();
     }
     
     private void initLogin(){
@@ -111,6 +113,8 @@ public class PanelLogin extends javax.swing.JLayeredPane {
                 System.out.println("Logueado");
             }
         });
+        
+        txtLoginUser.requestFocus();
     }
     
     public void showRegister(boolean isShow){

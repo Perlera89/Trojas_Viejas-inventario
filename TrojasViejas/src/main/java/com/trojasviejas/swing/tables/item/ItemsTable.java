@@ -73,7 +73,7 @@ public class ItemsTable extends JTable {
 
     @Override
     public TableCellEditor getCellEditor(int row, int col) {
-        if (col == 5) {
+        if (col == 4) {
             return new ItemCellAction();
         } else {
             return super.getCellEditor(row, col);

@@ -32,6 +32,11 @@
             <artifactId>syntheticaDark</artifactId>
             <version>SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.toedter</groupId>
+            <artifactId>jcalendar</artifactId>
+            <version>1.4</version>
+        </dependency>
     </dependencies>
     <name>TrojasViejas</name>
     <repositories>
