@@ -66,6 +66,7 @@ com/trojasviejas/component/login/PanelLogin$3.class
 com/trojasviejas/demo/form/FrmInventory.class
 com/trojasviejas/swing/ListMenu$2.class
 com/trojasviejas/models/utility/UserActionModel.class
+com/trojasviejas/models/utility/Link.class
 com/trojasviejas/component/login/MessageDialog.class
 com/trojasviejas/component/main/event/IProviderEventAction.class
 com/trojasviejas/swing/tables/user/UsersTable$2.class

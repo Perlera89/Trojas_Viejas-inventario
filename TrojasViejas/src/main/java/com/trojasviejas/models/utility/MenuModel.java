@@ -42,7 +42,7 @@ public class MenuModel {
     }
     
     public Icon toIcon(){
-        return new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/" + icon + ".png");
+        return new ImageIcon(Link.link+"/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/" + icon + ".png");
     }
     
     public static enum MenuType{

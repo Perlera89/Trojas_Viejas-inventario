@@ -1,6 +1,7 @@
 package com.trojasviejas.component.login;
 
 import com.trojasviejas.demo.form.FrmLogin;
+import com.trojasviejas.models.utility.Link;
 import com.trojasviejas.swing.buttons.Button;
 import com.trojasviejas.swing.buttons.ButtonOutline;
 import java.awt.Color;
@@ -18,7 +19,7 @@ import net.miginfocom.swing.MigLayout;
 public class PanelCover extends javax.swing.JPanel {
     
     private final DecimalFormat df = new DecimalFormat("##0.###");
-    final ImageIcon imagenLogo = new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/isotipo.png");
+    final ImageIcon imagenLogo = new ImageIcon(Link.link + "/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/isotipo.png");
     private ActionListener event;
     private MigLayout layout;
     private JLabel lblLogo;

@@ -1,5 +1,6 @@
 package com.trojasviejas.component.login;
 
+import com.trojasviejas.models.utility.Link;
 import com.trojasviejas.models.utility.TestModel;
 import com.trojasviejas.swing.buttons.Button;
 import com.trojasviejas.swing.fields.MyPasswordField;
@@ -37,17 +38,17 @@ public class PanelLogin extends javax.swing.JLayeredPane {
         pnlRegister.add(title);
         
         MyTextField txtUser = new MyTextField();
-        txtUser.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/user.png"));
+        txtUser.setPrefixIcon(new ImageIcon(Link.link + "/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/user.png"));
         txtUser.setHint("Nombre");
         pnlRegister.add(txtUser, "w 60%");
         
         MyPasswordField txtPass = new MyPasswordField();
-        txtPass.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/pass.png"));
+        txtPass.setPrefixIcon(new ImageIcon(Link.link + "/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/pass.png"));
         txtPass.setHint("Contrase\u00f1a");
         pnlRegister.add(txtPass, "w 60%");
         
         MyPasswordField txtConfirmPass = new MyPasswordField();
-        txtConfirmPass.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/pass.png"));
+        txtConfirmPass.setPrefixIcon(new ImageIcon(Link.link + "/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/pass.png"));
         txtConfirmPass.setHint("Confirmar contrase\u00f1a");
         pnlRegister.add(txtConfirmPass, "w 60%");
         
@@ -77,12 +78,12 @@ public class PanelLogin extends javax.swing.JLayeredPane {
         pnlLogin.add(title);
         
         MyTextField txtLoginUser = new MyTextField();
-        txtLoginUser.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/user.png"));
+        txtLoginUser.setPrefixIcon(new ImageIcon(Link.link + "/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/user.png"));
         txtLoginUser.setHint("Nombre");
         pnlLogin.add(txtLoginUser, "w 60%");
         
         MyPasswordField txtLoginPass = new MyPasswordField();
-        txtLoginPass.setPrefixIcon(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/pass.png"));
+        txtLoginPass.setPrefixIcon(new ImageIcon(Link.link + "/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/pass.png"));
         txtLoginPass.setHint("Contrase\u00f1a");
         pnlLogin.add(txtLoginPass, "w 60%");
         
