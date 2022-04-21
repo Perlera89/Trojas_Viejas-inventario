@@ -2,6 +2,7 @@ package com.trojasviejas.demo.form;
 
 import com.trojasviejas.models.utility.ProviderType;
 import com.trojasviejas.models.utility.CardModel;
+import com.trojasviejas.models.utility.Link;
 import javax.swing.SwingConstants;
 import javax.swing.table.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
@@ -13,9 +14,10 @@ public class FrmHome extends javax.swing.JPanel {
 
     public FrmHome() {
         initComponents();
-        pnlCard1.setData(new CardModel(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/stock.png"), "Total stock", "200", "Incremento un 10%"));
-        pnlCard2.setData(new CardModel(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/dollar.png"), "Total costo", "$1200", "Incremento un 45%"));
-        pnlCard3.setData(new CardModel(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/stock.png"), "Total stock", "200", "Incremento un 10%"));
+        //pnlCard1.setData(new CardModel(new ImageIcon(Link.link + "/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/seller.png"), "Total Vendedores", "21", "Incremento un 10%"));
+        pnlCard1.setData(new CardModel(null, "Total stock", "200", "Incremento un 10%"));
+        pnlCard2.setData(new CardModel(null, "Total costo", "$1200", "Incremento un 45%"));
+        pnlCard3.setData(new CardModel(null, "Total stock", "200", "Incremento un 10%"));
         
         //Agregar registro
         scroll.setVerticalScrollBar(new ScrollBar());

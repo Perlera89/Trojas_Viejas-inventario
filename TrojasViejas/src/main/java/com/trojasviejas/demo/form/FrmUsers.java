@@ -18,7 +18,7 @@ public class FrmUsers extends javax.swing.JPanel {
     }
     
     private void initCard(){
-        pnlCard1.setData(new CardModel(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/user.png"), "Total Usuarios", "4", "Sin descripcion"));
+        pnlCard1.setData(new CardModel(null, "Total Usuarios", "4", "Sin descripcion"));
     }
     
     private void initTableData(){
@@ -74,7 +74,6 @@ public class FrmUsers extends javax.swing.JPanel {
 
         btnNew.setBackground(new java.awt.Color(0, 184, 82));
         btnNew.setForeground(new java.awt.Color(255, 255, 255));
-        btnNew.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/add.png")); // NOI18N
         btnNew.setText("Nuevo");
         btnNew.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         btnNew.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);

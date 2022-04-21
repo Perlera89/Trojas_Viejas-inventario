@@ -18,8 +18,8 @@ public class FrmProviders extends javax.swing.JPanel {
     }
     
     private void initCard(){
-        pnlCard1.setData(new CardModel(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/seller.png"), "Total Vendedores", "21", "Incremento un 10%"));
-        pnlCard2.setData(new CardModel(new ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/donor.png"), "Total Donadores", "$8", "Incremento un 45%"));
+        pnlCard1.setData(new CardModel(null, "Total Vendedores", "21", "Incremento un 10%"));
+        pnlCard2.setData(new CardModel(null, "Total Donadores", "$8", "Incremento un 45%"));
     }
     
     private void initTableData(){
@@ -101,7 +101,6 @@ public class FrmProviders extends javax.swing.JPanel {
 
         btnNew.setBackground(new java.awt.Color(0, 184, 82));
         btnNew.setForeground(new java.awt.Color(255, 255, 255));
-        btnNew.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/add.png")); // NOI18N
         btnNew.setText("Nuevo");
         btnNew.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         btnNew.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);

@@ -84,8 +84,6 @@ public class WindowInvoices extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/isotipoSmall.png")); // NOI18N
-
         pnlHeader.setBackground(new java.awt.Color(255, 255, 255));
         pnlHeader.setFont(new java.awt.Font("Norwester", 0, 24)); // NOI18N
         pnlHeader.setForeground(new java.awt.Color(255, 255, 255));
@@ -151,7 +149,6 @@ public class WindowInvoices extends javax.swing.JFrame {
         btnCancel.setText("Cancelar");
 
         lblImage.setForeground(new java.awt.Color(150, 150, 150));
-        lblImage.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/image.png")); // NOI18N
         lblImage.setText("  Agrega una imagen");
         lblImage.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblImage.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -205,7 +202,7 @@ public class WindowInvoices extends javax.swing.JFrame {
                         .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
                         .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                         .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlHomeLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

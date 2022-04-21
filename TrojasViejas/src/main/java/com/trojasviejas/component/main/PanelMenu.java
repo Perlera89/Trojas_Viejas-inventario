@@ -29,19 +29,19 @@ public class PanelMenu extends javax.swing.JPanel {
         //Agregando elementos del menu
 //        DefaultListCellRenderer cellRenderer = (DefaultListCellRenderer)lstMenu.getCellRenderer();
 //        cellRenderer.setHorizontalAlignment(SwingConstants .CENTER);
-        lstMenu.addItem(new MenuModel("home", "Inicio", MenuModel.MenuType.MENU));
-        lstMenu.addItem(new MenuModel("provider", "Proveedores", MenuModel.MenuType.MENU));
-        lstMenu.addItem(new MenuModel("item", "Articulos", MenuModel.MenuType.MENU));
-        lstMenu.addItem(new MenuModel("invoice", "Facturas", MenuModel.MenuType.MENU));
-        lstMenu.addItem(new MenuModel("inventory", "Inventario", MenuModel.MenuType.MENU));
-        lstMenu.addItem(new MenuModel("activity", "Actividad", MenuModel.MenuType.MENU));
-        lstMenu.addItem(new MenuModel("reports", "Reportes", MenuModel.MenuType.MENU));
+        lstMenu.addItem(new MenuModel("", "Inicio", MenuModel.MenuType.MENU));
+        lstMenu.addItem(new MenuModel("", "Proveedores", MenuModel.MenuType.MENU));
+        lstMenu.addItem(new MenuModel("", "Articulos", MenuModel.MenuType.MENU));
+        lstMenu.addItem(new MenuModel("", "Facturas", MenuModel.MenuType.MENU));
+        lstMenu.addItem(new MenuModel("", "Inventario", MenuModel.MenuType.MENU));
+        lstMenu.addItem(new MenuModel("", "Actividad", MenuModel.MenuType.MENU));
+        lstMenu.addItem(new MenuModel("", "Reportes", MenuModel.MenuType.MENU));
         lstMenu.addItem(new MenuModel("", "", MenuModel.MenuType.EMPTY));
         
         lstMenu.addItem(new MenuModel("", "Perfil", MenuModel.MenuType.TITLE));
         lstMenu.addItem(new MenuModel("", "", MenuModel.MenuType.EMPTY));
-        lstMenu.addItem(new MenuModel("user", "Usuarios", MenuModel.MenuType.MENU));
-        lstMenu.addItem(new MenuModel("setting", "Ajustes", MenuModel.MenuType.MENU));
+        lstMenu.addItem(new MenuModel("", "Usuarios", MenuModel.MenuType.MENU));
+        lstMenu.addItem(new MenuModel("", "Ajustes", MenuModel.MenuType.MENU));
         lstMenu.addItem(new MenuModel("", "", MenuModel.MenuType.EMPTY));
     }
 
@@ -57,7 +57,6 @@ public class PanelMenu extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Norwester", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/isotipoSmall.png")); // NOI18N
         jLabel1.setText("Trojas Viejas");
 
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);

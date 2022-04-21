@@ -19,7 +19,7 @@ import net.miginfocom.swing.MigLayout;
 public class PanelCover extends javax.swing.JPanel {
     
     private final DecimalFormat df = new DecimalFormat("##0.###");
-    final ImageIcon imagenLogo = new ImageIcon(Link.link + "/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/isotipo.png");
+    //final ImageIcon imagenLogo = new ImageIcon(Link.link + "/Trojas_Viejas-inventario/TrojasViejas/src/main/src/img/isotipo.png");
     private ActionListener event;
     private MigLayout layout;
     private JLabel lblLogo;
@@ -41,7 +41,7 @@ public class PanelCover extends javax.swing.JPanel {
     private void init(){
         lblLogo = new JLabel();
         lblLogo.setSize(200, 200);
-        lblLogo.setIcon(new ImageIcon(imagenLogo.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH)));
+        //lblLogo.setIcon(new ImageIcon(imagenLogo.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH)));
         add(lblLogo);
         
         title = new JLabel("Trojas Viejas");

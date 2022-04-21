@@ -52,9 +52,6 @@
     <Component class="javax.swing.JLabel" name="btnSearch">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/search.png"/>
-        </Property>
       </Properties>
     </Component>
     <Component class="com.trojasviejas.swing.fields.SearchText" name="txtSearch">
@@ -67,9 +64,6 @@
     <Component class="javax.swing.JLabel" name="btnOption1">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/option.png"/>
-        </Property>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnOption1MouseClicked"/>

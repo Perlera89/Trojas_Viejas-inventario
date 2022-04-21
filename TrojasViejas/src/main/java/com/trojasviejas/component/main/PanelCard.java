@@ -53,8 +53,6 @@ public class PanelCard extends javax.swing.JPanel {
         lblValues = new javax.swing.JLabel();
         lblDescription = new javax.swing.JLabel();
 
-        lblIcon.setIcon(new javax.swing.ImageIcon("/Users/perlera/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/src/icons/stock.png")); // NOI18N
-
         lblTitle.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle.setText("Titulo");
