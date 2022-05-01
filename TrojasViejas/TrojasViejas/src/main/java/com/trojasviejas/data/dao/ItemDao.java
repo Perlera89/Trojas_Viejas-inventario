@@ -91,40 +91,40 @@ public class ItemDao {
         }
 
     }
-//
-//    public void UpdateItems(ItemModel itemM) {
-//
-//        Connection connection = null;
-//        CallableStatement query = null;
-//        try {
-//            connection = Conexion.getConnection();
-//            query = connection.prepareCall("{call sp_u_items(?, ?, ?, ?, ?,?)}");
-//
-//
-//            query.setInt(1, itemM.getIdItem());
-//            query.setString(2, itemM.getName());
-//            query.setString(3, itemM.getDescription());
-//            query.setInt(4, itemM.getMinimunAmount());
-//            query.setInt(5, itemM.getCategory().ordinal() + 1);
-//            query.setInt(6, itemM.getType().ordinal() + 1);
-//            query.execute();
-//
-//            JOptionPane.showMessageDialog(null, "Actualizado exitosamente.");
-//
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "No se han podido actualizar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//        finally {
-//            try {
-//           
-//            Conexion.close(query);
-//                Conexion.close(connection);
-//            } catch (SQLException e) {
-//                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
-//            }
-//
-//        }
-//    }
+
+    public void UpdateItems(ItemModel itemM) {
+
+        Connection connection = null;
+        CallableStatement query = null;
+        try {
+            connection = Conexion.getConnection();
+            query = connection.prepareCall("{call sp_u_items(?, ?, ?, ?, ?,?)}");
+
+
+            query.setInt(1, itemM.getIdItem());
+            query.setString(2, itemM.getName());
+            query.setString(3, itemM.getDescription());
+            query.setInt(4, itemM.getMinimunAmount());
+            query.setInt(5, itemM.getCategory().ordinal() + 1);
+            query.setInt(6, itemM.getType().ordinal() + 1);
+            query.execute();
+
+            JOptionPane.showMessageDialog(null, "Actualizado exitosamente.");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se han podido actualizar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        finally {
+            try {
+           
+            Conexion.close(query);
+                Conexion.close(connection);
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+    }
 //     public void DeleteItem(int id){
 //     
 //     

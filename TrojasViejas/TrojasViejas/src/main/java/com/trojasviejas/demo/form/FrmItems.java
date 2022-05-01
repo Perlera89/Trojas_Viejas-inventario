@@ -36,22 +36,22 @@ public class FrmItems extends javax.swing.JPanel {
             @Override
             public void update(ItemModel entity) {
                
-//                ArrayList<Object> selectedtRow = new ArrayList<>();
-//                selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
-//
-//                //Pasar datos al formulario de Windows
-//                WindowItems formulario = new WindowItems();
-//                formulario.frmItem = form;
-//
-//                formulario.idRegistro = (int) selectedtRow.get(0);
-//                formulario.txtName.setText(selectedtRow.get(1).toString());
-//                formulario.txtAmount.setText(selectedtRow.get(2).toString());
-//                formulario.txtDescription.setText(selectedtRow.get(3).toString());
-//                formulario.cbbCategory.setSelectedItem(selectedtRow.get(4).toString());
-//                formulario.cbbItemType.setSelectedItem(selectedtRow.get(5).toString());
-//
-//                formulario.lblEncabezado.setText("ACTUALIZAR ARTÍCULO");
-//                formulario.setVisible(true);
+                ArrayList<Object> selectedtRow = new ArrayList<>();
+                selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
+
+                //Pasar datos al formulario de Windows
+                WindowItems formulario = new WindowItems();
+                formulario.frmItem = form;
+
+                formulario.idRegistro = (int) selectedtRow.get(0);
+                formulario.txtName.setText(selectedtRow.get(1).toString());
+                formulario.txtAmount.setText(selectedtRow.get(2).toString());
+                formulario.txtDescription.setText(selectedtRow.get(3).toString());
+                formulario.cbbCategory.setSelectedItem(selectedtRow.get(4).toString());
+                formulario.cbbItemType.setSelectedItem(selectedtRow.get(5).toString());
+
+                formulario.lblEncabezado.setText("ACTUALIZAR ARTÍCULO");
+                formulario.setVisible(true);
             }
 
             @Override
