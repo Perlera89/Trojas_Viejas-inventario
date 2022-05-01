@@ -296,36 +296,18 @@ public class WindowItems extends javax.swing.JFrame {
 
       }
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        //Agregar o Actualizar
-//        if (idRegistro > 0) {
-//            ItemModel item = new ItemModel();
-//            ItemDao items = new ItemDao();
-//            
-//            item.setIdItem(idRegistro);
-//            item.setName(txtName.getText());
-//            item.setMinimunAmount(Integer.parseInt(txtAmount.getText()));
-//            item.setDescription(txtDescription.getText());
-//            item.setCategory(CategoryType.values()[cbbCategory.getSelectedIndex()]);
-//            item.setType(ItemType.values()[cbbItemType.getSelectedIndex()]);
-//
-//            items.UpdateItems(item);
-//            frmItem.initTableData();
-//
-//        } else {
-//            ItemModel item = new ItemModel();
-//            ItemDao items = new ItemDao();
-//            
-//            item.setName(txtName.getText());
-//            item.setMinimunAmount(Integer.parseInt(txtAmount.getText()));
-//            item.setDescription(txtDescription.getText());
-//            item.setCategory(CategoryType.values()[cbbCategory.getSelectedIndex()]);
-//            item.setType(ItemType.values()[cbbItemType.getSelectedIndex()]);
-//            
-//            items.AddItem(item);
-//            frmItem.initTableData();
-//
-//        }
-     
+        ItemModel item = new ItemModel();
+        ItemDao items = new ItemDao();
+
+        item.setName(txtName.getText());
+        item.setMinimunAmount(Integer.parseInt(txtAmount.getText()));
+        item.setDescription(txtDescription.getText());
+        item.setCategory(CategoryType.values()[cbbCategory.getSelectedIndex()]);
+        item.setType(ItemType.values()[cbbItemType.getSelectedIndex()]);
+
+        items.AddItem(item);
+        frmItem.initTableData();
+
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed

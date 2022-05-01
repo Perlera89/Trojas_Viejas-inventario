@@ -58,39 +58,39 @@ public class ItemDao {
         return items;
     }
 
-//    public void AddItem(ItemModel itemM) {
-//        
-//        Connection connection = null;
-//        CallableStatement query = null;
-//        
-//        try {
-//            connection = Conexion.getConnection();
-//            query = connection.prepareCall("{call sp_i_items(?,?,?,?,?)}");
-//
-//
-//            query.setString(1, itemM.getName());
-//            query.setString(2, itemM.getDescription());
-//            query.setInt(3, itemM.getMinimunAmount());
-//            query.setInt(4, itemM.getCategory().ordinal() + 1);
-//            query.setInt(5, itemM.getType().ordinal() + 1);
-//            query.execute();
-//            
-//            JOptionPane.showMessageDialog(null, "Agregado exitosamente.");
-//       
-//         
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "No se han podido agregar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//        finally {
-//            try {
-//                Conexion.close(query);
-//                Conexion.close(connection);
-//        } catch (SQLException e) {
-//                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
-//
-//    }
+    public void AddItem(ItemModel itemM) {
+        
+        Connection connection = null;
+        CallableStatement query = null;
+        
+        try {
+            connection = Conexion.getConnection();
+            query = connection.prepareCall("{call sp_i_items(?,?,?,?,?)}");
+
+
+            query.setString(1, itemM.getName());
+            query.setString(2, itemM.getDescription());
+            query.setInt(3, itemM.getMinimunAmount());
+            query.setInt(4, itemM.getCategory().ordinal() + 1);
+            query.setInt(5, itemM.getType().ordinal() + 1);
+            query.execute();
+            
+            JOptionPane.showMessageDialog(null, "Agregado exitosamente.");
+       
+         
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se han podido agregar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+     finally {
+            try {
+                Conexion.close(query);
+                Conexion.close(connection);
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    }
 //
 //    public void UpdateItems(ItemModel itemM) {
 //
