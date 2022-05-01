@@ -125,35 +125,35 @@ public class ItemDao {
 
         }
     }
-//     public void DeleteItem(int id){
-//     
-//     
-//        Connection connection = null;
-//        CallableStatement query = null;
-//    
-//        try {
-//            connection = Conexion.getConnection();
-//            query = connection.prepareCall("call sp_d_items(?)");
-//          
-//
-//             query.setInt(1, id);
-//             query.execute();
-//            JOptionPane.showMessageDialog(null, "Eliminado exitosamente.");
-//
-//         } catch (Exception e) {
-//             JOptionPane.showMessageDialog(null, "No se han podido eliminar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-//         }
-//        finally {
-//            try {
-// 
-//            Conexion.close(query);
-//                Conexion.close(connection);
-//            } catch (SQLException e) {
-//                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
-//            }
-//
-//        }
-//
-//    }
+     public void DeleteItem(int id){
+     
+     
+        Connection connection = null;
+        CallableStatement query = null;
+    
+        try {
+            connection = Conexion.getConnection();
+            query = connection.prepareCall("call sp_d_items(?)");
+          
+
+             query.setInt(1, id);
+             query.execute();
+            JOptionPane.showMessageDialog(null, "Eliminado exitosamente.");
+
+         } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "No se han podido eliminar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+         }
+        finally {
+            try {
+ 
+            Conexion.close(query);
+                Conexion.close(connection);
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+
+    }
 
 }

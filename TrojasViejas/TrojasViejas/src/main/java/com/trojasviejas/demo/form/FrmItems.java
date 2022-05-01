@@ -56,12 +56,12 @@ public class FrmItems extends javax.swing.JPanel {
 
             @Override
             public void delete(ItemModel entity) {
-             
-//                ItemDao item = new ItemDao();
-//                ArrayList<Object> selectedtRow = new ArrayList<>();
-//                selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
-//                item.DeleteItem(Integer.parseInt(selectedtRow.get(0).toString()));
-//                initTableData();
+
+                ItemDao item = new ItemDao();
+                ArrayList<Object> selectedtRow = new ArrayList<>();
+                selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
+                item.DeleteItem(Integer.parseInt(selectedtRow.get(0).toString()));
+                initTableData();
             }
         };
         
