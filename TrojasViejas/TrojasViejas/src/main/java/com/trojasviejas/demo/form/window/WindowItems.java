@@ -1,5 +1,10 @@
 package com.trojasviejas.demo.form.window;
 
+import com.trojasviejas.data.dao.ItemDao;
+import com.trojasviejas.demo.form.FrmItems;
+import com.trojasviejas.models.entity.ItemModel;
+import com.trojasviejas.models.utility.CategoryType;
+import com.trojasviejas.models.utility.ItemType;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -17,6 +22,10 @@ public class WindowItems extends javax.swing.JFrame {
 
     private WindowItems providers;
 
+      
+    public FrmItems frmItem;
+    public int idRegistro;
+    
     public WindowItems() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
@@ -30,6 +39,7 @@ public class WindowItems extends javax.swing.JFrame {
         panel.setBackground(Color.white);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
+        CargarComboBox();
     }
 
     private int x;
@@ -63,7 +73,7 @@ public class WindowItems extends javax.swing.JFrame {
         pnlHeader = new com.trojasviejas.swing.panels.PanelBorder();
         btnClose = new com.trojasviejas.swing.Buttons.ActionButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblEncabezado = new javax.swing.JLabel();
         panelBorder2 = new com.trojasviejas.swing.panels.PanelBorder();
         txtName = new com.trojasviejas.swing.fields.LinearTextField();
         cbbCategory = new com.trojasviejas.swing.ComboBox();
@@ -72,6 +82,7 @@ public class WindowItems extends javax.swing.JFrame {
         btnCancel = new com.trojasviejas.swing.buttons.Button();
         scroll = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
+        cbbItemType = new com.trojasviejas.swing.ComboBox();
 
         txtProveedor1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtProveedor1.setLabelText("Nombre");
@@ -93,11 +104,11 @@ public class WindowItems extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/isotipoSmall.png"))); // NOI18N
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Norwester", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Agregar articulo");
+        lblEncabezado.setBackground(new java.awt.Color(255, 255, 255));
+        lblEncabezado.setFont(new java.awt.Font("Norwester", 0, 24)); // NOI18N
+        lblEncabezado.setForeground(new java.awt.Color(255, 255, 255));
+        lblEncabezado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEncabezado.setText("Agregar articulo");
 
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
@@ -106,7 +117,7 @@ public class WindowItems extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblEncabezado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -118,7 +129,7 @@ public class WindowItems extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -139,8 +150,6 @@ public class WindowItems extends javax.swing.JFrame {
         txtName.setLabelText("Nombre");
 
         cbbCategory.setForeground(new java.awt.Color(100, 100, 100));
-        cbbCategory.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tipo", "Vendedores", "Donadores" }));
-        cbbCategory.setSelectedIndex(-1);
         cbbCategory.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbbCategory.setLabeText("Categoria");
 
@@ -154,11 +163,21 @@ public class WindowItems extends javax.swing.JFrame {
 
         btnAdd.setBackground(new java.awt.Color(0, 184, 82));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
-        btnAdd.setText("Agregar");
+        btnAdd.setText("Guardar");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnCancel.setBackground(new java.awt.Color(255, 5, 0));
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancelar");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         txtDescription.setColumns(20);
         txtDescription.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -175,6 +194,10 @@ public class WindowItems extends javax.swing.JFrame {
         });
         scroll.setViewportView(txtDescription);
 
+        cbbItemType.setForeground(new java.awt.Color(100, 100, 100));
+        cbbItemType.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        cbbItemType.setLabeText("Tipo");
+
         javax.swing.GroupLayout pnlHomeLayout = new javax.swing.GroupLayout(pnlHome);
         pnlHome.setLayout(pnlHomeLayout);
         pnlHomeLayout.setHorizontalGroup(
@@ -187,7 +210,8 @@ public class WindowItems extends javax.swing.JFrame {
                     .addComponent(txtAmount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbbCategory, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
-                    .addComponent(scroll))
+                    .addComponent(scroll)
+                    .addComponent(cbbItemType, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))
                 .addGap(84, 84, 84)
                 .addGroup(pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
@@ -200,20 +224,23 @@ public class WindowItems extends javax.swing.JFrame {
                 .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlHomeLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50))
+                    .addGroup(pnlHomeLayout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
                         .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
                         .addComponent(cbbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
-                    .addGroup(pnlHomeLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(50, 50, 50)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbbItemType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -225,7 +252,10 @@ public class WindowItems extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlHome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -253,6 +283,55 @@ public class WindowItems extends javax.swing.JFrame {
     private void txtDescriptionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDescriptionMouseEntered
         txtDescription.setBorder(BorderFactory.createLineBorder(new Color(3,150,200), 0));
     }//GEN-LAST:event_txtDescriptionMouseEntered
+   public void CargarComboBox() {
+
+        for (var i : CategoryType.values()) {
+            cbbCategory.addItem(i.toString());
+        }
+        
+        
+        for (var i : ItemType.values()) {
+            cbbItemType.addItem(i.toString());
+        }
+
+      }
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        //Agregar o Actualizar
+//        if (idRegistro > 0) {
+//            ItemModel item = new ItemModel();
+//            ItemDao items = new ItemDao();
+//            
+//            item.setIdItem(idRegistro);
+//            item.setName(txtName.getText());
+//            item.setMinimunAmount(Integer.parseInt(txtAmount.getText()));
+//            item.setDescription(txtDescription.getText());
+//            item.setCategory(CategoryType.values()[cbbCategory.getSelectedIndex()]);
+//            item.setType(ItemType.values()[cbbItemType.getSelectedIndex()]);
+//
+//            items.UpdateItems(item);
+//            frmItem.initTableData();
+//
+//        } else {
+//            ItemModel item = new ItemModel();
+//            ItemDao items = new ItemDao();
+//            
+//            item.setName(txtName.getText());
+//            item.setMinimunAmount(Integer.parseInt(txtAmount.getText()));
+//            item.setDescription(txtDescription.getText());
+//            item.setCategory(CategoryType.values()[cbbCategory.getSelectedIndex()]);
+//            item.setType(ItemType.values()[cbbItemType.getSelectedIndex()]);
+//            
+//            items.AddItem(item);
+//            frmItem.initTableData();
+//
+//        }
+     
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -298,16 +377,17 @@ public class WindowItems extends javax.swing.JFrame {
     private com.trojasviejas.swing.buttons.Button btnAdd;
     private com.trojasviejas.swing.buttons.Button btnCancel;
     private com.trojasviejas.swing.Buttons.ActionButton btnClose;
-    private com.trojasviejas.swing.ComboBox cbbCategory;
+    public com.trojasviejas.swing.ComboBox cbbCategory;
+    public com.trojasviejas.swing.ComboBox cbbItemType;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel lblEncabezado;
     private com.trojasviejas.swing.panels.PanelBorder panelBorder2;
     private com.trojasviejas.swing.panels.PanelBorder pnlHeader;
     private com.trojasviejas.swing.panels.PanelRound pnlHome;
     private javax.swing.JScrollPane scroll;
-    private com.trojasviejas.swing.fields.LinearTextField txtAmount;
-    private javax.swing.JTextArea txtDescription;
-    private com.trojasviejas.swing.fields.LinearTextField txtName;
+    public com.trojasviejas.swing.fields.LinearTextField txtAmount;
+    public javax.swing.JTextArea txtDescription;
+    public com.trojasviejas.swing.fields.LinearTextField txtName;
     private com.trojasviejas.swing.fields.LinearTextField txtProveedor1;
     // End of variables declaration//GEN-END:variables
 }

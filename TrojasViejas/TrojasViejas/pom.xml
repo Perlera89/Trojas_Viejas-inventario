@@ -16,7 +16,7 @@
             <artifactId>timingframework</artifactId>
             <version>1.0</version>
         </dependency>
-
+    
         <dependency>
             <groupId>com.miglayout</groupId>
             <artifactId>miglayout-swing</artifactId>
@@ -36,6 +36,12 @@
             <groupId>com.toedter</groupId>
             <artifactId>jcalendar</artifactId>
             <version>1.4</version>
+        </dependency>
+         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version>
         </dependency>
     </dependencies>
     <name>TrojasViejas</name>

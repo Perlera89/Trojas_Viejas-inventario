@@ -1,38 +1,67 @@
 package com.trojasviejas.demo.form;
 
 import com.trojasviejas.component.main.event.IItemEventAction;
+import com.trojasviejas.data.dao.ItemDao;
+
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
 import com.trojasviejas.models.entity.ItemModel;
+import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.table.DefaultTableModel;
 
 public class FrmItems extends javax.swing.JPanel {
 
     public FrmItems() {
         setOpaque(false);
         initComponents();
-        initCard();
+        initCard(0);
         initTableData();
     }
     
-    private void initCard(){
-        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Articulos", "21", "Incremento un 10%"));
-        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Categorias", "$8", "Incremento un 45%"));
+    private void initCard(int contadorItem){
+        pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Artículos",String.valueOf(contadorItem), "Incremento un 10%"));
+        pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Herramientas", "$8", "Incremento un 45%"));
+        pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Accesorios", "$8", "Incremento un 45%"));
     }
     
-    private void initTableData(){
+    FrmItems form = this;
+
+    public void initTableData() {
         //Agregar registro
         IItemEventAction eventAction = new IItemEventAction() {
             @Override
             public void update(ItemModel entity) {
-                System.out.println("Editar a " + entity.getName());
+               
+//                ArrayList<Object> selectedtRow = new ArrayList<>();
+//                selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
+//
+//                //Pasar datos al formulario de Windows
+//                WindowItems formulario = new WindowItems();
+//                formulario.frmItem = form;
+//
+//                formulario.idRegistro = (int) selectedtRow.get(0);
+//                formulario.txtName.setText(selectedtRow.get(1).toString());
+//                formulario.txtAmount.setText(selectedtRow.get(2).toString());
+//                formulario.txtDescription.setText(selectedtRow.get(3).toString());
+//                formulario.cbbCategory.setSelectedItem(selectedtRow.get(4).toString());
+//                formulario.cbbItemType.setSelectedItem(selectedtRow.get(5).toString());
+//
+//                formulario.lblEncabezado.setText("ACTUALIZAR ARTÍCULO");
+//                formulario.setVisible(true);
             }
 
             @Override
             public void delete(ItemModel entity) {
-                System.out.println("Eliminar a " + entity.getName());
+             
+//                ItemDao item = new ItemDao();
+//                ArrayList<Object> selectedtRow = new ArrayList<>();
+//                selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
+//                item.DeleteItem(Integer.parseInt(selectedtRow.get(0).toString()));
+//                initTableData();
             }
         };
         
@@ -43,17 +72,60 @@ public class FrmItems extends javax.swing.JPanel {
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
         
-        tblItems.addRow(new ItemModel("Tubo PVC", 20, "Sin descripcion", CategoryType.GALVANIZADO).toRowTable(eventAction));
-        tblItems.addRow(new ItemModel("Arena", 25, "Sin descripcion", CategoryType.PVC).toRowTable(eventAction));
-    }
+        //LIMPIAR TABLA
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblItems.getModel();
+            int filas = tblItems.getRowCount();
+            for (int i = 0; filas > i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
 
+        ItemDao items = new ItemDao();
+        int contadorItem = 0;
+        
+        for (var item : items.ListItems()) {
+            tblItems.addRow(new ItemModel(
+                    item.getIdItem(),
+                    item.getName(),
+                    item.getMinimunAmount(),
+                    item.getDescription(),
+                    item.getCategory(),
+                    item.getType()
+            ).toRowTable(eventAction));
+            contadorItem++;
+        }
+        for (var i: items.ListItems()) {
+            System.out.println(i.getCategory().toString() + i.getType().toString());
+        }
+
+        initCard(contadorItem);
+   
+        //Ocultar Columnas
+        tblItems.getColumnModel().getColumn(0).setMaxWidth(0);
+        tblItems.getColumnModel().getColumn(0).setMinWidth(0);
+        tblItems.getColumnModel().getColumn(0).setPreferredWidth(0);
+        tblItems.getColumnModel().getColumn(0).setResizable(false);
+
+        tblItems.getColumnModel().getColumn(3).setMaxWidth(0);
+        tblItems.getColumnModel().getColumn(3).setMinWidth(0);
+        tblItems.getColumnModel().getColumn(3).setPreferredWidth(0);
+        tblItems.getColumnModel().getColumn(3).setResizable(false);
+        
+//        tblItems.addRow(new ItemModel("Tubo PVC", 20, "Sin descripcion", CategoryType.GALVANIZADO).toRowTable(eventAction));
+//        tblItems.addRow(new ItemModel("Arena", 25, "Sin descripcion", CategoryType.PVC).toRowTable(eventAction));
+//    
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         pnlContainer = new javax.swing.JLayeredPane();
-        pnlCard1 = new com.trojasviejas.component.main.PanelCard();
-        pnlCard2 = new com.trojasviejas.component.main.PanelCard();
+        pnlCardCountItems = new com.trojasviejas.component.main.PanelCard();
+        pnlCardCountCategory1 = new com.trojasviejas.component.main.PanelCard();
+        pnlCardCountCategory2 = new com.trojasviejas.component.main.PanelCard();
         pnlTable = new com.trojasviejas.swing.panels.PanelBorder();
         lblProviders = new javax.swing.JLabel();
         btnNew = new com.trojasviejas.swing.Buttons.ActionButton();
@@ -64,13 +136,17 @@ public class FrmItems extends javax.swing.JPanel {
 
         pnlContainer.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
-        pnlCard1.setColor1(new java.awt.Color(0, 40, 85));
-        pnlCard1.setColor2(new java.awt.Color(2, 62, 125));
-        pnlContainer.add(pnlCard1);
+        pnlCardCountItems.setColor1(new java.awt.Color(0, 40, 85));
+        pnlCardCountItems.setColor2(new java.awt.Color(2, 62, 125));
+        pnlContainer.add(pnlCardCountItems);
 
-        pnlCard2.setColor1(new java.awt.Color(255, 123, 0));
-        pnlCard2.setColor2(new java.awt.Color(255, 136, 0));
-        pnlContainer.add(pnlCard2);
+        pnlCardCountCategory1.setColor1(new java.awt.Color(255, 123, 0));
+        pnlCardCountCategory1.setColor2(new java.awt.Color(255, 136, 0));
+        pnlContainer.add(pnlCardCountCategory1);
+
+        pnlCardCountCategory2.setColor1(new java.awt.Color(255, 123, 0));
+        pnlCardCountCategory2.setColor2(new java.awt.Color(255, 136, 0));
+        pnlContainer.add(pnlCardCountCategory2);
 
         pnlTable.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -97,11 +173,11 @@ public class FrmItems extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nombre", "Cantidad minima", "Descripcion", "Categoria", "Acciones"
+                "Id", "Nombre", "Cantidad minima", "Descripcion", "Categoria", "Tipo", "Acciones"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -158,15 +234,18 @@ public class FrmItems extends javax.swing.JPanel {
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         WindowItems formulario = new WindowItems();
-        formulario.setVisible(true);
+        formulario.frmItem = form;
+        formulario.lblEncabezado.setText("AGREGAR ARTÍCULO");
+        formulario.setVisible(true);  
     }//GEN-LAST:event_btnNewActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.Buttons.ActionButton btnNew;
     private javax.swing.JLabel lblProviders;
-    private com.trojasviejas.component.main.PanelCard pnlCard1;
-    private com.trojasviejas.component.main.PanelCard pnlCard2;
+    private com.trojasviejas.component.main.PanelCard pnlCardCountCategory1;
+    private com.trojasviejas.component.main.PanelCard pnlCardCountCategory2;
+    private com.trojasviejas.component.main.PanelCard pnlCardCountItems;
     private javax.swing.JLayeredPane pnlContainer;
     private com.trojasviejas.swing.panels.PanelBorder pnlTable;
     private javax.swing.JScrollPane scroll;
