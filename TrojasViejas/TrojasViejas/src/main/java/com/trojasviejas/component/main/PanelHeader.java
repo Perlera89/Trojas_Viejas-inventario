@@ -36,7 +36,6 @@ public class PanelHeader extends javax.swing.JPanel {
         btnSearch = new javax.swing.JLabel();
         txtSearch = new com.trojasviejas.swing.fields.SearchText();
         btnOption1 = new javax.swing.JLabel();
-        btnClose = new com.trojasviejas.swing.Buttons.ActionButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -53,15 +52,6 @@ public class PanelHeader extends javax.swing.JPanel {
             }
         });
 
-        btnClose.setForeground(new java.awt.Color(200, 0, 20));
-        btnClose.setText("X");
-        btnClose.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        btnClose.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCloseActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,12 +59,10 @@ public class PanelHeader extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                 .addGap(92, 92, 92)
                 .addComponent(btnOption1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,9 +70,7 @@ public class PanelHeader extends javax.swing.JPanel {
             .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnOption1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnOption1, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -93,13 +79,8 @@ public class PanelHeader extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnOption1MouseClicked
 
-    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_btnCloseActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.Buttons.ActionButton btnClose;
     private javax.swing.JLabel btnOption1;
     private javax.swing.JLabel btnSearch;
     private com.trojasviejas.swing.fields.SearchText txtSearch;

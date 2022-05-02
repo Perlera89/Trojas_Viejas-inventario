@@ -2,6 +2,7 @@ package com.trojasviejas.component.main;
 
 import com.trojasviejas.component.main.event.IEventMenuSelected;
 import com.trojasviejas.models.utility.MenuModel;
+import com.trojasviejas.swing.panels.*;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -44,6 +45,10 @@ public class PanelMenu extends javax.swing.JPanel {
         lstMenu.addItem(new MenuModel("setting", "Ajustes", MenuModel.MenuType.MENU));
         lstMenu.addItem(new MenuModel("", "", MenuModel.MenuType.EMPTY));
     }
+    
+    public void initWinButton(JFrame frame, PanelBorder panel){
+        panelWin.initEvent(frame, panel);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -51,6 +56,7 @@ public class PanelMenu extends javax.swing.JPanel {
 
         pnlHeader = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        panelWin = new com.trojasviejas.swing.Buttons.PanelButtonWin();
         lstMenu = new com.trojasviejas.swing.ListMenu<>();
 
         pnlHeader.setOpaque(false);
@@ -68,11 +74,15 @@ public class PanelMenu extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(pnlHeaderLayout.createSequentialGroup()
+                .addComponent(panelWin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(panelWin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -91,7 +101,7 @@ public class PanelMenu extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
-                .addComponent(lstMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE))
+                .addComponent(lstMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -131,6 +141,7 @@ public class PanelMenu extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private com.trojasviejas.swing.ListMenu<String> lstMenu;
+    private com.trojasviejas.swing.Buttons.PanelButtonWin panelWin;
     private javax.swing.JPanel pnlHeader;
     // End of variables declaration//GEN-END:variables
 }

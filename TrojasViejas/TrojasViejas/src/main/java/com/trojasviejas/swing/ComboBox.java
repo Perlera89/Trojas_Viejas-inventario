@@ -1,6 +1,6 @@
 package com.trojasviejas.swing;
 
-import com.trojasviejas.swing.panels.ScrollBarCustom;
+import com.trojasviejas.swing.scroll.ScrollBar;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FontMetrics;
@@ -171,7 +171,7 @@ public class ComboBox<E> extends JComboBox<E> {
                     list.setFixedCellHeight(30);
                     JScrollPane scroll = new JScrollPane(list);
                     scroll.setBackground(Color.WHITE);
-                    ScrollBarCustom sb = new ScrollBarCustom();
+                    ScrollBar sb = new ScrollBar();
                     sb.setUnitIncrement(30);
                     sb.setForeground(new Color(180, 180, 180));
                     scroll.setVerticalScrollBar(sb);

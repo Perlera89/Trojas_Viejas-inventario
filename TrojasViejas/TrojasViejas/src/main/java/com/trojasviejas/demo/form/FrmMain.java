@@ -18,6 +18,8 @@ public class FrmMain extends javax.swing.JFrame {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
         
+        pnlMenu.initWinButton(this, pnlContainer);
+        
         home = new FrmHome();
         providers = new FrmProviders();
         items = new FrmItems();
@@ -67,6 +69,7 @@ public class FrmMain extends javax.swing.JFrame {
         pnlMenu = new com.trojasviejas.component.main.PanelMenu();
         panelHeader1 = new com.trojasviejas.component.main.PanelHeader();
         pnlMain = new javax.swing.JPanel();
+        scrollBar1 = new com.trojasviejas.swing.scroll.ScrollBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -77,6 +80,7 @@ public class FrmMain extends javax.swing.JFrame {
         pnlMain.setBackground(new java.awt.Color(232, 241, 242));
         pnlMain.setOpaque(false);
         pnlMain.setLayout(new java.awt.BorderLayout());
+        pnlMain.add(scrollBar1, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout pnlContainerLayout = new javax.swing.GroupLayout(pnlContainer);
         pnlContainer.setLayout(pnlContainerLayout);
@@ -97,7 +101,7 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(panelHeader1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+            .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 708, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,5 +156,6 @@ public class FrmMain extends javax.swing.JFrame {
     private com.trojasviejas.swing.panels.PanelBorder pnlContainer;
     private javax.swing.JPanel pnlMain;
     private com.trojasviejas.component.main.PanelMenu pnlMenu;
+    private com.trojasviejas.swing.scroll.ScrollBar scrollBar1;
     // End of variables declaration//GEN-END:variables
 }
