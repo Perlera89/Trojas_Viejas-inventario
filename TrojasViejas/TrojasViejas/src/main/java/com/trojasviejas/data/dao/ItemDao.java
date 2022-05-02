@@ -79,7 +79,7 @@ public class ItemDao {
        
          
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "No se han podido agregar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se ha podido agregar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
      finally {
             try {
@@ -98,7 +98,7 @@ public class ItemDao {
         CallableStatement query = null;
         try {
             connection = Conexion.getConnection();
-            query = connection.prepareCall("{call sp_u_items(?, ?, ?, ?, ?,?)}");
+            query = connection.prepareCall("{call sp_u_items(?, ?, ?, ?, ?, ?)}");
 
 
             query.setInt(1, itemM.getIdItem());
@@ -112,7 +112,7 @@ public class ItemDao {
             JOptionPane.showMessageDialog(null, "Actualizado exitosamente.");
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "No se han podido actualizar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se ha podido actualizar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         finally {
             try {

@@ -2,9 +2,9 @@ package com.trojasviejas.swing;
 
 import com.trojasviejas.models.utility.*;
 
-public class CategoryCellStatus extends javax.swing.JPanel {
+public class ItemCellStatus extends javax.swing.JPanel {
 
-    public CategoryCellStatus(CategoryType type) {
+    public ItemCellStatus(ItemType type) {
         initComponents();
         status.setType(type);
     }
@@ -13,7 +13,7 @@ public class CategoryCellStatus extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        status = new com.trojasviejas.swing.tables.item.CategoryStatus();
+        status = new com.trojasviejas.swing.tables.item.ItemStatus();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -24,22 +24,22 @@ public class CategoryCellStatus extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.tables.item.CategoryStatus status;
+    private com.trojasviejas.swing.tables.item.ItemStatus status;
     // End of variables declaration//GEN-END:variables
 }

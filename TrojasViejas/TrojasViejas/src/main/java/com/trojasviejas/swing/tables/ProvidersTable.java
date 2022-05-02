@@ -2,7 +2,7 @@ package com.trojasviejas.swing.tables;
 
 import com.trojasviejas.models.utility.ProviderActionModel;
 import com.trojasviejas.models.utility.ProviderType;
-import com.trojasviejas.swing.TypeCellStatus;
+import com.trojasviejas.swing.ProviderCellStatus;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.*;
@@ -24,8 +24,8 @@ public class ProvidersTable extends JTable {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                 TableHeader header = new TableHeader(o + "");
-                if (i1 == 4) {
-                    header.setHorizontalAlignment(JLabel.LEFT);
+                if (i1 == 4 | i1 == 5) {
+                    header.setHorizontalAlignment(JLabel.CENTER);
                 }
                 return header;
             }
@@ -57,13 +57,13 @@ public class ProvidersTable extends JTable {
 //                        return cell;
 //                    } else {
 //                        ProviderType type = (ProviderType) o;
-//                        TypeCellStatus cell = new TypeCellStatus(type);
+//                        ProviderCellStatus cell = new ProviderCellStatus(type);
 //                        return cell;
 //                    }
 //                }
                 if (o instanceof ProviderType) {
                     ProviderType type = (ProviderType) o;
-                    TypeCellStatus cell = new TypeCellStatus(type);
+                    ProviderCellStatus cell = new ProviderCellStatus(type);
                     
                     if (selected) {
                         cell.setBackground(new Color(239, 244, 255));

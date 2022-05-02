@@ -2,7 +2,9 @@ package com.trojasviejas.swing.tables.item;
 
 import com.trojasviejas.models.utility.CategoryType;
 import com.trojasviejas.models.utility.ItemActionModel;
+import com.trojasviejas.models.utility.ItemType;
 import com.trojasviejas.swing.CategoryCellStatus;
+import com.trojasviejas.swing.ItemCellStatus;
 import com.trojasviejas.swing.tables.TableHeader;
 import java.awt.Color;
 import java.awt.Component;
@@ -25,8 +27,8 @@ public class ItemsTable extends JTable {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                 TableHeader header = new TableHeader(o + "");
-                if (i1 == 3) {
-                    header.setHorizontalAlignment(JLabel.LEFT);
+                if (i1 == 4 || i1 == 5 || i1 == 6) {
+                    header.setHorizontalAlignment(JLabel.CENTER);
                 }
                 return header;
             }
@@ -37,6 +39,18 @@ public class ItemsTable extends JTable {
                 if (o instanceof CategoryType) {
                     CategoryType type = (CategoryType) o;
                     CategoryCellStatus cell = new CategoryCellStatus(type);
+                    
+                    if (selected) {
+                        cell.setBackground(new Color(239, 244, 255));
+                    } else {
+                        cell.setBackground(Color.WHITE);
+                    }
+                    
+                    return cell;
+
+                } else if (o instanceof ItemType) {
+                    ItemType type = (ItemType) o;
+                    ItemCellStatus cell = new ItemCellStatus(type);
                     
                     if (selected) {
                         cell.setBackground(new Color(239, 244, 255));

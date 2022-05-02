@@ -1,17 +1,35 @@
 package com.trojasviejas.swing.fields;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPasswordField;
 
 public class MyPasswordField extends JPasswordField {
+    private final Image eye;
+    private final Image eye_hide;
+    private boolean hide = true;
+    private boolean showAndHide = true;
+
+    public boolean isShowAndHide() {
+        return showAndHide;
+    }
+
+    public void setShowAndHide(boolean showAndHide) {
+        this.showAndHide = showAndHide;
+        repaint();
+    }
 
     public String getHint() {
         return hint;
@@ -46,9 +64,43 @@ public class MyPasswordField extends JPasswordField {
     public MyPasswordField() {
         setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setBackground(new Color(0, 0, 0, 0));
-        setForeground(Color.decode("#1B98E0"));
+        setForeground(Color.decode("#13293D"));
         setFont(new java.awt.Font("Roboto", 0, 14));
         setSelectionColor(new Color(36, 123, 160));
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                if (showAndHide) {
+                    int x = getWidth() - 30;
+                    if (new Rectangle(x, 0, 30, 30).contains(me.getPoint())) {
+                        hide = !hide;
+                        if (hide) {
+                            setEchoChar('*');
+                        } else {
+                            setEchoChar((char) 0);
+                        }
+                        repaint();
+                    }
+                }
+            }
+            
+        });
+        
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent me) {
+                if (showAndHide) {
+                    int x = getWidth() - 30;
+                    if (new Rectangle(x, 0, 30, 30).contains(me.getPoint())) {
+                        setCursor(new Cursor(Cursor.HAND_CURSOR));
+                    } else {
+                        setCursor(new Cursor(Cursor.TEXT_CURSOR));
+                    }
+                }
+            }
+        });
+        eye = new ImageIcon(getClass().getResource("/icons/eye.png")).getImage();
+        eye_hide = new ImageIcon(getClass().getResource("/icons/eye_hide.png")).getImage();
     }
 
     @Override
@@ -73,6 +125,12 @@ public class MyPasswordField extends JPasswordField {
             g.drawString(hint, ins.left, h / 2 + fm.getAscent() / 2 - 2);
         }
     }
+    
+    private void createShowHide(Graphics2D g2){
+        int x = getWidth() - 30 + 5;
+        int y = (getHeight() - 20)/2;
+        g2.drawImage(hide ? eye_hide : eye, x, y, null);
+    }
 
     private void paintIcon(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
@@ -85,6 +143,10 @@ public class MyPasswordField extends JPasswordField {
             Image suffix = ((ImageIcon) suffixIcon).getImage();
             int y = (getHeight() - suffixIcon.getIconHeight()) / 2;
             g2.drawImage(suffix, getWidth() - suffixIcon.getIconWidth() - 10, y, this);
+        }
+        
+        if(showAndHide){
+            createShowHide(g2);
         }
     }
 

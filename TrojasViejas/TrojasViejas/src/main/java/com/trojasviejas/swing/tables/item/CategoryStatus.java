@@ -8,19 +8,19 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.JLabel;
 
-public class ItemStatus extends JLabel {
+public class CategoryStatus extends JLabel {
 
-    public ItemType getType() {
+    public CategoryType getType() {
         return type;
     }
 
-    public ItemStatus() {
+    public CategoryStatus() {
         setForeground(Color.WHITE);
     }
 
-    private ItemType type;
+    private CategoryType type;
 
-    public void setType(ItemType type) {
+    public void setType(CategoryType type) {
         this.type = type;
         setText(type.toString());
         repaint();
@@ -32,12 +32,10 @@ public class ItemStatus extends JLabel {
             Graphics2D g2 = (Graphics2D) grphcs;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             GradientPaint g;
-            if (type == ItemType.GALVANIZADO) {
-                g = new GradientPaint(0, 0, new Color(51, 58, 64), 0, getHeight(), new Color(72, 80, 87));
-            } else if(type == ItemType.GENERICO) {
-                g = new GradientPaint(0, 0, new Color(0, 80, 37), 0, getHeight(), new Color(0, 107, 5));
+            if (type == CategoryType.HERRAMIENTAS) {
+                g = new GradientPaint(0, 0, new Color(0, 53, 98), 0, getHeight(), new Color(0, 67, 121));
             }  else {
-                g = new GradientPaint(0, 0, new Color(94, 47, 0), 0, getHeight(), new Color(102, 54, 0));
+                g = new GradientPaint(0, 0, new Color(255, 93, 0), 0, getHeight(), new Color(255, 109, 0));
             }
             
             g2.setPaint(g);

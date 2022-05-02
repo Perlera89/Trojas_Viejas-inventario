@@ -2,9 +2,9 @@ package com.trojasviejas.swing;
 
 import com.trojasviejas.models.utility.ProviderType;
 
-public class TypeCellStatus extends javax.swing.JPanel {
+public class ProviderCellStatus extends javax.swing.JPanel {
 
-    public TypeCellStatus(ProviderType type) {
+    public ProviderCellStatus(ProviderType type) {
         initComponents();
         status.setType(type);
     }
@@ -25,16 +25,16 @@ public class TypeCellStatus extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                .addGap(8, 8, 8))
+                .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

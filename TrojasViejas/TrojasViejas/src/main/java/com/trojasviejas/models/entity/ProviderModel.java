@@ -67,6 +67,4 @@ public class ProviderModel {
     public void setType(ProviderType type) {
         this.type = type;
     }
-    
-    
 }

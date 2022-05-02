@@ -25,7 +25,7 @@
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="pnlTable" max="32767" attributes="0"/>
-                  <Component id="pnlContainer" pref="875" max="32767" attributes="0"/>
+                  <Component id="pnlContainer" pref="876" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
           </Group>
@@ -73,14 +73,6 @@
           </Properties>
         </Component>
         <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCardCountCategory2">
-          <Properties>
-            <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="7b" red="ff" type="rgb"/>
-            </Property>
-            <Property name="color2" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="88" red="ff" type="rgb"/>
-            </Property>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -99,7 +91,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblProviders" min="-2" max="-2" attributes="0"/>
                       <Component id="btnNew" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
-                      <Component id="scroll" alignment="0" pref="835" max="32767" attributes="0"/>
+                      <Component id="scroll" alignment="0" pref="836" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
@@ -110,7 +102,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="lblProviders" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="btnNew" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="20" max="32767" attributes="0"/>
                   <Component id="scroll" min="-2" pref="281" max="-2" attributes="0"/>

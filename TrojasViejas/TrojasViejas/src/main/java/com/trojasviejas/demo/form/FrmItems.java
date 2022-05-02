@@ -23,9 +23,9 @@ public class FrmItems extends javax.swing.JPanel {
     }
     
     private void initCard(int contadorItem){
-        pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Artículos",String.valueOf(contadorItem), "Incremento un 10%"));
-        pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Herramientas", "$8", "Incremento un 45%"));
-        pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Accesorios", "$8", "Incremento un 45%"));
+        pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Artículos",String.valueOf(contadorItem), ""));
+        pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Herramientas", "$8", ""));
+        pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Accesorios", "$8", ""));
     }
     
     FrmItems form = this;
@@ -52,6 +52,8 @@ public class FrmItems extends javax.swing.JPanel {
 
                 formulario.lblEncabezado.setText("ACTUALIZAR ARTÍCULO");
                 formulario.setVisible(true);
+                
+                repaint();
             }
 
             @Override
@@ -112,11 +114,8 @@ public class FrmItems extends javax.swing.JPanel {
         tblItems.getColumnModel().getColumn(3).setMaxWidth(0);
         tblItems.getColumnModel().getColumn(3).setMinWidth(0);
         tblItems.getColumnModel().getColumn(3).setPreferredWidth(0);
-        tblItems.getColumnModel().getColumn(3).setResizable(false);
-        
-//        tblItems.addRow(new ItemModel("Tubo PVC", 20, "Sin descripcion", CategoryType.GALVANIZADO).toRowTable(eventAction));
-//        tblItems.addRow(new ItemModel("Arena", 25, "Sin descripcion", CategoryType.PVC).toRowTable(eventAction));
-//    
+        tblItems.getColumnModel().getColumn(3).setResizable(false);        
+   
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -143,9 +142,6 @@ public class FrmItems extends javax.swing.JPanel {
         pnlCardCountCategory1.setColor1(new java.awt.Color(255, 123, 0));
         pnlCardCountCategory1.setColor2(new java.awt.Color(255, 136, 0));
         pnlContainer.add(pnlCardCountCategory1);
-
-        pnlCardCountCategory2.setColor1(new java.awt.Color(255, 123, 0));
-        pnlCardCountCategory2.setColor2(new java.awt.Color(255, 136, 0));
         pnlContainer.add(pnlCardCountCategory2);
 
         pnlTable.setBackground(new java.awt.Color(255, 255, 255));
@@ -195,7 +191,7 @@ public class FrmItems extends javax.swing.JPanel {
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblProviders)
                     .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE))
+                    .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         pnlTableLayout.setVerticalGroup(
@@ -203,7 +199,7 @@ public class FrmItems extends javax.swing.JPanel {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(lblProviders)
-                .addGap(27, 27, 27)
+                .addGap(20, 20, 20)
                 .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,7 +214,7 @@ public class FrmItems extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 875, Short.MAX_VALUE))
+                    .addComponent(pnlContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
