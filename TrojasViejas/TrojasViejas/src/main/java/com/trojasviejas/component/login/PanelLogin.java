@@ -1,6 +1,6 @@
 package com.trojasviejas.component.login;
 
-import com.trojasviejas.models.utility.TestModel;
+import com.trojasviejas.models.entity.UserModel;
 import com.trojasviejas.swing.buttons.Button;
 import com.trojasviejas.swing.fields.MyPasswordField;
 import com.trojasviejas.swing.fields.MyTextField;
@@ -14,9 +14,9 @@ import net.miginfocom.swing.MigLayout;
 
 public class PanelLogin extends javax.swing.JLayeredPane {
     
-    private TestModel user;
+    private UserModel user;
     
-    public TestModel getUser(){
+    public UserModel getUser(){
         return user;
     }
     

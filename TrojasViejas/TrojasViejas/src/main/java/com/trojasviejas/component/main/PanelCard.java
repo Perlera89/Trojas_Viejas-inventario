@@ -2,6 +2,8 @@ package com.trojasviejas.component.main;
 
 import com.trojasviejas.models.utility.CardModel;
 import java.awt.*;
+import java.awt.event.*;
+import javax.swing.ImageIcon;
 
 public class PanelCard extends javax.swing.JPanel {
     
@@ -21,11 +23,17 @@ public class PanelCard extends javax.swing.JPanel {
         color2 = Color.decode("#2d6a4f");
     }
     
+    public void setFilter(MouseListener action){
+        btnFilter.setBackground(new Color(0,0,0,0));
+        btnFilter.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnFilter.setIcon(new ImageIcon(getClass().getResource("/icons/filter.png")));
+        btnFilter.addMouseListener(action);
+    }
+    
     public void setData(CardModel data) {
         lblIcon.setIcon(data.getIcon());
         lblTitle.setText(data.getTitle());
         lblValues.setText(data.getValues());
-        lblDescription.setText(data.getDescription());
     }
     
     public Color getColor1() {
@@ -51,7 +59,7 @@ public class PanelCard extends javax.swing.JPanel {
         lblIcon = new javax.swing.JLabel();
         lblTitle = new javax.swing.JLabel();
         lblValues = new javax.swing.JLabel();
-        lblDescription = new javax.swing.JLabel();
+        btnFilter = new javax.swing.JLabel();
 
         lblTitle.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(255, 255, 255));
@@ -61,10 +69,6 @@ public class PanelCard extends javax.swing.JPanel {
         lblValues.setForeground(new java.awt.Color(255, 255, 255));
         lblValues.setText("Valores");
 
-        lblDescription.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblDescription.setForeground(new java.awt.Color(255, 255, 255));
-        lblDescription.setText("Descripcion");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,24 +76,30 @@ public class PanelCard extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDescription)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 313, Short.MAX_VALUE)
+                        .addComponent(btnFilter))
                     .addComponent(lblValues)
-                    .addComponent(lblTitle)
-                    .addComponent(lblIcon))
-                .addContainerGap(246, Short.MAX_VALUE))
+                    .addComponent(lblTitle))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(22, Short.MAX_VALUE)
+                        .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(lblTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblValues)
-                .addGap(18, 18, 18)
-                .addComponent(lblDescription)
-                .addGap(15, 15, 15))
+                .addGap(50, 50, 50))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -107,7 +117,7 @@ public class PanelCard extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel lblDescription;
+    private javax.swing.JLabel btnFilter;
     private javax.swing.JLabel lblIcon;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblValues;

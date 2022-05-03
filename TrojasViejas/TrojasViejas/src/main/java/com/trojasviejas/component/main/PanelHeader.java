@@ -9,13 +9,27 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import javax.swing.JOptionPane;
 
 public class PanelHeader extends javax.swing.JPanel {
+    private String search;
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     public PanelHeader() {
         initComponents();
         setOpaque(false);
+    }
+    
+    public void setSearch(MouseListener action){
+        btnSearch.addMouseListener(action);
     }
     
     @Override
@@ -41,6 +55,14 @@ public class PanelHeader extends javax.swing.JPanel {
 
         btnSearch.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/search.png"))); // NOI18N
+        btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSearchMouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnSearchMousePressed(evt);
+            }
+        });
 
         txtSearch.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
@@ -78,6 +100,15 @@ public class PanelHeader extends javax.swing.JPanel {
     private void btnOption1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOption1MouseClicked
 
     }//GEN-LAST:event_btnOption1MouseClicked
+
+    private void btnSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMousePressed
+        search = txtSearch.getText();
+        JOptionPane.showMessageDialog(null, search);
+    }//GEN-LAST:event_btnSearchMousePressed
+
+    private void btnSearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseEntered
+        btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnSearchMouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,5 +1,6 @@
 package com.trojasviejas.demo.form;
 
+import com.trojasviejas.component.login.MessageDialog;
 import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.data.dao.ItemDao;
 
@@ -8,6 +9,7 @@ import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import com.trojasviejas.models.entity.ItemModel;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,13 +23,29 @@ public class FrmItems extends javax.swing.JPanel {
         initCard(0);
         initTableData();
     }
-    
-    private void initCard(int contadorItem){
-        pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Artículos",String.valueOf(contadorItem), ""));
-        pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Herramientas", "$8", ""));
-        pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Accesorios", "$8", ""));
+
+    private void initCard(int contadorItem) {
+        pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Artículos", String.valueOf(contadorItem)));
+        pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Herramientas", "$8"));
+        pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Accesorios", "$8"));
+        
+        pnlCardCountCategory1.setFilter(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                JOptionPane.showMessageDialog(null, "Filtrando contador herramientas");
+            }
+            
+        });
+        
+        pnlCardCountCategory2.setFilter(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                JOptionPane.showMessageDialog(null, "Filtrando contador herramientas");
+            }
+            
+        });
     }
-    
+
     FrmItems form = this;
 
     public void initTableData() {
@@ -35,7 +53,7 @@ public class FrmItems extends javax.swing.JPanel {
         IItemEventAction eventAction = new IItemEventAction() {
             @Override
             public void update(ItemModel entity) {
-               
+
                 ArrayList<Object> selectedtRow = new ArrayList<>();
                 selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
 
@@ -52,28 +70,34 @@ public class FrmItems extends javax.swing.JPanel {
 
                 formulario.lblEncabezado.setText("ACTUALIZAR ARTÍCULO");
                 formulario.setVisible(true);
-                
+
                 repaint();
             }
 
             @Override
             public void delete(ItemModel entity) {
+                MessageDialog dialogResult = new MessageDialog(new FrmLogin());
+                dialogResult.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el articulo " + entity.getName() + "?");
 
-                ItemDao item = new ItemDao();
-                ArrayList<Object> selectedtRow = new ArrayList<>();
-                selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
-                item.DeleteItem(Integer.parseInt(selectedtRow.get(0).toString()));
-                initTableData();
+                if (dialogResult.getMessageType() == MessageDialog.MessageType.OK) {
+                    ItemDao item = new ItemDao();
+                    ArrayList<Object> selectedtRow = new ArrayList<>();
+                    selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
+                    item.DeleteItem(Integer.parseInt(selectedtRow.get(0).toString()));
+                    initTableData();
+                } else {
+                    repaint();
+                }
             }
         };
-        
+
         scroll.setVerticalScrollBar(new ScrollBar());
         scroll.getVerticalScrollBar().setBackground(Color.white);
         JPanel panel = new JPanel();
         panel.setBackground(Color.white);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
-        
+
         //LIMPIAR TABLA
         try {
             DefaultTableModel modelo = (DefaultTableModel) tblItems.getModel();
@@ -87,7 +111,7 @@ public class FrmItems extends javax.swing.JPanel {
 
         ItemDao items = new ItemDao();
         int contadorItem = 0;
-        
+
         for (var item : items.ListItems()) {
             tblItems.addRow(new ItemModel(
                     item.getIdItem(),
@@ -99,12 +123,12 @@ public class FrmItems extends javax.swing.JPanel {
             ).toRowTable(eventAction));
             contadorItem++;
         }
-        for (var i: items.ListItems()) {
+        for (var i : items.ListItems()) {
             System.out.println(i.getCategory().toString() + i.getType().toString());
         }
 
         initCard(contadorItem);
-   
+
         //Ocultar Columnas
         tblItems.getColumnModel().getColumn(0).setMaxWidth(0);
         tblItems.getColumnModel().getColumn(0).setMinWidth(0);
@@ -114,9 +138,10 @@ public class FrmItems extends javax.swing.JPanel {
         tblItems.getColumnModel().getColumn(3).setMaxWidth(0);
         tblItems.getColumnModel().getColumn(3).setMinWidth(0);
         tblItems.getColumnModel().getColumn(3).setPreferredWidth(0);
-        tblItems.getColumnModel().getColumn(3).setResizable(false);        
-   
+        tblItems.getColumnModel().getColumn(3).setResizable(false);
+
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -130,6 +155,7 @@ public class FrmItems extends javax.swing.JPanel {
         btnNew = new com.trojasviejas.swing.Buttons.ActionButton();
         scroll = new javax.swing.JScrollPane();
         tblItems = new com.trojasviejas.swing.tables.item.ItemsTable();
+        btnRefresh = new com.trojasviejas.swing.Buttons.ActionButton();
 
         setBackground(new java.awt.Color(232, 241, 242));
 
@@ -182,6 +208,13 @@ public class FrmItems extends javax.swing.JPanel {
         });
         scroll.setViewportView(tblItems);
 
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refresh.png"))); // NOI18N
+        btnRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnRefreshMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
         pnlTable.setLayout(pnlTableLayout);
         pnlTableLayout.setHorizontalGroup(
@@ -189,9 +222,14 @@ public class FrmItems extends javax.swing.JPanel {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblProviders)
-                    .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE))
+                    .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+                    .addGroup(pnlTableLayout.createSequentialGroup()
+                        .addComponent(lblProviders)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlTableLayout.createSequentialGroup()
+                        .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
         pnlTableLayout.setVerticalGroup(
@@ -200,9 +238,12 @@ public class FrmItems extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(lblProviders)
                 .addGap(20, 20, 20)
-                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlTableLayout.createSequentialGroup()
+                        .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -232,12 +273,17 @@ public class FrmItems extends javax.swing.JPanel {
         WindowItems formulario = new WindowItems();
         formulario.frmItem = form;
         formulario.lblEncabezado.setText("AGREGAR ARTÍCULO");
-        formulario.setVisible(true);  
+        formulario.setVisible(true);
     }//GEN-LAST:event_btnNewActionPerformed
+
+    private void btnRefreshMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMousePressed
+        initTableData();
+    }//GEN-LAST:event_btnRefreshMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.Buttons.ActionButton btnNew;
+    private com.trojasviejas.swing.Buttons.ActionButton btnRefresh;
     private javax.swing.JLabel lblProviders;
     private com.trojasviejas.component.main.PanelCard pnlCardCountCategory1;
     private com.trojasviejas.component.main.PanelCard pnlCardCountCategory2;

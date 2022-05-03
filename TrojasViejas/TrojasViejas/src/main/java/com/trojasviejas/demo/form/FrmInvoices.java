@@ -18,8 +18,8 @@ public class FrmInvoices extends javax.swing.JPanel {
     }
     
     private void initCard(){
-        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Total Vendedores", "21", "Incremento un 10%"));
-        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total Donadores", "$8", "Incremento un 45%"));
+        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Total Vendedores", "21"));
+        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total Donadores", "$8"));
     }
     
     private void initTableData(){

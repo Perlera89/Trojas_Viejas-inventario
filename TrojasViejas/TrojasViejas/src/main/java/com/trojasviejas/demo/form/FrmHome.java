@@ -1,5 +1,6 @@
 package com.trojasviejas.demo.form;
 
+import com.trojasviejas.swing.chart.ChartModel;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
@@ -8,41 +9,49 @@ public class FrmHome extends javax.swing.JPanel {
 
     public FrmHome() {
         initComponents();
+        setOpaque(false);
         scroll.setVerticalScrollBar(new ScrollBar());
         scroll.getVerticalScrollBar().setBackground(Color.white);
         JPanel panel = new JPanel();
         panel.setBackground(Color.white);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
-//        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total stock", "200", "Incremento un 10%"));
-//        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/dollar.png")), "Total costo", "$1200", "Incremento un 45%"));
-//        pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total stock", "200", "Incremento un 10%"));
+        init();
+    }
+    
+    private void init(){
+//        barChart.addLegend("Entradas", new Color(12, 84, 175), new Color(0, 108, 247));
+//        barChart.addLegend("Gastos", new Color(54, 4, 143), new Color(104, 49, 200));
+//        barChart.addLegend("Ganancia", new Color(5, 125, 0), new Color(95, 209, 69));
+//        barChart.addLegend("Costo", new Color(186, 37, 37), new Color(241, 100, 120));
+//        barChart.addData(new ChartModel("Enero", new double[]{500, 200, 80, 89}));
+//        barChart.addData(new ChartModel("Febrero", new double[]{600, 750, 90, 150}));
+//        barChart.addData(new ChartModel("Marzo", new double[]{200, 350, 460, 900}));
+//        barChart.addData(new ChartModel("Abril", new double[]{480, 150, 750, 700}));
+//        barChart.addData(new ChartModel("Mayo", new double[]{350, 540, 300, 150}));
+//        barChart.addData(new ChartModel("Junio", new double[]{190, 280, 81, 200}));
+//        barChart.start();
 //        
-//        //Agregar registro
-//        scroll.setVerticalScrollBar(new ScrollBar());
-//        scroll.getVerticalScrollBar().setBackground(Color.white);
-//        JPanel panel = new JPanel();
-//        panel.setBackground(Color.white);
-//        scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
-//        scroll.getViewport().setBackground(Color.white);
-//        
-//        tblProviders.addRow(new Object[]{"Manuel Perlera", "7097-0435", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.VENDEDOR});
-//        tblProviders.addRow(new Object[]{"Manuel Perlera", "7097-0435", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.DONADOR});
-//        tblProviders.addRow(new Object[]{"Manuel Perlera", "7097-0435", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.VENDEDOR});
-//        tblProviders.addRow(new Object[]{"Manuel Perlera", "7097-0435", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.DONADOR});
-//        tblProviders.addRow(new Object[]{"Manuel Perlera", "7097-0435", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.VENDEDOR});
-//        tblProviders.addRow(new Object[]{"Manuel Perlera", "7097-0435", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.DONADOR});
-//        tblProviders.addRow(new Object[]{"Manuel Perlera", "7097-0435", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.VENDEDOR});
-//        tblProviders.addRow(new Object[]{"Manuel Perlera", "7097-0435", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.DONADOR});
+//        lineChart.addLegend("Entradas", new Color(12, 84, 175), new Color(0, 108, 247));
+//        lineChart.addLegend("Gastos", new Color(54, 4, 143), new Color(104, 49, 200));
+//        lineChart.addLegend("Ganancia", new Color(5, 125, 0), new Color(95, 209, 69));
+//        lineChart.addLegend("Costo", new Color(186, 37, 37), new Color(241, 100, 120));
+//        lineChart.addData(new ChartModel("Enero", new double[]{500, 200, 80, 89}));
+//        lineChart.addData(new ChartModel("Febrero", new double[]{600, 750, 90, 150}));
+//        lineChart.addData(new ChartModel("Marzo", new double[]{200, 350, 460, 900}));
+//        lineChart.addData(new ChartModel("Abril", new double[]{480, 150, 750, 700}));
+//        lineChart.addData(new ChartModel("Mayo", new double[]{350, 540, 300, 150}));
+//        lineChart.addData(new ChartModel("Junio", new double[]{190, 280, 81, 200}));
+//        lineChart.start();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        legendModel1 = new com.trojasviejas.swing.chart.LegendModel();
         scroll = new javax.swing.JScrollPane();
         pnlBg = new javax.swing.JPanel();
-        panelShadow1 = new com.trojasviejas.swing.panels.PanelShadow();
 
         setBackground(new java.awt.Color(232, 241, 242));
 
@@ -50,32 +59,15 @@ public class FrmHome extends javax.swing.JPanel {
 
         pnlBg.setBackground(new java.awt.Color(232, 241, 242));
 
-        javax.swing.GroupLayout panelShadow1Layout = new javax.swing.GroupLayout(panelShadow1);
-        panelShadow1.setLayout(panelShadow1Layout);
-        panelShadow1Layout.setHorizontalGroup(
-            panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 275, Short.MAX_VALUE)
-        );
-        panelShadow1Layout.setVerticalGroup(
-            panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout pnlBgLayout = new javax.swing.GroupLayout(pnlBg);
         pnlBg.setLayout(pnlBgLayout);
         pnlBgLayout.setHorizontalGroup(
             pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBgLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(619, Short.MAX_VALUE))
+            .addGap(0, 905, Short.MAX_VALUE)
         );
         pnlBgLayout.setVerticalGroup(
             pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBgLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1375, Short.MAX_VALUE))
+            .addGap(0, 837, Short.MAX_VALUE)
         );
 
         scroll.setViewportView(pnlBg);
@@ -84,18 +76,17 @@ public class FrmHome extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 915, Short.MAX_VALUE)
+            .addComponent(scroll)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
+            .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel4;
-    private com.trojasviejas.swing.panels.PanelShadow panelShadow1;
+    private com.trojasviejas.swing.chart.LegendModel legendModel1;
     private javax.swing.JPanel pnlBg;
     private javax.swing.JScrollPane scroll;
     // End of variables declaration//GEN-END:variables

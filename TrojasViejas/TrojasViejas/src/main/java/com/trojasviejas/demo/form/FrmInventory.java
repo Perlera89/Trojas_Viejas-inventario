@@ -18,8 +18,8 @@ public class FrmInventory extends javax.swing.JPanel {
     }
     
     private void initCard(){
-        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Total Vendedores", "21", "Incremento un 10%"));
-        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total Donadores", "$8", "Incremento un 45%"));
+        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Total Vendedores", "21"));
+        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total Donadores", "$8"));
     }
     
     private void initTableData(){
@@ -54,6 +54,7 @@ public class FrmInventory extends javax.swing.JPanel {
         pnlContainer = new javax.swing.JLayeredPane();
         pnlCard1 = new com.trojasviejas.component.main.PanelCard();
         pnlCard2 = new com.trojasviejas.component.main.PanelCard();
+        pnlCard3 = new com.trojasviejas.component.main.PanelCard();
         pnlTable = new com.trojasviejas.swing.panels.PanelBorder();
         lblProviders = new javax.swing.JLabel();
         scroll = new javax.swing.JScrollPane();
@@ -71,6 +72,10 @@ public class FrmInventory extends javax.swing.JPanel {
         pnlCard2.setColor1(new java.awt.Color(255, 123, 0));
         pnlCard2.setColor2(new java.awt.Color(255, 136, 0));
         pnlContainer.add(pnlCard2);
+
+        pnlCard3.setColor1(new java.awt.Color(255, 123, 0));
+        pnlCard3.setColor2(new java.awt.Color(255, 136, 0));
+        pnlContainer.add(pnlCard3);
 
         pnlTable.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -134,11 +139,11 @@ public class FrmInventory extends javax.swing.JPanel {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(lblProviders)
-                .addGap(27, 27, 27)
-                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(20, 20, 20)
+                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -158,8 +163,8 @@ public class FrmInventory extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(pnlContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -174,6 +179,7 @@ public class FrmInventory extends javax.swing.JPanel {
     private javax.swing.JLabel lblProviders;
     private com.trojasviejas.component.main.PanelCard pnlCard1;
     private com.trojasviejas.component.main.PanelCard pnlCard2;
+    private com.trojasviejas.component.main.PanelCard pnlCard3;
     private javax.swing.JLayeredPane pnlContainer;
     private com.trojasviejas.swing.panels.PanelBorder pnlTable;
     private javax.swing.JScrollPane scroll;

@@ -18,7 +18,7 @@ public class FrmUsers extends javax.swing.JPanel {
     }
     
     private void initCard(){
-        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/user.png")), "Total Usuarios", "4", "Sin descripcion"));
+        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/user.png")), "Total Usuarios", "4"));
     }
     
     private void initTableData(){
@@ -115,18 +115,18 @@ public class FrmUsers extends javax.swing.JPanel {
                     .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblProviders)
                     .addComponent(scroll))
-                .addGap(21, 21, 21))
+                .addGap(20, 20, 20))
         );
         pnlTableLayout.setVerticalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(lblProviders)
-                .addGap(27, 27, 27)
+                .addGap(20, 20, 20)
                 .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -146,8 +146,8 @@ public class FrmUsers extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(pnlContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
         );
     }// </editor-fold>//GEN-END:initComponents
 
