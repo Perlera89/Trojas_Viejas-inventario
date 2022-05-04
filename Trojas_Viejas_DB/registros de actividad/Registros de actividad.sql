@@ -53,12 +53,18 @@ DELIMITER $$
 		ORDER BY rgtr_id;
     END$$
 
-/*---------------------FILTRO POR YEAR------------------------*/
+    
+    /*------------FILTRO POR YEAR Y MES---------------*/
 DELIMITER $$
-	CREATE PROCEDURE sp_filter_by_year_activity_registers(
-		p_years INT
+	CREATE PROCEDURE sp_filter_by_activity_registers(
+	    p_month VARCHAR(20),
+        p_years INT
     )
     BEGIN
+/*--------------------------YEAR----------------------------------*/
+        IF((p_month = 'NULL'))
+        THEN
+		SET lc_time_names = 'es_SV';
 		SELECT
 			a.rgtr_id,
 			(a.rgtr_tp_action +0)`rgtr_tp_action`,
@@ -79,18 +85,13 @@ DELIMITER $$
             INNER JOIN invoice_details AS c ON b.inventory_invc_dtl_id_fk = c.dtl_id
             INNER JOIN items AS d ON c.dtl_item_id_fk = d.item_id
 			INNER JOIN invoices AS e ON c.dtl_invc_id_fk = e.invc_id 
-		WHERE YEAR(a.rgtr_date) = p_years
+		WHERE YEAR(a.rgtr_date) = p_years 
 		ORDER BY rgtr_id;
-    END$$
-    
-    /*------------FILTRO POR YEAR Y MES---------------*/
-DELIMITER $$
-	CREATE PROCEDURE sp_filter_by_year_and_month_activity_registers(
-		p_years INT,
-        p_month VARCHAR(20)
-    )
-    BEGIN
-    	SET lc_time_names = 'es_SV';
+
+/*----------------YEAR AND MONTH----------------------------------------------------------------*/
+        ELSEIF(p_month!='NULL')
+        THEN
+		SET lc_time_names = 'es_SV';
 		SELECT
 			a.rgtr_id,
 			(a.rgtr_tp_action +0)`rgtr_tp_action`,
@@ -113,6 +114,7 @@ DELIMITER $$
 			INNER JOIN invoices AS e ON c.dtl_invc_id_fk = e.invc_id 
 		WHERE YEAR(a.rgtr_date) = p_years AND MONTHNAME(a.rgtr_date) = p_month
 		ORDER BY rgtr_id;
+        END IF;
     END$$
     
    /*------------FILTRO POR FACTURA---------------*/
