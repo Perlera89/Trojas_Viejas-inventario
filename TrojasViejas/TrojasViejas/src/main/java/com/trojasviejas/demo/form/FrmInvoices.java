@@ -76,7 +76,7 @@ public class FrmInvoices extends javax.swing.JPanel {
 
         lblProviders.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         lblProviders.setForeground(new java.awt.Color(127, 127, 127));
-        lblProviders.setText("Proveedores");
+        lblProviders.setText("Facturas");
 
         scroll.setBorder(null);
 
@@ -164,8 +164,8 @@ public class FrmInvoices extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        WindowInvoices formulario = new WindowInvoices();
-        formulario.setVisible(true);
+        WindowInvoice invoice = new WindowInvoice();
+        WindowHome.main(WindowType.INVOICE, invoice, false);
     }//GEN-LAST:event_btnNewActionPerformed
 
 

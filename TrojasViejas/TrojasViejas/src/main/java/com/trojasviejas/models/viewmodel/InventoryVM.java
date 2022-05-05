@@ -1,19 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.trojasviejas.data.viewmodels;
+package com.trojasviejas.models.viewmodel;
 
-import com.trojasviejas.models.utility.CategoryType;
-import com.trojasviejas.models.utility.ItemType;
+import com.trojasviejas.models.utility.*;
 import java.util.Date;
 
 
-/**
- *
- * @author wilian
- */
-public class InventoriesViewModel {
+public class InventoryVM {
     private int id;
     private int amount;
     private String item;
@@ -23,6 +14,21 @@ public class InventoriesViewModel {
     private CategoryType category;
     private ItemType type;
     private Date buyDate;
+    
+    public InventoryVM(){
+        
+    }
+
+    public InventoryVM(int amount, String item, int stock, int minimunAmount, double pricePerUnit, CategoryType category, ItemType type, Date buyDate) {
+        this.amount = amount;
+        this.item = item;
+        this.stock = stock;
+        this.pricePerUnit = pricePerUnit;
+        this.minimunAmount = minimunAmount;
+        this.category = category;
+        this.type = type;
+        this.buyDate = buyDate;
+    }
 
     public int getId() {
         return id;
@@ -95,8 +101,4 @@ public class InventoriesViewModel {
     public void setBuyDate(Date buyDate) {
         this.buyDate = buyDate;
     }
-
-
-        
-    
 }

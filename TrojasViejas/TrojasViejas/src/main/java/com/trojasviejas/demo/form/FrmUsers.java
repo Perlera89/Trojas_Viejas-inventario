@@ -1,6 +1,6 @@
 package com.trojasviejas.demo.form;
 
-import com.trojasviejas.demo.form.window.WindowProviders;
+import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.entity.*;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;

@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.trojasviejas.data.dao;
 
 import com.trojasviejas.data.connectiondb.Conexion;
-import com.trojasviejas.data.viewmodels.InventoriesViewModel;
 import com.trojasviejas.models.utility.CategoryType;
 import com.trojasviejas.models.utility.ItemType;
+import com.trojasviejas.models.viewmodel.InventoryVM;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,20 +11,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author wilian
- */
-public class InventoriesDao{
+public class InventoryDao{
 
     //variable para almacenar para la conexion
     Connection connection = null;
     
 
-    public ArrayList<InventoriesViewModel> list() {
+    public ArrayList<InventoryVM> list() {
         
-        ArrayList<InventoriesViewModel> inventories = null;
-        InventoriesViewModel inventory;
+        ArrayList<InventoryVM> inventories = null;
+        InventoryVM inventory;
         
         CallableStatement query = null;
         ResultSet result = null;
@@ -46,7 +38,7 @@ public class InventoriesDao{
             
             //cargando los datos en una array           
             while (result.next()) {                
-                inventory = new InventoriesViewModel();
+                inventory = new InventoryVM();
                 inventory.setId(result.getInt("inventory_id"));
                 inventory.setAmount(result.getInt("dtl_amount"));
                 inventory.setItem(result.getString("item_name"));
@@ -92,11 +84,11 @@ public class InventoriesDao{
 
     }
 
-    public ArrayList<InventoriesViewModel> findBy(String search_string) {
+    public ArrayList<InventoryVM> findBy(String search_string) {
         //sp_find_inventories
             
-        ArrayList<InventoriesViewModel> inventories = null;
-        InventoriesViewModel inventory;
+        ArrayList<InventoryVM> inventories = null;
+        InventoryVM inventory;
         
         CallableStatement query = null;
         ResultSet result = null;
@@ -117,7 +109,7 @@ public class InventoriesDao{
             
             //cargando los datos en una array           
             while (result.next()) {                
-                inventory = new InventoriesViewModel();
+                inventory = new InventoryVM();
                 inventory.setId(result.getInt("inventory_id"));
                 inventory.setAmount(result.getInt("dtl_amount"));
                 inventory.setItem(result.getString("item_name"));

@@ -1,6 +1,6 @@
 package com.trojasviejas.demo.form;
 
-import com.trojasviejas.demo.form.window.WindowProviders;
+import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
@@ -16,13 +16,13 @@ public class FrmProviders extends javax.swing.JPanel {
         initCard();
         initTableData();
     }
-    
-    private void initCard(){
+
+    private void initCard() {
         pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Total Vendedores", "21"));
         pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total Donadores", "$8"));
     }
-    
-    private void initTableData(){
+
+    private void initTableData() {
         //Agregar registro
         IProviderEventAction eventAction = new IProviderEventAction() {
             @Override
@@ -35,14 +35,14 @@ public class FrmProviders extends javax.swing.JPanel {
                 System.out.println("Eliminar a " + entity.getName());
             }
         };
-        
+
         scroll.setVerticalScrollBar(new ScrollBar());
         scroll.getVerticalScrollBar().setBackground(Color.white);
         JPanel panel = new JPanel();
         panel.setBackground(Color.white);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
-        
+
         tblProviders.addRow(new ProviderModel("Manuel Perlera", "7738-8921", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.VENDEDOR).toRowTable(eventAction));
         tblProviders.addRow(new ProviderModel("Maria Pineda", "7738-8921", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.DONADOR).toRowTable(eventAction));
     }
@@ -164,8 +164,8 @@ public class FrmProviders extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        WindowProviders formulario = new WindowProviders();
-        formulario.setVisible(true);
+        WindowProvider provider = new WindowProvider();
+        WindowHome.main(WindowType.PROVIDER, provider, false);
     }//GEN-LAST:event_btnNewActionPerformed
 
 

@@ -19,6 +19,10 @@ public class FrmItems extends javax.swing.JPanel {
 
     public FrmItems() {
         setOpaque(false);
+        init();
+    }
+    
+    public void init(){
         initComponents();
         initCard(0);
         initTableData();
@@ -58,7 +62,7 @@ public class FrmItems extends javax.swing.JPanel {
                 selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
 
                 //Pasar datos al formulario de Windows
-                WindowItems formulario = new WindowItems();
+                WindowItem formulario = new WindowItem();
                 formulario.frmItem = form;
 
                 formulario.idRegistro = (int) selectedtRow.get(0);
@@ -68,8 +72,7 @@ public class FrmItems extends javax.swing.JPanel {
                 formulario.cbbCategory.setSelectedItem(selectedtRow.get(4).toString());
                 formulario.cbbItemType.setSelectedItem(selectedtRow.get(5).toString());
 
-                formulario.lblEncabezado.setText("ACTUALIZAR ARTÍCULO");
-                formulario.setVisible(true);
+                WindowHome.main(WindowType.ITEM, formulario, true);
 
                 repaint();
             }
@@ -270,10 +273,8 @@ public class FrmItems extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        WindowItems formulario = new WindowItems();
-        formulario.frmItem = form;
-        formulario.lblEncabezado.setText("AGREGAR ARTÍCULO");
-        formulario.setVisible(true);
+        WindowItem item = new WindowItem();
+        WindowHome.main(WindowType.ITEM, item, false);
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnRefreshMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMousePressed
