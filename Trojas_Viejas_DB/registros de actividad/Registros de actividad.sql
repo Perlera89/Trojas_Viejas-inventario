@@ -1,4 +1,4 @@
-USE inventories;
+USE trojas_viejas_db;
 /*-------------------GUARDAR----------------------------------*/
 DELIMITER $$
 CREATE PROCEDURE sp_i_activity_registers(
@@ -24,6 +24,19 @@ BEGIN
         p_rgtr_tp_action_index,
         p_rgtr_dtl_id_fk
     );
+END$$
+
+/*-------------------ACTUALIZAR----------------------------------*/
+DELIMITER $$
+CREATE PROCEDURE sp_u_activity_registers(
+	p_rgtr_id INT,
+    p_rgtr_description VARCHAR(255)
+)
+BEGIN
+	UPDATE activity_registers
+		SET
+        `rgtr_description` = p_rgtr_description
+        WHERE(rgtr_id = p_rgtr_id);
 END$$
 
 /*-----------------------MOSTRAR-----------------------------*/

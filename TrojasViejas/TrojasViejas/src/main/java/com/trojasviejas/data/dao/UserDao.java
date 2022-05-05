@@ -21,7 +21,7 @@ public class UserDao {
         //ResultSet result = null;
         Connection connection = Conexion.getConnection();
 
-        CallableStatement query = connection.prepareCall("call sp_i_user(?,?,?)");
+        CallableStatement query = connection.prepareCall("call sp_i_users(?,?,?)");
         query.setString(1, model.getUsername());
         query.setString(2, model.getPassword());
         query.setString(3, model.getVerifyPassword());

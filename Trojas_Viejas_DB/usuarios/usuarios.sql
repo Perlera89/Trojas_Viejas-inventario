@@ -1,20 +1,24 @@
-use inventories;
+use trojas_viejas_db;
 
 /*Insertar*/
 Delimiter $$
 CREATE PROCEDURE sp_i_users(
-	p_usr_name VARCHAR(50),
-    p_usr_password VARCHAR(50)
+	p_usr_name VARCHAR(45),
+    p_usr_password VARCHAR(45),
+    p_usr_verify_pass VARCHAR(45)
 )
 BEGIN
-	INSERT INTO users (
-		`usr_name`, 
-        `usr_password`
-        )
-    VALUES (
-		p_usr_name, 
-        sha1(p_usr_password) 
-        );
+
+	INSERT INTO users(
+    `usr_name`, 
+    `usr_password`, 
+    `usr_verify_pass`
+    ) 
+    VALUES(
+    p_usr_name,
+    sha1(p_usr_password),
+    sha1(p_usr_verify_pass)
+    );
 END
 $$
 

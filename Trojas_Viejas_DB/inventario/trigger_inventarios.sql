@@ -1,4 +1,4 @@
-USE inventories;
+USE trojas_viejas_db;
 
 /*------------------INSERTAR---------------------------------------------------------------*/
 DELIMITER $$

@@ -1,4 +1,4 @@
-use inventories;
+use trojas_viejas_db;
 
 
 /*----------------------------------MOSTRAR------------------------------------------------------*/
@@ -127,4 +127,3 @@ BEGIN
 	WHERE (NEW.rgtr_dtl_id_fk=`inventory_invc_dtl_id_fk`);
 END$$
 
-/*DROP TRIGGER tg_u_from_act_rgtr_inventories; */   

@@ -1,14 +1,14 @@
 
 Delimiter $$
-DROP DATABASE IF EXISTS inventories;
+DROP DATABASE IF EXISTS trojas_viejas_db;
 $$
 
 Delimiter $$
-CREATE DATABASE inventories;
+CREATE DATABASE trojas_viejas_db;
 $$
 
 Delimiter $$
-USE inventories;
+USE trojas_viejas_db;
 $$
 
 
@@ -44,7 +44,8 @@ CREATE TABLE providers(
 CREATE TABLE users(
 	usr_id INT NOT NULL AUTO_INCREMENT,
     usr_name VARCHAR(50) NOT NULL UNIQUE,
-    usr_password VARCHAR(50) NOT NULL,
+    usr_password VARCHAR(255) NOT NULL,
+    usr_verify_pass VARCHAR(255) NOT NULL
     PRIMARY KEY (usr_id)
 );$$
 
