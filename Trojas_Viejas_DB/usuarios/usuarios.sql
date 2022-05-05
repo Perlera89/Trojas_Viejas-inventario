@@ -50,13 +50,13 @@ BEGIN
 END$$
 
 /*Otros*/
-/*Encontrar un articulo*/
 Delimiter $$
-CREATE PROCEDURE sp_find_users(
+CREATE PROCEDURE sp_s_user(
 	p_usr_name VARCHAR(50),
-    p_usr_password VARCHAR(50)
+    p_usr_password VARCHAR(255)
 )
 BEGIN
-	SELECT * FROM users AS a
-		WHERE a.usr_name = p_usr_name AND a.usr_password = sha1(p_usr_password);
-end$$
+	SELECT usr_id, usr_name, usr_password 
+    FROM users 
+    WHERE usr_name = p_usr_name AND usr_password = p_usr_password  LIMIT 1;
+END$$
