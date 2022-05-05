@@ -4,128 +4,181 @@ import com.trojasviejas.component.login.PanelCover;
 import com.trojasviejas.component.login.PanelLoading;
 import com.trojasviejas.component.login.PanelLogin;
 import com.trojasviejas.component.login.PanelMessage;
+import com.trojasviejas.data.connectiondb.Conexion;
+import com.trojasviejas.data.dao.UserDao;
+import com.trojasviejas.models.entity.UserModel;
+import com.trojasviejas.models.viewmodel.LoginVM;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class FrmLogin extends javax.swing.JFrame {
+
     private MigLayout layout;
     private PanelCover cover;
     private PanelLogin login;
     private PanelLoading loading;
-    
+
     private boolean isLogin;
     private final double addSize = 30;
     private final double coverSize = 40;
-    
+
     private final double loginSize = 60;
     private final DecimalFormat df = new DecimalFormat("##0.###");
-    
+    private UserDao service;
+
     public FrmLogin() {
         initComponents();
         init();
     }
-    
-    private void init(){
+
+    private void init() {
+        service = new UserDao();
         layout = new MigLayout("fill, insets 0");
         cover = new PanelCover();
-        ActionListener eventRegister = new ActionListener(){
+        ActionListener eventRegister = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 register();
             }
         };
-        login = new PanelLogin(eventRegister);
+        ActionListener eventLogin = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                login();
+            }
+        };
+        login = new PanelLogin(eventRegister, eventLogin);
         loading = new PanelLoading();
-        
-        TimingTarget target = new TimingTargetAdapter(){
+
+        TimingTarget target = new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
                 double fractionCover;
                 double fractionLogin;
                 double size = coverSize;
 
-                if(fraction <= 0.5f){
-                    size += fraction*addSize;
-                } else{
-                    size += addSize-fraction * addSize;
+                if (fraction <= 0.5f) {
+                    size += fraction * addSize;
+                } else {
+                    size += addSize - fraction * addSize;
                 }
-                if(isLogin){
-                    fractionCover = 1f-fraction;
+                if (isLogin) {
+                    fractionCover = 1f - fraction;
                     fractionLogin = fraction;
-                    if(fraction >= 0.5f){
+                    if (fraction >= 0.5f) {
                         cover.registerRight(fractionCover * 100);
-                    } else{
+                    } else {
                         cover.loginRight(fractionLogin * 100);
                     }
-                } else{
+                } else {
                     fractionCover = fraction;
                     fractionLogin = 1f - fraction;
-                    if(fraction <= 0.5f){
+                    if (fraction <= 0.5f) {
                         cover.registerLeft(fraction * 100);
-                    } else{
-                        cover.loginLeft((1f-fraction) * 100);
-                        
+                    } else {
+                        cover.loginLeft((1f - fraction) * 100);
+
                     }
                 }
-                
-                if(fraction >= 0.5f){
+
+                if (fraction >= 0.5f) {
                     login.showRegister(isLogin);
                 }
-                
+
                 fractionCover = Double.valueOf(df.format(fractionCover));
                 fractionLogin = Double.valueOf(df.format(fractionLogin));
-                
-                layout.setComponentConstraints(cover, "width "+size+"%, pos "+fractionCover+"al 0 n 100%");
-                layout.setComponentConstraints(login, "width "+loginSize+"%, pos "+fractionLogin+"al 0 n 100%");
+
+                layout.setComponentConstraints(cover, "width " + size + "%, pos " + fractionCover + "al 0 n 100%");
+                layout.setComponentConstraints(login, "width " + loginSize + "%, pos " + fractionLogin + "al 0 n 100%");
                 pnlBg.revalidate();
             }
 
             @Override
             public void end() {
-                isLogin =! isLogin;
-            }  
+                isLogin = !isLogin;
+            }
         };
-        
+
         Animator animator = new Animator(800, target);
         animator.setAcceleration(0.5f);
         animator.setDeceleration(0.5f);
         animator.setResolution(0); //smooth animation        
         pnlBg.setLayout(layout);
         pnlBg.setLayer(loading, JLayeredPane.POPUP_LAYER);
-        
+
         pnlBg.add(loading, "pos 0 0 100%");
         pnlBg.add(cover, "width " + coverSize + "%, pos 0al 0 n 100%");
-        pnlBg.add(login, "width "+loginSize+"%, pos 1al 0 n 100%"); // 1al es 100%
+        pnlBg.add(login, "width " + loginSize + "%, pos 1al 0 n 100%"); // 1al es 100%
         cover.addEvent(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!animator.isRunning()){
+                if (!animator.isRunning()) {
                     animator.start();
                 }
             }
         });
     }
-    
-    private void register(){
-        //User user = login.getUser();
-        showMessage(PanelMessage.MessageType.SUCCESS, "Probando mensaje");
-        loading.setVisible(true);
-        
+
+    private void register() {
+        UserModel user = login.getUser();
+
+        if (user.getUsername().equals("") || user.getPassword().equals("") || user.getVerifyPassword().equals("")) {
+            showMessage(PanelMessage.MessageType.ERROR, "Debe llenar todos los campos");
+        } else {
+            if (user.getPassword().length() < 4) {
+                showMessage(PanelMessage.MessageType.ERROR, "La contraseña es demasiado corta");
+                System.out.println(user.getPassword());
+                System.out.println(user.getVerifyPassword());
+            } else {
+                if (!(user.getVerifyPassword().equals(user.getPassword()))) {
+                    showMessage(PanelMessage.MessageType.ERROR, "La contraseña no coincide");
+                } else {
+                    try {
+                        service.register(user);
+                        showMessage(PanelMessage.MessageType.SUCCESS, "Se ha registrado correctamente");
+                    } catch (SQLException e) {
+                        showMessage(PanelMessage.MessageType.ERROR, e.getMessage());
+                    }
+                }
+            }
+        }
+
+        loading.setVisible(false);
+
     }
-    
+
+    private void login() {
+        LoginVM data = login.getDataLogin();
+        try {
+            if (service.login(data)) {
+                this.dispose();
+                FrmMain.main();
+            } else {
+                showMessage(PanelMessage.MessageType.ERROR, "Usuario y contraseña incorrectos");
+            }
+
+        } catch (SQLException e) {
+            showMessage(PanelMessage.MessageType.ERROR, e.getMessage());
+        }
+    }
+
     //muestra el mensaje del panel
-    private void showMessage(PanelMessage.MessageType messageType, String message){
+    private void showMessage(PanelMessage.MessageType messageType, String message) {
         PanelMessage ms = new PanelMessage();
         ms.showMessage(messageType, message);
         TimingTarget target;
-        target = new TimingTargetAdapter(){
+        target = new TimingTargetAdapter() {
             @Override
             public void begin() {
                 if (!ms.isShow()) {
@@ -157,25 +210,25 @@ public class FrmLogin extends javax.swing.JFrame {
                 } else {
                     ms.setShow(true);
                 }
-            }           
+            }
         };
-        
+
         Animator animator = new Animator(300, target);
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
         animator.setDeceleration(0.5f);
         animator.start();
-        new Thread(new Runnable(){
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
+                try {
                     Thread.sleep(2000);
                     animator.start();
-                } catch(InterruptedException e){
+                } catch (InterruptedException e) {
                     System.err.println(e.getMessage());
                 }
             }
-            
+
         }).start();
     }
 
@@ -239,9 +292,13 @@ public class FrmLogin extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-
+        try {
+            //</editor-fold>
+            //</editor-fold>
+            Conexion.getConnection();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión \n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

@@ -1,6 +1,7 @@
-package com.trojasviejas.component.login;
+    package com.trojasviejas.component.login;
 
 import com.trojasviejas.models.entity.UserModel;
+import com.trojasviejas.models.viewmodel.LoginVM;
 import com.trojasviejas.swing.buttons.Button;
 import com.trojasviejas.swing.fields.MyPasswordField;
 import com.trojasviejas.swing.fields.MyTextField;
@@ -13,44 +14,49 @@ import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
 public class PanelLogin extends javax.swing.JLayeredPane {
-    
+
     private UserModel user;
-    
-    public UserModel getUser(){
+    private LoginVM dataLogin;
+
+    public UserModel getUser() {
         return user;
     }
     
-    public PanelLogin(ActionListener eventRegister) {
+    public LoginVM getDataLogin(){
+        return dataLogin;
+    }
+
+    public PanelLogin(ActionListener eventRegister, ActionListener eventLogin) {
         initComponents();
         initRegister(eventRegister);
-        initLogin();
+        initLogin(eventLogin);
         pnlLogin.setVisible(false);
         pnlRegister.setVisible(true);
     }
-    
-    private void initRegister(ActionListener eventRegister){
+
+    private void initRegister(ActionListener eventRegister) {
         pnlRegister.setLayout(new MigLayout("wrap", "push[center]push", "push[]25[]10[]10[]25[]push"));
-        
+
         JLabel title = new JLabel("Crear una cuenta");
         title.setFont(new Font("Norwester", 1, 30));
         title.setForeground(new Color(0, 100, 148));
         pnlRegister.add(title);
-        
+
         MyTextField txtUser = new MyTextField();
         txtUser.setPrefixIcon(new ImageIcon(getClass().getResource("/img/user.png")));
         txtUser.setHint("Nombre");
         pnlRegister.add(txtUser, "w 60%");
-        
+
         MyPasswordField txtPass = new MyPasswordField();
         txtPass.setPrefixIcon(new ImageIcon(getClass().getResource("/img/pass.png")));
         txtPass.setHint("Contrase\u00f1a");
         pnlRegister.add(txtPass, "w 60%");
-        
+
         MyPasswordField txtConfirmPass = new MyPasswordField();
         txtConfirmPass.setPrefixIcon(new ImageIcon(getClass().getResource("/img/pass.png")));
         txtConfirmPass.setHint("Confirmar contrase\u00f1a");
         pnlRegister.add(txtConfirmPass, "w 60%");
-        
+
         Button btnRegister = new Button();
         btnRegister.setBackground(new Color(0, 100, 148));
         btnRegister.setForeground(new Color(250, 250, 250));
@@ -60,33 +66,34 @@ public class PanelLogin extends javax.swing.JLayeredPane {
         btnRegister.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Aqui va el codigo para el registro
-                System.out.println("Registrado");
+                String userName = txtUser.getText().trim();
+                String password = String.valueOf(txtPass.getPassword());
+                String confirmPassword = String.valueOf(txtConfirmPass.getPassword());
+                user = new UserModel(userName, password, confirmPassword);
             }
         });
-        
+
         txtUser.requestFocus();
     }
-    
-    private void initLogin(){
+
+    private void initLogin(ActionListener eventLogin) {
         pnlLogin.setLayout(new MigLayout("wrap", "push[center]push", "push[]25[]10[]10[]25[]push"));
-        
+
         JLabel title = new JLabel("Iniciar sesion");
         title.setFont(new Font("Norwester", 1, 30));
         title.setForeground(new Color(0, 100, 148));
         pnlLogin.add(title);
-        
+
         MyTextField txtLoginUser = new MyTextField();
         txtLoginUser.setPrefixIcon(new ImageIcon(getClass().getResource("/img/user.png")));
         txtLoginUser.setHint("Nombre");
         pnlLogin.add(txtLoginUser, "w 60%");
-        
+
         MyPasswordField txtLoginPass = new MyPasswordField();
         txtLoginPass.setPrefixIcon(new ImageIcon(getClass().getResource("/img/pass.png")));
         txtLoginPass.setHint("Contrase\u00f1a");
         pnlLogin.add(txtLoginPass, "w 60%");
-        
-        
+
         JButton btnForget = new JButton("¿Olvidaste tu contrase\u00f1a?");
         btnForget.setForeground(new Color(100, 100, 100));
         btnForget.setFont(new Font("Roboto", 0, 14));
@@ -100,28 +107,30 @@ public class PanelLogin extends javax.swing.JLayeredPane {
                 System.out.println("Registrado");
             }
         });
-        
+
         Button btnLogin = new Button();
         btnLogin.setBackground(new Color(0, 100, 148));
         btnLogin.setForeground(new Color(250, 250, 250));
         btnLogin.setText("Iniciar sesion");
+        btnLogin.addActionListener(eventLogin);
         pnlLogin.add(btnLogin, "w 40%, h 40");
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Aqui va el codigo para el logueo
-                System.out.println("Logueado");
+                String username = txtLoginUser.getText().trim();
+                String password = String.valueOf(txtLoginPass.getPassword());
+                dataLogin = new LoginVM(username, password);
             }
         });
-        
+
         txtLoginUser.requestFocus();
     }
-    
-    public void showRegister(boolean isShow){
-        if(isShow){
+
+    public void showRegister(boolean isShow) {
+        if (isShow) {
             pnlRegister.setVisible(true);
             pnlLogin.setVisible(false);
-        } else{
+        } else {
             pnlRegister.setVisible(false);
             pnlLogin.setVisible(true);
         }
@@ -167,7 +176,7 @@ public class PanelLogin extends javax.swing.JLayeredPane {
         add(pnlRegister, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel pnlLogin;
     private javax.swing.JPanel pnlRegister;

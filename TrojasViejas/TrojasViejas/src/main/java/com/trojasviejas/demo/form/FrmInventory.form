@@ -82,6 +82,26 @@
             </Property>
           </Properties>
         </Component>
+        <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCard4">
+          <Properties>
+            <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="7b" red="ff" type="rgb"/>
+            </Property>
+            <Property name="color2" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="88" red="ff" type="rgb"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCard5">
+          <Properties>
+            <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="7b" red="ff" type="rgb"/>
+            </Property>
+            <Property name="color2" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="88" red="ff" type="rgb"/>
+            </Property>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="com.trojasviejas.swing.panels.PanelBorder" name="pnlTable">

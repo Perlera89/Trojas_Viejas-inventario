@@ -4,8 +4,10 @@ import com.trojasviejas.component.main.event.*;
 import com.trojasviejas.models.utility.*;
 
 public class UserModel {
+    private int userId;
     private String username;
     private String password;
+    private String verifyPassword;
 
     public UserModel() {
     }
@@ -14,9 +16,30 @@ public class UserModel {
         this.username = username;
         this.password = password;
     }
+
+    public UserModel(String username, String password, String verifyPassword) {
+        this.username = username;
+        this.password = password;
+        this.verifyPassword = verifyPassword;
+    }
+    
+    public UserModel(int userId, String username, String password, String verifyPassword) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.verifyPassword = verifyPassword;
+    }
     
     public Object[] toRowTable(IUserEventAction event) {
         return new Object[]{username, password, new UserActionModel(this, event)};
+    }
+    
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -33,5 +56,13 @@ public class UserModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    public String getVerifyPassword() {
+        return verifyPassword;
+    }
+
+    public void setVerifyPassword(String verifyPassword) {
+        this.verifyPassword = verifyPassword;
     }
 }

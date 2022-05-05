@@ -41,7 +41,7 @@ public class PanelMessage extends javax.swing.JPanel {
 
         lblMessage = new javax.swing.JLabel();
 
-        lblMessage.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        lblMessage.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         lblMessage.setForeground(new java.awt.Color(248, 248, 248));
         lblMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMessage.setText("Mensaje");
@@ -50,7 +50,9 @@ public class PanelMessage extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblMessage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

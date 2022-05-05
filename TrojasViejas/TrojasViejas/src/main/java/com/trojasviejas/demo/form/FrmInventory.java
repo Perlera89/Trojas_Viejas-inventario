@@ -55,6 +55,8 @@ public class FrmInventory extends javax.swing.JPanel {
         pnlCard1 = new com.trojasviejas.component.main.PanelCard();
         pnlCard2 = new com.trojasviejas.component.main.PanelCard();
         pnlCard3 = new com.trojasviejas.component.main.PanelCard();
+        pnlCard4 = new com.trojasviejas.component.main.PanelCard();
+        pnlCard5 = new com.trojasviejas.component.main.PanelCard();
         pnlTable = new com.trojasviejas.swing.panels.PanelBorder();
         lblProviders = new javax.swing.JLabel();
         scroll = new javax.swing.JScrollPane();
@@ -76,6 +78,14 @@ public class FrmInventory extends javax.swing.JPanel {
         pnlCard3.setColor1(new java.awt.Color(255, 123, 0));
         pnlCard3.setColor2(new java.awt.Color(255, 136, 0));
         pnlContainer.add(pnlCard3);
+
+        pnlCard4.setColor1(new java.awt.Color(255, 123, 0));
+        pnlCard4.setColor2(new java.awt.Color(255, 136, 0));
+        pnlContainer.add(pnlCard4);
+
+        pnlCard5.setColor1(new java.awt.Color(255, 123, 0));
+        pnlCard5.setColor2(new java.awt.Color(255, 136, 0));
+        pnlContainer.add(pnlCard5);
 
         pnlTable.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -180,6 +190,8 @@ public class FrmInventory extends javax.swing.JPanel {
     private com.trojasviejas.component.main.PanelCard pnlCard1;
     private com.trojasviejas.component.main.PanelCard pnlCard2;
     private com.trojasviejas.component.main.PanelCard pnlCard3;
+    private com.trojasviejas.component.main.PanelCard pnlCard4;
+    private com.trojasviejas.component.main.PanelCard pnlCard5;
     private javax.swing.JLayeredPane pnlContainer;
     private com.trojasviejas.swing.panels.PanelBorder pnlTable;
     private javax.swing.JScrollPane scroll;
