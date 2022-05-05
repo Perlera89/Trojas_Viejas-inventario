@@ -7,12 +7,8 @@ import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
 import com.trojasviejas.component.main.event.IProviderEventAction;
-import com.trojasviejas.models.viewmodel.InventoryVM;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class FrmInventory extends javax.swing.JPanel {
 
@@ -24,8 +20,11 @@ public class FrmInventory extends javax.swing.JPanel {
     }
     
     private void initCard(){
-        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Total Vendedores", "21"));
-        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total Donadores", "$8"));
+        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total de articulos", "21"));
+        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total en stock", "8"));
+        pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/limit.png")), "Total en el limite", "21"));
+        pnlCard4.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/tools.png")), "Total de herramientas", "22"));
+        pnlCard5.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/accessories.png")), "Total de accesorios", "13"));
     }
     
     private void initTableData(){
@@ -67,10 +66,11 @@ public class FrmInventory extends javax.swing.JPanel {
         pnlCard5 = new com.trojasviejas.component.main.PanelCard();
         pnlTable = new com.trojasviejas.swing.panels.PanelBorder();
         lblProviders = new javax.swing.JLabel();
-        btnNew = new com.trojasviejas.swing.Buttons.ActionButton();
+        btnRegister = new com.trojasviejas.swing.Buttons.ActionButton();
         scroll = new javax.swing.JScrollPane();
         tblInventory = new com.trojasviejas.swing.tables.inventory.InventoryTable();
         cbbStock = new com.trojasviejas.swing.ComboBox();
+        cbbItems = new com.trojasviejas.swing.ComboBox();
 
         setBackground(new java.awt.Color(232, 241, 242));
 
@@ -102,15 +102,15 @@ public class FrmInventory extends javax.swing.JPanel {
         lblProviders.setForeground(new java.awt.Color(127, 127, 127));
         lblProviders.setText("Inventario");
 
-        btnNew.setBackground(new java.awt.Color(0, 184, 82));
-        btnNew.setForeground(new java.awt.Color(255, 255, 255));
-        btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png"))); // NOI18N
-        btnNew.setText("Nuevo");
-        btnNew.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        btnNew.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnNew.addActionListener(new java.awt.event.ActionListener() {
+        btnRegister.setBackground(new java.awt.Color(0, 184, 82));
+        btnRegister.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png"))); // NOI18N
+        btnRegister.setText("Registro");
+        btnRegister.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        btnRegister.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewActionPerformed(evt);
+                btnRegisterActionPerformed(evt);
             }
         });
 
@@ -139,23 +139,29 @@ public class FrmInventory extends javax.swing.JPanel {
         cbbStock.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         cbbStock.setLabeText("Elija existencia");
 
+        cbbItems.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Existencias", "Agotados" }));
+        cbbItems.setSelectedIndex(-1);
+        cbbItems.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        cbbItems.setLabeText("Elija articulo");
+
         javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
         pnlTable.setLayout(pnlTableLayout);
         pnlTableLayout.setHorizontalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTableLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblProviders)
-                            .addGroup(pnlTableLayout.createSequentialGroup()
-                                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cbbStock, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(scroll)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlTableLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(cbbItems, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbbStock, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scroll, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlTableLayout.createSequentialGroup()
+                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblProviders, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnRegister, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(20, 20, 20))
         );
         pnlTableLayout.setVerticalGroup(
@@ -165,8 +171,9 @@ public class FrmInventory extends javax.swing.JPanel {
                 .addComponent(lblProviders)
                 .addGap(11, 11, 11)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbbStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -194,13 +201,15 @@ public class FrmInventory extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        
-    }//GEN-LAST:event_btnNewActionPerformed
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        WindowInventory item = new WindowInventory();
+        WindowHome.main(WindowType.IVENTORY, item, false);
+    }//GEN-LAST:event_btnRegisterActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.Buttons.ActionButton btnNew;
+    private com.trojasviejas.swing.Buttons.ActionButton btnRegister;
+    private com.trojasviejas.swing.ComboBox cbbItems;
     private com.trojasviejas.swing.ComboBox cbbStock;
     private javax.swing.JLabel lblProviders;
     private com.trojasviejas.component.main.PanelCard pnlCard1;

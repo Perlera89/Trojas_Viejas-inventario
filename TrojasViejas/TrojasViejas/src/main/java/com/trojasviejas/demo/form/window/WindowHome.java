@@ -1,22 +1,10 @@
 package com.trojasviejas.demo.form.window;
 
-import com.trojasviejas.data.dao.ItemDao;
-import com.trojasviejas.demo.form.FrmItems;
-import com.trojasviejas.models.entity.ItemModel;
-import com.trojasviejas.models.utility.CategoryType;
-import com.trojasviejas.models.utility.ItemType;
-import com.trojasviejas.swing.scroll.ScrollBar;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 
 public class WindowHome extends javax.swing.JFrame {
 
@@ -50,6 +38,13 @@ public class WindowHome extends javax.swing.JFrame {
             } else{
                 setForm(component);
                 lblEncabezado.setText("Agregar Factura");
+            }
+        } else if(type == type.IVENTORY){
+            if(isUpdate){
+                
+            } else{
+                setForm(component);
+                lblEncabezado.setText("Agregar Entrada/Salida");
             }
         }
     }
@@ -159,7 +154,6 @@ public class WindowHome extends javax.swing.JFrame {
         );
 
         pnlContainer.setBackground(new java.awt.Color(255, 255, 255));
-        pnlContainer.setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         pnlContainer.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout pnlHomeLayout = new javax.swing.GroupLayout(pnlHome);
@@ -177,9 +171,9 @@ public class WindowHome extends javax.swing.JFrame {
             pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHomeLayout.createSequentialGroup()
                 .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pnlContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 

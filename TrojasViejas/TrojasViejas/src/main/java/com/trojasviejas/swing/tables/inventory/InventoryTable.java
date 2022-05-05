@@ -1,8 +1,6 @@
 package com.trojasviejas.swing.tables.inventory;
 
-import com.trojasviejas.swing.tables.item.*;
 import com.trojasviejas.models.utility.CategoryType;
-import com.trojasviejas.models.utility.ItemActionModel;
 import com.trojasviejas.models.utility.ItemType;
 import com.trojasviejas.swing.CategoryCellStatus;
 import com.trojasviejas.swing.ItemCellStatus;
@@ -10,12 +8,9 @@ import com.trojasviejas.swing.tables.TableHeader;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.*;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 
 public class InventoryTable extends JTable {
 
@@ -28,7 +23,7 @@ public class InventoryTable extends JTable {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                 TableHeader header = new TableHeader(o + "");
-                if (i1 == 4 || i1 == 5 || i1 == 6) {
+                if (i1 == 5 || i1 == 6) {
                     header.setHorizontalAlignment(JLabel.CENTER);
                 }
                 return header;

@@ -29,9 +29,9 @@ public class FrmItems extends javax.swing.JPanel {
     }
 
     private void initCard(int contadorItem) {
-        pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Artículos", String.valueOf(contadorItem)));
-        pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Herramientas", "$8"));
-        pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Accesorios", "$8"));
+        pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Artículos", String.valueOf(contadorItem)));
+        pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/tools.png")), "Total Herramientas", "21"));
+        pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/accessories.png")), "Total Accesorios", "18"));
         
         pnlCardCountCategory1.setFilter(new MouseAdapter() {
             @Override

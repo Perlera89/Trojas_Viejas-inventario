@@ -38,8 +38,6 @@ public class UserDao {
         CallableStatement query = connection.prepareCall("call sp_s_user(?,?);");
         query.setString(1, login.getUsername());
         query.setString(2, Hash.getHash(login.getPassword(), "SHA1"));
-        System.out.println(login.getUsername());
-        System.out.println(Hash.getHash(login.getPassword(), "SHA1"));
 
         ResultSet result = query.executeQuery();
         if (result.next()) {
