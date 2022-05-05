@@ -279,7 +279,7 @@ public class WindowItems extends javax.swing.JFrame {
             txtDescription.setBorder(BorderFactory.createLineBorder(new Color(3,155,216), 0));
         } 
     }//GEN-LAST:event_txtDescriptionMousePressed
-
+  
     private void txtDescriptionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDescriptionMouseEntered
         txtDescription.setBorder(BorderFactory.createLineBorder(new Color(3,150,200), 0));
     }//GEN-LAST:event_txtDescriptionMouseEntered
@@ -294,7 +294,14 @@ public class WindowItems extends javax.swing.JFrame {
             cbbItemType.addItem(i.toString());
         }
 
-      }
+    }
+    public void clean(){
+        txtName.setText("");
+        txtAmount.setText("");
+        txtDescription.setText("");
+        cbbCategory.setSelectedItem(CategoryType.values()[0].toString());
+        cbbItemType.setSelectedItem(ItemType.values()[0].toString());
+    }
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
      //Agregar o Actualizar
         if (idRegistro > 0) {
@@ -310,6 +317,7 @@ public class WindowItems extends javax.swing.JFrame {
 
             items.UpdateItems(item);
             frmItem.initTableData();
+            this.dispose();
 
         } else {
             ItemModel item = new ItemModel();
@@ -323,8 +331,8 @@ public class WindowItems extends javax.swing.JFrame {
             
             items.AddItem(item);
             frmItem.initTableData();
+            clean();
         }
-
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
