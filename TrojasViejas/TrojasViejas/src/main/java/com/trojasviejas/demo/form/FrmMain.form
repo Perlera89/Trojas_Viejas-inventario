@@ -75,6 +75,10 @@
         <Component class="com.trojasviejas.component.main.PanelMenu" name="pnlMenu">
         </Component>
         <Component class="com.trojasviejas.component.main.PanelHeader" name="panelHeader1">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.trojasviejas.component.main.PanelHeader()"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="panelHeader1.frmMain = formMain;"/>
+          </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="pnlMain">
           <Properties>

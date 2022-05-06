@@ -1,11 +1,12 @@
 package com.trojasviejas.demo.form;
 
 import com.trojasviejas.component.main.event.IEventMenuSelected;
+import com.trojasviejas.services.IFindFunctions;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import java.awt.*;
 import javax.swing.JComponent;
 
-public class FrmMain extends javax.swing.JFrame {
+public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     
     private FrmHome home;
     private FrmProviders providers;
@@ -33,17 +34,40 @@ public class FrmMain extends javax.swing.JFrame {
             public void selected(int index) {
                 if(index == 0){
                     setForm(home);
+                    
+                    //indice del dashboard
+                    indexForm = 0;
                 } else if(index == 1){
+                    
+                    //indice del dashboard
+                    indexForm = 1;
                     setForm(providers);
                 } else if(index == 2){
+                    
                     setForm(items);
+                    
+                    //indice del proveedores
+                    indexForm = 2;
                 } else if(index == 3){
                     setForm(invoices);
+                    
+                    //indice del facturas
+                    indexForm = 3;
                 } else if(index == 4){
                     setForm(inventory);
+                    
+                    //indice del inventario
+                    indexForm = 4;
                 } else if(index == 5){
                     setForm(inventory);
-                } else if(index == 9){
+                    
+                    //indice del regisstros de actividad
+                    indexForm = 5;
+                }else if(index == 6){
+                    
+                    //indice del reportes
+                    indexForm = 6;
+                }else if(index == 9){
                     setForm(users);
                 } else if(index == 10){
                     setForm(users);
@@ -60,7 +84,70 @@ public class FrmMain extends javax.swing.JFrame {
         pnlMain.repaint();
         pnlMain.revalidate();
     }
+    
+    //variable para reconocer el objeto actual de menu en el buscador
+    private final FrmMain formMain = this;
+    
 
+        //define el indice del boton presionado
+    private int indexForm = 0;
+    
+    public void findIn(String stringSearch){
+        switch (indexForm) {
+            //redirige la busqueda al metodo de busqueda de la entidad en especifico
+            case 0 -> findForDasboard(stringSearch);
+            case 1 -> findForProviders(stringSearch);
+            case 2 -> findForItems(stringSearch);
+            case 3 -> findForInvoices(stringSearch);
+            case 4 -> findForInventory(stringSearch);
+            case 5 -> findForActivityRegisters(stringSearch);
+            case 6 -> findForReports(stringSearch);
+            default -> {}
+        }
+    }
+    
+        @Override
+    public void findForDasboard(String stringSearch) {
+        //llama al metodo en la entidad que ejecuta la busqueda
+        System.out.println("buscando en dashboard: "+ stringSearch);
+    }
+
+    @Override
+    public void findForProviders(String stringSearch) {
+        //llama al metodo en la entidad que ejecuta la busqueda
+        System.out.println("buscando en providers: "+ stringSearch);
+    }
+
+    @Override
+    public void findForItems(String stringSearch) {
+        //llama al metodo en la entidad que ejecuta la busqueda
+        System.out.println("buscando en items: "+ stringSearch);
+    }
+
+    @Override
+    public void findForInvoices(String stringSearch) {
+        //llama al metodo en la entidad que ejecuta la busqueda
+        System.out.println("buscando en invoices: "+ stringSearch);
+    }
+
+    @Override
+    public void findForInventory(String stringSearch) { 
+        //llama al metodo en la entidad que ejecuta la busqueda
+        System.out.println("buscando en inventory: " + stringSearch);      
+    }
+
+    @Override
+    public void findForActivityRegisters(String stringSearch) {
+        //llama al metodo en la entidad que ejecuta la busqueda
+        System.out.println("buscando en registers: "+ stringSearch);     
+    }
+
+    @Override
+    public void findForReports(String stringSearch) {
+        //llama al metodo en la entidad que ejecuta la busqueda
+        System.out.println("buscando en reports: "+ stringSearch);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -76,6 +163,8 @@ public class FrmMain extends javax.swing.JFrame {
 
         pnlContainer.setBackground(new java.awt.Color(232, 241, 242));
         pnlContainer.setForeground(new java.awt.Color(255, 255, 255));
+
+        panelHeader1.frmMain = formMain;
 
         pnlMain.setBackground(new java.awt.Color(232, 241, 242));
         pnlMain.setOpaque(false);
@@ -158,4 +247,5 @@ public class FrmMain extends javax.swing.JFrame {
     private com.trojasviejas.component.main.PanelMenu pnlMenu;
     private com.trojasviejas.swing.scroll.ScrollBar scrollBar1;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -2,6 +2,7 @@ package com.trojasviejas.component.main;
 
 import com.trojasviejas.component.login.MessageDialog;
 import com.trojasviejas.demo.form.FrmLogin;
+import com.trojasviejas.demo.form.FrmMain;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
@@ -13,6 +14,16 @@ import java.awt.event.MouseListener;
 import javax.swing.JOptionPane;
 
 public class PanelHeader extends javax.swing.JPanel {
+
+
+    //llamando al menu para luego pasarle los datos de las busqueda
+    public PanelHeader(/*FrmMain main*/) {
+        initComponents();
+        setOpaque(false);
+        //frmMain = main;
+    }
+    
+    //string de busqueda
     private String search;
 
     public String getSearch() {
@@ -21,11 +32,6 @@ public class PanelHeader extends javax.swing.JPanel {
 
     public void setSearch(String search) {
         this.search = search;
-    }
-
-    public PanelHeader() {
-        initComponents();
-        setOpaque(false);
     }
     
     public void setSearch(MouseListener action){
@@ -56,11 +62,11 @@ public class PanelHeader extends javax.swing.JPanel {
         btnSearch.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/search.png"))); // NOI18N
         btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSearchMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSearchMouseEntered(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnSearchMousePressed(evt);
             }
         });
 
@@ -100,15 +106,17 @@ public class PanelHeader extends javax.swing.JPanel {
     private void btnOption1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOption1MouseClicked
 
     }//GEN-LAST:event_btnOption1MouseClicked
-
-    private void btnSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMousePressed
-        search = txtSearch.getText();
-        JOptionPane.showMessageDialog(null, search);
-    }//GEN-LAST:event_btnSearchMousePressed
+    
 
     private void btnSearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseEntered
         btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_btnSearchMouseEntered
+    //se almacena el objeto actual del menu
+    public FrmMain frmMain = null;
+    private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
+        setSearch(txtSearch.getText());
+        frmMain.findIn(getSearch());
+    }//GEN-LAST:event_btnSearchMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
