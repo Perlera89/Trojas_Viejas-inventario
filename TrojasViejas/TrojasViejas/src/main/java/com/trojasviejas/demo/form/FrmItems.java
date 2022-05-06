@@ -1,9 +1,7 @@
 package com.trojasviejas.demo.form;
-
 import com.trojasviejas.component.login.MessageDialog;
 import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.data.dao.ItemDao;
-
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
@@ -19,38 +17,46 @@ public class FrmItems extends javax.swing.JPanel {
 
     public FrmItems() {
         setOpaque(false);
-        init();
-    }
-    
-    public void init(){
         initComponents();
-        initCard(0);
+        initCard(0, 0, 0);
         initTableData();
     }
+    
+    private void initCard(int contadorItem, int contador_tools, int contador_accesories) {
+        pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Artículos", String.valueOf(contadorItem)));
+        pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "HERRAMIENTAS", String.valueOf(contador_tools)));
+        pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "ACCESORIOS", String.valueOf(contador_accesories)));
 
-    private void initCard(int contadorItem) {
-        pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total Artículos", String.valueOf(contadorItem)));
-        pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/tools.png")), "Total Herramientas", "21"));
-        pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/accessories.png")), "Total Accesorios", "18"));
-        
+        pnlCardCountItems.setFilter(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showItems("ALL", f_eventAction);
+                JOptionPane.showMessageDialog(null, "Filtrando contador de artículos");
+            }
+
+        });
+
         pnlCardCountCategory1.setFilter(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                showItems(String.valueOf(CategoryType.HERRAMIENTAS), f_eventAction);
                 JOptionPane.showMessageDialog(null, "Filtrando contador herramientas");
+
             }
-            
+
         });
-        
         pnlCardCountCategory2.setFilter(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Filtrando contador herramientas");
+                showItems(String.valueOf(CategoryType.ACCESORIOS), f_eventAction);
+                JOptionPane.showMessageDialog(null, "Filtrando contador accesorios");
             }
-            
+
         });
     }
 
     FrmItems form = this;
+    private IItemEventAction f_eventAction;
 
     public void initTableData() {
         //Agregar registro
@@ -73,7 +79,6 @@ public class FrmItems extends javax.swing.JPanel {
                 formulario.cbbItemType.setSelectedItem(selectedtRow.get(5).toString());
 
                 WindowHome.main(WindowType.ITEM, formulario, true);
-
                 repaint();
             }
 
@@ -101,38 +106,14 @@ public class FrmItems extends javax.swing.JPanel {
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
 
-        //LIMPIAR TABLA
-        try {
-            DefaultTableModel modelo = (DefaultTableModel) tblItems.getModel();
-            int filas = tblItems.getRowCount();
-            for (int i = 0; filas > i; i++) {
-                modelo.removeRow(0);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
-        }
+        //Cargando datos a la tabla
+        f_eventAction = eventAction;
+        showItems("ALL", f_eventAction);
 
-        ItemDao items = new ItemDao();
-        int contadorItem = 0;
+        //Agregndo los contadores
+        initCard(contador_item, contador_tools, contador_accesories);
 
-        for (var item : items.ListItems()) {
-            tblItems.addRow(new ItemModel(
-                    item.getIdItem(),
-                    item.getName(),
-                    item.getMinimunAmount(),
-                    item.getDescription(),
-                    item.getCategory(),
-                    item.getType()
-            ).toRowTable(eventAction));
-            contadorItem++;
-        }
-        for (var i : items.ListItems()) {
-            System.out.println(i.getCategory().toString() + i.getType().toString());
-        }
-
-        initCard(contadorItem);
-
-        //Ocultar Columnas
+        //Ocultando columnas de la tabla tblItems
         tblItems.getColumnModel().getColumn(0).setMaxWidth(0);
         tblItems.getColumnModel().getColumn(0).setMinWidth(0);
         tblItems.getColumnModel().getColumn(0).setPreferredWidth(0);
@@ -143,6 +124,101 @@ public class FrmItems extends javax.swing.JPanel {
         tblItems.getColumnModel().getColumn(3).setPreferredWidth(0);
         tblItems.getColumnModel().getColumn(3).setResizable(false);
 
+    }
+
+    //Método para limpiar la tabla
+    private void clearRowsInTable() {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblItems.getModel();
+            int filas = tblItems.getRowCount();
+            for (int i = 0; filas > i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+    }
+
+    private int contador_item = 0;
+    private int contador_tools = 0;
+    private int contador_accesories = 0;
+
+    public void showItems(String tipo_filtro, IItemEventAction eventAction) {
+        //Reseteando los contadores     
+        contador_item = 0;
+        contador_tools = 0;
+        contador_accesories = 0;
+
+        //Limpiando la tabla
+        clearRowsInTable();
+
+        ItemDao items = new ItemDao();
+
+        //Mostrar todos los datos
+        switch (tipo_filtro) {
+            case "ALL" -> {
+                for (var item : items.ListItems()) {
+                    if (item.getCategory().equals(CategoryType.HERRAMIENTAS)) {
+                        contador_tools++;
+                    }
+                    if (item.getCategory().equals(CategoryType.ACCESORIOS)) {
+                        contador_accesories++;
+                    }
+
+                    //Agregando la fila a la tabla y los botones de acciones
+                    add_rows_to_table(item, eventAction);
+                    contador_item++;
+                }
+
+                //Actualizando los contadores
+                initCard(contador_item, contador_tools, contador_accesories);
+            }
+
+            //Filtrar filas por categoría de "HERRAMIENTAS"
+            case "HERRAMIENTAS" -> {
+                for (var item : items.ListItems()) {
+                    if (item.getCategory().equals(CategoryType.HERRAMIENTAS)) {
+                        contador_tools++;
+
+                        //Agregando la fila a la tabla y los botones
+                        add_rows_to_table(item, eventAction);
+                        contador_item++;
+                    }
+                }
+
+                //Actualizando los contadores
+                initCard(contador_item, contador_tools, contador_accesories);
+            }
+            //filtrar las filas por la categoria de "ACCESORIOS"
+            case "ACCESORIOS" -> {
+                for (var item : items.ListItems()) {
+                    if (item.getCategory().equals(CategoryType.ACCESORIOS)) {
+                        contador_accesories++;
+
+                        //Agregando la fila a la tabla y los botones de acciones
+                        add_rows_to_table(item, eventAction);
+                        contador_item++;
+                    }
+                }
+                //Actualizando los contadores
+                initCard(contador_item, contador_tools, contador_accesories);
+
+            }
+            default -> {
+            }
+        }
+    }
+
+    private void add_rows_to_table(ItemModel item, IItemEventAction eventAction) {
+        //Agregando fila a la tabla
+        tblItems.addRow(new ItemModel(
+                item.getIdItem(),
+                item.getName(),
+                item.getMinimunAmount(),
+                item.getDescription(),
+                item.getCategory(),
+                item.getType()
+        ).toRowTable(eventAction));
     }
 
     @SuppressWarnings("unchecked")

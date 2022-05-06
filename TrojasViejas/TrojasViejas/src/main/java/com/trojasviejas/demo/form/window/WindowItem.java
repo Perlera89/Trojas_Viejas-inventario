@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 public class WindowItem extends javax.swing.JPanel {
-    
+
     public FrmItems frmItem;
     public WindowHome home;
     public int idRegistro;
@@ -38,20 +38,19 @@ public class WindowItem extends javax.swing.JPanel {
         scroll.getViewport().setBackground(Color.white);
         CargarComboBox();
     }
-    
+
     public void CargarComboBox() {
 
         for (var i : CategoryType.values()) {
             cbbCategory.addItem(i.toString());
         }
-        
-        
         for (var i : ItemType.values()) {
             cbbItemType.addItem(i.toString());
         }
-
     }
-    public void clean(){
+
+    //Método para limpiar cajas de texto
+    public void clean() {
         txtName.setText("");
         txtAmount.setText("");
         txtDescription.setText("");
@@ -170,7 +169,7 @@ public class WindowItem extends javax.swing.JPanel {
     private void txtAmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAmountKeyTyped
         char car = evt.getKeyChar();
         if ((car < '0' || car > '9'))
-        evt.consume();
+            evt.consume();
     }//GEN-LAST:event_txtAmountKeyTyped
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -202,7 +201,7 @@ public class WindowItem extends javax.swing.JPanel {
             item.setType(ItemType.values()[cbbItemType.getSelectedIndex()]);
 
             items.AddItem(item);
-            frmItem.init();
+            frmItem.initTableData();
             clean();
         }
     }//GEN-LAST:event_btnAddActionPerformed

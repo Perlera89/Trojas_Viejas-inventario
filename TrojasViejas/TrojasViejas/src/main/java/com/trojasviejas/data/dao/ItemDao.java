@@ -4,7 +4,6 @@ import com.trojasviejas.data.connectiondb.Conexion;
 import com.trojasviejas.models.entity.ItemModel;
 import com.trojasviejas.models.utility.CategoryType;
 import com.trojasviejas.models.utility.ItemType;
-
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
