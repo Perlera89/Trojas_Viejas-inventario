@@ -9,6 +9,8 @@ import java.awt.*;
 import com.trojasviejas.component.main.event.IProviderEventAction;
 import com.trojasviejas.data.dao.InventoryDao;
 import com.trojasviejas.models.viewmodel.InventoryVM;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import javax.swing.table.DefaultTableModel;
@@ -28,6 +30,43 @@ public class FrmInventory extends javax.swing.JPanel {
         pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "BAJO EL LÍMITE", String.valueOf(countItemOnLimit)));
         pnlCard4.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "HERRAMIENTAS", String.valueOf(countTools)));
         pnlCard5.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "ACCESORIOS", String.valueOf(countAccesories)));
+
+        
+        //MUESTRA TODOS LOS REGISTROS NUEVAMENTE
+        pnlCard1.setFilter(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showInventory("ALL");
+            }
+            
+        });
+        
+        //EJECUTA FILTRO DE ITEMS <= LIMITE ESTABLECIDO
+        pnlCard3.setFilter(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showInventory("ITEMS_ON_LIMIT");
+            }
+            
+        }); 
+        
+        //EJECUTA FILTRO DE FILAS POR LAS QUE PERTENECEN A HERRAMIENTAS
+        pnlCard4.setFilter(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showInventory("TOOLS");
+            }
+            
+        });
+           
+        //EJECUTA FILTRO DE LAS FILAS QUE PERTECEN A ACCESORIOS
+        pnlCard5.setFilter(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showInventory("ACCESORIES");
+            }
+            
+        });
         
     }
     
@@ -216,6 +255,7 @@ public class FrmInventory extends javax.swing.JPanel {
         tblInventory = new com.trojasviejas.swing.tables.inventory.InventoryTable();
         cbbStock = new com.trojasviejas.swing.ComboBox();
         cbbItems = new com.trojasviejas.swing.ComboBox();
+        btnRefresh = new com.trojasviejas.swing.Buttons.ActionButton();
 
         setBackground(new java.awt.Color(232, 241, 242));
 
@@ -304,6 +344,13 @@ public class FrmInventory extends javax.swing.JPanel {
         cbbItems.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         cbbItems.setLabeText("Elija articulo");
 
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refresh.png"))); // NOI18N
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
         pnlTable.setLayout(pnlTableLayout);
         pnlTableLayout.setHorizontalGroup(
@@ -311,29 +358,36 @@ public class FrmInventory extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlTableLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(cbbItems, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbbStock, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(scroll, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlTableLayout.createSequentialGroup()
-                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblProviders, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRegister, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(scroll, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+                    .addGroup(pnlTableLayout.createSequentialGroup()
+                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlTableLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(cbbItems, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbbStock, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlTableLayout.createSequentialGroup()
+                                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblProviders, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnRegister, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
         pnlTableLayout.setVerticalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(lblProviders)
-                .addGap(11, 11, 11)
-                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbbStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbbItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlTableLayout.createSequentialGroup()
+                        .addComponent(lblProviders)
+                        .addGap(11, 11, 11)
+                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbbStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbbItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -366,8 +420,13 @@ public class FrmInventory extends javax.swing.JPanel {
         WindowHome.main(WindowType.IVENTORY, item, false);
     }//GEN-LAST:event_btnRegisterActionPerformed
 
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.trojasviejas.swing.Buttons.ActionButton btnRefresh;
     private com.trojasviejas.swing.Buttons.ActionButton btnRegister;
     private com.trojasviejas.swing.ComboBox cbbItems;
     private com.trojasviejas.swing.ComboBox cbbStock;
