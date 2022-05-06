@@ -110,42 +110,50 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     public void findForDasboard(String stringSearch) {
         //llama al metodo en la entidad que ejecuta la busqueda
         System.out.println("buscando en dashboard: "+ stringSearch);
+        //home <- objeto de la entidad donde se buscara en metodo que ejecuta la busqueda
     }
 
     @Override
     public void findForProviders(String stringSearch) {
         //llama al metodo en la entidad que ejecuta la busqueda
         System.out.println("buscando en providers: "+ stringSearch);
+        //providers <- objeto de la entidad donde se buscara en metodo que ejecuta la busqueda
     }
 
     @Override
     public void findForItems(String stringSearch) {
         //llama al metodo en la entidad que ejecuta la busqueda
         System.out.println("buscando en items: "+ stringSearch);
+        //items <- objeto de la entidad donde se buscara en metodo que ejecuta la busqueda
     }
 
     @Override
     public void findForInvoices(String stringSearch) {
         //llama al metodo en la entidad que ejecuta la busqueda
         System.out.println("buscando en invoices: "+ stringSearch);
+        //invoices <- objeto de la entidad donde se buscara en metodo que ejecuta la busqueda
     }
 
     @Override
     public void findForInventory(String stringSearch) { 
         //llama al metodo en la entidad que ejecuta la busqueda
-        System.out.println("buscando en inventory: " + stringSearch);      
+        System.out.println("buscando en inventory: " + stringSearch);   
+        inventory.listByFinder(stringSearch);
+        inventory.showInventory("ALL");
     }
 
     @Override
     public void findForActivityRegisters(String stringSearch) {
         //llama al metodo en la entidad que ejecuta la busqueda
-        System.out.println("buscando en registers: "+ stringSearch);     
+        System.out.println("buscando en registers: "+ stringSearch); 
+        
     }
 
     @Override
     public void findForReports(String stringSearch) {
         //llama al metodo en la entidad que ejecuta la busqueda
         System.out.println("buscando en reports: "+ stringSearch);
+        
     }
     
     @SuppressWarnings("unchecked")

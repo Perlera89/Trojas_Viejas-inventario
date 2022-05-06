@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.time.*;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmInventory extends javax.swing.JPanel {
@@ -110,6 +111,19 @@ public class FrmInventory extends javax.swing.JPanel {
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
     
     //Array De busqueda
+    ArrayList<InventoryVM> listFound=null;
+    
+    public void listByFinder(String _search){
+        if (!_search.isBlank() || !_search.isEmpty()){
+
+            InventoryDao inventories = new InventoryDao();
+
+            //guardando la busqueda en una array para ser usada en los filtros de cajas
+            listFound = inventories.findBy(_search);
+            showInventory("ALL");
+        }
+
+    }
     
     //contadores
     private int countItem = 0;
@@ -129,12 +143,16 @@ public class FrmInventory extends javax.swing.JPanel {
         //LIMPIANDO LA TABLA
         clearRowsInTable();
         
-        InventoryDao inventories = new InventoryDao();
-
+       InventoryDao inventory = new InventoryDao();
+        ArrayList<InventoryVM> inventories = inventory.list();
+        
+        if (listFound != null) {
+            inventories = listFound;
+        }
         //MOSTRAR TODOS LOS DATOS
         switch (tipo_filtro) {
             case "ALL" -> {
-                for (var i : inventories.list()) {
+                for (var i : inventories) {
                     if (i.getCategory().equals(CategoryType.HERRAMIENTAS)) {
                         countTools++;
                     }
@@ -155,7 +173,7 @@ public class FrmInventory extends javax.swing.JPanel {
             }
             //FILTRAR LAAS FILAS POR ITEMS BAJO EL MINIMO
             case "ITEMS_ON_LIMIT" -> {
-                for (var i : inventories.list()) {
+                for (var i : inventories) {
 
                     if (i.getStock() <= i.getMinimunAmount()) {
                         if (i.getCategory().equals(CategoryType.HERRAMIENTAS)) {
@@ -180,7 +198,7 @@ public class FrmInventory extends javax.swing.JPanel {
             }
             //FILTRAR LAAS FILAS POR LA CATEGORIA DE HERRAMIENTAS
             case "TOOLS" -> {
-                for (var i : inventories.list()) {
+                for (var i : inventories) {
                     if (i.getCategory().equals(CategoryType.HERRAMIENTAS)) {
                         
                         if (i.getStock() <= i.getMinimunAmount()) {
@@ -199,7 +217,7 @@ public class FrmInventory extends javax.swing.JPanel {
             }
             //FILTRAR LAS FILAS POR LA CATEGORIA DE ACCESORIOS
             case "ACCESORIES" -> {
-                for (var i : inventories.list()) {
+                for (var i : inventories) {
                     if (i.getCategory().equals(CategoryType.ACCESORIOS)) {
 
                         if (i.getStock() <= i.getMinimunAmount()) {
@@ -421,7 +439,9 @@ public class FrmInventory extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        // TODO add your handling code here:
+        
+        listFound = null;
+        showInventory("ALL");
     }//GEN-LAST:event_btnRefreshActionPerformed
 
 

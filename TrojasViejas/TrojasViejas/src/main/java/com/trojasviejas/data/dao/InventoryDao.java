@@ -52,18 +52,18 @@ public class InventoryDao{
                 inventories.add(inventory);
                 
                 
-                System.out.println(
-                  inventory.getId()+" "
-                 +inventory.getAmount()+" "
-                 +inventory.getItem()+" "
-                 +inventory.getStock()+" "
-                 +inventory.getPricePerUnit()+" "
-                 +inventory.getMinimunAmount()+" "
-                 +inventory.getCategory()+" "
-                 +inventory.getType()+" "
-                 +inventory.getBuyDate()+" \n"
-                  
-                );
+//                System.out.println(
+//                  inventory.getId()+" "
+//                 +inventory.getAmount()+" "
+//                 +inventory.getItem()+" "
+//                 +inventory.getStock()+" "
+//                 +inventory.getPricePerUnit()+" "
+//                 +inventory.getMinimunAmount()+" "
+//                 +inventory.getCategory()+" "
+//                 +inventory.getType()+" "
+//                 +inventory.getBuyDate()+" \n"
+//                  
+//                );
             }
             
         
@@ -123,18 +123,18 @@ public class InventoryDao{
                 inventories.add(inventory);
                 
                 
-                System.out.println(
-                  inventory.getId()+" "
-                 +inventory.getAmount()+" "
-                 +inventory.getItem()+" "
-                 +inventory.getStock()+" "
-                 +inventory.getPricePerUnit()+" "
-                 +inventory.getMinimunAmount()+" "
-                 +inventory.getCategory()+" "
-                 +inventory.getType()+" "
-                 +inventory.getBuyDate()+" \n"
-                  
-                );
+//                System.out.println(
+//                  inventory.getId()+" "
+//                 +inventory.getAmount()+" "
+//                 +inventory.getItem()+" "
+//                 +inventory.getStock()+" "
+//                 +inventory.getPricePerUnit()+" "
+//                 +inventory.getMinimunAmount()+" "
+//                 +inventory.getCategory()+" "
+//                 +inventory.getType()+" "
+//                 +inventory.getBuyDate()+" \n"
+//                  
+//                );
             }
             
         
