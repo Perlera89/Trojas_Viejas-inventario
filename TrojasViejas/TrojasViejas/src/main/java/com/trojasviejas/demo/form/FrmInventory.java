@@ -7,8 +7,11 @@ import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
 import com.trojasviejas.component.main.event.IProviderEventAction;
+import com.trojasviejas.data.dao.InventoryDao;
+import com.trojasviejas.models.viewmodel.InventoryVM;
 import java.text.SimpleDateFormat;
 import java.time.*;
+import javax.swing.table.DefaultTableModel;
 
 public class FrmInventory extends javax.swing.JPanel {
 
@@ -20,11 +23,12 @@ public class FrmInventory extends javax.swing.JPanel {
     }
     
     private void initCard(){
-        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total de articulos", "21"));
-        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "Total en stock", "8"));
-        pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/limit.png")), "Total en el limite", "21"));
-        pnlCard4.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/tools.png")), "Total de herramientas", "22"));
-        pnlCard5.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/accessories.png")), "Total de accesorios", "13"));
+        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "ARTÍCULOS", String.valueOf(countItem)));
+        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "EXISTENCIAS", String.valueOf(countStock)));
+        pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "BAJO EL LÍMITE", String.valueOf(countItemOnLimit)));
+        pnlCard4.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "HERRAMIENTAS", String.valueOf(countTools)));
+        pnlCard5.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "ACCESORIOS", String.valueOf(countAccesories)));
+        
     }
     
     private void initTableData(){
@@ -48,10 +52,151 @@ public class FrmInventory extends javax.swing.JPanel {
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
         
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        LocalDate fecha = LocalDate.now();
+        showInventory("ALL");
+
+    }
         
-        tblInventory.addRow(new Object[]{10, "Tubo", 10, 5, 4, CategoryType.ACCESORIOS, ItemType.PVC, fecha});
+    private void clearRowsInTable(){
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblInventory.getModel();
+            int filas = tblInventory.getRowCount();
+            for (int i = 0; filas > i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+    }
+    //formato para fechas
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+    
+    //Array De busqueda
+    
+    //contadores
+    private int countItem = 0;
+    private int countStock = 0;
+    private int countItemOnLimit = 0;
+    private int countTools = 0;
+    private int countAccesories = 0;
+    
+    public void showInventory(String tipo_filtro){
+        //RESETEANDO LOS CONTADORES      
+        countItem = 0;
+        countStock = 0;
+        countItemOnLimit = 0;
+        countTools = 0;
+        countAccesories = 0;
+        
+        //LIMPIANDO LA TABLA
+        clearRowsInTable();
+        
+        InventoryDao inventories = new InventoryDao();
+
+        //MOSTRAR TODOS LOS DATOS
+        switch (tipo_filtro) {
+            case "ALL" -> {
+                for (var i : inventories.list()) {
+                    if (i.getCategory().equals(CategoryType.HERRAMIENTAS)) {
+                        countTools++;
+                    }
+                    if (i.getCategory().equals(CategoryType.ACCESORIOS)) {
+                        countAccesories++;
+                    }
+                    if (i.getStock() <= i.getMinimunAmount()) {
+                        countItemOnLimit++;
+                    }
+                    //AGREGANDO LA FILA A LA TABLA Y LOS BOTONES DE ACCIONES
+                    add_rows_to_table(i);
+                    //Sumando las existencias
+                    countStock += i.getStock();
+                    countItem++;
+                }
+                //ACTUALIZANDO LOS CONTADORES
+                initCard();
+            }
+            //FILTRAR LAAS FILAS POR ITEMS BAJO EL MINIMO
+            case "ITEMS_ON_LIMIT" -> {
+                for (var i : inventories.list()) {
+
+                    if (i.getStock() <= i.getMinimunAmount()) {
+                        if (i.getCategory().equals(CategoryType.HERRAMIENTAS)) {
+                            countTools++;
+                        }
+                        if (i.getCategory().equals(CategoryType.ACCESORIOS)) {
+                            countAccesories++;
+                        }
+                        countItemOnLimit++;
+                        //Sumando las existencias
+                        countStock += i.getStock();
+
+                        //AGREGANDO LA FILA A LA TABLA Y LOS BOTONES DE ACCIONES
+                        add_rows_to_table(i);
+                        countItem++;
+                    }
+
+                    
+                }
+                //ACTUALIZANDO LOS CONTADORES
+                initCard();
+            }
+            //FILTRAR LAAS FILAS POR LA CATEGORIA DE HERRAMIENTAS
+            case "TOOLS" -> {
+                for (var i : inventories.list()) {
+                    if (i.getCategory().equals(CategoryType.HERRAMIENTAS)) {
+                        
+                        if (i.getStock() <= i.getMinimunAmount()) {
+                            countItemOnLimit++;
+                        }
+                        //Sumando las existencias
+                        countStock += i.getStock();
+                        countTools++;
+                        //AGREGANDO LA FILA A LA TABLA Y LOS BOTONES DE ACCIONES
+                        add_rows_to_table(i);
+                        countItem++;
+                    }
+                }
+                //ACTUALIZANDO LOS CONTADORES
+                initCard();
+            }
+            //FILTRAR LAS FILAS POR LA CATEGORIA DE ACCESORIOS
+            case "ACCESORIES" -> {
+                for (var i : inventories.list()) {
+                    if (i.getCategory().equals(CategoryType.ACCESORIOS)) {
+
+                        if (i.getStock() <= i.getMinimunAmount()) {
+                            countItemOnLimit++;
+                        }
+                        //Sumando las existencias
+                        countStock += i.getStock();
+                        
+                        countAccesories++;
+                        //AGREGANDO LA FILA A LA TABLA Y LOS BOTONES DE ACCIONES
+                        add_rows_to_table(i);
+                        countItem++;
+                    }
+                }
+                //ACTUALIZANDO LOS CONTADORES
+                initCard();
+
+            }
+            default -> {
+            }
+        } 
+    }
+    
+    private void add_rows_to_table(InventoryVM inventory){
+        //AGREGANDO FILA A  lA TABLA
+        tblInventory.addRow(new Object[]{
+                inventory.getId(),
+                inventory.getAmount(),
+                inventory.getItem(),
+                inventory.getStock(),
+                inventory.getMinimunAmount(),
+                "$"+inventory.getPricePerUnit(),
+                inventory.getCategory(),
+                inventory.getType(),
+                formato.format(inventory.getBuyDate())
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -121,18 +266,33 @@ public class FrmInventory extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Comprado", "Articulo", "Existencias", "Cantidad minima", "C/U", "Categoria", "Tipo", "Fecha de compra"
+                "Id", "Comprado", "Articulo", "Existencias", "Cantidad minima", "C/U", "Categoria", "Tipo", "Fecha de compra"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
         scroll.setViewportView(tblInventory);
+        if (tblInventory.getColumnModel().getColumnCount() > 0) {
+            tblInventory.getColumnModel().getColumn(0).setMinWidth(0);
+            tblInventory.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblInventory.getColumnModel().getColumn(0).setMaxWidth(0);
+            tblInventory.getColumnModel().getColumn(4).setMinWidth(0);
+            tblInventory.getColumnModel().getColumn(4).setPreferredWidth(0);
+            tblInventory.getColumnModel().getColumn(4).setMaxWidth(0);
+        }
 
         cbbStock.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Existencias", "Agotados" }));
         cbbStock.setSelectedIndex(-1);
