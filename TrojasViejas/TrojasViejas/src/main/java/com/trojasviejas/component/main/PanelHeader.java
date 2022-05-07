@@ -115,7 +115,13 @@ public class PanelHeader extends javax.swing.JPanel {
     public FrmMain frmMain = null;
     private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
         setSearch(txtSearch.getText());
-        frmMain.findIn(getSearch());
+        
+        if (getSearch().isBlank() || getSearch().isEmpty()) {
+            txtSearch.setText("");
+        }else{
+            frmMain.findIn(getSearch());
+        }
+        
     }//GEN-LAST:event_btnSearchMouseClicked
 
 
