@@ -92,6 +92,7 @@ public class FrmInventory extends javax.swing.JPanel {
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
         
+        //mostrando el inevntario, filtrado por existencias > 0
         showInventory("ALL");
 
     }
@@ -114,12 +115,20 @@ public class FrmInventory extends javax.swing.JPanel {
     ArrayList<InventoryVM> listFound=null;
     
     public void listByFinder(String _search){
+        //resetendo el array de busqueda
+        listFound = null;
         if (!_search.isBlank() || !_search.isEmpty()){
 
             InventoryDao inventories = new InventoryDao();
 
             //guardando la busqueda en una array para ser usada en los filtros de cajas
-            listFound = inventories.findBy(_search);
+            //y filtrando los items con stock
+            if (cbbStock.getSelectedItem().equals("Agotados")) {
+                listFound = itemsWithStock(inventories.findBy(_search),0);          
+            }else{
+                listFound = itemsWithStock(inventories.findBy(_search),1);
+            }
+
             showInventory("ALL");
         }
 
@@ -144,7 +153,7 @@ public class FrmInventory extends javax.swing.JPanel {
         clearRowsInTable();
         
        InventoryDao inventory = new InventoryDao();
-        ArrayList<InventoryVM> inventories = inventory.list();
+        ArrayList<InventoryVM> inventories = itemsWithStock(inventory.list(),1);  
         
         if (listFound != null) {
             inventories = listFound;
@@ -255,7 +264,49 @@ public class FrmInventory extends javax.swing.JPanel {
                 formato.format(inventory.getBuyDate())
         });
     }
+    
+    private ArrayList<InventoryVM> itemsWithStock(ArrayList<InventoryVM> inventories, int type ){
 
+        ArrayList<InventoryVM> inventary = new ArrayList<>();
+        ArrayList<InventoryVM> _inventary = new ArrayList<>();
+
+        for (var i : inventories) {
+
+            //filtrando por las filas que tienen exitencias 0
+            if (i.getStock() > 0) {
+                inventary.add(i);
+            }else{
+                _inventary.add(i);
+            }
+
+        }
+
+        //retornando los datos en items agotados filtrados por el string de busqueda
+        if (type==0) {
+           return _inventary;
+        }
+        return inventary;
+    }
+    
+    private ArrayList<InventoryVM> filterBy(String typeFilter){
+        
+        InventoryDao inventories = new InventoryDao();
+        
+        ArrayList<InventoryVM> inventary = new ArrayList<>();
+        
+        if (typeFilter.equals("AGOTADOS")) {
+              for (var i: inventories.list()) {
+                  
+                  //filtrando por las filas que tienen exitencias 0
+                  if (i.getStock() == 0) {
+                      inventary.add(i);
+                  }
+            }
+        }
+        
+        return inventary;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -356,6 +407,11 @@ public class FrmInventory extends javax.swing.JPanel {
         cbbStock.setSelectedIndex(-1);
         cbbStock.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         cbbStock.setLabeText("Elija existencia");
+        cbbStock.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbStockItemStateChanged(evt);
+            }
+        });
 
         cbbItems.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Existencias", "Agotados" }));
         cbbItems.setSelectedIndex(-1);
@@ -384,11 +440,8 @@ public class FrmInventory extends javax.swing.JPanel {
                                 .addComponent(cbbItems, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(cbbStock, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlTableLayout.createSequentialGroup()
-                                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblProviders, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnRegister, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(lblProviders)
+                            .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
@@ -441,8 +494,28 @@ public class FrmInventory extends javax.swing.JPanel {
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         
         listFound = null;
+        cbbStock.setSelectedIndex(-1);
         showInventory("ALL");
     }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void cbbStockItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbStockItemStateChanged
+               if(cbbStock.getSelectedIndex()==0){
+            //colocando el array de las listas de busqueda como nula
+            //para que solo se carguen los que tiene existencias
+            listFound = null;
+            
+            //recargando todos los datos
+            showInventory("ALL");
+            
+        }else if(cbbStock.getSelectedIndex()==1){
+            
+            //colocando en la lista de filtrado los datos de los items agotados
+             listFound = filterBy("AGOTADOS");
+             showInventory("ALL");
+            
+            
+        }
+    }//GEN-LAST:event_cbbStockItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

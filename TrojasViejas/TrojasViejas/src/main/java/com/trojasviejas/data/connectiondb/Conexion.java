@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class Conexion {
     
-    private static final String URL = "jdbc:mysql://localhost:3306/inventories?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+    private static final String URL = "jdbc:mysql://localhost:3306/trojas_viejas_db?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true";
 //    private static final String USER = "perlera";
 //    private static final String PASSWORD = "12345678";
     
