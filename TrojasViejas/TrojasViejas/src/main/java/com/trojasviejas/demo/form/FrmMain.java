@@ -1,7 +1,7 @@
 package com.trojasviejas.demo.form;
 
 import com.trojasviejas.component.main.event.IEventMenuSelected;
-import com.trojasviejas.services.IFindFunctions;
+import com.trojasviejas.component.main.event.IFindFunctions;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import java.awt.*;
 import javax.swing.JComponent;

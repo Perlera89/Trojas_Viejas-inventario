@@ -3,15 +3,15 @@ use trojas_viejas_db;
 /*Tipo de proveedores*/
 
 /*Proveedores*/
-call inventories.sp_i_providers('Agroferreteria El Halcon', '7412-8956', 'afeh@gmail.com', 'Chalatenango', 1);
-call inventories.sp_i_providers('Ferreteria San Antonio', '7569-7845', 'afsa@gmail.com', 'Chalatenango', 1);
-call inventories.sp_i_providers('Mini Super Gabriela', '7569-8956', 'ms@gmail.com', 'Ojos de Agua', 1);
-call inventories.sp_i_providers('Super El Baratillo', '4123-8956', 'seb@gmail.com', 'Chalatenango', 1);
-call inventories.sp_i_providers('FONAVIPO', '7569-8956', 'f@gmail.com', 'San Salvador', 2);
-call inventories.sp_i_providers('Mini Super Gabriela', '7569-8956', 'ms@gmail.com', 'Ojos de Agua', 1);
-call inventories.sp_i_providers('Mini Super Gabriela', '7569-8956', 'ms@gmail.com', 'Ojos de Agua', 1);
-call inventories.sp_i_providers('Mini Super Gabriela', '7569-8956', 'ms@gmail.com', 'Ojos de Agua', 1);
-call inventories.sp_i_providers('Mini Super Gabriela', '7569-8956', 'ms@gmail.com', 'Ojos de Agua', 1);
+call sp_i_providers('Agroferreteria El Halcon', '7412-8956', 'afeh@gmail.com', 'Chalatenango', 1);
+call sp_i_providers('Ferreteria San Antonio', '7569-7845', 'afsa@gmail.com', 'Chalatenango', 1);
+call sp_i_providers('Mini Super Gabriela', '7569-8956', 'ms@gmail.com', 'Ojos de Agua', 1);
+call sp_i_providers('Super El Baratillo', '4123-8956', 'seb@gmail.com', 'Chalatenango', 1);
+call sp_i_providers('FONAVIPO', '7569-8956', 'f@gmail.com', 'San Salvador', 2);
+call sp_i_providers('Mini Super Gabriela', '7569-8956', 'ms@gmail.com', 'Ojos de Agua', 1);
+call sp_i_providers('Mini Super Gabriela', '7569-8956', 'ms@gmail.com', 'Ojos de Agua', 1);
+call sp_i_providers('Mini Super Gabriela', '7569-8956', 'ms@gmail.com', 'Ojos de Agua', 1);
+call sp_i_providers('Mini Super Gabriela', '7569-8956', 'ms@gmail.com', 'Ojos de Agua', 1);
 
 
 /*articulos*/

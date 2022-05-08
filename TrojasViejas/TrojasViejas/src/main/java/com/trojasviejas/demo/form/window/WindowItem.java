@@ -110,7 +110,7 @@ public class WindowItem extends javax.swing.JPanel {
         txtDescription.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtDescription.setForeground(new java.awt.Color(150, 150, 150));
         txtDescription.setRows(5);
-        txtDescription.setText("Descripcion");
+        txtDescription.setText("Sin descripcion");
         txtDescription.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txtDescriptionMouseEntered(evt);
@@ -215,7 +215,7 @@ public class WindowItem extends javax.swing.JPanel {
     }//GEN-LAST:event_txtDescriptionMouseEntered
 
     private void txtDescriptionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDescriptionMousePressed
-        if (txtDescription.getText().equals("Descripcion")) {
+        if (txtDescription.getText().equals("Sin descripcion")) {
             txtDescription.setText("");
             txtDescription.setForeground(Color.black);
             txtDescription.setBorder(BorderFactory.createLineBorder(new Color(3,155,216), 0));

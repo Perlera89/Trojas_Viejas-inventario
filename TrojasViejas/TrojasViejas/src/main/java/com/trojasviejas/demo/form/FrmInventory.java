@@ -487,8 +487,7 @@ public class FrmInventory extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        WindowInventory item = new WindowInventory();
-        WindowHome.main(WindowType.IVENTORY, item, false);
+        WindowInventory.main();
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
