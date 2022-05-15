@@ -120,13 +120,17 @@ public class FrmInventory extends javax.swing.JPanel {
         if (!_search.isBlank() || !_search.isEmpty()){
 
             InventoryDao inventories = new InventoryDao();
-
-            //guardando la busqueda en una array para ser usada en los filtros de cajas
-            //y filtrando los items con stock
-            if (cbbStock.getSelectedItem().equals("Agotados")) {
-                listFound = itemsWithStock(inventories.findBy(_search),0);          
+            if (cbbStock.getSelectedIndex() >= 0) {
+                
+                //guardando la busqueda en una array para ser usada en los filtros de cajas
+                //y filtrando los items con stock
+                if (cbbStock.getSelectedItem().equals("Agotados")) {
+                    listFound = itemsWithStock(inventories.findBy(_search), 0);
+                } else {
+                    listFound = itemsWithStock(inventories.findBy(_search), 1);
+                }
             }else{
-                listFound = itemsWithStock(inventories.findBy(_search),1);
+                listFound = itemsWithStock(inventories.findBy(_search), 1);       
             }
 
             showInventory("ALL");
@@ -295,15 +299,16 @@ public class FrmInventory extends javax.swing.JPanel {
         ArrayList<InventoryVM> inventary = new ArrayList<>();
         
         if (typeFilter.equals("AGOTADOS")) {
-              for (var i: inventories.list()) {
-                  
-                  //filtrando por las filas que tienen exitencias 0
-                  if (i.getStock() == 0) {
-                      inventary.add(i);
-                  }
+            for (var i : inventories.list()) {
+
+                //filtrando por las filas que tienen exitencias 0
+                if (i.getStock() == 0) {
+                    inventary.add(i);
+                }
             }
+
+
         }
-        
         return inventary;
     }
     
@@ -485,11 +490,36 @@ public class FrmInventory extends javax.swing.JPanel {
                 .addGap(20, 20, 20))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    FrmInventory thisForm = this;
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        WindowInventory.main();
+        WindowActivityRegisters newRegister = new WindowActivityRegisters();
+        
+        if (tblInventory.getSelectedRowCount() > 0) {
+            transferDataToForm(newRegister);
+            newRegister.inventoryForm = thisForm;
+            WindowActivityRegisters.main(newRegister);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Para registrar una salida debe seleccionar un artículo previamente. \n",
+                    "Error",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnRegisterActionPerformed
+   private void transferDataToForm(WindowActivityRegisters newRegister){
 
+        int indexRegister = tblInventory.getSelectedRow();
+
+        //agregando los datos a las cajas 
+        newRegister.idItem = Integer.parseInt(tblInventory.getValueAt(indexRegister, 0).toString());
+       
+        newRegister.lblAmountBought.setText(tblInventory.getValueAt(indexRegister, 1).toString());
+        newRegister.lblItem.setText(tblInventory.getValueAt(indexRegister, 2).toString());
+        newRegister.lblStock.setText(tblInventory.getValueAt(indexRegister, 3).toString());
+        newRegister.lblCategory.setText(tblInventory.getValueAt(indexRegister, 6).toString());
+        newRegister.lblType.setText(tblInventory.getValueAt(indexRegister, 7).toString());
+        newRegister.lblBuyDate.setText(tblInventory.getValueAt(indexRegister, 8).toString());
+
+    }
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         
         listFound = null;

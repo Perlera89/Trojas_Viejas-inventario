@@ -1,19 +1,30 @@
 package com.trojasviejas.demo.form.window;
 
+import com.trojasviejas.data.dao.ActivityRegistersDao;
+import com.trojasviejas.demo.form.FrmInventory;
+import com.trojasviejas.models.entity.ActivityRegisters;
+import com.trojasviejas.models.utility.ActionType;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.*;
+import javax.swing.BorderFactory;
+import java.awt.Color;
 
-public class WindowInventory extends javax.swing.JFrame {
+public class WindowActivityRegisters extends javax.swing.JFrame {
 
     //public WindowItem items;
 
-    public WindowInventory() {
+    public WindowActivityRegisters() {
+        
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
         initMoving(this);
+        currentDate();
+        setDataToCombobox();
     }
 
     private int x;
@@ -55,7 +66,7 @@ public class WindowInventory extends javax.swing.JFrame {
         scroll = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
         cbbActionType = new com.trojasviejas.swing.ComboBox();
-        txtCount = new com.trojasviejas.swing.fields.LinearTextField();
+        txtAmount = new com.trojasviejas.swing.fields.LinearTextField();
         txtDate = new com.toedter.calendar.JDateChooser();
         panelShadow1 = new com.trojasviejas.swing.panels.PanelShadow();
         jLabel2 = new javax.swing.JLabel();
@@ -65,9 +76,9 @@ public class WindowInventory extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        lblName = new javax.swing.JLabel();
-        lblDate = new javax.swing.JLabel();
-        lblShell = new javax.swing.JLabel();
+        lblItem = new javax.swing.JLabel();
+        lblBuyDate = new javax.swing.JLabel();
+        lblAmountBought = new javax.swing.JLabel();
         lblCategory = new javax.swing.JLabel();
         lblType = new javax.swing.JLabel();
         lblStock = new javax.swing.JLabel();
@@ -172,18 +183,27 @@ public class WindowInventory extends javax.swing.JFrame {
         cbbActionType.setForeground(new java.awt.Color(100, 100, 100));
         cbbActionType.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbbActionType.setLabeText("Tipo de accion");
+        cbbActionType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbActionTypeActionPerformed(evt);
+            }
+        });
 
-        txtCount.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCount.setLabelText("Cantidad a retirar");
-        txtCount.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtAmount.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtAmount.setLabelText("Cantidad a retirar");
+        txtAmount.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAmountKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCountKeyTyped(evt);
+                txtAmountKeyTyped(evt);
             }
         });
 
         txtDate.setBackground(new java.awt.Color(255, 255, 255));
         txtDate.setForeground(new java.awt.Color(100, 100, 100));
         txtDate.setDateFormatString("dd/MM/yyyy");
+        txtDate.setEnabled(false);
         txtDate.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
@@ -214,14 +234,14 @@ public class WindowInventory extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(100, 100, 100));
         jLabel8.setText("Categoria:");
 
-        lblName.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblName.setText(". . .");
+        lblItem.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        lblItem.setText(". . .");
 
-        lblDate.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblDate.setText(". . .");
+        lblBuyDate.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        lblBuyDate.setText(". . .");
 
-        lblShell.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblShell.setText(". . .");
+        lblAmountBought.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        lblAmountBought.setText(". . .");
 
         lblCategory.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblCategory.setText(". . .");
@@ -247,15 +267,15 @@ public class WindowInventory extends javax.swing.JFrame {
                             .addGroup(panelShadow1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(10, 10, 10)
-                                .addComponent(lblDate))
+                                .addComponent(lblBuyDate))
                             .addGroup(panelShadow1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(10, 10, 10)
-                                .addComponent(lblName))
+                                .addComponent(lblItem))
                             .addGroup(panelShadow1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(10, 10, 10)
-                                .addComponent(lblShell)))
+                                .addComponent(lblAmountBought)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
                         .addGroup(panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelShadow1Layout.createSequentialGroup()
@@ -294,15 +314,15 @@ public class WindowInventory extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(lblName))
+                            .addComponent(lblItem))
                         .addGap(20, 20, 20)
                         .addGroup(panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(lblDate))
+                            .addComponent(lblBuyDate))
                         .addGap(20, 20, 20)
                         .addGroup(panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(lblShell))))
+                            .addComponent(lblAmountBought))))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -318,7 +338,7 @@ public class WindowInventory extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(scroll)
                             .addComponent(cbbActionType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtCount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAmount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -334,7 +354,7 @@ public class WindowInventory extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(cbbActionType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
@@ -387,12 +407,46 @@ public class WindowInventory extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
+    //id del registro a actualizar
+    public int idItem = 0;
+    //objeto actual que muestra el inventario para acceder a su metodo de 
+    //recarga de datos de la tabla al agregar y actualizar
+    public FrmInventory inventoryForm;
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (!txtAmount.getText().isEmpty() || !txtAmount.getText().isBlank()) {
 
+            ActivityRegistersDao registerDao = new ActivityRegistersDao();
+            ActivityRegisters register = new ActivityRegisters();
+
+            //obteniendo los datos
+            if (selection.equals(ActionType.ENTRADA)) {
+                register.setAmount("+" + txtAmount.getText());
+            } else {
+                register.setAmount("-" + txtAmount.getText());
+            }
+            register.setIdInventory(idItem);
+            register.setCurrentStock(Integer.parseInt(this.lblStock.getText()));
+            register.setTypeAction(selection);
+            register.setDescription(txtDescription.getText());
+            register.setDate(txtDate.getDate());
+
+            registerDao.save(register);
+
+            inventoryForm.showInventory("ALL");
+
+            this.dispose();
+
+        }else{
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "Los retiros de valor nulo no son válidos.", 
+                    "Valor no válido",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-
+        this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void txtDescriptionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDescriptionMouseEntered
@@ -407,13 +461,84 @@ public class WindowInventory extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtDescriptionMousePressed
 
-    private void txtCountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCountKeyTyped
+    private void txtAmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAmountKeyTyped
         char car = evt.getKeyChar();
         if ((car < '0' || car > '9'))
         evt.consume();
-    }//GEN-LAST:event_txtCountKeyTyped
+    }//GEN-LAST:event_txtAmountKeyTyped
+   
 
-    public static void main() {
+    //almcacena el tipo de accion del registro para la validacion
+    private ActionType selection;
+    private void txtAmountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAmountKeyReleased
+        validatingSelectedIndex();   
+    }//GEN-LAST:event_txtAmountKeyReleased
+
+    private void cbbActionTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbActionTypeActionPerformed
+         if (cbbActionType.getSelectedIndex()>=0) {
+            selection = ActionType.values()[cbbActionType.getSelectedIndex()];
+            txtAmount.setBackground(Color.WHITE);
+            txtAmount.setText("");
+        }
+    }//GEN-LAST:event_cbbActionTypeActionPerformed
+    private void validatingSelectedIndex() {
+            //trae desde invemtario la cantidad de existencias
+        int itemStock = Integer.parseInt(this.lblStock.getText());
+        //trae desde invemtario la cantidad que ha sido comprada
+        int itemBought = Integer.parseInt(this.lblAmountBought.getText());
+        int amount = 0;
+        try {
+            //toma la cantlida de retiro ingresada
+            amount = Integer.parseInt(txtAmount.getText());
+
+            switch (selection) {
+                case ENTRADA -> {
+                    //la cantidad de entrada no debe ser mayor que la diferencia entre las existencias y la cantidad comprada
+                    if (amount <= (itemBought - itemStock) && amount > 0) {
+                        btnAdd.setEnabled(true);
+                        txtAmount.setBackground(Color.WHITE);
+
+                    } else {
+                        txtAmount.setBackground(Color.getHSBColor(0, 184, 82));
+                        btnAdd.setEnabled(false);
+                    }
+                }
+                case SALIDA -> {
+                    //la cantidad de retiro no debe ser mayor a las existencias actuales
+                    if (amount > 0 && amount <= itemStock) {
+                        btnAdd.setEnabled(true);
+                        txtAmount.setBackground(Color.WHITE);
+
+                    } else {
+                        txtAmount.setBackground(Color.getHSBColor(0, 184, 82));
+                        btnAdd.setEnabled(false);
+                    }
+                }
+                default -> {
+                }
+            }
+
+        } catch (NumberFormatException e) {
+            txtAmount.setText("");
+        }
+    }
+
+    private void setDataToCombobox() {
+        for (var i : ActionType.values()) {
+            cbbActionType.addItem(i);
+        }
+    }
+
+    private void currentDate() {
+
+        Calendar calendar = Calendar.getInstance();
+        Date dateObj = calendar.getTime();
+
+        txtDate.setDate(dateObj);
+
+    }
+
+    public static void main(WindowActivityRegisters registerWindow) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -427,45 +552,14 @@ public class WindowInventory extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(WindowInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowActivityRegisters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(WindowInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowActivityRegisters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(WindowInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowActivityRegisters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(WindowInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowActivityRegisters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
 
@@ -473,7 +567,7 @@ public class WindowInventory extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new WindowInventory().setVisible(true);
+                registerWindow.setVisible(true);
             }
         });
     }
@@ -492,19 +586,19 @@ public class WindowInventory extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblCategory;
-    private javax.swing.JLabel lblDate;
+    public javax.swing.JLabel lblAmountBought;
+    public javax.swing.JLabel lblBuyDate;
+    public javax.swing.JLabel lblCategory;
     public javax.swing.JLabel lblEncabezado;
-    private javax.swing.JLabel lblName;
-    private javax.swing.JLabel lblShell;
-    private javax.swing.JLabel lblStock;
-    private javax.swing.JLabel lblType;
+    public javax.swing.JLabel lblItem;
+    public javax.swing.JLabel lblStock;
+    public javax.swing.JLabel lblType;
     private com.trojasviejas.swing.panels.PanelBorder panelBorder2;
     private com.trojasviejas.swing.panels.PanelShadow panelShadow1;
     private com.trojasviejas.swing.panels.PanelBorder pnlHeader;
     private com.trojasviejas.swing.panels.PanelRound pnlHome;
     private javax.swing.JScrollPane scroll;
-    public com.trojasviejas.swing.fields.LinearTextField txtCount;
+    public com.trojasviejas.swing.fields.LinearTextField txtAmount;
     private com.toedter.calendar.JDateChooser txtDate;
     public javax.swing.JTextArea txtDescription;
     private com.trojasviejas.swing.fields.LinearTextField txtProveedor1;

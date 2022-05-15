@@ -188,7 +188,7 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="scroll" alignment="0" max="32767" attributes="0"/>
                                   <Component id="cbbActionType" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtCount" alignment="1" min="-2" pref="330" max="-2" attributes="0"/>
+                                  <Component id="txtAmount" alignment="1" min="-2" pref="330" max="-2" attributes="0"/>
                                   <Component id="txtDate" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace pref="124" max="32767" attributes="0"/>
@@ -210,7 +210,7 @@
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="cbbActionType" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txtCount" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtAmount" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="txtDate" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -298,11 +298,14 @@
                 </Property>
                 <Property name="labeText" type="java.lang.String" value="Tipo de accion"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbbActionTypeActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
             </Component>
-            <Component class="com.trojasviejas.swing.fields.LinearTextField" name="txtCount">
+            <Component class="com.trojasviejas.swing.fields.LinearTextField" name="txtAmount">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto" size="14" style="0"/>
@@ -310,7 +313,8 @@
                 <Property name="labelText" type="java.lang.String" value="Cantidad a retirar"/>
               </Properties>
               <Events>
-                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCountKeyTyped"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtAmountKeyReleased"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtAmountKeyTyped"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -325,6 +329,7 @@
                   <Color blue="64" green="64" red="64" type="rgb"/>
                 </Property>
                 <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto" size="14" style="0"/>
                 </Property>
@@ -347,17 +352,17 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                          <Component id="lblDate" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblBuyDate" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                          <Component id="lblName" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblItem" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                          <Component id="lblShell" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblAmountBought" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace pref="215" max="32767" attributes="0"/>
@@ -410,17 +415,17 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblItem" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblBuyDate" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblShell" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblAmountBought" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -507,29 +512,38 @@
                     <Property name="text" type="java.lang.String" value="Categoria:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblName">
+                <Component class="javax.swing.JLabel" name="lblItem">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto" size="14" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value=". . ."/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblDate">
+                <Component class="javax.swing.JLabel" name="lblBuyDate">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto" size="14" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value=". . ."/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblShell">
+                <Component class="javax.swing.JLabel" name="lblAmountBought">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto" size="14" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value=". . ."/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCategory">
                   <Properties>
@@ -538,6 +552,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value=". . ."/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblType">
                   <Properties>
@@ -546,6 +563,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value=". . ."/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblStock">
                   <Properties>
@@ -554,6 +574,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value=". . ."/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>

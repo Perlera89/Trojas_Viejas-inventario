@@ -69,21 +69,26 @@ public class ActivityRegistersDao{
                 
                 registers.add(register);
                 
-                System.out.println(
-                  register.getId()+" "
-                 +register.getTypeAction()+" "
-                 +register.getItem()+" "
-                 +register.getCurrentStock()+" "
-                 +register.getAmount()+" "
-                 +register.getNewStock()+" "
-                 +register.getDescription()+" "
-                 +register.getPricePerUnit()+" "
-                 +register.getCategory().toString()+" "
-                 +register.getType().toString()+" "
-                 +register.getBuyDate()+" "
-                 +register.getDate().toString()+" \n"
-                  
-                );
+//                System.out.println(
+//                  register.getId()+" "
+//                 +register.getTypeAction()+" "
+//                 +register.getItem()+" "
+//                 +register.getCurrentStock()+" "
+//                 +register.getAmount()+" "
+//                 +register.getNewStock()+" "
+//                 +register.getDescription()+" "
+//                 +register.getPricePerUnit()+" "
+//                 +register.getCategory().toString()+" "
+//                 +register.getType().toString()+" "
+//                 +register.getBuyDate()+" "
+//                 +register.getDate().toString()+" \n"
+//                  
+//                );
+            JOptionPane.showMessageDialog(
+                        null,
+                        "Se ha registrado un retiro de tipo: " + register.getTypeAction() + ", exitosamente. \n",
+                        "Registro",
+                        JOptionPane.INFORMATION_MESSAGE);
                 
             }
             
@@ -123,13 +128,18 @@ public class ActivityRegistersDao{
 
             //ejecutando y almacenando el resultado de la consulta
             query.execute();
-
-            System.out.println(
-                    register.getTypeAction() + " "
-                    + register.getCurrentStock() + " "
-                    + register.getAmount() + " "
-                    + register.getDescription() + " \n"
-            );
+//
+//            System.out.println(
+//                    register.getTypeAction() + " "
+//                    + register.getCurrentStock() + " "
+//                    + register.getAmount() + " "
+//                    + register.getDescription() + " \n"
+//            );
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Se ha registrado un retiro de tipo: " + register.getTypeAction() + ", exitosamente. \n",
+                    "Registro",
+                    JOptionPane.INFORMATION_MESSAGE);
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(
