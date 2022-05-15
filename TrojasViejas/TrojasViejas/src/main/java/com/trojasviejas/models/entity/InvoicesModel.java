@@ -1,15 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.trojasviejas.models.entity;
 
+import com.trojasviejas.component.main.event.IInvoicesEventAction;
+import com.trojasviejas.component.main.event.IItemEventAction;
+import com.trojasviejas.models.utility.InvoiceActionModel;
+import com.trojasviejas.models.utility.ItemActionModel;
 import java.util.Date;
 
-/**
- *
- * @author cb272
- */
 public class InvoicesModel {
     private int id;
     private Double totalAmount;
@@ -20,12 +16,16 @@ public class InvoicesModel {
     public InvoicesModel() {
     }
 
-    public InvoicesModel(int id, Double totalAmount, String buyDate, byte[] picture, int fkProv) {
+    public InvoicesModel(int id, Double totalAmount, String buyDate, int fkProv) {
         this.id = id;
         this.totalAmount = totalAmount;
         this.buyDate = buyDate;
-        this.picture = picture;
+        //this.picture = picture;
         this.fkProv = fkProv;
+    }
+    
+    public Object[] toRowTable(IInvoicesEventAction event) {
+        return new Object[]{id, totalAmount, buyDate, fkProv, new InvoiceActionModel(this, event)};
     }
 
     public int getId() {

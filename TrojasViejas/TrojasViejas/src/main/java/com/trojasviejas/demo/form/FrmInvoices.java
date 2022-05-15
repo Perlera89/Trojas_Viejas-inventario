@@ -1,12 +1,15 @@
 package com.trojasviejas.demo.form;
 
+import com.trojasviejas.component.main.event.IInvoicesEventAction;
 import com.trojasviejas.demo.form.window.*;
-import com.trojasviejas.models.entity.ProviderModel;
+import com.trojasviejas.models.entity.*;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
 import com.trojasviejas.component.main.event.IProviderEventAction;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FrmInvoices extends javax.swing.JPanel {
 
@@ -24,15 +27,20 @@ public class FrmInvoices extends javax.swing.JPanel {
     
     private void initTableData(){
         //Agregar registro
-        IProviderEventAction eventAction = new IProviderEventAction() {
+        IInvoicesEventAction eventAction = new IInvoicesEventAction() {
             @Override
-            public void update(ProviderModel entity) {
-                System.out.println("Editar a " + entity.getName());
+            public void update(InvoicesModel entity) {
+                System.out.println("Editar a " + entity.getId());
             }
 
             @Override
-            public void delete(ProviderModel entity) {
-                System.out.println("Eliminar a " + entity.getName());
+            public void delete(InvoicesModel entity) {
+                System.out.println("Eliminar a " + entity.getId());
+            }
+            
+            @Override
+            public void view(InvoicesModel entity) {
+                System.out.println("Ver a " + entity.getId());
             }
         };
         
@@ -42,9 +50,9 @@ public class FrmInvoices extends javax.swing.JPanel {
         panel.setBackground(Color.white);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
+        Date date = new Date();
         
-        tblProviders.addRow(new ProviderModel("Manuel Perlera", "7738-8921", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.VENDEDOR).toRowTable(eventAction));
-        tblProviders.addRow(new ProviderModel("Maria Pineda", "7738-8921", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.DONADOR).toRowTable(eventAction));
+        tblInvoices.addRow(new InvoicesModel(1, 20.5, new SimpleDateFormat("dd-MM-yyyy").format(date), 1).toRowTable(eventAction));
     }
 
     @SuppressWarnings("unchecked")
@@ -56,9 +64,9 @@ public class FrmInvoices extends javax.swing.JPanel {
         pnlCard2 = new com.trojasviejas.component.main.PanelCard();
         pnlTable = new com.trojasviejas.swing.panels.PanelBorder();
         lblProviders = new javax.swing.JLabel();
-        scroll = new javax.swing.JScrollPane();
-        tblProviders = new com.trojasviejas.swing.tables.ProvidersTable();
         btnNew = new com.trojasviejas.swing.Buttons.ActionButton();
+        scroll = new javax.swing.JScrollPane();
+        tblInvoices = new com.trojasviejas.swing.tables.invoice.InvoicesTable();
 
         setBackground(new java.awt.Color(232, 241, 242));
 
@@ -78,27 +86,6 @@ public class FrmInvoices extends javax.swing.JPanel {
         lblProviders.setForeground(new java.awt.Color(127, 127, 127));
         lblProviders.setText("Facturas");
 
-        scroll.setBorder(null);
-
-        tblProviders.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nombre", "Telefono", "Email", "Direccion", "Tipo", "Acciones"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblProviders.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        scroll.setViewportView(tblProviders);
-
         btnNew.setBackground(new java.awt.Color(0, 184, 82));
         btnNew.setForeground(new java.awt.Color(255, 255, 255));
         btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png"))); // NOI18N
@@ -111,6 +98,26 @@ public class FrmInvoices extends javax.swing.JPanel {
             }
         });
 
+        scroll.setBorder(null);
+
+        tblInvoices.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id", "Total", "Fecha de compra", "Proveedor", "Acciones"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        scroll.setViewportView(tblInvoices);
+
         javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
         pnlTable.setLayout(pnlTableLayout);
         pnlTableLayout.setHorizontalGroup(
@@ -118,16 +125,10 @@ public class FrmInvoices extends javax.swing.JPanel {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(scroll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE)
-                            .addGroup(pnlTableLayout.createSequentialGroup()
-                                .addComponent(lblProviders)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(20, 20, 20))))
+                    .addComponent(scroll)
+                    .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblProviders))
+                .addGap(20, 20, 20))
         );
         pnlTableLayout.setVerticalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,7 +150,7 @@ public class FrmInvoices extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 875, Short.MAX_VALUE))
+                    .addComponent(pnlContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
@@ -158,8 +159,8 @@ public class FrmInvoices extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(pnlContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -177,6 +178,6 @@ public class FrmInvoices extends javax.swing.JPanel {
     private javax.swing.JLayeredPane pnlContainer;
     private com.trojasviejas.swing.panels.PanelBorder pnlTable;
     private javax.swing.JScrollPane scroll;
-    private com.trojasviejas.swing.tables.ProvidersTable tblProviders;
+    private com.trojasviejas.swing.tables.invoice.InvoicesTable tblInvoices;
     // End of variables declaration//GEN-END:variables
 }

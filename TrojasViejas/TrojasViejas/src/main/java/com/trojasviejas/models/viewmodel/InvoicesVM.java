@@ -1,16 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.trojasviejas.models.viewmodel;
 
 import com.trojasviejas.models.utility.ProviderType;
 import java.util.Date;
 
-/**
- *
- * @author cb272
- */
 public class InvoicesVM {
     private int id;
     private Double totalAmount;
@@ -108,6 +100,4 @@ public class InvoicesVM {
     public void setType(ProviderType type) {
         this.type = type;
     }
-    
-    
 }
