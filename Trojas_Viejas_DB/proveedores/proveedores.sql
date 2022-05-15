@@ -67,7 +67,7 @@ BEGIN
             a.prov_num_phone, 
             a.prov_email, 
             a.prov_direction, 
-            a.prov_tp 
+            (a.prov_tp+0)`prov_tp`
 	FROM providers AS a;
 END$$
 
@@ -83,7 +83,7 @@ BEGIN
             a.prov_num_phone,
 			a.prov_email,
             a.prov_direction,
-            a.prov_tp 
+            (a.prov_tp+0)`prov_tp`
 	FROM providers AS a
     WHERE 
     a.prov_name LIKE concat('%',search_string,'%') OR

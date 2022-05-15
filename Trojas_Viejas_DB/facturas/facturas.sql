@@ -8,7 +8,7 @@ Delimiter $$
 CREATE PROCEDURE sp_i_invoices(
 	p_invc_total_amount DECIMAL(10,4),
     p_invc_buy_date DATE,
-    p_invc_picture MEDIUMBLOB,
+    p_invc_picture LONGBLOB,
     p_invc_prov_id_fk INT
 )
 BEGIN
@@ -32,7 +32,7 @@ CREATE PROCEDURE sp_u_invoices(
 	p_invc_id INT,
 	P_invc_total_amount DECIMAL(10,4),
     P_invc_buy_date DATE,
-    p_invc_picture MEDIUMBLOB,
+    p_invc_picture LONGBLOB,
     p_invc_prov_id_fk INT
 )
 BEGIN

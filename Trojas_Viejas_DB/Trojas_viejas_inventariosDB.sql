@@ -45,7 +45,7 @@ CREATE TABLE users(
 	usr_id INT NOT NULL AUTO_INCREMENT,
     usr_name VARCHAR(50) NOT NULL UNIQUE,
     usr_password VARCHAR(255) NOT NULL,
-    usr_verify_pass VARCHAR(255) NOT NULL
+    usr_verify_pass VARCHAR(255) NOT NULL,
     PRIMARY KEY (usr_id)
 );$$
 
@@ -58,7 +58,7 @@ CREATE TABLE invoices(
 	invc_id INT NOT NULL AUTO_INCREMENT,
     invc_total_amount DECIMAL(10,4) NOT NULL,
     invc_buy_date DATE NOT NULL,
-    invc_picture MEDIUMBLOB,
+    invc_picture LONGBLOB,
     invc_prov_id_fk INT NOT NULL,
     FOREIGN KEY (invc_prov_id_fk) REFERENCES providers(prov_id),
     PRIMARY KEY(invc_id)
