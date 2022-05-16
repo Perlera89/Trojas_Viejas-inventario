@@ -24,8 +24,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="pnlTable" max="32767" attributes="0"/>
                   <Component id="pnlContainer" pref="876" max="32767" attributes="0"/>
+                  <Component id="pnlTable" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
           </Group>
@@ -44,38 +44,6 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JLayeredPane" name="pnlContainer">
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-        <Property name="columns" type="int" value="0"/>
-        <Property name="horizontalGap" type="int" value="10"/>
-        <Property name="rows" type="int" value="1"/>
-      </Layout>
-      <SubComponents>
-        <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCardCountItems">
-          <Properties>
-            <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="55" green="28" red="0" type="rgb"/>
-            </Property>
-            <Property name="color2" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="7d" green="3e" red="2" type="rgb"/>
-            </Property>
-          </Properties>
-        </Component>
-        <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCardCountCategory1">
-          <Properties>
-            <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="7b" red="ff" type="rgb"/>
-            </Property>
-            <Property name="color2" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="88" red="ff" type="rgb"/>
-            </Property>
-          </Properties>
-        </Component>
-        <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCardCountCategory2">
-        </Component>
-      </SubComponents>
-    </Container>
     <Container class="com.trojasviejas.swing.panels.PanelBorder" name="pnlTable">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -86,16 +54,15 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="scroll" alignment="0" pref="836" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Component id="btnNew" min="-2" pref="124" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="lblProviders" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="scroll" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblActivity" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnRegister" min="-2" pref="124" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnRefresh" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -109,20 +76,22 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblProviders" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnRefresh" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="btnRefresh" alignment="0" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblActivity" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="btnRegister" min="-2" pref="29" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnNew" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="scroll" min="-2" pref="281" max="-2" attributes="0"/>
-                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <EmptySpace pref="20" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="lblProviders">
+        <Component class="javax.swing.JLabel" name="lblActivity">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="18" style="1"/>
@@ -130,10 +99,10 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="7f" green="7f" red="7f" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Articulos"/>
+            <Property name="text" type="java.lang.String" value="Actividad"/>
           </Properties>
         </Component>
-        <Component class="com.trojasviejas.swing.Buttons.ActionButton" name="btnNew">
+        <Component class="com.trojasviejas.swing.Buttons.ActionButton" name="btnRegister">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="52" green="b8" red="0" type="rgb"/>
@@ -144,14 +113,24 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icons/add.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Nuevo"/>
+            <Property name="text" type="java.lang.String" value="Registro"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="16" style="1"/>
             </Property>
             <Property name="horizontalTextPosition" type="int" value="4"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNewActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegisterActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="com.trojasviejas.swing.Buttons.ActionButton" name="btnRefresh">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icons/refresh.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefreshActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="scroll">
@@ -166,21 +145,57 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="com.trojasviejas.swing.tables.item.ItemsTable" name="tblItems">
+            <Component class="com.trojasviejas.swing.tables.activity.ActivityTable" name="tblActivity">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="7" rowCount="0">
+                  <Table columnCount="13" rowCount="0">
                     <Column editable="false" title="Id" type="java.lang.Object"/>
-                    <Column editable="false" title="Nombre" type="java.lang.Object"/>
-                    <Column editable="false" title="Cantidad minima" type="java.lang.Object"/>
-                    <Column editable="false" title="Descripcion" type="java.lang.Object"/>
+                    <Column editable="false" title="Accion" type="java.lang.Object"/>
+                    <Column editable="false" title="Articulo" type="java.lang.Object"/>
+                    <Column editable="false" title="Existencias" type="java.lang.Object"/>
+                    <Column editable="false" title="Retiro" type="java.lang.Object"/>
+                    <Column editable="false" title="En inventario" type="java.lang.Object"/>
+                    <Column editable="false" title="Descripci&#xf3;n" type="java.lang.Object"/>
+                    <Column editable="false" title="C/U" type="java.lang.Object"/>
                     <Column editable="false" title="Categoria" type="java.lang.Object"/>
                     <Column editable="false" title="Tipo" type="java.lang.Object"/>
+                    <Column editable="false" title="Fecha de compra" type="java.lang.Object"/>
+                    <Column editable="false" title="Fecha de registro" type="java.lang.Object"/>
                     <Column editable="true" title="Acciones" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
@@ -225,15 +240,45 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="com.trojasviejas.swing.Buttons.ActionButton" name="btnRefresh">
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JLayeredPane" name="pnlContainer">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+        <Property name="columns" type="int" value="0"/>
+        <Property name="horizontalGap" type="int" value="10"/>
+        <Property name="rows" type="int" value="1"/>
+      </Layout>
+      <SubComponents>
+        <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCard1">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icons/refresh.png"/>
+            <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="55" green="28" red="0" type="rgb"/>
+            </Property>
+            <Property name="color2" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="7d" green="3e" red="2" type="rgb"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnRefreshMousePressed"/>
-          </Events>
+        </Component>
+        <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCard2">
+          <Properties>
+            <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="1" green="3a" red="0" type="rgb"/>
+            </Property>
+            <Property name="color2" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="2" green="47" red="0" type="rgb"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCard3">
+          <Properties>
+            <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="5" red="6c" type="rgb"/>
+            </Property>
+            <Property name="color2" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="a2" type="rgb"/>
+            </Property>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

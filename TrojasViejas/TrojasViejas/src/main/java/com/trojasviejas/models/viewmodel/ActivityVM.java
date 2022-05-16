@@ -1,19 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.trojasviejas.models.viewmodel;
 
-import com.trojasviejas.models.utility.ActionType;
-import com.trojasviejas.models.utility.CategoryType;
-import com.trojasviejas.models.utility.ItemType;
+import com.trojasviejas.component.main.event.IActivityEventAction;
+import com.trojasviejas.models.utility.*;
 import java.util.Date;
 
-/**
- *
- * @author wilian
- */
-public class ActivityRegistersVM {
+public class ActivityVM {
     
     private int id;
     private ActionType typeAction;
@@ -25,8 +16,31 @@ public class ActivityRegistersVM {
     private double pricePerUnit;
     private CategoryType category;
     private ItemType type;
-    private Date buyDate;
-    private Date date;
+    private String buyDate;
+    private String registerDate;
+    
+    public ActivityVM(){
+        
+    }
+
+    public ActivityVM(int id, ActionType typeAction, String item, int currentStock, String amount, int newStock, String description, double pricePerUnit, CategoryType category, ItemType type, String buyDate, String registerDate) {
+        this.id = id;
+        this.typeAction = typeAction;
+        this.item = item;
+        this.currentStock = currentStock;
+        this.amount = amount;
+        this.newStock = newStock;
+        this.description = description;
+        this.pricePerUnit = pricePerUnit;
+        this.category = category;
+        this.type = type;
+        this.buyDate = buyDate;
+        this.registerDate = registerDate;
+    }
+    
+    public Object[] toRowTable(IActivityEventAction event) {
+        return new Object[]{id, typeAction, item, currentStock, amount, newStock, description, pricePerUnit, category, type, buyDate, registerDate, new ActivityActionModel(this, event)};
+    }
 
     public int getId() {
         return id;
@@ -108,21 +122,19 @@ public class ActivityRegistersVM {
         this.type = type;
     }
 
-    public Date getBuyDate() {
+    public String getBuyDate() {
         return buyDate;
     }
 
-    public void setBuyDate(Date buyDate) {
+    public void setBuyDate(String buyDate) {
         this.buyDate = buyDate;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+        return registerDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(String date) {
+        this.registerDate = date;
     }
-
-
 }

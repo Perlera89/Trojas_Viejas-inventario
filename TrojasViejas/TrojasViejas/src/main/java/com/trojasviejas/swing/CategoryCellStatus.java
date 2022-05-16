@@ -19,6 +19,7 @@ public class CategoryCellStatus extends javax.swing.JPanel {
 
         status.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         status.setText("itemStatus1");
+        status.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

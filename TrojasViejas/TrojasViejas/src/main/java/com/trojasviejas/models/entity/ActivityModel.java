@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.trojasviejas.models.entity;
 
 import com.trojasviejas.models.utility.ActionType;
 import java.util.Date;
 
-/**
- *
- * @author wilian
- */
-public class ActivityRegisters {
+public class ActivityModel {
     private int id;
     private ActionType typeAction;
     private int currentStock;

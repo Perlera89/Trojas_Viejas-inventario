@@ -1,6 +1,5 @@
 package com.trojasviejas.swing.tables.invoice;
 
-import com.trojasviejas.swing.tables.invoice.*;
 import com.trojasviejas.models.utility.*;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -10,25 +9,16 @@ public class InvoiceAction extends javax.swing.JPanel {
 
     public InvoiceAction(InvoiceActionModel data) {
         initComponents();
-        btnEdit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                data.getEvent().update(data.getInvoice());
-            }
+        btnEdit.addActionListener((ActionEvent ae) -> {
+            data.getEvent().update(data.getInvoice());
         });
 
-        btnDelete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                data.getEvent().delete(data.getInvoice());
-            }
+        btnDelete.addActionListener((ActionEvent ae) -> {
+            data.getEvent().delete(data.getInvoice());
         });
 
-        btnView.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                data.getEvent().view(data.getInvoice());
-            }
+        btnView.addActionListener((ActionEvent ae) -> {
+            data.getEvent().view(data.getInvoice());
         });
     }
 

@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.trojasviejas.data.dao;
 
 import com.trojasviejas.data.connectiondb.Conexion;
-import com.trojasviejas.models.viewmodel.ActivityRegistersVM;
-import com.trojasviejas.models.entity.ActivityRegisters;
+import com.trojasviejas.models.viewmodel.ActivityVM;
+import com.trojasviejas.models.entity.ActivityModel;
 import com.trojasviejas.models.utility.ActionType;
 import com.trojasviejas.models.utility.CategoryType;
 import com.trojasviejas.models.utility.ItemType;
@@ -17,19 +13,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author wilian
- */
-public class ActivityRegistersDao{
+public class ActivityDao{
 
         //variable para la conexion
         Connection connection = null;
         
-    public ArrayList<ActivityRegistersVM> list() {
+    public ArrayList<ActivityVM> list() {
 
         //array a retornar
-        ArrayList<ActivityRegistersVM> registers = null;
+        ArrayList<ActivityVM> registers = null;
         
         //variable para la consulta
         CallableStatement query = null;
@@ -50,9 +42,9 @@ public class ActivityRegistersDao{
             
             //cargando los datos al array
             //objeto para agregar filas al array
-            ActivityRegistersVM register;
+            ActivityVM register;
             while (result.next()) {
-                register = new ActivityRegistersVM();
+                register = new ActivityVM();
                 
                 register.setId(result.getInt("rgtr_id"));
                 register.setTypeAction(ActionType.values()[result.getInt("rgtr_tp_action")-1]);
@@ -64,8 +56,8 @@ public class ActivityRegistersDao{
                 register.setPricePerUnit(result.getDouble("dtl_price_per_unit"));
                 register.setCategory(CategoryType.values()[result.getInt("item_cat")-1]);
                 register.setType(ItemType.values()[result.getInt("item_tp")-1]);
-                register.setBuyDate(result.getDate("invc_buy_date"));
-                register.setDate(result.getDate("rgtr_date"));
+                //register.setBuyDate(result.getDate("invc_buy_date"));
+                //register.setDate(result.getDate("rgtr_date"));
                 
                 registers.add(register);
                 
@@ -107,7 +99,7 @@ public class ActivityRegistersDao{
         return registers;
     }
 
-    public void save(ActivityRegisters register) {
+    public void save(ActivityModel register) {
 
         //variable para la consulta
         CallableStatement query = null;
@@ -161,7 +153,7 @@ public class ActivityRegistersDao{
         }
     }
 
-    public void update(ActivityRegisters entity) {
+    public void update(ActivityModel entity) {
 
         //variable para la consulta
         CallableStatement query = null;
@@ -206,9 +198,9 @@ public class ActivityRegistersDao{
         }
     }
 
-    public ArrayList<ActivityRegistersVM> findBy(String month, int year) {
+    public ArrayList<ActivityVM> findBy(String month, int year) {
         //array a retornar
-        ArrayList<ActivityRegistersVM> registers = null;
+        ArrayList<ActivityVM> registers = null;
         
         //variable para la consulta
         CallableStatement query = null;
@@ -232,9 +224,9 @@ public class ActivityRegistersDao{
             
             //cargando los datos al array
             //objeto para agregar filas al array
-            ActivityRegistersVM register;
+            ActivityVM register;
             while (result.next()) {
-                register = new ActivityRegistersVM();
+                register = new ActivityVM();
                 
                 register.setId(result.getInt("rgtr_id"));
                 register.setTypeAction(ActionType.values()[result.getInt("rgtr_tp_action")-1]);
@@ -246,8 +238,8 @@ public class ActivityRegistersDao{
                 register.setPricePerUnit(result.getDouble("dtl_price_per_unit"));
                 register.setCategory(CategoryType.values()[result.getInt("item_cat")-1]);
                 register.setType(ItemType.values()[result.getInt("item_tp")-1]);
-                register.setBuyDate(result.getDate("invc_buy_date"));
-                register.setDate(result.getDate("rgtr_date"));
+//                register.setBuyDate(result.getDate("invc_buy_date"));
+//                register.setDate(result.getDate("rgtr_date"));
                 
                 registers.add(register);
                 

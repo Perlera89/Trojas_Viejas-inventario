@@ -1,17 +1,14 @@
 package com.trojasviejas.swing.tables.activity;
 
-import com.trojasviejas.swing.tables.inventory.*;
-import com.trojasviejas.models.utility.CategoryType;
-import com.trojasviejas.models.utility.ItemType;
-import com.trojasviejas.swing.CategoryCellStatus;
-import com.trojasviejas.swing.ItemCellStatus;
+import com.trojasviejas.models.utility.*;
+import com.trojasviejas.swing.*;
 import com.trojasviejas.swing.tables.TableHeader;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.*;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 
 public class ActivityTable extends JTable {
 
@@ -24,7 +21,7 @@ public class ActivityTable extends JTable {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                 TableHeader header = new TableHeader(o + "");
-                if (i1 == 5 || i1 == 6) {
+                if (i1 == 1 || i1 == 7 || i1 == 8 || i1 == 11) {
                     header.setHorizontalAlignment(JLabel.CENTER);
                 }
                 return header;
@@ -57,6 +54,18 @@ public class ActivityTable extends JTable {
                     
                     return cell;
 
+                }  else if (o instanceof ActionType) {
+                    ActionType type = (ActionType) o;
+                    ActionCellStatus cell = new ActionCellStatus(type);
+                    
+                    if (selected) {
+                        cell.setBackground(new Color(239, 244, 255));
+                    } else {
+                        cell.setBackground(Color.WHITE);
+                    }
+                    
+                    return cell;
+
                 }  else {
                     Component com = super.getTableCellRendererComponent(jtable, o, selected, bln1, i, i1);
                     setBorder(noFocusBorder);
@@ -72,14 +81,14 @@ public class ActivityTable extends JTable {
         });
     }
 
-//    @Override
-//    public TableCellEditor getCellEditor(int row, int col) {
-//        if (col == 6) {
-//            return new ItemCellAction();
-//        } else {
-//            return super.getCellEditor(row, col);
-//        }
-//    }
+    @Override
+    public TableCellEditor getCellEditor(int row, int col) {
+        if (col == 12) {
+            return new ActivityCellAction();
+        } else {
+            return super.getCellEditor(row, col);
+        }
+    }
 
     public void addRow(Object[] row) {
         DefaultTableModel model = (DefaultTableModel) getModel();

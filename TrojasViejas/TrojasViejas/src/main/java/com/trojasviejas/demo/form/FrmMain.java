@@ -13,6 +13,7 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     private FrmItems items;
     private FrmInvoices invoices;
     private FrmInventory inventory;
+    private FrmActivity activity;
     private FrmUsers users;
 
     public FrmMain() {
@@ -26,6 +27,7 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
         items = new FrmItems();
         invoices = new FrmInvoices();
         inventory = new FrmInventory();
+        activity = new FrmActivity();
         users = new FrmUsers();
         
         pnlMenu.initMoving(this);
@@ -59,11 +61,11 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
                     //indice del inventario
                     indexForm = 4;
                 } else if(index == 5){
-                    setForm(inventory);
+                    setForm(activity);
                     
-                    //indice del regisstros de actividad
+                    //indice del registros de actividad
                     indexForm = 5;
-                }else if(index == 6){
+                } else if(index == 6){
                     
                     //indice del reportes
                     indexForm = 6;

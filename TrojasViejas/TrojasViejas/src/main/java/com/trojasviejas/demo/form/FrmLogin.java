@@ -1,7 +1,6 @@
 package com.trojasviejas.demo.form;
 
 import com.trojasviejas.component.login.PanelCover;
-import com.trojasviejas.component.login.PanelLoading;
 import com.trojasviejas.component.login.PanelLogin;
 import com.trojasviejas.component.login.PanelMessage;
 import com.trojasviejas.data.connectiondb.Conexion;
@@ -27,7 +26,6 @@ public class FrmLogin extends javax.swing.JFrame {
     private MigLayout layout;
     private PanelCover cover;
     private PanelLogin login;
-    private PanelLoading loading;
 
     private boolean isLogin;
     private final double addSize = 30;
@@ -59,7 +57,6 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         };
         login = new PanelLogin(eventRegister, eventLogin);
-        loading = new PanelLoading();
 
         TimingTarget target = new TimingTargetAdapter() {
             @Override
@@ -115,9 +112,7 @@ public class FrmLogin extends javax.swing.JFrame {
         animator.setDeceleration(0.5f);
         animator.setResolution(0); //smooth animation        
         pnlBg.setLayout(layout);
-        pnlBg.setLayer(loading, JLayeredPane.POPUP_LAYER);
 
-        pnlBg.add(loading, "pos 0 0 100%");
         pnlBg.add(cover, "width " + coverSize + "%, pos 0al 0 n 100%");
         pnlBg.add(login, "width " + loginSize + "%, pos 1al 0 n 100%"); // 1al es 100%
         cover.addEvent(new ActionListener() {
@@ -153,9 +148,6 @@ public class FrmLogin extends javax.swing.JFrame {
                 }
             }
         }
-
-        loading.setVisible(false);
-
     }
 
     private void login() {
@@ -172,8 +164,7 @@ public class FrmLogin extends javax.swing.JFrame {
 //            showMessage(PanelMessage.MessageType.ERROR, e.getMessage());
 //        }
     }
-
-    //muestra el mensaje del panel
+    
     private void showMessage(PanelMessage.MessageType messageType, String message) {
         PanelMessage ms = new PanelMessage();
         ms.showMessage(messageType, message);
@@ -236,6 +227,7 @@ public class FrmLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnlHome = new com.trojasviejas.swing.panels.PanelBorder();
         pnlBg = new javax.swing.JLayeredPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -248,22 +240,43 @@ public class FrmLogin extends javax.swing.JFrame {
         pnlBg.setLayout(pnlBgLayout);
         pnlBgLayout.setHorizontalGroup(
             pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
+            .addGap(0, 912, Short.MAX_VALUE)
         );
         pnlBgLayout.setVerticalGroup(
             pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 519, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout pnlHomeLayout = new javax.swing.GroupLayout(pnlHome);
+        pnlHome.setLayout(pnlHomeLayout);
+        pnlHomeLayout.setHorizontalGroup(
+            pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 912, Short.MAX_VALUE)
+            .addGroup(pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(pnlBg, javax.swing.GroupLayout.Alignment.TRAILING))
+        );
+        pnlHomeLayout.setVerticalGroup(
+            pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 519, Short.MAX_VALUE)
+            .addGroup(pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(pnlBg))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlBg)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(pnlHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlBg, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(pnlHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -309,5 +322,6 @@ public class FrmLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane pnlBg;
+    private com.trojasviejas.swing.panels.PanelBorder pnlHome;
     // End of variables declaration//GEN-END:variables
 }

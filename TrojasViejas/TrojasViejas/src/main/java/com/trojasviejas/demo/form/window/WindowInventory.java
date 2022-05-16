@@ -1,8 +1,8 @@
 package com.trojasviejas.demo.form.window;
 
-import com.trojasviejas.data.dao.ActivityRegistersDao;
+import com.trojasviejas.data.dao.ActivityDao;
 import com.trojasviejas.demo.form.FrmInventory;
-import com.trojasviejas.models.entity.ActivityRegisters;
+import com.trojasviejas.models.entity.ActivityModel;
 import com.trojasviejas.models.utility.ActionType;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -14,11 +14,11 @@ import javax.swing.*;
 import javax.swing.BorderFactory;
 import java.awt.Color;
 
-public class WindowActivityRegisters extends javax.swing.JFrame {
+public class WindowInventory extends javax.swing.JFrame {
 
     //public WindowItem items;
 
-    public WindowActivityRegisters() {
+    public WindowInventory() {
         
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
@@ -295,7 +295,7 @@ public class WindowActivityRegisters extends javax.swing.JFrame {
         panelShadow1Layout.setVerticalGroup(
             panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelShadow1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(30, 30, 30)
                 .addGroup(panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelShadow1Layout.createSequentialGroup()
                         .addGroup(panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -415,8 +415,8 @@ public class WindowActivityRegisters extends javax.swing.JFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         if (!txtAmount.getText().isEmpty() || !txtAmount.getText().isBlank()) {
 
-            ActivityRegistersDao registerDao = new ActivityRegistersDao();
-            ActivityRegisters register = new ActivityRegisters();
+            ActivityDao registerDao = new ActivityDao();
+            ActivityModel register = new ActivityModel();
 
             //obteniendo los datos
             if (selection.equals(ActionType.ENTRADA)) {
@@ -538,7 +538,7 @@ public class WindowActivityRegisters extends javax.swing.JFrame {
 
     }
 
-    public static void main(WindowActivityRegisters registerWindow) {
+    public static void main(WindowInventory registerWindow) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -552,14 +552,15 @@ public class WindowActivityRegisters extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(WindowActivityRegisters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(WindowActivityRegisters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(WindowActivityRegisters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(WindowActivityRegisters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
 

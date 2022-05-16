@@ -1,5 +1,6 @@
 package com.trojasviejas.demo.form;
 
+import com.trojasviejas.component.login.PanelMessage;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.*;
@@ -492,20 +493,20 @@ public class FrmInventory extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     FrmInventory thisForm = this;
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        WindowActivityRegisters newRegister = new WindowActivityRegisters();
+        WindowInventory newRegister = new WindowInventory();
         
         if (tblInventory.getSelectedRowCount() > 0) {
             transferDataToForm(newRegister);
             newRegister.inventoryForm = thisForm;
-            WindowActivityRegisters.main(newRegister);
-        } else {
+            WindowInventory.main(newRegister);
+        } else {           
             JOptionPane.showMessageDialog(null,
                     "Para registrar una salida debe seleccionar un artículo previamente. \n",
                     "Error",
                     JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnRegisterActionPerformed
-   private void transferDataToForm(WindowActivityRegisters newRegister){
+   private void transferDataToForm(WindowInventory newRegister){
 
         int indexRegister = tblInventory.getSelectedRow();
 
