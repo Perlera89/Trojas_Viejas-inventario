@@ -1,23 +1,17 @@
 package com.trojasviejas.demo.form;
 
-import com.trojasviejas.component.main.event.IActivityEventAction;
+import com.trojasviejas.component.main.PanelMenu;
 import com.trojasviejas.demo.form.window.*;
-import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
-import com.trojasviejas.component.main.event.IProviderEventAction;
-import com.trojasviejas.data.dao.InventoryDao;
 import com.trojasviejas.models.viewmodel.ActivityVM;
-import com.trojasviejas.models.viewmodel.InventoryVM;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.time.*;
-import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.table.DefaultTableModel;
 
 public class FrmActivity extends javax.swing.JPanel {
 
@@ -36,9 +30,6 @@ public class FrmActivity extends javax.swing.JPanel {
 
     private void initTableData() {
         //Agregar registro
-        IActivityEventAction eventAction = (ActivityVM entity) -> {
-            System.out.println("Editar a " + entity.getItem());
-        };
 
         scroll.setVerticalScrollBar(new ScrollBar());
         scroll.getVerticalScrollBar().setBackground(Color.white);
@@ -49,13 +40,21 @@ public class FrmActivity extends javax.swing.JPanel {
         Date buyDate = new Date();
         Date registerDate = new Date();
 
-        tblActivity.addRow(new ActivityVM(1, ActionType.ENTRADA, "Botella", 10, "$10", 8, "Sin descripcion", 3.5, CategoryType.ACCESORIOS, ItemType.PVC, new SimpleDateFormat("dd-MM-yyyy").format(buyDate), new SimpleDateFormat("dd-MM-yyyy").format(registerDate)).toRowTable(eventAction));
+        tblActivity.addRow(new ActivityVM(1, ActionType.ENTRADA, "Botella", 10, "$10", 8, "Sin descripcion", 3.5, CategoryType.ACCESORIOS, ItemType.PVC, new SimpleDateFormat("dd-MM-yyyy").format(buyDate), new SimpleDateFormat("dd-MM-yyyy").format(registerDate)).toRowTable());
+
+        if (FrmMain.main.getExtendedState() == JFrame.NORMAL) {
+            tblActivity.getColumnModel().getColumn(0).setMaxWidth(0);
+            tblActivity.getColumnModel().getColumn(0).setMinWidth(0);
+            tblActivity.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblActivity.getColumnModel().getColumn(0).setResizable(false);
+        }
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        toggle = new javax.swing.JToggleButton();
         pnlTable = new com.trojasviejas.swing.panels.PanelBorder();
         lblActivity = new javax.swing.JLabel();
         btnRegister = new com.trojasviejas.swing.Buttons.ActionButton();
@@ -67,6 +66,8 @@ public class FrmActivity extends javax.swing.JPanel {
         pnlCard2 = new com.trojasviejas.component.main.PanelCard();
         pnlCard3 = new com.trojasviejas.component.main.PanelCard();
 
+        toggle.setText("jToggleButton1");
+
         setBackground(new java.awt.Color(232, 241, 242));
 
         pnlTable.setBackground(new java.awt.Color(255, 255, 255));
@@ -77,7 +78,7 @@ public class FrmActivity extends javax.swing.JPanel {
 
         btnRegister.setBackground(new java.awt.Color(0, 184, 82));
         btnRegister.setForeground(new java.awt.Color(255, 255, 255));
-        btnRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png"))); // NOI18N
+        btnRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/update.png"))); // NOI18N
         btnRegister.setText("Registro");
         btnRegister.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         btnRegister.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -101,11 +102,11 @@ public class FrmActivity extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Id", "Accion", "Articulo", "Existencias", "Retiro", "En inventario", "Descripción", "C/U", "Categoria", "Tipo", "Fecha de compra", "Fecha de registro", "Acciones"
+                "Id", "Accion", "Articulo", "Existencias", "Retiro", "En inventario", "Descripción", "C/U", "Categoria", "Tipo", "Fecha de compra", "Fecha de registro"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, true
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -182,12 +183,14 @@ public class FrmActivity extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     FrmActivity thisForm = this;
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-
         WindowActivity.main();
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-
+        tblActivity.getColumnModel().getColumn(0).setMaxWidth(30);
+        tblActivity.getColumnModel().getColumn(0).setMinWidth(30);
+        tblActivity.getColumnModel().getColumn(0).setPreferredWidth(30);
+        tblActivity.getColumnModel().getColumn(0).setResizable(false);
     }//GEN-LAST:event_btnRefreshActionPerformed
 
 
@@ -202,5 +205,6 @@ public class FrmActivity extends javax.swing.JPanel {
     private com.trojasviejas.swing.panels.PanelBorder pnlTable;
     private javax.swing.JScrollPane scroll;
     private com.trojasviejas.swing.tables.activity.ActivityTable tblActivity;
+    private javax.swing.JToggleButton toggle;
     // End of variables declaration//GEN-END:variables
 }

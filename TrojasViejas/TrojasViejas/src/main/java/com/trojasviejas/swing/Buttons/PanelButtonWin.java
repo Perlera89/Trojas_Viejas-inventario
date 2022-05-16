@@ -1,5 +1,7 @@
 package com.trojasviejas.swing.Buttons;
 
+import com.trojasviejas.demo.form.FrmActivity;
+import com.trojasviejas.demo.form.FrmMain;
 import com.trojasviejas.swing.panels.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,32 +13,23 @@ public class PanelButtonWin extends javax.swing.JPanel {
         initComponents();
         setOpaque(false);
     }
-    
-    public void initEvent(JFrame frame, PanelBorder panel){
-        btnClose.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
+
+    public void initEvent(JFrame frame, PanelBorder panel) {
+        btnClose.addActionListener((ActionEvent e) -> {
+            System.exit(0);
         });
-        
-        btnMi.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setState(JFrame.ICONIFIED);
-            }
+
+        btnMi.addActionListener((ActionEvent e) -> {
+            frame.setState(JFrame.ICONIFIED);
         });
-        
-        btnRe.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(frame.getExtendedState() == JFrame.MAXIMIZED_BOTH){
-                    panel.setRound(15);
-                    frame.setExtendedState(JFrame.NORMAL);
-                } else{
-                    panel.setRound(0);
-                    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                }
+
+        btnRe.addActionListener((ActionEvent e) -> {
+            if (frame.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
+                panel.setRound(15);
+                frame.setExtendedState(JFrame.NORMAL);
+            } else {
+                panel.setRound(0);
+                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             }
         });
     }

@@ -5,9 +5,11 @@ import com.trojasviejas.component.main.event.IFindFunctions;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import java.awt.*;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 
 public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     
+    public static FrmMain main;
     private FrmHome home;
     private FrmProviders providers;
     private FrmItems items;
@@ -22,6 +24,7 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
         
         pnlMenu.initWinButton(this, pnlContainer);
         
+        main = this;
         home = new FrmHome();
         providers = new FrmProviders();
         items = new FrmItems();

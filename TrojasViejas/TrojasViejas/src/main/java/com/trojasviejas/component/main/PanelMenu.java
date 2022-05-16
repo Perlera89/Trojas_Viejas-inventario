@@ -1,8 +1,10 @@
 package com.trojasviejas.component.main;
 
 import com.trojasviejas.component.main.event.IEventMenuSelected;
+import com.trojasviejas.demo.form.FrmMain;
 import com.trojasviejas.models.utility.MenuModel;
 import com.trojasviejas.swing.panels.*;
+import com.trojasviejas.swing.tables.activity.ActivityTable;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -144,4 +146,5 @@ public class PanelMenu extends javax.swing.JPanel {
     private com.trojasviejas.swing.Buttons.PanelButtonWin panelWin;
     private javax.swing.JPanel pnlHeader;
     // End of variables declaration//GEN-END:variables
+
 }

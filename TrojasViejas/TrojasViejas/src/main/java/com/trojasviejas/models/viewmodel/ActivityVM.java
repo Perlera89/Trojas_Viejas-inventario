@@ -1,6 +1,5 @@
 package com.trojasviejas.models.viewmodel;
 
-import com.trojasviejas.component.main.event.IActivityEventAction;
 import com.trojasviejas.models.utility.*;
 import java.util.Date;
 
@@ -38,8 +37,8 @@ public class ActivityVM {
         this.registerDate = registerDate;
     }
     
-    public Object[] toRowTable(IActivityEventAction event) {
-        return new Object[]{id, typeAction, item, currentStock, amount, newStock, description, pricePerUnit, category, type, buyDate, registerDate, new ActivityActionModel(this, event)};
+    public Object[] toRowTable() {
+        return new Object[]{id, typeAction, item, currentStock, amount, newStock, description, pricePerUnit, category, type, buyDate, registerDate};
     }
 
     public int getId() {
