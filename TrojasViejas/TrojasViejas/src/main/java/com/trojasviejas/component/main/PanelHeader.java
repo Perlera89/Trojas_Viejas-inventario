@@ -113,6 +113,7 @@ public class PanelHeader extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSearchMouseEntered
     //se almacena el objeto actual del menu
     public FrmMain frmMain = null;
+    
     private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
         setSearch(txtSearch.getText());
         
@@ -128,6 +129,6 @@ public class PanelHeader extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnOption1;
     private javax.swing.JLabel btnSearch;
-    private com.trojasviejas.swing.fields.SearchText txtSearch;
+    public com.trojasviejas.swing.fields.SearchText txtSearch;
     // End of variables declaration//GEN-END:variables
 }

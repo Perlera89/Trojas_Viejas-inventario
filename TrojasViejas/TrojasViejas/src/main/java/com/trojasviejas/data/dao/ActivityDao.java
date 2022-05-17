@@ -56,32 +56,10 @@ public class ActivityDao{
                 register.setPricePerUnit(result.getDouble("dtl_price_per_unit"));
                 register.setCategory(CategoryType.values()[result.getInt("item_cat")-1]);
                 register.setType(ItemType.values()[result.getInt("item_tp")-1]);
-                //register.setBuyDate(result.getDate("invc_buy_date"));
-                //register.setDate(result.getDate("rgtr_date"));
+                register.setBuyDate(result.getDate("invc_buy_date"));
+                register.setDate(result.getDate("rgtr_date"));
                 
                 registers.add(register);
-                
-//                System.out.println(
-//                  register.getId()+" "
-//                 +register.getTypeAction()+" "
-//                 +register.getItem()+" "
-//                 +register.getCurrentStock()+" "
-//                 +register.getAmount()+" "
-//                 +register.getNewStock()+" "
-//                 +register.getDescription()+" "
-//                 +register.getPricePerUnit()+" "
-//                 +register.getCategory().toString()+" "
-//                 +register.getType().toString()+" "
-//                 +register.getBuyDate()+" "
-//                 +register.getDate().toString()+" \n"
-//                  
-//                );
-            JOptionPane.showMessageDialog(
-                        null,
-                        "Se ha registrado un retiro de tipo: " + register.getTypeAction() + ", exitosamente. \n",
-                        "Registro",
-                        JOptionPane.INFORMATION_MESSAGE);
-                
             }
             
         } catch (SQLException e) {
@@ -238,26 +216,11 @@ public class ActivityDao{
                 register.setPricePerUnit(result.getDouble("dtl_price_per_unit"));
                 register.setCategory(CategoryType.values()[result.getInt("item_cat")-1]);
                 register.setType(ItemType.values()[result.getInt("item_tp")-1]);
-//                register.setBuyDate(result.getDate("invc_buy_date"));
-//                register.setDate(result.getDate("rgtr_date"));
+                register.setBuyDate(result.getDate("invc_buy_date"));
+                register.setDate(result.getDate("rgtr_date"));
                 
                 registers.add(register);
                 
-                System.out.println(
-                  register.getId()+" "
-                 +register.getTypeAction()+" "
-                 +register.getItem()+" "
-                 +register.getCurrentStock()+" "
-                 +register.getAmount()+" "
-                 +register.getNewStock()+" "
-                 +register.getDescription()+" "
-                 +register.getPricePerUnit()+" "
-                 +register.getCategory().toString()+" "
-                 +register.getType().toString()+" "
-                 +register.getBuyDate()+" "
-                 +register.getDate().toString()+" \n"
-                  
-                );
                 
             }
             

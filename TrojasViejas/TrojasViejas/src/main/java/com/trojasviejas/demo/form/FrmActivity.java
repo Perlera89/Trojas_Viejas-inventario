@@ -1,6 +1,7 @@
 package com.trojasviejas.demo.form;
 
 import com.trojasviejas.component.main.PanelMenu;
+import com.trojasviejas.data.dao.ActivityDao;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
@@ -11,7 +12,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.time.*;
+import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.table.DefaultTableModel;
 
 public class FrmActivity extends javax.swing.JPanel {
 
@@ -23,9 +26,35 @@ public class FrmActivity extends javax.swing.JPanel {
     }
 
     private void initCard() {
-        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/register.png")), "REGISTROS", "15"));
-        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/income.png")), "ENTRADAS", "25"));
-        pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/output.png")), "SALIDAS", "12"));
+        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/register.png")), "REGISTROS", String.valueOf(countRegisters)));
+        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/income.png")), "ENTRADAS", String.valueOf(countEntries)));
+        pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/output.png")), "SALIDAS", String.valueOf(countOutputs)));
+    
+        //muestra todos los registros nuevamente
+        pnlCard1.setFilter(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showActivityRegistersFilterBy("ALL");
+            }
+
+        });
+        //filtra los registros de tipo de Entrada
+        pnlCard2.setFilter(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showActivityRegistersFilterBy(ActionType.ENTRADA.toString());
+            }
+
+        });
+        //filtra los registros de tipo de Salida
+        pnlCard3.setFilter(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showActivityRegistersFilterBy(ActionType.SALIDA.toString());
+            }
+
+        });
+    
     }
 
     private void initTableData() {
@@ -37,11 +66,10 @@ public class FrmActivity extends javax.swing.JPanel {
         panel.setBackground(Color.white);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
-        Date buyDate = new Date();
-        Date registerDate = new Date();
 
-        tblActivity.addRow(new ActivityVM(1, ActionType.ENTRADA, "Botella", 10, "$10", 8, "Sin descripcion", 3.5, CategoryType.ACCESORIOS, ItemType.PVC, new SimpleDateFormat("dd-MM-yyyy").format(buyDate), new SimpleDateFormat("dd-MM-yyyy").format(registerDate)).toRowTable());
-
+        //cargando datos a la tabla
+        showActivityRegistersFilterBy("ALL");
+        
         if (FrmMain.main.getExtendedState() == JFrame.NORMAL) {
             tblActivity.getColumnModel().getColumn(0).setMaxWidth(0);
             tblActivity.getColumnModel().getColumn(0).setMinWidth(0);
@@ -49,7 +77,164 @@ public class FrmActivity extends javax.swing.JPanel {
             tblActivity.getColumnModel().getColumn(0).setResizable(false);
         }
     }
+    //Array De busqueda
+    ArrayList<ActivityVM> listFound = null;
 
+    public void runSearch(String _search) {
+        //resetendo el array de busqueda
+        listFound = null;
+        if (!_search.isBlank() || !_search.isEmpty()) {
+
+            int year=0;
+            String month="";
+            //obteniendo el mes y año
+            try {
+                String search[] = _search.split("_");
+                month = search[0];
+                year = Integer.parseInt(search[1]);
+                
+                System.out.println("mes: "+month+" año: "+year);
+
+                ActivityDao activitiesDao = new ActivityDao();
+
+                //verificando que los resultados de la busqueda no vengan vacios
+                if (month.isBlank()==true) {
+                   // if (!activitiesDao.findBy("NULL", year).isEmpty()) { 
+                         //guardando la busqueda en una array para ser usada en los filtros de cajas          
+                        listFound = activitiesDao.findBy("NULL", year);                   
+                    //}
+
+                } else {
+                    //verificando que los resultados de la busqueda no vengan vacios
+                       // if ( !activitiesDao.findBy(month, year).isEmpty()) {
+                        //guardando la busqueda en una array para ser usada en los filtros de cajas          
+                        listFound = activitiesDao.findBy(month, year); 
+                    //}
+
+                }
+
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Formato de búsqueda no válido.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+    }
+        
+        
+        
+        int countRegisters = 0;
+        int countEntries = 0;
+        int countOutputs = 0;
+    public void showActivityRegistersFilterBy(String tipo_filtro){
+        //RESETEANDO LOS CONTADORES      
+        countRegisters = 0;
+        countEntries = 0;
+        countOutputs = 0;
+
+        
+        //LIMPIANDO LA TABLA
+        clearRowsInTable();
+        
+       ActivityDao activitiesDao = new ActivityDao();
+       ArrayList<ActivityVM> activity = activitiesDao.list();  
+        
+        if (listFound != null) {
+            activity = listFound;
+        }
+        //MOSTRAR TODOS LOS DATOS
+        switch (tipo_filtro) {
+            case "ALL" -> {
+                for (var i : activity) {
+                    if (i.getTypeAction().equals(ActionType.ENTRADA)) {
+                        countEntries++;
+                    }
+                    if (i.getTypeAction().equals(ActionType.SALIDA)) {
+                        countOutputs++;
+                    }
+
+                    //AGREGANDO LA FILA A LA TABLA
+                    add_rows_to_table(i);
+                    //Sumando los registros de actividades
+                    countRegisters ++;
+                }
+                //ACTUALIZANDO LOS CONTADORES
+                initCard();
+            }
+
+            //FILTRAR LAAS FILAS POR LA ACCION DE ENTRADA
+            case "ENTRADA" -> {
+                for (var i : activity) {
+                    if (i.getTypeAction().equals(ActionType.ENTRADA)) {
+
+                        //contando los registros de tipo entrada
+                        countEntries++;
+                        //AGREGANDO LA FILA A LA TABLA
+                        add_rows_to_table(i);
+                        countRegisters++;
+                    }
+                }
+                //ACTUALIZANDO LOS CONTADORES
+                initCard();
+            }
+            //FILTRAR LAS FILAS POR LA CATEGORIA DE ACCESORIOS
+            case "SALIDA" -> {
+                for (var i : activity) {
+                    if (i.getTypeAction().equals(ActionType.SALIDA)) {
+                        
+                        //contando los registros de tipo salida
+                        countOutputs ++; 
+                        
+                        //AGREGANDO LA FILA A LA TABLA 
+                        add_rows_to_table(i);
+                        countRegisters++;
+                    }
+                }
+                //ACTUALIZANDO LOS CONTADORES
+                initCard();
+
+            }
+            default -> {
+            }
+        } 
+    }
+    
+      //formato para la fecha
+     SimpleDateFormat formatDate  = new SimpleDateFormat("dd-MM-yyyy");
+    private void add_rows_to_table(ActivityVM register) {
+        //AGREGANDO FILA A  lA TABLA
+        tblActivity.addRow(new Object[]{
+            register.getId(),
+            register.getTypeAction(),
+            register.getItem(),
+            register.getCurrentStock(),
+            register.getAmount(),
+            register.getNewStock(),
+            register.getDescription(),
+            "$" + register.getPricePerUnit(),
+            register.getCategory(),
+            register.getType(),
+            formatDate.format(register.getBuyDate()),
+            formatDate.format(register.getDate())
+        });
+    }
+    //borrado de las filas de la tabla
+        private void clearRowsInTable(){
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblActivity.getModel();
+            int filas = tblActivity.getRowCount();
+            for (int i = 0; filas > i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+    }
+        
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -187,10 +372,14 @@ public class FrmActivity extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        tblActivity.getColumnModel().getColumn(0).setMaxWidth(30);
-        tblActivity.getColumnModel().getColumn(0).setMinWidth(30);
-        tblActivity.getColumnModel().getColumn(0).setPreferredWidth(30);
-        tblActivity.getColumnModel().getColumn(0).setResizable(false);
+        if (FrmMain.main.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
+            //tblActivity.getColumnModel().getColumn(6).setMaxWidth(0);
+            tblActivity.getColumnModel().getColumn(6).setMinWidth(150);
+            tblActivity.getColumnModel().getColumn(6).setPreferredWidth(150);
+            tblActivity.getColumnModel().getColumn(6).setResizable(true);
+        }
+        listFound = null;
+        showActivityRegistersFilterBy("ALL");
     }//GEN-LAST:event_btnRefreshActionPerformed
 
 

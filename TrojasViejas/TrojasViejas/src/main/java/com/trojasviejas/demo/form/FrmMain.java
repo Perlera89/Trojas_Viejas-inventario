@@ -39,28 +39,28 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
             public void selected(int index) {
                 if(index == 0){
                     setForm(home);
-                    
+                     panelHeader1.txtSearch.setToolTipText("Busrcar aquí...");                   
                     //indice del dashboard
                     indexForm = 0;
                 } else if(index == 1){
-                    
-                    //indice del dashboard
+                    panelHeader1.txtSearch.setToolTipText("Busrcar aquí...");              
+                    //indice del proveedores
                     indexForm = 1;
                     setForm(providers);
                 } else if(index == 2){
                     
                     setForm(items);
-                    
+                    panelHeader1.txtSearch.setToolTipText("Busrcar aquí...");                    
                     //indice del proveedores
                     indexForm = 2;
                 } else if(index == 3){
                     setForm(invoices);
-                    
+                    panelHeader1.txtSearch.setToolTipText("Busrcar aquí...");
                     //indice del facturas
                     indexForm = 3;
                 } else if(index == 4){
                     setForm(inventory);
-                    
+                    panelHeader1.txtSearch.setToolTipText("Nombre del Artículo");
                     //indice del inventario
                     indexForm = 4;
                 } else if(index == 5){
@@ -68,6 +68,7 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
                     
                     //indice del registros de actividad
                     indexForm = 5;
+                    panelHeader1.txtSearch.setToolTipText("_año ó mes_año");
                 } else if(index == 6){
                     
                     //indice del reportes
@@ -151,6 +152,9 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     public void findForActivityRegisters(String stringSearch) {
         //llama al metodo en la entidad que ejecuta la busqueda
         System.out.println("buscando en registers: "+ stringSearch); 
+        activity.runSearch(stringSearch);
+        //hara que se muestren los datos, y los contadores udaran la informacion de la busqueda para ;os filtros
+        activity.showActivityRegistersFilterBy("ALL");
         
     }
 
@@ -158,6 +162,7 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     public void findForReports(String stringSearch) {
         //llama al metodo en la entidad que ejecuta la busqueda
         System.out.println("buscando en reports: "+ stringSearch);
+
         
     }
     

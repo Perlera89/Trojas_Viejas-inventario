@@ -15,14 +15,14 @@ public class ActivityVM {
     private double pricePerUnit;
     private CategoryType category;
     private ItemType type;
-    private String buyDate;
-    private String registerDate;
+    private Date buyDate;
+    private Date registerDate;
     
     public ActivityVM(){
         
     }
 
-    public ActivityVM(int id, ActionType typeAction, String item, int currentStock, String amount, int newStock, String description, double pricePerUnit, CategoryType category, ItemType type, String buyDate, String registerDate) {
+    public ActivityVM(int id, ActionType typeAction, String item, int currentStock, String amount, int newStock, String description, double pricePerUnit, CategoryType category, ItemType type, Date buyDate, Date registerDate) {
         this.id = id;
         this.typeAction = typeAction;
         this.item = item;
@@ -121,19 +121,19 @@ public class ActivityVM {
         this.type = type;
     }
 
-    public String getBuyDate() {
+    public Date getBuyDate() {
         return buyDate;
     }
 
-    public void setBuyDate(String buyDate) {
+    public void setBuyDate(Date buyDate) {
         this.buyDate = buyDate;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return registerDate;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.registerDate = date;
     }
 }
