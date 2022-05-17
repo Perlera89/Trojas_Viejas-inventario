@@ -125,6 +125,11 @@ public class PanelHeader extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnSearchMouseClicked
 
+    public String moveStringSearchToMenu(){
+         setSearch(txtSearch.getText());
+            return getSearch();
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnOption1;

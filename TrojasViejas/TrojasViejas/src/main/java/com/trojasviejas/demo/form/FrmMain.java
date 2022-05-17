@@ -1,5 +1,6 @@
 package com.trojasviejas.demo.form;
 
+import com.trojasviejas.component.main.PanelHeader;
 import com.trojasviejas.component.main.event.IEventMenuSelected;
 import com.trojasviejas.component.main.event.IFindFunctions;
 import com.trojasviejas.swing.scroll.ScrollBar;
@@ -148,13 +149,21 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
         inventory.showInventory("ALL");
     }
 
+     public String getStringSearch(){
+         return panelHeader1.moveStringSearchToMenu();
+     }
+
     @Override
     public void findForActivityRegisters(String stringSearch) {
+                
         //llama al metodo en la entidad que ejecuta la busqueda
-        System.out.println("buscando en registers: "+ stringSearch); 
+        System.out.println("buscando en registers: "+ stringSearch);
         activity.runSearch(stringSearch);
         //hara que se muestren los datos, y los contadores udaran la informacion de la busqueda para ;os filtros
         activity.showActivityRegistersFilterBy("ALL");
+        
+        activity.frmMenu = formMain;
+       
         
     }
 

@@ -1,5 +1,6 @@
 package com.trojasviejas.data.dao;
 
+import com.trojasviejas.component.login.MessageDialog;
 import com.trojasviejas.data.connectiondb.Conexion;
 import com.trojasviejas.models.viewmodel.ActivityVM;
 import com.trojasviejas.models.entity.ActivityModel;
@@ -11,12 +12,15 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 
 public class ActivityDao{
 
         //variable para la conexion
         Connection connection = null;
+        
+        //Mensajes personalizados
+        MessageDialog message = new MessageDialog(new JFrame());
         
     public ArrayList<ActivityVM> list() {
 
@@ -63,14 +67,14 @@ public class ActivityDao{
             }
             
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se han podido mostrar los registros de actividad. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            message.showMessage("ÉXITO", "Ha ocurrido un error al mostrar los registros de actividad. \n"+ e.toString());
         } finally {
             try {
                 Conexion.close(result);
                 Conexion.close(query);
                 Conexion.close(connection);
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+                message.showMessage("ERROR", "Ha ocurrido un error al cerrar las conexiones luego de mostrar los registros de actividad. \n"+ ex.toString());
             }
         }
         //retornando el array
@@ -98,35 +102,17 @@ public class ActivityDao{
 
             //ejecutando y almacenando el resultado de la consulta
             query.execute();
-//
-//            System.out.println(
-//                    register.getTypeAction() + " "
-//                    + register.getCurrentStock() + " "
-//                    + register.getAmount() + " "
-//                    + register.getDescription() + " \n"
-//            );
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Se ha registrado un retiro de tipo: " + register.getTypeAction() + ", exitosamente. \n",
-                    "Registro",
-                    JOptionPane.INFORMATION_MESSAGE);
+           message.showMessage("ÉXITO", "Se ha registrado un retiro de tipo: "+register.getTypeAction()+" exitosamente.");
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(
-                    null, 
-                    "No se ha podido guardar el registro de "+register.getTypeAction()+". \n" + e.toString(), 
-                    "Error", 
-                    JOptionPane.ERROR_MESSAGE);
+                message.showMessage("ERROR", "Ha ocurrido un error al registrar un retiro de tipo: "+register.getTypeAction()+". \n" + e.toString());
         } finally {
             try {
                 Conexion.close(query);
                 Conexion.close(connection);
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(
-                        null, 
-                        "No se ha cerrado la conexión",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                 message.showMessage("ERROR", "Ha ocurrido un error al cerrar las conexiones luego de registrar un "
+                         + "retiro de tipo "+register.getTypeAction()+". \n" + ex.toString());
             }
         }
     }
@@ -151,27 +137,16 @@ public class ActivityDao{
             //ejecutando y almacenando el resultado de la consulta
             query.execute();
 
-            System.out.println(
-                    entity.getId() + " "
-                    + entity.getDescription() + " \n"
-            );
+            message.showMessage("ÉXITO", "El registro de actividad se ha actualizado exitosamente.");
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(
-                    null, 
-                    "No se ha podido actualizar la descripcion del registro. \n" + e.toString(), 
-                    "Error", 
-                    JOptionPane.ERROR_MESSAGE);
+                        message.showMessage("ERROR", "Ha ocurrido un error al actualizar la descripcion del registro. \n" + e.toString());
         } finally {
             try {
                 Conexion.close(query);
                 Conexion.close(connection);
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(
-                        null, 
-                        "No se ha cerrado la conexión",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                        message.showMessage("ERROR", "Ha ocurrido un error al cerrar las conexiones luego de actualizar el registro de actividad. \n" + ex.toString());
             }
         }
     }
@@ -225,22 +200,15 @@ public class ActivityDao{
             }
             
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "No se han podido mostrar los registros de actividad filtrados. \n" + e.toString(),
-                    "Error", 
-                    JOptionPane.ERROR_MESSAGE);
+             message.showMessage("ERROR", "Ha ocurrido un error al realizar la busqueda en los registros de actividad. \n" + e.toString());
         } finally {
             try {
                 Conexion.close(result);
                 Conexion.close(query);
                 Conexion.close(connection);
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(
-                        null, 
-                        "No se ha cerrado la conexión", 
-                        "Error", 
-                        JOptionPane.ERROR_MESSAGE);
+               message.showMessage("ERROR", "Ha ocurrido un error al cerrar las conexiones luego "
+                       + "de realizar una busqueda en los registros de actividad. \n" + ex.toString());
             }
         }
         //retornando el array

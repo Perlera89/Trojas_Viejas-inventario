@@ -1,6 +1,7 @@
 package com.trojasviejas.demo.form;
 
-import com.trojasviejas.component.main.PanelMenu;
+import com.trojasviejas.component.login.MessageDialog;
+
 import com.trojasviejas.data.dao.ActivityDao;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.utility.*;
@@ -11,9 +12,7 @@ import com.trojasviejas.models.viewmodel.ActivityVM;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
-import java.time.*;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmActivity extends javax.swing.JPanel {
@@ -35,6 +34,7 @@ public class FrmActivity extends javax.swing.JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 showActivityRegistersFilterBy("ALL");
+                typeFilterAplicated = "ALL";
             }
 
         });
@@ -43,6 +43,7 @@ public class FrmActivity extends javax.swing.JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 showActivityRegistersFilterBy(ActionType.ENTRADA.toString());
+                typeFilterAplicated = ActionType.ENTRADA.toString();
             }
 
         });
@@ -51,6 +52,7 @@ public class FrmActivity extends javax.swing.JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 showActivityRegistersFilterBy(ActionType.SALIDA.toString());
+                typeFilterAplicated = ActionType.SALIDA.toString();
             }
 
         });
@@ -91,7 +93,7 @@ public class FrmActivity extends javax.swing.JPanel {
             try {
                 String search[] = _search.split("_");
                 month = search[0];
-                year = Integer.parseInt(search[1]);
+                year = Math.abs(Integer.parseInt(search[1]));
                 
                 System.out.println("mes: "+month+" año: "+year);
 
@@ -112,7 +114,7 @@ public class FrmActivity extends javax.swing.JPanel {
                     //}
 
                 }
-
+                showActivityRegistersFilterBy("ALL");
 
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(
@@ -123,6 +125,8 @@ public class FrmActivity extends javax.swing.JPanel {
             }
 
         }
+        
+        typeFilterAplicated = "SEARCH";
     }
         
         
@@ -223,7 +227,7 @@ public class FrmActivity extends javax.swing.JPanel {
         });
     }
     //borrado de las filas de la tabla
-        private void clearRowsInTable(){
+    private void clearRowsInTable(){
         try {
             DefaultTableModel modelo = (DefaultTableModel) tblActivity.getModel();
             int filas = tblActivity.getRowCount();
@@ -368,9 +372,41 @@ public class FrmActivity extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     FrmActivity thisForm = this;
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        WindowActivity.main();
-    }//GEN-LAST:event_btnRegisterActionPerformed
+       
+        if (tblActivity.getSelectedRowCount() > 0) {
+              WindowActivity updateRegister = new WindowActivity();
+            updateRegister =  transferDataToForm(updateRegister);
+            updateRegister.activity = thisForm;
+            WindowActivity.main(updateRegister);          
 
+       }else{
+            MessageDialog message =  new MessageDialog(new JFrame());
+            message.showMessage("Error","Debe seleccionar un registro previamente para "
+                    + "actualizar su descripción.");
+        }
+
+    }//GEN-LAST:event_btnRegisterActionPerformed
+    private WindowActivity transferDataToForm(WindowActivity updateRegister) {
+
+        int indexRegister = tblActivity.getSelectedRow();
+
+        //agregando los datos a las cajas 
+        updateRegister.idRegister = Integer.parseInt(tblActivity.getValueAt(indexRegister, 0).toString());
+
+        updateRegister.lblAction.setText(tblActivity.getValueAt(indexRegister, 1).toString());
+        updateRegister.lblItem.setText(tblActivity.getValueAt(indexRegister, 2).toString());
+        updateRegister.lblStock.setText(tblActivity.getValueAt(indexRegister, 3).toString());
+        updateRegister.lblOut.setText(tblActivity.getValueAt(indexRegister, 4).toString());
+        updateRegister.lblInventory.setText(tblActivity.getValueAt(indexRegister, 5).toString());
+        updateRegister.txtDescription.setText(tblActivity.getValueAt(indexRegister, 6).toString());
+        updateRegister.lblPerUnit.setText(tblActivity.getValueAt(indexRegister, 7).toString());
+        updateRegister.lblCategory.setText(tblActivity.getValueAt(indexRegister, 8).toString());
+        updateRegister.lblType.setText(tblActivity.getValueAt(indexRegister, 9).toString());
+        updateRegister.lblBuyDate.setText(tblActivity.getValueAt(indexRegister, 10).toString());
+        updateRegister.lblRegisterDate.setText(tblActivity.getValueAt(indexRegister, 11).toString());
+
+        return updateRegister;
+    }
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         if (FrmMain.main.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
             //tblActivity.getColumnModel().getColumn(6).setMaxWidth(0);
@@ -380,9 +416,23 @@ public class FrmActivity extends javax.swing.JPanel {
         }
         listFound = null;
         showActivityRegistersFilterBy("ALL");
+        typeFilterAplicated = "ALL";
     }//GEN-LAST:event_btnRefreshActionPerformed
 
-
+    String typeFilterAplicated="";
+    FrmMain frmMenu;
+    public void showByFilterSelected(){
+        switch (typeFilterAplicated) {
+            case "SALIDA" -> showActivityRegistersFilterBy(ActionType.SALIDA.toString());
+            case "ENTRADA" -> showActivityRegistersFilterBy(ActionType.ENTRADA.toString());
+            case "SEARCH" -> 
+                      runSearch(frmMenu.getStringSearch());          
+            default -> {
+                    showActivityRegistersFilterBy("ALL");
+            }
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.Buttons.ActionButton btnRefresh;
     private com.trojasviejas.swing.Buttons.ActionButton btnRegister;

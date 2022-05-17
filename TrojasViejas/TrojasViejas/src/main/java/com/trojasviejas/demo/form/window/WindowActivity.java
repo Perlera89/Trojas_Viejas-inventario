@@ -1,7 +1,7 @@
 package com.trojasviejas.demo.form.window;
 
 import com.trojasviejas.data.dao.ActivityDao;
-import com.trojasviejas.demo.form.FrmInventory;
+import com.trojasviejas.demo.form.FrmActivity;
 import com.trojasviejas.models.entity.ActivityModel;
 import com.trojasviejas.models.utility.ActionType;
 import java.awt.*;
@@ -429,9 +429,23 @@ public class WindowActivity extends javax.swing.JFrame {
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
-
+    public int idRegister;
+    public FrmActivity activity= null;
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (!txtDescription.getText().isBlank() || !txtDescription.getText().isEmpty()) {
+            ActivityDao registersDao = new ActivityDao();
+            ActivityModel  register = new ActivityModel();
+            
+            //capturando datos
+            register.setId(idRegister);
+            register.setDescription(txtDescription.getText());
+            //actualizando
+            registersDao.update(register);
+            //recargando la tabla
+            activity.showByFilterSelected();
+        }
         
+            this.dispose();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
@@ -450,7 +464,7 @@ public class WindowActivity extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtDescriptionMousePressed
 
-    public static void main() {
+    public static void main(WindowActivity updateRegister) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -482,7 +496,7 @@ public class WindowActivity extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new WindowActivity().setVisible(true);
+                updateRegister.setVisible(true);
             }
         });
     }
