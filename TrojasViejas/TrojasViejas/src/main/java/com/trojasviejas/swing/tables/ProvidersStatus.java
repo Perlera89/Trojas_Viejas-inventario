@@ -32,7 +32,7 @@ public class ProvidersStatus extends JLabel {
             Graphics2D g2 = (Graphics2D) grphcs;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             GradientPaint g;
-            if (type == ProviderType.DONADOR) {
+            if (type == ProviderType.DONANTE) {
                 g = new GradientPaint(0, 0, new Color(0, 105, 104), 0, getHeight(), new Color(0, 120, 113));
             }  else {
                 g = new GradientPaint(0, 0, new Color(170, 0, 18), 0, getHeight(), new Color(191, 0, 0));

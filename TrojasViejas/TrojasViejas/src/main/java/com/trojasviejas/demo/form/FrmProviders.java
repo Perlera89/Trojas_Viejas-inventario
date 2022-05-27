@@ -1,5 +1,7 @@
 package com.trojasviejas.demo.form;
 
+import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.*;
@@ -7,6 +9,12 @@ import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
 import com.trojasviejas.component.main.event.IProviderEventAction;
+import com.trojasviejas.data.dao.ProviderDao;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.table.DefaultTableModel;
 
 public class FrmProviders extends javax.swing.JPanel {
 
@@ -18,21 +26,105 @@ public class FrmProviders extends javax.swing.JPanel {
     }
 
     private void initCard() {
-        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Total Vendedores", "21"));
-        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total Donadores", "$8"));
+        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Comerciales", contador_commercial + ""));
+        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Donadores", contador_donor + ""));
+        pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Proveedores", contador_provider + ""));
+
+//        pnlCardCount.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Artículos", String.valueOf(contadorItem)));
+//        pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "HERRAMIENTAS", String.valueOf(contador_tools)));
+//        pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "ACCESORIOS", String.valueOf(contador_accesories)));
+//
+//        pnlCardCountItems.setFilter(new MouseAdapter() {
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//                showItems("ALL", f_eventAction);
+//                JOptionPane.showMessageDialog(null, "Filtrando contador de artículos");
+//            }
+//
+//        });
+//
+//        pnlCardCountCategory1.setFilter(new MouseAdapter() {
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//                showItems(String.valueOf(CategoryType.HERRAMIENTAS), f_eventAction);
+//                JOptionPane.showMessageDialog(null, "Filtrando contador herramientas");
+//
+//            }
+//
+//        });
+//        pnlCardCountCategory2.setFilter(new MouseAdapter() {
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//                showItems(String.valueOf(CategoryType.ACCESORIOS), f_eventAction);
+//                JOptionPane.showMessageDialog(null, "Filtrando contador accesorios");
+//            }
+//
+//        });
     }
 
-    private void initTableData() {
+    FrmProviders form = this;
+    private IProviderEventAction f_eventAction;
+
+    public void initTableData() {
         //Agregar registro
+
         IProviderEventAction eventAction = new IProviderEventAction() {
+            int IndexRow;
+
             @Override
             public void update(ProviderModel entity) {
-                System.out.println("Editar a " + entity.getName());
+//                ArrayList<Object> selectedtRow = new ArrayList<>();
+//                selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
+                if (tblProviders.getSelectedRowCount() > 0) {
+                    IndexRow = tblProviders.getSelectedRow();
+
+                    //Pasar datos al formulario de Windows
+                    WindowProvider formulario = new WindowProvider();
+                    formulario.frmProviders = form;
+
+                    formulario.id = (int) tblProviders.getValueAt(IndexRow, 0);
+                    formulario.txtName.setText(tblProviders.getValueAt(IndexRow, 1).toString());
+                    formulario.txtPhone.setText(tblProviders.getValueAt(IndexRow, 2).toString());
+                    formulario.txtEmail.setText(tblProviders.getValueAt(IndexRow, 3).toString());
+                    formulario.txtAddress.setText(tblProviders.getValueAt(IndexRow, 4).toString());
+                    formulario.cbbType.setSelectedItem(tblProviders.getValueAt(IndexRow, 5).toString());
+//                formulario.id = (int) selectedtRow.get(0);
+//                formulario.txtName.setText(selectedtRow.get(1).toString());
+//                formulario.txtPhone.setText(selectedtRow.get(2).toString());
+//                formulario.txtEmail.setText(selectedtRow.get(3).toString());
+//                formulario.txtAddress.setText(selectedtRow.get(3).toString());                
+//                formulario.cbbType.setSelectedItem(selectedtRow.get(5).toString());
+
+                    WindowHome.main(WindowType.PROVIDER, formulario, false);
+                    repaint();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Para actualizar un registro debe seleccionar uno previamente", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
 
             @Override
             public void delete(ProviderModel entity) {
-                System.out.println("Eliminar a " + entity.getName());
+                if (tblProviders.getSelectedRowCount() > 0) {
+                    MessageDialog dialogResult = new MessageDialog(new FrmLogin());
+                    dialogResult.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el proveedor " + entity.getName() + "?");
+
+                    if (dialogResult.getMessageType() == MessageDialog.MessageType.OK) {
+
+                        ProviderDao prvD = new ProviderDao();
+//                    ArrayList<Object> selectedtRow = new ArrayList<>();
+//                    selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
+
+                        int IndexRow = tblProviders.getSelectedRow();
+                        prvD.DeleteProvider(Integer.parseInt(tblProviders.getValueAt(IndexRow, 0).toString()));
+                        clearRowsInTable();
+                        initTableData();
+                    } else {
+                        repaint();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Para eliminar un registro debe seleccionar uno previamente", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+                }
+
             }
         };
 
@@ -43,8 +135,125 @@ public class FrmProviders extends javax.swing.JPanel {
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
 
-        tblProviders.addRow(new ProviderModel("Manuel Perlera", "7738-8921", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.VENDEDOR).toRowTable(eventAction));
-        tblProviders.addRow(new ProviderModel("Maria Pineda", "7738-8921", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.DONADOR).toRowTable(eventAction));
+        //tblProviders.addRow(new ProviderModel("Manuel Perlera", "7738-8921", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.VENDEDOR).toRowTable(eventAction));
+        //tblProviders.addRow(new ProviderModel("Maria Pineda", "7738-8921", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.DONADOR).toRowTable(eventAction));
+        //Cargando datos a la tabla
+        f_eventAction = eventAction;
+        showProviders("ALL", f_eventAction);
+
+        //Agregndo los contadores
+        initCard();
+
+        //Ocultando columnas de la tabla tblItems
+        tblProviders.getColumnModel().getColumn(0).setMaxWidth(0);
+        tblProviders.getColumnModel().getColumn(0).setMinWidth(0);
+        tblProviders.getColumnModel().getColumn(0).setPreferredWidth(0);
+        tblProviders.getColumnModel().getColumn(0).setResizable(false);
+
+    }
+
+    private void clearRowsInTable() {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblProviders.getModel();
+            int filas = tblProviders.getRowCount();
+            for (int i = 0; filas > i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+
+//        tblProviders.selectAll();
+//
+//        int rowsSelected[] = tblProviders.getSelectedRows();
+//        int indexRow = rowsSelected.length - 1;
+//        for (int i = 0; i < rowsSelected.length; i++) {
+//            modelo.removeRow(indexRow);
+//            indexRow--;
+//        }
+    }
+
+    private int contador_commercial = 0;
+    private int contador_donor = 0;
+    private int contador_provider = 0;
+
+    public void showProviders(String tipo_filtro, IProviderEventAction eventAction) {
+        //Reseteando los contadores     
+        contador_commercial = 0;
+        contador_donor = 0;
+        contador_provider = 0;
+
+        //Limpiando la tabla
+        clearRowsInTable();
+
+        ProviderDao prvD = new ProviderDao();
+
+        //Mostrar todos los datos
+        switch (tipo_filtro) {
+            case "ALL" -> {
+                for (var item : prvD.ListProviders()) {
+                    if (item.getType().equals(ProviderType.COMERCIAL)) {
+                        contador_commercial++;
+                    }
+                    if (item.getType().equals(ProviderType.DONANTE)) {
+                        contador_donor++;
+                    }
+
+                    //Agregando la fila a la tabla y los botones de acciones
+                    add_rows_to_table(item, eventAction);
+                    contador_provider++;
+                }
+
+                //Actualizando los contadores
+                initCard();
+            }
+
+            //filtrar las filas por la categoria de "COMERCIAL"
+            case "COMERCIAL" -> {
+                for (var i : prvD.ListProviders()) {
+                    if (i.getType().equals(ProviderType.COMERCIAL)) {
+                        contador_commercial++;
+
+                        //Agregando la fila a la tabla y los botones de acciones
+                        add_rows_to_table(i, eventAction);
+                        contador_provider++;
+                    }
+                }
+                //Actualizando los contadores
+                initCard();
+
+            }
+            //Filtrar filas por tipo de "DONANTE"
+            case "DONANTE" -> {
+                for (var i : prvD.ListProviders()) {
+                    if (i.getType().equals(ProviderType.DONANTE)) {
+                        contador_donor++;
+
+                        //Agregando la fila a la tabla y los botones
+                        add_rows_to_table(i, eventAction);
+                        contador_provider++;
+                    }
+                }
+
+                //Actualizando los contadores
+                initCard();
+            }
+            default -> {
+            }
+        }
+    }
+
+    private void add_rows_to_table(ProviderModel prvM, IProviderEventAction eventAction) {
+        //Agregando fila a la tabla
+        tblProviders.addRow(new ProviderModel(
+                prvM.getId(),
+                prvM.getName(),
+                prvM.getNumberPhone(),
+                prvM.getEmail(),
+                prvM.getAddress(),
+                prvM.getType()
+        ).toRowTable(eventAction));
+
     }
 
     @SuppressWarnings("unchecked")
@@ -52,6 +261,7 @@ public class FrmProviders extends javax.swing.JPanel {
     private void initComponents() {
 
         pnlContainer = new javax.swing.JLayeredPane();
+        pnlCard3 = new com.trojasviejas.component.main.PanelCard();
         pnlCard1 = new com.trojasviejas.component.main.PanelCard();
         pnlCard2 = new com.trojasviejas.component.main.PanelCard();
         pnlTable = new com.trojasviejas.swing.panels.PanelBorder();
@@ -63,6 +273,10 @@ public class FrmProviders extends javax.swing.JPanel {
         setBackground(new java.awt.Color(232, 241, 242));
 
         pnlContainer.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
+
+        pnlCard3.setColor1(new java.awt.Color(0, 40, 85));
+        pnlCard3.setColor2(new java.awt.Color(2, 62, 125));
+        pnlContainer.add(pnlCard3);
 
         pnlCard1.setColor1(new java.awt.Color(0, 40, 85));
         pnlCard1.setColor2(new java.awt.Color(2, 62, 125));
@@ -85,12 +299,19 @@ public class FrmProviders extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nombre", "Telefono", "Email", "Direccion", "Tipo", "Acciones"
+                "Id", "Nombre", "Telefono", "Email", "Direccion", "Tipo", "Acciones"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -165,6 +386,7 @@ public class FrmProviders extends javax.swing.JPanel {
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         WindowProvider provider = new WindowProvider();
+        provider.frmProviders = form;
         WindowHome.main(WindowType.PROVIDER, provider, false);
     }//GEN-LAST:event_btnNewActionPerformed
 
@@ -174,6 +396,7 @@ public class FrmProviders extends javax.swing.JPanel {
     private javax.swing.JLabel lblProviders;
     private com.trojasviejas.component.main.PanelCard pnlCard1;
     private com.trojasviejas.component.main.PanelCard pnlCard2;
+    private com.trojasviejas.component.main.PanelCard pnlCard3;
     private javax.swing.JLayeredPane pnlContainer;
     private com.trojasviejas.swing.panels.PanelBorder pnlTable;
     private javax.swing.JScrollPane scroll;
