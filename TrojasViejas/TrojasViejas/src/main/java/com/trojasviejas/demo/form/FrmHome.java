@@ -1,9 +1,14 @@
 package com.trojasviejas.demo.form;
 
+import com.trojasviejas.data.dao.DashboardDao;
+import com.trojasviejas.models.entity.InvoicesAverageReport;
 import com.trojasviejas.swing.chart.ChartModel;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class FrmHome extends javax.swing.JPanel {
 
@@ -16,36 +21,210 @@ public class FrmHome extends javax.swing.JPanel {
         panel.setBackground(Color.white);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
-        gaugeChart1.setValueWithAnimation(75);
-        gaugeChart2.setValueWithAnimation(90);
-        gaugeChart3.setValueWithAnimation(45);
+        InitGaugeCharts(year);
         init();
+        
+        lblChartOne.setText(lblChartOne.getText()+" "+year);
+        lblChartTwo.setText(lblChartTwo.getText()+" "+year);
+    }
+        //obteniendo año actual
+    int year = LocalDateTime.now().getYear();
+    //obteniendo el mes actual
+    int month = LocalDateTime.now().getMonthValue();
+
+    DashboardDao dashboardDao = new DashboardDao();
+
+    private void InitGaugeCharts(int year) {
+
+        //primer año
+        setReportDataByYearOneToCard(year);
+        //segundo año
+        setReportDataByYearTwoToCard(year-1);
+        //tercer año
+        setReportDataByYearThreeToCard(year-2);
+        
+        
+        //colocando los promedios de los años anteriores al actual
+        setAverages();
+        
+        //Colocando los porcentajes a los graficos si hay un promedio
+        //FACTURAS
+        setDataToChartOneInCard();
+        //ARTICULOS
+        setDataToChartTwoInCard();
+        //VALOR TOTAL
+        setDataToChartThreeInCard();
+
     }
     
-    private void init(){
-        barChart.addLegend("Entradas", new Color(12, 84, 175), new Color(0, 108, 247));
-        barChart.addLegend("Gastos", new Color(54, 4, 143), new Color(104, 49, 200));
-        barChart.addLegend("Ganancia", new Color(5, 125, 0), new Color(95, 209, 69));
-        barChart.addLegend("Costo", new Color(186, 37, 37), new Color(241, 100, 120));
-        barChart.addData(new ChartModel("Enero", new double[]{500, 200, 80, 89}));
-        barChart.addData(new ChartModel("Febrero", new double[]{600, 750, 90, 150}));
-        barChart.addData(new ChartModel("Marzo", new double[]{200, 350, 460, 900}));
-        barChart.addData(new ChartModel("Abril", new double[]{480, 150, 750, 700}));
-        barChart.addData(new ChartModel("Mayo", new double[]{350, 540, 300, 150}));
-        barChart.addData(new ChartModel("Junio", new double[]{190, 280, 81, 200}));
-        barChart.start();
+    private void setReportDataByYearOneToCard(int year){
+              for (var i : dashboardDao.reportPurchases(year)) {
+            //total de compras
+            lblPurchaseYear1.setText(String.valueOf(year));
+            lblAmountPurchaseYear1.setText(String.valueOf(i.getAmountPurchases()));
+            //total de items
+            lblItemsYear1.setText(String.valueOf(year));
+            lblAmountItemsYear1.setText(String.valueOf(i.getAmountItems()));
+            //valor total de las compras
+            lblValueYear1.setText(String.valueOf(year));
+            lblAmountValueYear1.setText("$" + String.valueOf(i.getValue()));
+        }  
+    }
+    private void setReportDataByYearTwoToCard(int year){
+        for (var i : dashboardDao.reportPurchases(year)) {
+            //total de compras
+            lblPurchaseYear2.setText(String.valueOf(year));
+            lblAmountPurchaseYear2.setText(String.valueOf(i.getAmountPurchases()));
+            //total de items
+            lblItemsYear2.setText(String.valueOf(year));
+            lblAmountItemsYear2.setText(String.valueOf(i.getAmountItems()));
+            //valor total de las compras
+            lblValueYear2.setText(String.valueOf(year));
+            lblAmountValueYear2.setText("$" + String.valueOf(i.getValue()));
+        }
+    }
+    private void setReportDataByYearThreeToCard(int year){
+         for (var i : dashboardDao.reportPurchases(year)) {
+            //total de compras
+            lblPurchaseYear3.setText(String.valueOf(year));
+            lblAmountPurchaseYear3.setText(String.valueOf(i.getAmountPurchases()));
+            //total de items
+            lblItemsYear3.setText(String.valueOf(year));
+            lblAmountItemsYear3.setText(String.valueOf(i.getAmountItems()));
+            //valor total de las compras
+            lblValueYear3.setText(String.valueOf(year));
+            lblAmountValueYear3.setText("$" + String.valueOf(i.getValue()));
+        } 
+    }
+    
+    private void setDataToChartOneInCard(){
+        double percentPurchases;
+        //si el valor promedio es distinto de 0, entonces hay un promedio en los years anteriores 
+        //para obtener el pocentaje
+        if (Double.parseDouble(lblAveragePurchases.getText()) > 0) {
+            //obteniendo el  porcentaje de las compras del year actual respecto al promedio general por year
+            percentPurchases= Double.parseDouble(lblAmountPurchaseYear1.getText()) / Double.parseDouble(lblAveragePurchases.getText());   
+            //como el porcentaje esta entre (0,1) se multiplica por 100, y se elevan al entero mas proximo porque 
+            //en el grafico no acepta porcentajes con decimales
+            gaugeChart1.setValueWithAnimation((int)Math.rint(percentPurchases*100));
+            //si las compras superan al promedio (pasan del 100%) obtenemos ese valor que sobrepasa y se muestra
+            lblPercentPurchases.setText(overOneHundredPercent(percentPurchases*100));
+        }else{gaugeChart1.setValueWithAnimation(0);}
+    }
+    private void setDataToChartTwoInCard(){
+        double percentItems;
+        if (Double.parseDouble(lblAverageItems.getText()) > 0) {
+            //obteniendo el porcentaje de las items del year actual respecto al promedio general por year
+           percentItems= Double.parseDouble(lblAmountItemsYear1.getText()) / Double.parseDouble(lblAverageItems.getText()); 
+            //como el porcentaje esta entre (0,1) se multiplica por 100, y se elevan al entero mas proximo porque 
+            //en el grafico no acepta porcentajes con decimales
+           gaugeChart2.setValueWithAnimation((int)Math.rint(percentItems*100));
+            //si el total de items superan al promedio (pasan del 100%) obtenemos ese valor que sobrepasa y se muestra
+           lblPercentItems.setText(overOneHundredPercent(percentItems*100));
+        }else{gaugeChart2.setValueWithAnimation(0);}
+    }
+    private void setDataToChartThreeInCard(){
+         if(getValueWithOutDollarSymbol(lblAverageValue.getText()) > 0){
+            //obteniendo el porcentaje de las valor total del year actual respecto al promedio general por year
+            String percent3= formatNumber.format(getValueWithOutDollarSymbol(lblAmountValueYear1.getText()) / getValueWithOutDollarSymbol(lblAverageValue.getText()));
+            //como el porcentaje esta entre (0,1) se multiplica por 100, y se elevan al entero mas proximo porque 
+            //en el grafico no acepta porcentajes con decimales
+            gaugeChart3.setValueWithAnimation((int)Math.rint(Double.parseDouble(percent3)*100));
+            //si el valor total del year actual superan al promedio (pasan del 100%) obtenemos ese valor que sobrepasa y se muestra
+            lblPercentValues.setText(overOneHundredPercent(Double.parseDouble(percent3)*100));
+        }else{gaugeChart3.setValueWithAnimation(0);}
+    }
+    
+    DecimalFormat formatNumber = new DecimalFormat("0.00");
+    int purchases = 0;
+    int items = 0;
+    double value = 0;
+
+    private void setAverages() {
+       DashboardDao averageDao = new DashboardDao();
+
+       //getAverage() retorna un array con los years en los que hay registros de facturas
+       //getYears() retorna la lista de years menores al year actual en los que hay registros
+        ArrayList<InvoicesAverageReport> averages = averageDao.getAverages(averageDao.getYears());
+        int amountYears = averages.size();
+
+        purchases = 0;
+        items = 0;
+        value = 0;
+
+        //si amountYears > 0 es porque hay years anteriores al actual con facturas, por lo que 
+        //se puede obtener un promedio
+        if (amountYears > 0) {
+            for (var i : averages) {
+                purchases += i.getAmoutPurchases();
+                items += i.getAmountItems();
+                value += i.getValue();
+            }
+
+            for (int i = 0; i < 1;i++) {
+                lblAveragePurchases.setText(String.valueOf(formatNumber.format(purchases / (double) amountYears)));
+                lblAverageItems.setText(String.valueOf(formatNumber.format(items / (double) amountYears)));
+                lblAverageValue.setText("$" + String.valueOf(formatNumber.format(value / (double) amountYears)));
+            }
+        }
+
         
-        lineChart.addLegend("Entradas", new Color(12, 84, 175), new Color(0, 108, 247));
-        lineChart.addLegend("Gastos", new Color(54, 4, 143), new Color(104, 49, 200));
-        lineChart.addLegend("Ganancia", new Color(5, 125, 0), new Color(95, 209, 69));
-        lineChart.addLegend("Costo", new Color(186, 37, 37), new Color(241, 100, 120));
-        lineChart.addData(new ChartModel("Enero", new double[]{500, 200, 80, 89}));
-        lineChart.addData(new ChartModel("Febrero", new double[]{600, 750, 90, 150}));
-        lineChart.addData(new ChartModel("Marzo", new double[]{200, 350, 460, 900}));
-        lineChart.addData(new ChartModel("Abril", new double[]{480, 150, 750, 700}));
-        lineChart.addData(new ChartModel("Mayo", new double[]{350, 540, 300, 150}));
-        lineChart.addData(new ChartModel("Junio", new double[]{190, 280, 81, 200}));
+    }
+
+    private String overOneHundredPercent(Double percent){
+        String valuePercent = " ";
+        if (percent > 100.0) {
+            valuePercent  = "+"+String.valueOf(formatNumber.format(percent -100))+"%";
+        }
+        return valuePercent;
+    }
+    
+    private double getValueWithOutDollarSymbol(String values){
+        return Double.parseDouble(values.substring(1, values.length()));
+    }
+    
+
+    private void init() {     
+        
+        barChart.addLegend("Entradas", new Color(12, 84, 175), new Color(0, 108, 247));
+        barChart.addLegend("Artículos de entrada", new Color(54, 4, 143), new Color(104, 49, 200));
+        barChart.addLegend("Salidas", new Color(5, 125, 0), new Color(95, 209, 69));
+        barChart.addLegend("Artículos de salida", new Color(186, 37, 37), new Color(241, 100, 120));
+        setDatatoChartOne();
+        barChart.start();
+        //txtCantidadEntradas.setBackground();
+
+        lineChart.addLegend("Compras", new Color(12, 84, 175), new Color(0, 108, 247));
+        lineChart.addLegend("Artículos", new Color(54, 4, 143), new Color(104, 49, 200));
+        lineChart.addLegend("Costo", new Color(5, 125, 0), new Color(95, 209, 69));
+        //lineChart.addLegend("Costo", new Color(186, 37, 37), new Color(241, 100, 120));
+        setDatatoChartTwo();
         lineChart.start();
+    }
+    
+    private void setDatatoChartOne(){
+
+        for (var i : dashboardDao.getDataCharI()) {
+          barChart.addData(new ChartModel(
+                  i.getMonth().toString(), 
+                  new double[]{
+                      i.getEntries(), 
+                      i.getAmountEntries(), 
+                      i.getOutputs(), 
+                      i.getAmountOutPuts()}));          
+        }
+        
+    }
+    private void setDatatoChartTwo(){
+
+        for (var i : dashboardDao.getDataCharII()) {
+          lineChart.addData(new ChartModel(
+                  i.getMonth().toString(), 
+                  new double[]{
+                      i.getAmountPurchases(), 
+                      i.getAmountItems(),
+                      i.getValue()}));          
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -56,38 +235,61 @@ public class FrmHome extends javax.swing.JPanel {
         pnlBg = new javax.swing.JPanel();
         pnlCard = new com.trojasviejas.swing.panels.PanelShadow();
         gaugeChart1 = new com.trojasviejas.swing.chart.GaugeChart();
+        lblAveragePurchases = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblPurchaseYear1 = new javax.swing.JLabel();
+        lblAmountPurchaseYear1 = new javax.swing.JLabel();
+        lblPurchaseYear2 = new javax.swing.JLabel();
+        lblAmountPurchaseYear2 = new javax.swing.JLabel();
+        lblPurchaseYear3 = new javax.swing.JLabel();
+        lblAmountPurchaseYear3 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        lblPercentPurchases = new javax.swing.JLabel();
         pnlCard1 = new com.trojasviejas.swing.panels.PanelShadow();
         gaugeChart2 = new com.trojasviejas.swing.chart.GaugeChart();
+        lblAverageItems = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        lblItemsYear1 = new javax.swing.JLabel();
+        lblAmountItemsYear1 = new javax.swing.JLabel();
+        lblItemsYear2 = new javax.swing.JLabel();
+        lblAmountItemsYear2 = new javax.swing.JLabel();
+        lblItemsYear3 = new javax.swing.JLabel();
+        lblAmountItemsYear3 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        lblPercentItems = new javax.swing.JLabel();
         pnlCard11 = new com.trojasviejas.swing.panels.PanelShadow();
         gaugeChart3 = new com.trojasviejas.swing.chart.GaugeChart();
+        lblAverageValue = new javax.swing.JLabel();
         jLabel78 = new javax.swing.JLabel();
-        jLabel79 = new javax.swing.JLabel();
-        jLabel80 = new javax.swing.JLabel();
-        jLabel81 = new javax.swing.JLabel();
-        jLabel82 = new javax.swing.JLabel();
-        jLabel83 = new javax.swing.JLabel();
-        jLabel84 = new javax.swing.JLabel();
-        lblData = new javax.swing.JLabel();
-        lblLineChart = new javax.swing.JLabel();
+        lblValueYear1 = new javax.swing.JLabel();
+        lblAmountValueYear1 = new javax.swing.JLabel();
+        lblValueYear2 = new javax.swing.JLabel();
+        lblAmountValueYear2 = new javax.swing.JLabel();
+        lblValueYear3 = new javax.swing.JLabel();
+        lblAmountValueYear3 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        lblPercentValues = new javax.swing.JLabel();
+        lblChartOne = new javax.swing.JLabel();
+        lblReportYear = new javax.swing.JLabel();
         panelShadow1 = new com.trojasviejas.swing.panels.PanelShadow();
         lineChart = new com.trojasviejas.swing.chart.LineChart();
-        lblData2 = new javax.swing.JLabel();
+        lblChartTwo = new javax.swing.JLabel();
         panelShadow2 = new com.trojasviejas.swing.panels.PanelShadow();
         barChart = new com.trojasviejas.swing.chart.Chart();
+        lblData3 = new javax.swing.JLabel();
+        txtEntradas = new javax.swing.JTextField();
+        lblData5 = new javax.swing.JLabel();
+        txtCantidadEntradas = new javax.swing.JTextField();
+        lblData4 = new javax.swing.JLabel();
+        txtSalidas = new javax.swing.JTextField();
+        lblData6 = new javax.swing.JLabel();
+        txtCantidadSalidas = new javax.swing.JTextField();
+        lblData7 = new javax.swing.JLabel();
+        txtCompras = new javax.swing.JTextField();
+        lblData8 = new javax.swing.JLabel();
+        txtCantidadArticulos = new javax.swing.JTextField();
+        lblData9 = new javax.swing.JLabel();
+        txtCostoTotal = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(232, 241, 242));
 
@@ -95,7 +297,6 @@ public class FrmHome extends javax.swing.JPanel {
         scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         pnlBg.setBackground(new java.awt.Color(232, 241, 242));
-        pnlBg.setPreferredSize(new java.awt.Dimension(1100, 1200));
 
         pnlCard.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
@@ -104,44 +305,66 @@ public class FrmHome extends javax.swing.JPanel {
         gaugeChart1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         gaugeChart1.setValue(50);
 
+        lblAveragePurchases.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblAveragePurchases.setForeground(new java.awt.Color(150, 150, 150));
+        lblAveragePurchases.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAveragePurchases.setText("0.0");
+        lblAveragePurchases.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblAveragePurchases.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gaugeChart1.add(lblAveragePurchases);
+        lblAveragePurchases.setBounds(20, 100, 80, 21);
+
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(100, 100, 100));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Total entrada");
+        jLabel1.setText("Compras");
 
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(150, 150, 150));
-        jLabel2.setText("Diciembre");
-        jLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblPurchaseYear1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblPurchaseYear1.setForeground(new java.awt.Color(150, 150, 150));
+        lblPurchaseYear1.setText("Diciembre");
+        lblPurchaseYear1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel3.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(27, 152, 224));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("$ 150.00");
-        jLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblAmountPurchaseYear1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblAmountPurchaseYear1.setForeground(new java.awt.Color(27, 152, 224));
+        lblAmountPurchaseYear1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblAmountPurchaseYear1.setText("$ 150.00");
+        lblAmountPurchaseYear1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel4.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(150, 150, 150));
-        jLabel4.setText("Enero");
-        jLabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblPurchaseYear2.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblPurchaseYear2.setForeground(new java.awt.Color(150, 150, 150));
+        lblPurchaseYear2.setText("Enero");
+        lblPurchaseYear2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel5.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(27, 152, 224));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("$ 200.00");
-        jLabel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblAmountPurchaseYear2.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblAmountPurchaseYear2.setForeground(new java.awt.Color(27, 152, 224));
+        lblAmountPurchaseYear2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblAmountPurchaseYear2.setText("$ 200.00");
+        lblAmountPurchaseYear2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel6.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(150, 150, 150));
-        jLabel6.setText("Febrero");
-        jLabel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblPurchaseYear3.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblPurchaseYear3.setForeground(new java.awt.Color(150, 150, 150));
+        lblPurchaseYear3.setText("Febrero");
+        lblPurchaseYear3.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel7.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(27, 152, 224));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText("$ 100.00");
-        jLabel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblAmountPurchaseYear3.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblAmountPurchaseYear3.setForeground(new java.awt.Color(27, 152, 224));
+        lblAmountPurchaseYear3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblAmountPurchaseYear3.setText("$ 100.00");
+        lblAmountPurchaseYear3.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(100, 100, 100));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("Promedio");
+
+        lblPercentPurchases.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblPercentPurchases.setForeground(new java.awt.Color(183, 228, 41));
+        lblPercentPurchases.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblPercentPurchases.setText(" ");
+        lblPercentPurchases.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblPercentPurchases.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout pnlCardLayout = new javax.swing.GroupLayout(pnlCard);
         pnlCard.setLayout(pnlCardLayout);
@@ -149,50 +372,58 @@ public class FrmHome extends javax.swing.JPanel {
             pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCardLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(gaugeChart1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlCardLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(pnlCardLayout.createSequentialGroup()
-                        .addComponent(gaugeChart1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCardLayout.createSequentialGroup()
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
+                            .addComponent(lblPurchaseYear3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                            .addComponent(lblPurchaseYear2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblPurchaseYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnlCardLayout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblAmountPurchaseYear1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCardLayout.createSequentialGroup()
                                     .addGap(12, 12, 12)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lblAmountPurchaseYear2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCardLayout.createSequentialGroup()
                                 .addGap(12, 12, 12)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(20, Short.MAX_VALUE))))
+                                .addComponent(lblAmountPurchaseYear3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(lblPercentPurchases, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCardLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         pnlCardLayout.setVerticalGroup(
             pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCardLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(gaugeChart1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCardLayout.createSequentialGroup()
-                        .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
+                .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel15))
+                .addGap(10, 10, 10)
+                .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(gaugeChart1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlCardLayout.createSequentialGroup()
+                        .addComponent(lblPercentPurchases)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
+                            .addComponent(lblPurchaseYear1)
+                            .addComponent(lblAmountPurchaseYear1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
+                            .addComponent(lblPurchaseYear2)
+                            .addComponent(lblAmountPurchaseYear2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblPurchaseYear3)
+                            .addComponent(lblAmountPurchaseYear3))
                         .addGap(26, 26, 26))))
         );
 
@@ -203,44 +434,66 @@ public class FrmHome extends javax.swing.JPanel {
         gaugeChart2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         gaugeChart2.setValue(89);
 
+        lblAverageItems.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblAverageItems.setForeground(new java.awt.Color(150, 150, 150));
+        lblAverageItems.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAverageItems.setText("0.0");
+        lblAverageItems.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblAverageItems.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gaugeChart2.add(lblAverageItems);
+        lblAverageItems.setBounds(20, 100, 80, 21);
+
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(100, 100, 100));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Total salida");
+        jLabel8.setText("Artículos");
 
-        jLabel9.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(150, 150, 150));
-        jLabel9.setText("Diciembre");
-        jLabel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblItemsYear1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblItemsYear1.setForeground(new java.awt.Color(150, 150, 150));
+        lblItemsYear1.setText("Diciembre");
+        lblItemsYear1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel10.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(248, 78, 78));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("$ 150.00");
-        jLabel10.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblAmountItemsYear1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblAmountItemsYear1.setForeground(new java.awt.Color(248, 78, 78));
+        lblAmountItemsYear1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblAmountItemsYear1.setText("$ 150.00");
+        lblAmountItemsYear1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel11.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(150, 150, 150));
-        jLabel11.setText("Enero");
-        jLabel11.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblItemsYear2.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblItemsYear2.setForeground(new java.awt.Color(150, 150, 150));
+        lblItemsYear2.setText("Enero");
+        lblItemsYear2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel12.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(248, 78, 78));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel12.setText("$ 200.00");
-        jLabel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblAmountItemsYear2.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblAmountItemsYear2.setForeground(new java.awt.Color(248, 78, 78));
+        lblAmountItemsYear2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblAmountItemsYear2.setText("$ 200.00");
+        lblAmountItemsYear2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel13.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(150, 150, 150));
-        jLabel13.setText("Febrero");
-        jLabel13.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblItemsYear3.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblItemsYear3.setForeground(new java.awt.Color(150, 150, 150));
+        lblItemsYear3.setText("Febrero");
+        lblItemsYear3.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel14.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(248, 78, 78));
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel14.setText("$ 100.00");
-        jLabel14.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblAmountItemsYear3.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblAmountItemsYear3.setForeground(new java.awt.Color(248, 78, 78));
+        lblAmountItemsYear3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblAmountItemsYear3.setText("$ 100.00");
+        lblAmountItemsYear3.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel16.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(100, 100, 100));
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setText("Promedio");
+
+        lblPercentItems.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblPercentItems.setForeground(new java.awt.Color(183, 228, 41));
+        lblPercentItems.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblPercentItems.setText(" ");
+        lblPercentItems.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblPercentItems.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout pnlCard1Layout = new javax.swing.GroupLayout(pnlCard1);
         pnlCard1.setLayout(pnlCard1Layout);
@@ -248,50 +501,58 @@ public class FrmHome extends javax.swing.JPanel {
             pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCard1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(gaugeChart2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlCard1Layout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(pnlCard1Layout.createSequentialGroup()
-                        .addComponent(gaugeChart2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCard1Layout.createSequentialGroup()
                         .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
+                            .addComponent(lblItemsYear3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                            .addComponent(lblItemsYear2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblItemsYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))
                         .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnlCard1Layout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblAmountItemsYear1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCard1Layout.createSequentialGroup()
                                     .addGap(12, 12, 12)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lblAmountItemsYear2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCard1Layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(20, Short.MAX_VALUE))))
+                                .addComponent(lblAmountItemsYear3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(lblPercentItems, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCard1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         pnlCard1Layout.setVerticalGroup(
             pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCard1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8)
-                .addGap(18, 18, 18)
-                .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(gaugeChart2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCard1Layout.createSequentialGroup()
-                        .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))
+                .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel16))
+                .addGap(12, 12, 12)
+                .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(gaugeChart2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlCard1Layout.createSequentialGroup()
+                        .addComponent(lblPercentItems)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12))
+                            .addComponent(lblItemsYear1)
+                            .addComponent(lblAmountItemsYear1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel14))
+                            .addComponent(lblItemsYear2)
+                            .addComponent(lblAmountItemsYear2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblItemsYear3)
+                            .addComponent(lblAmountItemsYear3))
                         .addGap(26, 26, 26))))
         );
 
@@ -302,44 +563,66 @@ public class FrmHome extends javax.swing.JPanel {
         gaugeChart3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         gaugeChart3.setValue(15);
 
+        lblAverageValue.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblAverageValue.setForeground(new java.awt.Color(150, 150, 150));
+        lblAverageValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAverageValue.setText("0.0");
+        lblAverageValue.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblAverageValue.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gaugeChart3.add(lblAverageValue);
+        lblAverageValue.setBounds(20, 100, 80, 21);
+
         jLabel78.setBackground(new java.awt.Color(255, 255, 255));
         jLabel78.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel78.setForeground(new java.awt.Color(100, 100, 100));
         jLabel78.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel78.setText("Total gasto");
+        jLabel78.setText("Costo Total");
 
-        jLabel79.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel79.setForeground(new java.awt.Color(150, 150, 150));
-        jLabel79.setText("Diciembre");
-        jLabel79.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblValueYear1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblValueYear1.setForeground(new java.awt.Color(150, 150, 150));
+        lblValueYear1.setText("Diciembre");
+        lblValueYear1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel80.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel80.setForeground(new java.awt.Color(27, 152, 224));
-        jLabel80.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel80.setText("$ 150.00");
-        jLabel80.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblAmountValueYear1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblAmountValueYear1.setForeground(new java.awt.Color(27, 152, 224));
+        lblAmountValueYear1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblAmountValueYear1.setText("$ 150.00");
+        lblAmountValueYear1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel81.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel81.setForeground(new java.awt.Color(150, 150, 150));
-        jLabel81.setText("Enero");
-        jLabel81.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblValueYear2.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblValueYear2.setForeground(new java.awt.Color(150, 150, 150));
+        lblValueYear2.setText("Enero");
+        lblValueYear2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel82.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel82.setForeground(new java.awt.Color(27, 152, 224));
-        jLabel82.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel82.setText("$ 200.00");
-        jLabel82.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblAmountValueYear2.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblAmountValueYear2.setForeground(new java.awt.Color(27, 152, 224));
+        lblAmountValueYear2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblAmountValueYear2.setText("$ 200.00");
+        lblAmountValueYear2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel83.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel83.setForeground(new java.awt.Color(150, 150, 150));
-        jLabel83.setText("Febrero");
-        jLabel83.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblValueYear3.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblValueYear3.setForeground(new java.awt.Color(150, 150, 150));
+        lblValueYear3.setText("Febrero");
+        lblValueYear3.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel84.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel84.setForeground(new java.awt.Color(27, 152, 224));
-        jLabel84.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel84.setText("$ 100.00");
-        jLabel84.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblAmountValueYear3.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblAmountValueYear3.setForeground(new java.awt.Color(27, 152, 224));
+        lblAmountValueYear3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblAmountValueYear3.setText("$ 100.00");
+        lblAmountValueYear3.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel17.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(100, 100, 100));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("Promedio");
+
+        lblPercentValues.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lblPercentValues.setForeground(new java.awt.Color(183, 228, 41));
+        lblPercentValues.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblPercentValues.setText(" ");
+        lblPercentValues.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lblPercentValues.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout pnlCard11Layout = new javax.swing.GroupLayout(pnlCard11);
         pnlCard11.setLayout(pnlCard11Layout);
@@ -347,60 +630,68 @@ public class FrmHome extends javax.swing.JPanel {
             pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCard11Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlCard11Layout.createSequentialGroup()
-                        .addComponent(jLabel78, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(pnlCard11Layout.createSequentialGroup()
-                        .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCard11Layout.createSequentialGroup()
                         .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel83, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                            .addComponent(jLabel81, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel79, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
+                            .addComponent(lblValueYear3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                            .addComponent(lblValueYear2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblValueYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))
                         .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnlCard11Layout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jLabel80, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblAmountValueYear1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCard11Layout.createSequentialGroup()
                                     .addGap(12, 12, 12)
-                                    .addComponent(jLabel82, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lblAmountValueYear2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCard11Layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
-                                .addComponent(jLabel84, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(20, Short.MAX_VALUE))))
+                                .addComponent(lblAmountValueYear3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(lblPercentValues, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCard11Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel78, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         pnlCard11Layout.setVerticalGroup(
             pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCard11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel78)
-                .addGap(18, 18, 18)
-                .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(gaugeChart3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCard11Layout.createSequentialGroup()
-                        .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel79)
-                            .addComponent(jLabel80))
+                .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel78)
+                    .addComponent(jLabel17))
+                .addGap(10, 10, 10)
+                .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(gaugeChart3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlCard11Layout.createSequentialGroup()
+                        .addComponent(lblPercentValues)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel81)
-                            .addComponent(jLabel82))
+                            .addComponent(lblValueYear1)
+                            .addComponent(lblAmountValueYear1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel83)
-                            .addComponent(jLabel84))
+                            .addComponent(lblValueYear2)
+                            .addComponent(lblAmountValueYear2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblValueYear3)
+                            .addComponent(lblAmountValueYear3))
                         .addGap(26, 26, 26))))
         );
 
-        lblData.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
-        lblData.setForeground(new java.awt.Color(27, 152, 224));
-        lblData.setText("Grafico de lineas");
+        lblChartOne.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
+        lblChartOne.setForeground(new java.awt.Color(27, 152, 224));
+        lblChartOne.setText("Grafico de Entradas y Salidas");
 
-        lblLineChart.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
-        lblLineChart.setForeground(new java.awt.Color(27, 152, 224));
-        lblLineChart.setText("Informe de datos");
+        lblReportYear.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
+        lblReportYear.setForeground(new java.awt.Color(27, 152, 224));
+        lblReportYear.setText("Informe de compras");
 
         javax.swing.GroupLayout panelShadow1Layout = new javax.swing.GroupLayout(panelShadow1);
         panelShadow1.setLayout(panelShadow1Layout);
@@ -419,9 +710,9 @@ public class FrmHome extends javax.swing.JPanel {
                 .addGap(20, 20, 20))
         );
 
-        lblData2.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
-        lblData2.setForeground(new java.awt.Color(27, 152, 224));
-        lblData2.setText("Grafico de lineas");
+        lblChartTwo.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
+        lblChartTwo.setForeground(new java.awt.Color(27, 152, 224));
+        lblChartTwo.setText("Grafico de Compras");
 
         javax.swing.GroupLayout panelShadow2Layout = new javax.swing.GroupLayout(panelShadow2);
         panelShadow2.setLayout(panelShadow2Layout);
@@ -430,7 +721,7 @@ public class FrmHome extends javax.swing.JPanel {
             .addGroup(panelShadow2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(barChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+                .addGap(21, 21, 21))
         );
         panelShadow2Layout.setVerticalGroup(
             panelShadow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -440,6 +731,62 @@ public class FrmHome extends javax.swing.JPanel {
                 .addGap(19, 19, 19))
         );
 
+        lblData3.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
+        lblData3.setForeground(new java.awt.Color(27, 152, 224));
+        lblData3.setText("Entradas");
+
+        txtEntradas.setEditable(false);
+        txtEntradas.setBackground(new java.awt.Color(0, 108, 247));
+        txtEntradas.setBorder(null);
+
+        lblData5.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
+        lblData5.setForeground(new java.awt.Color(27, 152, 224));
+        lblData5.setText("Artículos de entrada");
+
+        txtCantidadEntradas.setEditable(false);
+        txtCantidadEntradas.setBackground(new java.awt.Color(104, 49, 200));
+        txtCantidadEntradas.setBorder(null);
+
+        lblData4.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
+        lblData4.setForeground(new java.awt.Color(27, 152, 224));
+        lblData4.setText("Salidas");
+
+        txtSalidas.setEditable(false);
+        txtSalidas.setBackground(new java.awt.Color(95, 209, 69));
+        txtSalidas.setBorder(null);
+
+        lblData6.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
+        lblData6.setForeground(new java.awt.Color(27, 152, 224));
+        lblData6.setText("Artículos de salida");
+
+        txtCantidadSalidas.setEditable(false);
+        txtCantidadSalidas.setBackground(new java.awt.Color(241, 100, 120));
+        txtCantidadSalidas.setBorder(null);
+
+        lblData7.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
+        lblData7.setForeground(new java.awt.Color(27, 152, 224));
+        lblData7.setText("Compras");
+
+        txtCompras.setEditable(false);
+        txtCompras.setBackground(new java.awt.Color(0, 108, 247));
+        txtCompras.setBorder(null);
+
+        lblData8.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
+        lblData8.setForeground(new java.awt.Color(27, 152, 224));
+        lblData8.setText("Cantidad de artículos");
+
+        txtCantidadArticulos.setEditable(false);
+        txtCantidadArticulos.setBackground(new java.awt.Color(104, 49, 200));
+        txtCantidadArticulos.setBorder(null);
+
+        lblData9.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
+        lblData9.setForeground(new java.awt.Color(27, 152, 224));
+        lblData9.setText("Costo total");
+
+        txtCostoTotal.setEditable(false);
+        txtCostoTotal.setBackground(new java.awt.Color(95, 209, 69));
+        txtCostoTotal.setBorder(null);
+
         javax.swing.GroupLayout pnlBgLayout = new javax.swing.GroupLayout(pnlBg);
         pnlBg.setLayout(pnlBgLayout);
         pnlBgLayout.setHorizontalGroup(
@@ -448,52 +795,94 @@ public class FrmHome extends javax.swing.JPanel {
                 .addGap(15, 15, 15)
                 .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBgLayout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(lblData2)
-                        .addGap(924, 944, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBgLayout.createSequentialGroup()
-                        .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(panelShadow1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panelShadow2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlBgLayout.createSequentialGroup()
+                        .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblChartOne)
+                            .addComponent(lblReportYear)
+                            .addGroup(pnlBgLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlBgLayout.createSequentialGroup()
+                                        .addComponent(lblData3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(35, 35, 35)
+                                        .addComponent(lblData5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCantidadEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(35, 35, 35)
+                                        .addComponent(lblData4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(35, 35, 35)
+                                        .addComponent(lblData6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCantidadSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlBgLayout.createSequentialGroup()
+                                        .addComponent(lblData7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(35, 35, 35)
+                                        .addComponent(lblData8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCantidadArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(35, 35, 35)
+                                        .addComponent(lblData9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCostoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlBgLayout.createSequentialGroup()
+                        .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblChartTwo)
+                            .addGroup(pnlBgLayout.createSequentialGroup()
                                 .addComponent(pnlCard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                                 .addComponent(pnlCard1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                                .addComponent(pnlCard11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(20, 20, 20))))
-            .addGroup(pnlBgLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblData)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlBgLayout.createSequentialGroup()
-                    .addGap(43, 43, 43)
-                    .addComponent(lblLineChart)
-                    .addContainerGap(923, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                                .addComponent(pnlCard11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlBgLayout.createSequentialGroup()
+                                .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(panelShadow1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(panelShadow2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(3, 3, 3)))
+                        .addGap(34, 34, 34))))
         );
         pnlBgLayout.setVerticalGroup(
             pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBgLayout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(28, 28, 28)
+                .addComponent(lblReportYear)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlCard11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlCard1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlCard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(lblData)
+                    .addComponent(pnlCard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlCard11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
+                .addComponent(lblChartOne)
+                .addGap(18, 18, 18)
                 .addComponent(panelShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lblData2)
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblData3)
+                    .addComponent(lblData4)
+                    .addComponent(lblData5)
+                    .addComponent(lblData6)
+                    .addComponent(txtEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCantidadEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCantidadSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(lblChartTwo)
+                .addGap(18, 18, 18)
                 .addComponent(panelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlBgLayout.createSequentialGroup()
-                    .addGap(30, 30, 30)
-                    .addComponent(lblLineChart)
-                    .addContainerGap(1148, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblData7)
+                    .addComponent(lblData9)
+                    .addComponent(lblData8)
+                    .addComponent(txtCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCostoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCantidadArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45))
         );
 
         scroll.setViewportView(pnlBg);
@@ -502,7 +891,7 @@ public class FrmHome extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scroll)
+            .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 1070, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -517,29 +906,45 @@ public class FrmHome extends javax.swing.JPanel {
     private com.trojasviejas.swing.chart.GaugeChart gaugeChart2;
     private com.trojasviejas.swing.chart.GaugeChart gaugeChart3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel78;
-    private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel80;
-    private javax.swing.JLabel jLabel81;
-    private javax.swing.JLabel jLabel82;
-    private javax.swing.JLabel jLabel83;
-    private javax.swing.JLabel jLabel84;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel lblData;
-    private javax.swing.JLabel lblData2;
-    private javax.swing.JLabel lblLineChart;
+    private javax.swing.JLabel lblAmountItemsYear1;
+    private javax.swing.JLabel lblAmountItemsYear2;
+    private javax.swing.JLabel lblAmountItemsYear3;
+    private javax.swing.JLabel lblAmountPurchaseYear1;
+    private javax.swing.JLabel lblAmountPurchaseYear2;
+    private javax.swing.JLabel lblAmountPurchaseYear3;
+    private javax.swing.JLabel lblAmountValueYear1;
+    private javax.swing.JLabel lblAmountValueYear2;
+    private javax.swing.JLabel lblAmountValueYear3;
+    private javax.swing.JLabel lblAverageItems;
+    private javax.swing.JLabel lblAveragePurchases;
+    private javax.swing.JLabel lblAverageValue;
+    private javax.swing.JLabel lblChartOne;
+    private javax.swing.JLabel lblChartTwo;
+    private javax.swing.JLabel lblData3;
+    private javax.swing.JLabel lblData4;
+    private javax.swing.JLabel lblData5;
+    private javax.swing.JLabel lblData6;
+    private javax.swing.JLabel lblData7;
+    private javax.swing.JLabel lblData8;
+    private javax.swing.JLabel lblData9;
+    private javax.swing.JLabel lblItemsYear1;
+    private javax.swing.JLabel lblItemsYear2;
+    private javax.swing.JLabel lblItemsYear3;
+    private javax.swing.JLabel lblPercentItems;
+    private javax.swing.JLabel lblPercentPurchases;
+    private javax.swing.JLabel lblPercentValues;
+    private javax.swing.JLabel lblPurchaseYear1;
+    private javax.swing.JLabel lblPurchaseYear2;
+    private javax.swing.JLabel lblPurchaseYear3;
+    private javax.swing.JLabel lblReportYear;
+    private javax.swing.JLabel lblValueYear1;
+    private javax.swing.JLabel lblValueYear2;
+    private javax.swing.JLabel lblValueYear3;
     private com.trojasviejas.swing.chart.LineChart lineChart;
     private com.trojasviejas.swing.panels.PanelShadow panelShadow1;
     private com.trojasviejas.swing.panels.PanelShadow panelShadow2;
@@ -548,5 +953,12 @@ public class FrmHome extends javax.swing.JPanel {
     private com.trojasviejas.swing.panels.PanelShadow pnlCard1;
     private com.trojasviejas.swing.panels.PanelShadow pnlCard11;
     private javax.swing.JScrollPane scroll;
+    private javax.swing.JTextField txtCantidadArticulos;
+    private javax.swing.JTextField txtCantidadEntradas;
+    private javax.swing.JTextField txtCantidadSalidas;
+    private javax.swing.JTextField txtCompras;
+    private javax.swing.JTextField txtCostoTotal;
+    private javax.swing.JTextField txtEntradas;
+    private javax.swing.JTextField txtSalidas;
     // End of variables declaration//GEN-END:variables
 }
