@@ -432,7 +432,7 @@ public class WindowInventory extends javax.swing.JFrame {
 
             registerDao.save(register);
 
-            inventoryForm.showInventory("ALL");
+            inventoryForm.reloadChoosedFilter();
 
             this.dispose();
 

@@ -78,6 +78,7 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.trojasviejas.component.main.PanelHeader()"/>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="panelHeader1.frmMain = formMain;"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="pnlMain">

@@ -10,6 +10,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JOptionPane;
 
@@ -71,6 +73,11 @@ public class PanelHeader extends javax.swing.JPanel {
         });
 
         txtSearch.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSearchKeyPressed(evt);
+            }
+        });
 
         btnOption1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnOption1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/option.png"))); // NOI18N
@@ -125,15 +132,24 @@ public class PanelHeader extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnSearchMouseClicked
 
+   
+    
+    private void txtSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            System.out.println("enter");
+        }
+    }//GEN-LAST:event_txtSearchKeyPressed
+
     public String moveStringSearchToMenu(){
          setSearch(txtSearch.getText());
             return getSearch();
         
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnOption1;
-    private javax.swing.JLabel btnSearch;
+    public javax.swing.JLabel btnSearch;
     public com.trojasviejas.swing.fields.SearchText txtSearch;
     // End of variables declaration//GEN-END:variables
 }

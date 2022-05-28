@@ -1,19 +1,17 @@
 package com.trojasviejas.demo.form;
 
-import com.trojasviejas.component.login.PanelMessage;
+import com.trojasviejas.component.login.MessageDialog;
 import com.trojasviejas.demo.form.window.*;
-import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
-import com.trojasviejas.component.main.event.IProviderEventAction;
 import com.trojasviejas.data.dao.InventoryDao;
+import static com.trojasviejas.demo.form.FrmMain.getStringSearch;
 import com.trojasviejas.models.viewmodel.InventoryVM;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
-import java.time.*;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,141 +23,134 @@ public class FrmInventory extends javax.swing.JPanel {
         initCard();
         initTableData();
     }
-    
-    private void initCard(){
+    MessageDialog message = new MessageDialog(new JFrame());
+
+    private void initCard() {
         pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "ARTÍCULOS", String.valueOf(countItem)));
         pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "EXISTENCIAS", String.valueOf(countStock)));
         pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "BAJO EL LÍMITE", String.valueOf(countItemOnLimit)));
         pnlCard4.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "HERRAMIENTAS", String.valueOf(countTools)));
         pnlCard5.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "ACCESORIOS", String.valueOf(countAccesories)));
 
-        
         //MUESTRA TODOS LOS REGISTROS NUEVAMENTE
         pnlCard1.setFilter(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 showInventory("ALL");
             }
-            
+
         });
-        
+
         //EJECUTA FILTRO DE ITEMS <= LIMITE ESTABLECIDO
         pnlCard3.setFilter(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 showInventory("ITEMS_ON_LIMIT");
             }
-            
-        }); 
-        
+
+        });
+
         //EJECUTA FILTRO DE FILAS POR LAS QUE PERTENECEN A HERRAMIENTAS
         pnlCard4.setFilter(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 showInventory("TOOLS");
             }
-            
+
         });
-           
+
         //EJECUTA FILTRO DE LAS FILAS QUE PERTECEN A ACCESORIOS
         pnlCard5.setFilter(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 showInventory("ACCESORIES");
             }
-            
-        });
-        
-    }
-    
-    private void initTableData(){
-        //Agregar registro
-        IProviderEventAction eventAction = new IProviderEventAction() {
-            @Override
-            public void update(ProviderModel entity) {
-                System.out.println("Editar a " + entity.getName());
-            }
 
-            @Override
-            public void delete(ProviderModel entity) {
-                System.out.println("Eliminar a " + entity.getName());
-            }
-        };
-        
+        });
+
+    }
+
+    private void initTableData() {
+
         scroll.setVerticalScrollBar(new ScrollBar());
         scroll.getVerticalScrollBar().setBackground(Color.white);
         JPanel panel = new JPanel();
         panel.setBackground(Color.white);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
-        
+
         //mostrando el inevntario, filtrado por existencias > 0
         showInventory("ALL");
 
     }
-        
-    private void clearRowsInTable(){
+
+    private void clearRowsInTable() {
         try {
             DefaultTableModel modelo = (DefaultTableModel) tblInventory.getModel();
-            int filas = tblInventory.getRowCount();
-            for (int i = 0; filas > i; i++) {
-                modelo.removeRow(0);
+
+            tblInventory.selectAll();
+
+            int filas[] = tblInventory.getSelectedRows();
+            int index = filas.length - 1;
+            for (int i = 0; i < filas.length; i++) {
+                modelo.removeRow(index);
+                index--;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+
+            message.showMessage("Error", "Error al limpiar la tabla.");
         }
     }
+    
     //formato para fechas
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-    
+
     //Array De busqueda
-    ArrayList<InventoryVM> listFound=null;
-    
-    public void listByFinder(String _search){
+    ArrayList<InventoryVM> listFound = null;
+
+    public void filterByStringSearch(String _search) {
         //resetendo el array de busqueda
         listFound = null;
-        if (!_search.isBlank() || !_search.isEmpty()){
 
-            InventoryDao inventories = new InventoryDao();
-            if (cbbStock.getSelectedIndex() >= 0) {
-                
-                //guardando la busqueda en una array para ser usada en los filtros de cajas
-                //y filtrando los items con stock
-                if (cbbStock.getSelectedItem().equals("Agotados")) {
-                    listFound = itemsWithStock(inventories.findBy(_search), 0);
-                } else {
-                    listFound = itemsWithStock(inventories.findBy(_search), 1);
-                }
+        InventoryDao inventories = new InventoryDao();
+        if (cbbStock.getSelectedIndex() >= 0) {
+
+            //guardando la busqueda en una array para ser usada en los filtros de cajas
+            //y filtrando los items con stock
+            if (cbbStock.getSelectedItem().equals("Agotados")) {
+                listFound = itemsWithStock(inventories.findBy(_search), 0);
             }else{
-                listFound = itemsWithStock(inventories.findBy(_search), 1);       
+                listFound = itemsWithStock(inventories.findBy(_search), 1);
             }
-
-            showInventory("ALL");
+        } else {
+            listFound = itemsWithStock(inventories.findBy(_search), 1);
         }
+        showInventory("ALL");
 
+        filter = "BROWSER";
     }
-    
+
     //contadores
     private int countItem = 0;
     private int countStock = 0;
     private int countItemOnLimit = 0;
     private int countTools = 0;
     private int countAccesories = 0;
-    
-    public void showInventory(String tipo_filtro){
+
+    public void showInventory(String tipo_filtro) {
         //RESETEANDO LOS CONTADORES      
         countItem = 0;
         countStock = 0;
         countItemOnLimit = 0;
         countTools = 0;
         countAccesories = 0;
-        
+
         //LIMPIANDO LA TABLA
         clearRowsInTable();
-        
-       InventoryDao inventory = new InventoryDao();
-        ArrayList<InventoryVM> inventories = itemsWithStock(inventory.list(),1);  
-        
+
+        InventoryDao inventory = new InventoryDao();
+        ArrayList<InventoryVM> inventories = itemsWithStock(inventory.list(), 1);
+
         if (listFound != null) {
             inventories = listFound;
         }
@@ -205,7 +196,6 @@ public class FrmInventory extends javax.swing.JPanel {
                         countItem++;
                     }
 
-                    
                 }
                 //ACTUALIZANDO LOS CONTADORES
                 initCard();
@@ -214,7 +204,7 @@ public class FrmInventory extends javax.swing.JPanel {
             case "TOOLS" -> {
                 for (var i : inventories) {
                     if (i.getCategory().equals(CategoryType.HERRAMIENTAS)) {
-                        
+
                         if (i.getStock() <= i.getMinimunAmount()) {
                             countItemOnLimit++;
                         }
@@ -239,7 +229,7 @@ public class FrmInventory extends javax.swing.JPanel {
                         }
                         //Sumando las existencias
                         countStock += i.getStock();
-                        
+
                         countAccesories++;
                         //AGREGANDO LA FILA A LA TABLA Y LOS BOTONES DE ACCIONES
                         add_rows_to_table(i);
@@ -252,67 +242,46 @@ public class FrmInventory extends javax.swing.JPanel {
             }
             default -> {
             }
-        } 
+        }
     }
-    
-    private void add_rows_to_table(InventoryVM inventory){
+
+    private void add_rows_to_table(InventoryVM inventory) {
         //AGREGANDO FILA A  lA TABLA
         tblInventory.addRow(new Object[]{
-                inventory.getId(),
-                inventory.getAmount(),
-                inventory.getItem(),
-                inventory.getStock(),
-                inventory.getMinimunAmount(),
-                "$"+inventory.getPricePerUnit(),
-                inventory.getCategory(),
-                inventory.getType(),
-                formato.format(inventory.getBuyDate())
+            inventory.getId(),
+            inventory.getAmount(),
+            inventory.getItem(),
+            inventory.getStock(),
+            inventory.getMinimunAmount(),
+            "$" + inventory.getPricePerUnit(),
+            inventory.getCategory(),
+            inventory.getType(),
+            formato.format(inventory.getBuyDate())
         });
     }
-    
-    private ArrayList<InventoryVM> itemsWithStock(ArrayList<InventoryVM> inventories, int type ){
+
+    private ArrayList<InventoryVM> itemsWithStock(ArrayList<InventoryVM> inventories, int type) {
 
         ArrayList<InventoryVM> inventary = new ArrayList<>();
-        ArrayList<InventoryVM> _inventary = new ArrayList<>();
 
-        for (var i : inventories) {
-
-            //filtrando por las filas que tienen exitencias 0
-            if (i.getStock() > 0) {
-                inventary.add(i);
-            }else{
-                _inventary.add(i);
-            }
-
-        }
-
-        //retornando los datos en items agotados filtrados por el string de busqueda
-        if (type==0) {
-           return _inventary;
-        }
-        return inventary;
-    }
-    
-    private ArrayList<InventoryVM> filterBy(String typeFilter){
-        
-        InventoryDao inventories = new InventoryDao();
-        
-        ArrayList<InventoryVM> inventary = new ArrayList<>();
-        
-        if (typeFilter.equals("AGOTADOS")) {
-            for (var i : inventories.list()) {
-
+        if (type == 0) {
+            for (var i : inventories) {
                 //filtrando por las filas que tienen exitencias 0
                 if (i.getStock() == 0) {
                     inventary.add(i);
                 }
             }
-
-
+        } else {
+            for (var i : inventories) {
+                //filtrando por las filas que tienen exitencias 0
+                if (i.getStock() > 0) {
+                    inventary.add(i);
+                }
+            }
         }
         return inventary;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -329,7 +298,6 @@ public class FrmInventory extends javax.swing.JPanel {
         scroll = new javax.swing.JScrollPane();
         tblInventory = new com.trojasviejas.swing.tables.inventory.InventoryTable();
         cbbStock = new com.trojasviejas.swing.ComboBox();
-        cbbItems = new com.trojasviejas.swing.ComboBox();
         btnRefresh = new com.trojasviejas.swing.Buttons.ActionButton();
 
         setBackground(new java.awt.Color(232, 241, 242));
@@ -418,11 +386,11 @@ public class FrmInventory extends javax.swing.JPanel {
                 cbbStockItemStateChanged(evt);
             }
         });
-
-        cbbItems.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Existencias", "Agotados" }));
-        cbbItems.setSelectedIndex(-1);
-        cbbItems.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        cbbItems.setLabeText("Elija articulo");
+        cbbStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbStockActionPerformed(evt);
+            }
+        });
 
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refresh.png"))); // NOI18N
         btnRefresh.addActionListener(new java.awt.event.ActionListener() {
@@ -442,13 +410,13 @@ public class FrmInventory extends javax.swing.JPanel {
                     .addGroup(pnlTableLayout.createSequentialGroup()
                         .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlTableLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(cbbItems, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbbStock, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblProviders)
-                            .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblProviders)
+                                .addGap(0, 671, Short.MAX_VALUE))
+                            .addGroup(pnlTableLayout.createSequentialGroup()
+                                .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbbStock, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
@@ -456,14 +424,13 @@ public class FrmInventory extends javax.swing.JPanel {
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlTableLayout.createSequentialGroup()
                         .addComponent(lblProviders)
                         .addGap(11, 11, 11)
                         .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbbStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbbItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cbbStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -494,25 +461,22 @@ public class FrmInventory extends javax.swing.JPanel {
     FrmInventory thisForm = this;
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         WindowInventory newRegister = new WindowInventory();
-        
+
         if (tblInventory.getSelectedRowCount() > 0) {
             transferDataToForm(newRegister);
             newRegister.inventoryForm = thisForm;
             WindowInventory.main(newRegister);
-        } else {           
-            JOptionPane.showMessageDialog(null,
-                    "Para registrar una salida debe seleccionar un artículo previamente. \n",
-                    "Error",
-                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            message.showMessage("Error", "Para registrar una salida debe seleccionar un artículo previamente");
         }
     }//GEN-LAST:event_btnRegisterActionPerformed
-   private void transferDataToForm(WindowInventory newRegister){
+    private void transferDataToForm(WindowInventory newRegister) {
 
         int indexRegister = tblInventory.getSelectedRow();
 
         //agregando los datos a las cajas 
         newRegister.idItem = Integer.parseInt(tblInventory.getValueAt(indexRegister, 0).toString());
-       
+
         newRegister.lblAmountBought.setText(tblInventory.getValueAt(indexRegister, 1).toString());
         newRegister.lblItem.setText(tblInventory.getValueAt(indexRegister, 2).toString());
         newRegister.lblStock.setText(tblInventory.getValueAt(indexRegister, 3).toString());
@@ -521,37 +485,84 @@ public class FrmInventory extends javax.swing.JPanel {
         newRegister.lblBuyDate.setText(tblInventory.getValueAt(indexRegister, 8).toString());
 
     }
+
+    private String filter = "EXISTENCIAS";
+
+    public void reloadChoosedFilter() {
+        switch (filter) {
+            case "BROWSER" -> {
+                filterByStringSearch(getStringSearch());
+                showInventory("ALL");
+            }
+            case "AGOTADOS" -> {
+                listFound = itemsWithStock(new InventoryDao().list(), 0);
+                showInventory("ALL");
+            }
+            case "EXISTENCIAS" -> {
+                listFound = itemsWithStock(new InventoryDao().list(), 1);
+                showInventory("ALL");
+            }
+            default -> {
+                showInventory("ALL");
+            }
+        }
+    }
+
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        
+
         listFound = null;
         cbbStock.setSelectedIndex(-1);
         showInventory("ALL");
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void cbbStockItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbStockItemStateChanged
-               if(cbbStock.getSelectedIndex()==0){
+        /*//existencias 
+        if (cbbStock.getSelectedIndex() == 0) {
             //colocando el array de las listas de busqueda como nula
             //para que solo se carguen los que tiene existencias
-            listFound = null;
-            
+            listFound = itemsWithStock(new InventoryDao().list(), 1);
+
             //recargando todos los datos
             showInventory("ALL");
-            
-        }else if(cbbStock.getSelectedIndex()==1){
-            
+
+            filter = "EXISTENCIAS";
+            //agotados   
+        } else if (cbbStock.getSelectedIndex() == 1) {
+
             //colocando en la lista de filtrado los datos de los items agotados
-             listFound = filterBy("AGOTADOS");
-             showInventory("ALL");
-            
-            
-        }
+            listFound = itemsWithStock(new InventoryDao().list(), 0);
+            showInventory("ALL");
+
+            filter = "AGOTADOS";
+        }*/
     }//GEN-LAST:event_cbbStockItemStateChanged
+
+    private void cbbStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbStockActionPerformed
+        //existencias 
+        if (cbbStock.getSelectedIndex() == 0) {
+            //colocando el array de las listas de busqueda como nula
+            //para que solo se carguen los que tiene existencias
+            listFound = itemsWithStock(new InventoryDao().list(), 1);
+
+            //recargando todos los datos
+            showInventory("ALL");
+
+            filter = "EXISTENCIAS";
+            //agotados   
+        } else if (cbbStock.getSelectedIndex() == 1) {
+
+            //colocando en la lista de filtrado los datos de los items agotados
+            listFound = itemsWithStock(new InventoryDao().list(), 0);
+            showInventory("ALL");
+
+            filter = "AGOTADOS";
+        }
+    }//GEN-LAST:event_cbbStockActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.Buttons.ActionButton btnRefresh;
     private com.trojasviejas.swing.Buttons.ActionButton btnRegister;
-    private com.trojasviejas.swing.ComboBox cbbItems;
     private com.trojasviejas.swing.ComboBox cbbStock;
     private javax.swing.JLabel lblProviders;
     private com.trojasviejas.component.main.PanelCard pnlCard1;

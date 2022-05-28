@@ -145,11 +145,12 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     public void findForInventory(String stringSearch) { 
         //llama al metodo en la entidad que ejecuta la busqueda
         System.out.println("buscando en inventory: " + stringSearch);   
-        inventory.listByFinder(stringSearch);
+        inventory.filterByStringSearch(stringSearch);
         inventory.showInventory("ALL");
     }
 
-     public String getStringSearch(){
+     public static String getStringSearch(){
+         //panelHeader1: objeto actual del menu general
          return panelHeader1.moveStringSearchToMenu();
      }
 
@@ -268,7 +269,7 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.component.main.PanelHeader panelHeader1;
+    public static com.trojasviejas.component.main.PanelHeader panelHeader1;
     private com.trojasviejas.swing.panels.PanelBorder pnlContainer;
     private javax.swing.JPanel pnlMain;
     private com.trojasviejas.component.main.PanelMenu pnlMenu;
