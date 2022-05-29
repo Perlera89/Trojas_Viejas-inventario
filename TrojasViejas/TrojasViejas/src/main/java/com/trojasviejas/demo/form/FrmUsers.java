@@ -26,12 +26,12 @@ public class FrmUsers extends javax.swing.JPanel {
         IUserEventAction eventAction = new IUserEventAction() {
             @Override
             public void update(UserModel entity) {
-                System.out.println("Editar a " + entity.getUsername());
+              
             }
 
             @Override
             public void delete(UserModel entity) {
-                System.out.println("Eliminar a " + entity.getUsername());
+              
             }
         };
         
@@ -42,8 +42,18 @@ public class FrmUsers extends javax.swing.JPanel {
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
         
-        tblUsers.addRow(new UserModel("Manuel Perlera", "elwapoperlera").toRowTable(eventAction));
-        tblUsers.addRow(new UserModel("Wilian Mirada", "elfeomiranda").toRowTable(eventAction));
+//        tblUsers.addRow(new UserModel("Manuel Perlera", "elwapoperlera").toRowTable(eventAction));
+//        tblUsers.addRow(new UserModel("Wilian Mirada", "elfeomiranda").toRowTable(eventAction));
+        
+
+    }
+     private void add_rows_to_table(UserModel model, IUserEventAction eventAction) {
+        //Agregando fila a la tabla
+        tblUsers.addRow(new UserModel(
+               String.valueOf(model.getUserId()),
+                model.getUsername(),
+                model.getPassword()
+        ).toRowTable(eventAction));
     }
 
     @SuppressWarnings("unchecked")
@@ -91,11 +101,11 @@ public class FrmUsers extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Usuario", "Contraseña", "Acciones"
+                "Id", "Usuario", "Contraseña", "Acciones"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                true, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

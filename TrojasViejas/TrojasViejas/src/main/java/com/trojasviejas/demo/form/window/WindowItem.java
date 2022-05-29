@@ -1,5 +1,6 @@
 package com.trojasviejas.demo.form.window;
 
+import com.trojasviejas.component.login.MessageDialog;
 import com.trojasviejas.data.dao.ItemDao;
 import com.trojasviejas.demo.form.FrmItems;
 import com.trojasviejas.models.entity.ItemModel;
@@ -38,7 +39,9 @@ public class WindowItem extends javax.swing.JPanel {
         scroll.getViewport().setBackground(Color.white);
         CargarComboBox();
     }
-
+    
+    MessageDialog dialogResult = new MessageDialog(new JFrame());
+    
     public void CargarComboBox() {
 
         for (var i : CategoryType.values()) {
@@ -174,36 +177,51 @@ public class WindowItem extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         //Agregar o Actualizar
-        if (idRegistro > 0) {
-            ItemModel item = new ItemModel();
-            ItemDao items = new ItemDao();
+        //VALIDACIONES
+        if ((!txtName.getText().isBlank() && !txtName.getText().isEmpty())
+                && (!txtAmount.getText().isBlank() && !txtAmount.getText().isEmpty())) {
+            if (Integer.parseInt(txtAmount.getText()) > 0) {
+                //Agregar o Actualizar
+                if (idRegistro > 0) {
+                    ItemModel item = new ItemModel();
+                    ItemDao items = new ItemDao();
 
-            item.setIdItem(idRegistro);
-            item.setName(txtName.getText());
-            item.setMinimunAmount(Integer.parseInt(txtAmount.getText()));
-            item.setDescription(txtDescription.getText());
-            item.setCategory(CategoryType.values()[cbbCategory.getSelectedIndex()]);
-            item.setType(ItemType.values()[cbbItemType.getSelectedIndex()]);
+                    item.setIdItem(idRegistro);
+                    item.setName(txtName.getText());
+                    item.setMinimunAmount(Integer.parseInt(txtAmount.getText()));
+                    item.setDescription(txtDescription.getText());
+                    item.setCategory(CategoryType.values()[cbbCategory.getSelectedIndex()]);
+                    item.setType(ItemType.values()[cbbItemType.getSelectedIndex()]);
 
-            items.UpdateItems(item);
-            frmItem.initTableData();
-            //this.dispose();
-            clean();
+                    items.UpdateItems(item);
+                    frmItem.reloadChoosedFilter();
+
+                    home.dispose();
+
+                } else {
+                    ItemModel item = new ItemModel();
+                    ItemDao items = new ItemDao();
+
+                    item.setName(txtName.getText());
+                    item.setMinimunAmount(Integer.parseInt(txtAmount.getText()));
+                    item.setDescription(txtDescription.getText());
+                    item.setCategory(CategoryType.values()[cbbCategory.getSelectedIndex()]);
+                    item.setType(ItemType.values()[cbbItemType.getSelectedIndex()]);
+
+                    items.AddItem(item);
+                    frmItem.reloadChoosedFilter();
+                    clean();
+                }
+            } else {
+                dialogResult.showMessage("ERROR", "El campo de catidad mínima solo acepta valores mayores a cero.");
+
+            }
 
         } else {
-            ItemModel item = new ItemModel();
-            ItemDao items = new ItemDao();
-
-            item.setName(txtName.getText());
-            item.setMinimunAmount(Integer.parseInt(txtAmount.getText()));
-            item.setDescription(txtDescription.getText());
-            item.setCategory(CategoryType.values()[cbbCategory.getSelectedIndex()]);
-            item.setType(ItemType.values()[cbbItemType.getSelectedIndex()]);
-
-            items.AddItem(item);
-            frmItem.initTableData();
-            clean();
+            dialogResult.showMessage("ERROR", "No puede guardar un registro con valores nulos o vacios.");
         }
+
+
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed

@@ -31,7 +31,7 @@ public class UserModel {
     }
     
     public Object[] toRowTable(IUserEventAction event) {
-        return new Object[]{username, password, new UserActionModel(this, event)};
+        return new Object[]{userId,username, password, new UserActionModel(this, event)};
     }
     
     public int getUserId() {

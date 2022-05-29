@@ -57,7 +57,7 @@ public class UsersTable extends JTable {
 
     @Override
     public TableCellEditor getCellEditor(int row, int col) {
-        if (col == 2) {
+        if (col == 3) {
             return new UserCellAction();
         } else {
             return super.getCellEditor(row, col);

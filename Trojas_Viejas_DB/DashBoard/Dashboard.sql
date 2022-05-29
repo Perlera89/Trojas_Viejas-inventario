@@ -1,7 +1,7 @@
 use trojas_viejas_db;
 
 DELIMITER $$
-	CREATE PROCEDURE sp_report_purchases_by_year(
+	CREATE PROCEDURE sp_report_purchases(
 		p_month VARCHAR(20),
 		p_year INT
     )
