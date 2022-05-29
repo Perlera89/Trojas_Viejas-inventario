@@ -2,29 +2,45 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.trojasviejas.models.entity;
+package com.trojasviejas.models.utility;
+
+import com.trojasviejas.models.utility.Months;
 
 /**
  *
  * @author Willian
  */
-public class InvoicesAverageReport {
-    private int amoutPurchases;
+public class PurchaseReport {
+
+    private Months month;
+    private int amountPurchases;
     private int amountItems;
     private double value;
-    
-    public InvoicesAverageReport(int amoutPurchases, int amountItems, double value) {
-        this.amoutPurchases = amoutPurchases;
+
+    public PurchaseReport() {
+
+    }
+
+    public PurchaseReport(int amountPurchases, int amountItems, double value) {
+        this.amountPurchases = amountPurchases;
         this.amountItems = amountItems;
         this.value = value;
     }
 
-    public int getAmoutPurchases() {
-        return amoutPurchases;
+    public Months getMonth() {
+        return month;
     }
 
-    public void setAmoutPurchases(int amoutPurchases) {
-        this.amoutPurchases = amoutPurchases;
+    public void setMonth(Months month) {
+        this.month = month;
+    }
+
+    public int getAmountPurchases() {
+        return amountPurchases;
+    }
+
+    public void setAmountPurchases(int amountPurchases) {
+        this.amountPurchases = amountPurchases;
     }
 
     public int getAmountItems() {
@@ -42,5 +58,5 @@ public class InvoicesAverageReport {
     public void setValue(double value) {
         this.value = value;
     }
-    
+
 }

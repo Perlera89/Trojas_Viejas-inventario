@@ -6,9 +6,9 @@ package com.trojasviejas.data.dao;
 
 import com.trojasviejas.component.login.MessageDialog;
 import com.trojasviejas.data.connectiondb.Conexion;
-import com.trojasviejas.models.entity.InvoicesAverageReport;
-import com.trojasviejas.models.entity.PurchaseReport;
-import com.trojasviejas.models.entity.TypeRegisterReport;
+import com.trojasviejas.models.utility.InvoicesAverageReport;
+import com.trojasviejas.models.utility.PurchaseReport;
+import com.trojasviejas.models.utility.TypeRegisterReport;
 import com.trojasviejas.models.utility.ActionType;
 import com.trojasviejas.models.utility.Months;
 import java.sql.CallableStatement;

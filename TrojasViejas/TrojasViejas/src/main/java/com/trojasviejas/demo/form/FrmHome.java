@@ -1,7 +1,7 @@
 package com.trojasviejas.demo.form;
 
 import com.trojasviejas.data.dao.DashboardDao;
-import com.trojasviejas.models.entity.InvoicesAverageReport;
+import com.trojasviejas.models.utility.InvoicesAverageReport;
 import com.trojasviejas.swing.chart.ChartModel;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
