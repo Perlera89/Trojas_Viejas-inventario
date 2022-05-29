@@ -2,6 +2,7 @@ package com.trojasviejas.demo.form;
 import com.trojasviejas.component.login.MessageDialog;
 import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.data.dao.ItemDao;
+import static com.trojasviejas.demo.form.FrmMain.getStringSearch;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
@@ -21,6 +22,7 @@ public class FrmItems extends javax.swing.JPanel {
         initCard(0, 0, 0);
         initTableData();
     }
+      MessageDialog dialogResult = new MessageDialog(new FrmLogin());
     
     private void initCard(int contadorItem, int contador_tools, int contador_accesories) {
         pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Artículos", String.valueOf(contadorItem)));
@@ -31,7 +33,7 @@ public class FrmItems extends javax.swing.JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 showItems("ALL", f_eventAction);
-                JOptionPane.showMessageDialog(null, "Filtrando contador de artículos");
+             
             }
 
         });
@@ -40,7 +42,7 @@ public class FrmItems extends javax.swing.JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 showItems(String.valueOf(CategoryType.HERRAMIENTAS), f_eventAction);
-                JOptionPane.showMessageDialog(null, "Filtrando contador herramientas");
+             
 
             }
 
@@ -49,7 +51,7 @@ public class FrmItems extends javax.swing.JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 showItems(String.valueOf(CategoryType.ACCESORIOS), f_eventAction);
-                JOptionPane.showMessageDialog(null, "Filtrando contador accesorios");
+              
             }
 
         });
@@ -64,37 +66,49 @@ public class FrmItems extends javax.swing.JPanel {
             @Override
             public void update(ItemModel entity) {
 
-                ArrayList<Object> selectedtRow = new ArrayList<>();
-                selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
+               if (tblItems.getSelectedRowCount()> 0) {
+                 int index = tblItems.getSelectedRow(); //saber que fila se ha seleccionado
 
                 //Pasar datos al formulario de Windows
                 WindowItem formulario = new WindowItem();
                 formulario.frmItem = form;
 
-                formulario.idRegistro = (int) selectedtRow.get(0);
-                formulario.txtName.setText(selectedtRow.get(1).toString());
-                formulario.txtAmount.setText(selectedtRow.get(2).toString());
-                formulario.txtDescription.setText(selectedtRow.get(3).toString());
-                formulario.cbbCategory.setSelectedItem(selectedtRow.get(4).toString());
-                formulario.cbbItemType.setSelectedItem(selectedtRow.get(5).toString());
+                //Se ejecuta solo si hay una fila selecionada una fila
+                formulario.idRegistro = (int) tblItems.getValueAt(index, 0);
+                formulario.txtName.setText(tblItems.getValueAt(index, 1).toString());
+                formulario.txtAmount.setText(tblItems.getValueAt(index, 2).toString());
+                formulario.txtDescription.setText(tblItems.getValueAt(index, 3).toString());
+                formulario.cbbCategory.setSelectedItem(tblItems.getValueAt(index, 4).toString());
+                formulario.cbbItemType.setSelectedItem(tblItems.getValueAt(index, 5).toString());
 
                 WindowHome.main(WindowType.ITEM, formulario, true);
-                repaint();
+                repaint(); 
+                }else{
+                
+                dialogResult.showMessage("ADVERTENCIA","Para actualizar debe seleccionar un registro.");
+                
+                }
+              
             }
 
             @Override
             public void delete(ItemModel entity) {
-                MessageDialog dialogResult = new MessageDialog(new FrmLogin());
-                dialogResult.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el articulo " + entity.getName() + "?");
+               if (tblItems.getSelectedRowCount() > 0) {
+                   
+                    dialogResult.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el articulo " + entity.getName() + "?");
 
-                if (dialogResult.getMessageType() == MessageDialog.MessageType.OK) {
-                    ItemDao item = new ItemDao();
-                    ArrayList<Object> selectedtRow = new ArrayList<>();
-                    selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
-                    item.DeleteItem(Integer.parseInt(selectedtRow.get(0).toString()));
-                    initTableData();
+                    if (dialogResult.getMessageType() == MessageDialog.MessageType.OK) {
+                        ItemDao item = new ItemDao();
+                        ArrayList<Object> selectedtRow = new ArrayList<>();
+                        selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
+                        item.DeleteItem(Integer.parseInt(selectedtRow.get(0).toString()));
+                        reloadChoosedFilter();
+                    } else {
+                        repaint();
+                    }
                 } else {
-                    repaint();
+           
+                  dialogResult.showMessage("ADVERTENCIA", "Para eliminar debe seleccionar un registro.");
                 }
             }
         };
@@ -125,19 +139,38 @@ public class FrmItems extends javax.swing.JPanel {
         tblItems.getColumnModel().getColumn(3).setResizable(false);
 
     }
+    
+    
 
     //Método para limpiar la tabla
     private void clearRowsInTable() {
-        try {
+         try {
             DefaultTableModel modelo = (DefaultTableModel) tblItems.getModel();
-            int filas = tblItems.getRowCount();
-            for (int i = 0; filas > i; i++) {
-                modelo.removeRow(0);
+
+            tblItems.selectAll();
+
+            int filas[] = tblItems.getSelectedRows();
+            int index = filas.length - 1;
+            for (int i = 0; i < filas.length; i++) {
+                modelo.removeRow(index);
+                index--;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+
+            dialogResult.showMessage("Error", "Error al limpiar la tabla.");
         }
     }
+    
+    //METODO BUSAR
+    ArrayList<ItemModel> listFound = null;
+    
+    public void filterByStringSearch(String search_string){
+    listFound = null;
+    ItemDao item = new ItemDao();
+    listFound = item.findItem(search_string);
+        showItems("ALL", f_eventAction);//Filtrar todos los datos
+    }
+    
 
     private int contador_item = 0;
     private int contador_tools = 0;
@@ -152,12 +185,17 @@ public class FrmItems extends javax.swing.JPanel {
         //Limpiando la tabla
         clearRowsInTable();
 
-        ItemDao items = new ItemDao();
+        ItemDao itemDao = new ItemDao();
+        ArrayList<ItemModel> items = itemDao.ListItems();
+        if (listFound !=null) {
+            items = listFound; 
+        }
+        
 
         //Mostrar todos los datos
         switch (tipo_filtro) {
             case "ALL" -> {
-                for (var item : items.ListItems()) {
+                for (var item : items) {
                     if (item.getCategory().equals(CategoryType.HERRAMIENTAS)) {
                         contador_tools++;
                     }
@@ -176,7 +214,7 @@ public class FrmItems extends javax.swing.JPanel {
 
             //Filtrar filas por categoría de "HERRAMIENTAS"
             case "HERRAMIENTAS" -> {
-                for (var item : items.ListItems()) {
+                for (var item : items) {
                     if (item.getCategory().equals(CategoryType.HERRAMIENTAS)) {
                         contador_tools++;
 
@@ -191,7 +229,7 @@ public class FrmItems extends javax.swing.JPanel {
             }
             //filtrar las filas por la categoria de "ACCESORIOS"
             case "ACCESORIOS" -> {
-                for (var item : items.ListItems()) {
+                for (var item : items) {
                     if (item.getCategory().equals(CategoryType.ACCESORIOS)) {
                         contador_accesories++;
 
@@ -220,6 +258,17 @@ public class FrmItems extends javax.swing.JPanel {
                 item.getType()
         ).toRowTable(eventAction));
     }
+    
+   
+    public void reloadChoosedFilter(){
+    
+        if (listFound !=null) {
+             filterByStringSearch(getStringSearch()); //Obtiene el texto de la busqueda realizada
+        }else{
+            showItems("ALL", f_eventAction);
+        }
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -349,11 +398,14 @@ public class FrmItems extends javax.swing.JPanel {
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         WindowItem item = new WindowItem();
+        item.frmItem = form;
         WindowHome.main(WindowType.ITEM, item, false);
+        
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnRefreshMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMousePressed
-        initTableData();
+       listFound = null;
+       showItems("ALL", f_eventAction);
     }//GEN-LAST:event_btnRefreshMousePressed
 
 

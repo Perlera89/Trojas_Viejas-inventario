@@ -18,12 +18,16 @@ public class WindowHome extends javax.swing.JFrame {
         //items = new WindowItem();
 
         if (type == type.ITEM) {
+            WindowItem window = (WindowItem) component;
+            window.home = this;
             if (isUpdate) {
                 setForm(component);
                 lblEncabezado.setText("Actualizar Articulo");
             } else{
                 setForm(component);
                 lblEncabezado.setText("Agregar Articulo");
+              
+                
             }
         } else if(type == type.PROVIDER){
             if(isUpdate){
