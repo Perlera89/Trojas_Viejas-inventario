@@ -56,7 +56,12 @@ public class MyPasswordField extends JPasswordField {
         this.suffixIcon = suffixIcon;
         initBorder();
     }
-
+    
+    public void setColorFont(Color colorFont) {
+        this.colorFont = colorFont;
+    }
+    
+    private Color colorFont;
     private Icon prefixIcon;
     private Icon suffixIcon;
     private String hint = "";
@@ -121,7 +126,7 @@ public class MyPasswordField extends JPasswordField {
             ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             Insets ins = getInsets();
             FontMetrics fm = g.getFontMetrics();
-            g.setColor(new Color(190, 190, 190));
+            g.setColor(colorFont);
             g.drawString(hint, ins.left, h / 2 + fm.getAscent() / 2 - 2);
         }
     }

@@ -1,5 +1,6 @@
 package com.trojasviejas.demo.form;
 
+import com.trojasviejas.demo.form.window.WindowInvoice;
 import com.trojasviejas.component.login.MessageDialog;
 import com.trojasviejas.component.main.event.IInvoicesEventAction;
 import com.trojasviejas.demo.form.window.*;
@@ -20,7 +21,7 @@ import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmInvoices extends javax.swing.JPanel {
-
+    
     public FrmInvoices() {
         setOpaque(false);
         initComponents();
@@ -28,7 +29,7 @@ public class FrmInvoices extends javax.swing.JPanel {
         initTableData();
     }
     
-    private void initCard(){
+    private void initCard() {
         pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Facturas", contador_factura + ""));
         pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total Donadores", "$8"));
     }
@@ -38,24 +39,24 @@ public class FrmInvoices extends javax.swing.JPanel {
 //        return formatter.parse(date);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaConvertida=null;
-
+        Date fechaConvertida = null;
+        
         try {
-            Date parsed =  dateFormat.parse(date);
+            Date parsed = dateFormat.parse(date);
             fechaConvertida = new Date(parsed.getTime());
-        } catch(Exception e) {
-            System.out.println("Error occurred"+ e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error occurred" + e.getMessage());
         }
         return fechaConvertida;
     }
     
     FrmInvoices form = this;
     private IInvoicesEventAction f_eventAction;
-
-    public void initTableData(){
+    
+    public void initTableData() {
         //Agregar registro
         
-        IInvoicesEventAction eventAction = new IInvoicesEventAction(){
+        IInvoicesEventAction eventAction = new IInvoicesEventAction() {
             int IndexRow;
             
             @Override
@@ -63,14 +64,13 @@ public class FrmInvoices extends javax.swing.JPanel {
                 InvoicesDao invD = new InvoicesDao();
                 String provName;
                 
-                
                 if (tblInvoices.getSelectedRowCount() > 0) {
                     IndexRow = tblInvoices.getSelectedRow();
 
                     //Pasar datos al formulario de Windows
                     WindowInvoice formulario = new WindowInvoice();
                     formulario.frmInvoice = form;
-
+                    
                     formulario.id = (int) tblInvoices.getValueAt(IndexRow, 0);
                     formulario.txtTotal.setText(tblInvoices.getValueAt(IndexRow, 1).toString());
                     //Pasando fecha al JDateChooser
@@ -82,16 +82,15 @@ public class FrmInvoices extends javax.swing.JPanel {
 //                    Date fechaDate = formato.parse("2022/01/02");
 //                    formulario.txtDate.setDate(fechaDate);
                     
-                    provName = invD.SelectNameProvWfk((int)tblInvoices.getValueAt(IndexRow, 3));
+                    provName = invD.SelectNameProvWfk((int) tblInvoices.getValueAt(IndexRow, 3));
                     formulario.cbbProvider.setSelectedItem(provName);
-                   
+
 //                formulario.id = (int) selectedtRow.get(0);
 //                formulario.txtName.setText(selectedtRow.get(1).toString());
 //                formulario.txtPhone.setText(selectedtRow.get(2).toString());
 //                formulario.txtEmail.setText(selectedtRow.get(3).toString());
 //                formulario.txtAddress.setText(selectedtRow.get(3).toString());                
 //                formulario.cbbType.setSelectedItem(selectedtRow.get(5).toString());
-
                     WindowHome.main(WindowType.INVOICE, formulario, false);
                     repaint();
                 } else {
@@ -99,15 +98,15 @@ public class FrmInvoices extends javax.swing.JPanel {
                 }
                 
             }
-
+            
             @Override
             public void delete(InvoicesModel entity) {
                 if (tblInvoices.getSelectedRowCount() > 0) {
                     MessageDialog dialogResult = new MessageDialog(new FrmLogin());
                     dialogResult.showMessage(null, "¿Estas seguro de eliminar el proveedor?");
-
+                    
                     if (dialogResult.getMessageType() == MessageDialog.MessageType.OK) {
-
+                        
                         InvoicesDao invD = new InvoicesDao();
 //                    ArrayList<Object> selectedtRow = new ArrayList<>();
 //                    selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
@@ -126,7 +125,13 @@ public class FrmInvoices extends javax.swing.JPanel {
             
             @Override
             public void view(InvoicesModel entity) {
-                System.out.println("Ver a " + entity.getId());
+                System.out.println("Ver detalles de " + entity.getId());
+            }
+            
+            @Override
+            public void image(InvoicesModel entity) {
+                FrmImage imagen = new FrmImage();
+                imagen.setVisible(true);
             }
         };
         
@@ -137,9 +142,8 @@ public class FrmInvoices extends javax.swing.JPanel {
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
         Date date = new Date();
-        
-        //tblInvoices.addRow(new InvoicesModel(1, 20.5, new SimpleDateFormat("dd-MM-yyyy").format(date), 1).toRowTable(eventAction));
-        
+
+        tblInvoices.addRow(new InvoicesModel(1, 20.5, new SimpleDateFormat("dd-MM-yyyy").format(date), 1).toRowTable(eventAction));
         //Cargando datos a la tabla
         f_eventAction = eventAction;
         showInvoices("ALL", f_eventAction);
@@ -152,7 +156,7 @@ public class FrmInvoices extends javax.swing.JPanel {
         tblInvoices.getColumnModel().getColumn(0).setMinWidth(0);
         tblInvoices.getColumnModel().getColumn(0).setPreferredWidth(0);
         tblInvoices.getColumnModel().getColumn(0).setResizable(false);
-
+        
     }
 
     //Método para limpiar la tabla
@@ -180,7 +184,7 @@ public class FrmInvoices extends javax.swing.JPanel {
 
         //Limpiando la tabla
         clearRowsInTable();
-
+        
         InvoicesDao invD = new InvoicesDao();
 
         //Mostrar todos los datos
@@ -197,7 +201,6 @@ public class FrmInvoices extends javax.swing.JPanel {
 //                    }
 
                     //Agregando la fila a la tabla y los botones de acciones
-                    
                 }
 
                 //Actualizando los contadores
@@ -238,7 +241,7 @@ public class FrmInvoices extends javax.swing.JPanel {
 //            }
         }
     }
-
+    
     private void add_rows_to_table(InvoicesModel invM, IInvoicesEventAction eventAction) {
         //Agregando fila a la tabla
         //InvoicesDao invD = new InvoicesDao();
@@ -253,6 +256,7 @@ public class FrmInvoices extends javax.swing.JPanel {
                 invM.getFkProv()
         ).toRowTable(eventAction));
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

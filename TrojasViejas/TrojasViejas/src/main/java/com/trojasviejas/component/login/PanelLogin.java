@@ -1,4 +1,4 @@
-    package com.trojasviejas.component.login;
+package com.trojasviejas.component.login;
 
 import com.trojasviejas.models.entity.UserModel;
 import com.trojasviejas.models.viewmodel.LoginVM;
@@ -34,6 +34,7 @@ public class PanelLogin extends javax.swing.JLayeredPane {
         pnlRegister.setVisible(true);
     }
 
+    //Panel de registro
     private void initRegister(ActionListener eventRegister) {
         pnlRegister.setLayout(new MigLayout("wrap", "push[center]push", "push[]25[]10[]10[]25[]push"));
 
@@ -45,16 +46,19 @@ public class PanelLogin extends javax.swing.JLayeredPane {
         MyTextField txtUser = new MyTextField();
         txtUser.setPrefixIcon(new ImageIcon(getClass().getResource("/img/user.png")));
         txtUser.setHint("Nombre");
+        txtUser.setColorFont(new Color(190, 190, 190));
         pnlRegister.add(txtUser, "w 60%");
 
         MyPasswordField txtPass = new MyPasswordField();
         txtPass.setPrefixIcon(new ImageIcon(getClass().getResource("/img/pass.png")));
         txtPass.setHint("Contrase\u00f1a");
+        txtPass.setColorFont(new Color(190, 190, 190));
         pnlRegister.add(txtPass, "w 60%");
 
         MyPasswordField txtConfirmPass = new MyPasswordField();
         txtConfirmPass.setPrefixIcon(new ImageIcon(getClass().getResource("/img/pass.png")));
         txtConfirmPass.setHint("Confirmar contrase\u00f1a");
+        txtConfirmPass.setColorFont(new Color(190, 190, 190));
         pnlRegister.add(txtConfirmPass, "w 60%");
 
         Button btnRegister = new Button();
@@ -76,6 +80,7 @@ public class PanelLogin extends javax.swing.JLayeredPane {
         txtUser.requestFocus();
     }
 
+    //Panel de Login
     private void initLogin(ActionListener eventLogin) {
         pnlLogin.setLayout(new MigLayout("wrap", "push[center]push", "push[]25[]10[]10[]25[]push"));
 
@@ -87,11 +92,13 @@ public class PanelLogin extends javax.swing.JLayeredPane {
         MyTextField txtLoginUser = new MyTextField();
         txtLoginUser.setPrefixIcon(new ImageIcon(getClass().getResource("/img/user.png")));
         txtLoginUser.setHint("Nombre");
+        txtLoginUser.setColorFont(new Color(190, 190, 190));
         pnlLogin.add(txtLoginUser, "w 60%");
 
         MyPasswordField txtLoginPass = new MyPasswordField();
         txtLoginPass.setPrefixIcon(new ImageIcon(getClass().getResource("/img/pass.png")));
         txtLoginPass.setHint("Contrase\u00f1a");
+        txtLoginPass.setColorFont(new Color(190, 190, 190));
         pnlLogin.add(txtLoginPass, "w 60%");
 
         JButton btnForget = new JButton("¿Olvidaste tu contrase\u00f1a?");

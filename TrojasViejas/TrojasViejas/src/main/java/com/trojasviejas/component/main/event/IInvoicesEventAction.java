@@ -7,4 +7,5 @@ public interface IInvoicesEventAction {
     public void delete(InvoicesModel entity);
     public void update(InvoicesModel entity);
     public void view(InvoicesModel entity);
+    public void image(InvoicesModel entity);
 }

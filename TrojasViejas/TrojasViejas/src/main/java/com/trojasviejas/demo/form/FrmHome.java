@@ -379,7 +379,7 @@ public class FrmHome extends javax.swing.JPanel {
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblPurchaseYear3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
                             .addComponent(lblPurchaseYear2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPurchaseYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))
+                            .addComponent(lblPurchaseYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnlCardLayout.createSequentialGroup()
@@ -508,7 +508,7 @@ public class FrmHome extends javax.swing.JPanel {
                         .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblItemsYear3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
                             .addComponent(lblItemsYear2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblItemsYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))
+                            .addComponent(lblItemsYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
                         .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnlCard1Layout.createSequentialGroup()
@@ -637,7 +637,7 @@ public class FrmHome extends javax.swing.JPanel {
                         .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblValueYear3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
                             .addComponent(lblValueYear2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblValueYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))
+                            .addComponent(lblValueYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
                         .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnlCard11Layout.createSequentialGroup()
@@ -731,56 +731,56 @@ public class FrmHome extends javax.swing.JPanel {
                 .addGap(19, 19, 19))
         );
 
-        lblData3.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
-        lblData3.setForeground(new java.awt.Color(27, 152, 224));
+        lblData3.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        lblData3.setForeground(new java.awt.Color(0, 100, 148));
         lblData3.setText("Entradas");
 
         txtEntradas.setEditable(false);
         txtEntradas.setBackground(new java.awt.Color(0, 108, 247));
         txtEntradas.setBorder(null);
 
-        lblData5.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
-        lblData5.setForeground(new java.awt.Color(27, 152, 224));
+        lblData5.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        lblData5.setForeground(new java.awt.Color(0, 100, 148));
         lblData5.setText("Artículos de entrada");
 
         txtCantidadEntradas.setEditable(false);
         txtCantidadEntradas.setBackground(new java.awt.Color(104, 49, 200));
         txtCantidadEntradas.setBorder(null);
 
-        lblData4.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
-        lblData4.setForeground(new java.awt.Color(27, 152, 224));
+        lblData4.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        lblData4.setForeground(new java.awt.Color(0, 100, 148));
         lblData4.setText("Salidas");
 
         txtSalidas.setEditable(false);
         txtSalidas.setBackground(new java.awt.Color(95, 209, 69));
         txtSalidas.setBorder(null);
 
-        lblData6.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
-        lblData6.setForeground(new java.awt.Color(27, 152, 224));
+        lblData6.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        lblData6.setForeground(new java.awt.Color(0, 100, 148));
         lblData6.setText("Artículos de salida");
 
         txtCantidadSalidas.setEditable(false);
         txtCantidadSalidas.setBackground(new java.awt.Color(241, 100, 120));
         txtCantidadSalidas.setBorder(null);
 
-        lblData7.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
-        lblData7.setForeground(new java.awt.Color(27, 152, 224));
+        lblData7.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        lblData7.setForeground(new java.awt.Color(0, 100, 148));
         lblData7.setText("Compras");
 
         txtCompras.setEditable(false);
         txtCompras.setBackground(new java.awt.Color(0, 108, 247));
         txtCompras.setBorder(null);
 
-        lblData8.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
-        lblData8.setForeground(new java.awt.Color(27, 152, 224));
+        lblData8.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        lblData8.setForeground(new java.awt.Color(0, 100, 148));
         lblData8.setText("Cantidad de artículos");
 
         txtCantidadArticulos.setEditable(false);
         txtCantidadArticulos.setBackground(new java.awt.Color(104, 49, 200));
         txtCantidadArticulos.setBorder(null);
 
-        lblData9.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
-        lblData9.setForeground(new java.awt.Color(27, 152, 224));
+        lblData9.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        lblData9.setForeground(new java.awt.Color(0, 100, 148));
         lblData9.setText("Costo total");
 
         txtCostoTotal.setEditable(false);
@@ -796,39 +796,43 @@ public class FrmHome extends javax.swing.JPanel {
                 .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBgLayout.createSequentialGroup()
                         .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblChartOne)
-                            .addComponent(lblReportYear)
                             .addGroup(pnlBgLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
+                                .addGap(5, 5, 5)
                                 .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlBgLayout.createSequentialGroup()
                                         .addComponent(lblData3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(10, 10, 10)
                                         .addComponent(txtEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(35, 35, 35)
+                                        .addGap(20, 20, 20)
                                         .addComponent(lblData5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(10, 10, 10)
                                         .addComponent(txtCantidadEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(35, 35, 35)
+                                        .addGap(20, 20, 20)
                                         .addComponent(lblData4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txtSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(35, 35, 35)
+                                        .addGap(20, 20, 20)
                                         .addComponent(lblData6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(10, 10, 10)
                                         .addComponent(txtCantidadSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(pnlBgLayout.createSequentialGroup()
                                         .addComponent(lblData7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(10, 10, 10)
                                         .addComponent(txtCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(35, 35, 35)
+                                        .addGap(20, 20, 20)
                                         .addComponent(lblData8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(10, 10, 10)
                                         .addComponent(txtCantidadArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(35, 35, 35)
+                                        .addGap(20, 20, 20)
                                         .addComponent(lblData9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtCostoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addGap(10, 10, 10)
+                                        .addComponent(txtCostoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(pnlBgLayout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(lblChartOne))
+                            .addGroup(pnlBgLayout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(lblReportYear)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlBgLayout.createSequentialGroup()
                         .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -870,7 +874,7 @@ public class FrmHome extends javax.swing.JPanel {
                     .addComponent(txtSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCantidadEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCantidadSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(lblChartTwo)
                 .addGap(18, 18, 18)
                 .addComponent(panelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

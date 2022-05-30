@@ -38,7 +38,15 @@ public class MyTextField extends JTextField {
         this.suffixIcon = suffixIcon;
         initBorder();
     }
+    public Color getColorFont() {
+        return colorFont;
+    }
 
+    public void setColorFont(Color colorFont) {
+        this.colorFont = colorFont;
+    }
+    
+    private Color colorFont;
     private Icon prefixIcon;
     private Icon suffixIcon;
     private String hint = "";
@@ -69,7 +77,7 @@ public class MyTextField extends JTextField {
             ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             Insets ins = getInsets();
             FontMetrics fm = g.getFontMetrics();
-            g.setColor(new Color(190, 190, 190));
+            g.setColor(colorFont);
             g.drawString(hint, ins.left, h / 2 + fm.getAscent() / 2 - 2);
         }
     }

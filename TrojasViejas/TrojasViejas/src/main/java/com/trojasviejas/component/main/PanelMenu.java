@@ -40,10 +40,10 @@ public class PanelMenu extends javax.swing.JPanel {
         lstMenu.addItem(new MenuModel("activity", "Actividad", MenuModel.MenuType.MENU));
         lstMenu.addItem(new MenuModel("reports", "Reportes", MenuModel.MenuType.MENU));
         lstMenu.addItem(new MenuModel("", "", MenuModel.MenuType.EMPTY));
-        
-        lstMenu.addItem(new MenuModel("", "Perfil", MenuModel.MenuType.TITLE));
         lstMenu.addItem(new MenuModel("", "", MenuModel.MenuType.EMPTY));
-        lstMenu.addItem(new MenuModel("user", "Usuarios", MenuModel.MenuType.MENU));
+        
+        lstMenu.addItem(new MenuModel("", "Otros", MenuModel.MenuType.TITLE));
+        lstMenu.addItem(new MenuModel("", "", MenuModel.MenuType.EMPTY));
         lstMenu.addItem(new MenuModel("setting", "Ajustes", MenuModel.MenuType.MENU));
         lstMenu.addItem(new MenuModel("", "", MenuModel.MenuType.EMPTY));
     }

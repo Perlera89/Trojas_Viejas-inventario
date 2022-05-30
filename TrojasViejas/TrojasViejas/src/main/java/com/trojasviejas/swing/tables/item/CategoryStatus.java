@@ -33,9 +33,9 @@ public class CategoryStatus extends JLabel {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             GradientPaint g;
             if (type == CategoryType.HERRAMIENTAS) {
-                g = new GradientPaint(0, 0, new Color(0, 53, 98), 0, getHeight(), new Color(0, 67, 121));
+                g = new GradientPaint(0, 0, new Color(255,123,0), 0, getHeight(), new Color(255,136,0));
             }  else {
-                g = new GradientPaint(0, 0, new Color(255, 93, 0), 0, getHeight(), new Color(255, 109, 0));
+                g = new GradientPaint(0, 0, new Color(27,67,50), 0, getHeight(), new Color(45,106,79));
             }
             
             g2.setPaint(g);

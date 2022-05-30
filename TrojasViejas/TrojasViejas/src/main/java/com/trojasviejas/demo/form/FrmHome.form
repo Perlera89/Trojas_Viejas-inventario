@@ -56,42 +56,48 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblChartOne" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblReportYear" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
                                               <Component id="lblData3" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                               <Component id="txtEntradas" min="-2" pref="50" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                               <Component id="lblData5" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                               <Component id="txtCantidadEntradas" min="-2" pref="50" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                               <Component id="lblData4" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="txtSalidas" min="-2" pref="50" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                               <Component id="lblData6" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                               <Component id="txtCantidadSalidas" min="-2" pref="50" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" attributes="0">
                                               <Component id="lblData7" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                               <Component id="txtCompras" min="-2" pref="50" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                               <Component id="lblData8" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                               <Component id="txtCantidadArticulos" min="-2" pref="50" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                               <Component id="lblData9" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                               <Component id="txtCostoTotal" min="-2" pref="50" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                      <Component id="lblChartOne" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                      <Component id="lblReportYear" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -146,7 +152,7 @@
                           <Component id="txtCantidadEntradas" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                           <Component id="txtCantidadSalidas" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="42" max="32767" attributes="0"/>
+                      <EmptySpace pref="44" max="32767" attributes="0"/>
                       <Component id="lblChartTwo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="panelShadow1" min="-2" max="-2" attributes="0"/>
@@ -1098,10 +1104,10 @@
             <Component class="javax.swing.JLabel" name="lblData3">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Norwester" size="18" style="0"/>
+                  <Font name="Roboto" size="18" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="e0" green="98" red="1b" type="rgb"/>
+                  <Color blue="94" green="64" red="0" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Entradas"/>
               </Properties>
@@ -1120,10 +1126,10 @@
             <Component class="javax.swing.JLabel" name="lblData5">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Norwester" size="18" style="0"/>
+                  <Font name="Roboto" size="18" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="e0" green="98" red="1b" type="rgb"/>
+                  <Color blue="94" green="64" red="0" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Art&#xed;culos de entrada"/>
               </Properties>
@@ -1142,10 +1148,10 @@
             <Component class="javax.swing.JLabel" name="lblData4">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Norwester" size="18" style="0"/>
+                  <Font name="Roboto" size="18" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="e0" green="98" red="1b" type="rgb"/>
+                  <Color blue="94" green="64" red="0" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Salidas"/>
               </Properties>
@@ -1164,10 +1170,10 @@
             <Component class="javax.swing.JLabel" name="lblData6">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Norwester" size="18" style="0"/>
+                  <Font name="Roboto" size="18" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="e0" green="98" red="1b" type="rgb"/>
+                  <Color blue="94" green="64" red="0" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Art&#xed;culos de salida"/>
               </Properties>
@@ -1186,10 +1192,10 @@
             <Component class="javax.swing.JLabel" name="lblData7">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Norwester" size="18" style="0"/>
+                  <Font name="Roboto" size="18" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="e0" green="98" red="1b" type="rgb"/>
+                  <Color blue="94" green="64" red="0" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Compras"/>
               </Properties>
@@ -1208,10 +1214,10 @@
             <Component class="javax.swing.JLabel" name="lblData8">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Norwester" size="18" style="0"/>
+                  <Font name="Roboto" size="18" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="e0" green="98" red="1b" type="rgb"/>
+                  <Color blue="94" green="64" red="0" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cantidad de art&#xed;culos"/>
               </Properties>
@@ -1230,10 +1236,10 @@
             <Component class="javax.swing.JLabel" name="lblData9">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Norwester" size="18" style="0"/>
+                  <Font name="Roboto" size="18" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="e0" green="98" red="1b" type="rgb"/>
+                  <Color blue="94" green="64" red="0" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Costo total"/>
               </Properties>

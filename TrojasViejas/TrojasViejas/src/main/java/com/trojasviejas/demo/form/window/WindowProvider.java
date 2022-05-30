@@ -1,6 +1,7 @@
-package com.trojasviejas.demo.form;
+package com.trojasviejas.demo.form.window;
 
 import com.trojasviejas.data.dao.ProviderDao;
+import com.trojasviejas.demo.form.FrmProviders;
 import com.trojasviejas.demo.form.FrmProviders;
 import com.trojasviejas.demo.form.window.WindowHome;
 import com.trojasviejas.models.entity.ProviderModel;
@@ -37,7 +38,6 @@ public class WindowProvider extends javax.swing.JPanel {
         txtName.setLabelText("Nombre");
 
         cbbType.setForeground(new java.awt.Color(100, 100, 100));
-        cbbType.setSelectedIndex(-1);
         cbbType.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbbType.setLabeText("Tipo");
 
