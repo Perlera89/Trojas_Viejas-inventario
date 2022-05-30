@@ -1,6 +1,6 @@
 package com.trojasviejas.demo.form.window;
 
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.data.dao.ItemDao;
 import com.trojasviejas.demo.form.FrmItems;
 import com.trojasviejas.models.entity.ItemModel;
@@ -40,7 +40,7 @@ public class WindowItem extends javax.swing.JPanel {
         CargarComboBox();
     }
     
-    MessageDialog dialogResult = new MessageDialog(new JFrame());
+    MessageErrorDialog dialogResult = new MessageErrorDialog(new JFrame());
     
     public void CargarComboBox() {
 
@@ -93,6 +93,7 @@ public class WindowItem extends javax.swing.JPanel {
 
         btnAdd.setBackground(new java.awt.Color(0, 184, 82));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save.png"))); // NOI18N
         btnAdd.setText("Guardar");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,6 +103,7 @@ public class WindowItem extends javax.swing.JPanel {
 
         btnCancel.setBackground(new java.awt.Color(255, 5, 0));
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/exit.png"))); // NOI18N
         btnCancel.setText("Cancelar");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

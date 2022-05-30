@@ -1,6 +1,6 @@
 package com.trojasviejas.demo.form;
 
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
@@ -23,7 +23,7 @@ public class FrmInventory extends javax.swing.JPanel {
         initCard();
         initTableData();
     }
-    MessageDialog message = new MessageDialog(new JFrame());
+    MessageErrorDialog message = new MessageErrorDialog(new JFrame());
 
     private void initCard() {
         pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "ARTÍCULOS", String.valueOf(countItem)));

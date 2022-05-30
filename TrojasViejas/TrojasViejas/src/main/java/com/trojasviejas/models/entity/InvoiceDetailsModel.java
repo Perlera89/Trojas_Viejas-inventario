@@ -8,7 +8,7 @@ package com.trojasviejas.models.entity;
  *
  * @author wilian
  */
-public class InvoiceDetails {
+public class InvoiceDetailsModel {
 
     private int id;
     private int amount;
@@ -17,21 +17,21 @@ public class InvoiceDetails {
     private int invoiceFk;
     
     
-    public InvoiceDetails(int id, int amount, double pricerPerUnit, int itemFk, int invoiceFk) {
+    public InvoiceDetailsModel(int id, int amount, double pricerPerUnit, int itemFk, int invoiceFk) {
         this.id = id;
         this.amount = amount;
         this.pricerPerUnit = pricerPerUnit;
         this.itemFk = itemFk;
         this.invoiceFk = invoiceFk;
     }
-        public InvoiceDetails(int amount, double pricerPerUnit, int itemFk, int invoiceFk) {
+        public InvoiceDetailsModel(int amount, double pricerPerUnit, int itemFk, int invoiceFk) {
         this.amount = amount;
         this.pricerPerUnit = pricerPerUnit;
         this.itemFk = itemFk;
         this.invoiceFk = invoiceFk;
     }
 
-    public InvoiceDetails() {
+    public InvoiceDetailsModel() {
     }
 
 

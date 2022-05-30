@@ -1,6 +1,6 @@
 package com.trojasviejas.demo.form;
 
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
 
 import com.trojasviejas.data.dao.ActivityDao;
 import com.trojasviejas.demo.form.window.*;
@@ -380,7 +380,7 @@ public class FrmActivity extends javax.swing.JPanel {
             WindowActivity.main(updateRegister);          
 
        }else{
-            MessageDialog message =  new MessageDialog(new JFrame());
+            MessageErrorDialog message =  new MessageErrorDialog(new JFrame());
             message.showMessage("Error","Debe seleccionar un registro previamente para "
                     + "actualizar su descripción.");
         }

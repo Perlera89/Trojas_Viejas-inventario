@@ -4,9 +4,9 @@
  */
 package com.trojasviejas.data.dao;
 
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.data.connectiondb.Conexion;
-import com.trojasviejas.models.entity.InvoiceDetails;
+import com.trojasviejas.models.entity.InvoiceDetailsModel;
 import com.trojasviejas.models.viewmodel.InvoiceDetailsVM;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -21,7 +21,7 @@ import javax.swing.JFrame;
  */
 public class InvoiceDetailsDao {
     //mensajes personalizados
-    MessageDialog message = new MessageDialog(new JFrame());
+    MessageErrorDialog message = new MessageErrorDialog(new JFrame());
     //variable para establecer una conexion a la db
     Connection connection = null;
     
@@ -66,7 +66,7 @@ public class InvoiceDetailsDao {
         return invoiceDetalis;
     }
     
-    public void save(InvoiceDetails detail){
+    public void save(InvoiceDetailsModel detail){
          
         CallableStatement query = null;
         

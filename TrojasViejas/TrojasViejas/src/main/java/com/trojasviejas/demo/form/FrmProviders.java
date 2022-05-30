@@ -1,7 +1,7 @@
 package com.trojasviejas.demo.form;
 
 import com.trojasviejas.demo.form.window.WindowProvider;
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.entity.ProviderModel;
@@ -106,10 +106,10 @@ public class FrmProviders extends javax.swing.JPanel {
             @Override
             public void delete(ProviderModel entity) {
                 if (tblProviders.getSelectedRowCount() > 0) {
-                    MessageDialog dialogResult = new MessageDialog(new FrmLogin());
+                    MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
                     dialogResult.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el proveedor " + entity.getName() + "?");
 
-                    if (dialogResult.getMessageType() == MessageDialog.MessageType.OK) {
+                    if (dialogResult.getMessageType() == MessageErrorDialog.MessageType.OK) {
 
                         ProviderDao prvD = new ProviderDao();
 //                    ArrayList<Object> selectedtRow = new ArrayList<>();

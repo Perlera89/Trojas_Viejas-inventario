@@ -1,5 +1,5 @@
 package com.trojasviejas.demo.form;
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.data.dao.ItemDao;
 import com.trojasviejas.demo.form.window.*;

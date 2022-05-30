@@ -79,10 +79,10 @@ public class PanelCover extends javax.swing.JPanel {
         btnClose.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MessageDialog dialogResult = new MessageDialog(new FrmLogin());
+                MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
                 dialogResult.showMessage("Salir del programa", "¿Estas seguro de cerrar el programa? Pulsa ok para confirmar");
                 
-                if(dialogResult.getMessageType() == MessageDialog.MessageType.OK){
+                if(dialogResult.getMessageType() == MessageErrorDialog.MessageType.OK){
                     System.exit(0);
                 } else{
                     JOptionPane.showMessageDialog(null, "En espera");

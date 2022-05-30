@@ -1,7 +1,7 @@
 package com.trojasviejas.demo.form;
 
 import com.trojasviejas.demo.form.window.WindowInvoice;
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.component.main.event.IInvoicesEventAction;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.entity.*;
@@ -102,10 +102,10 @@ public class FrmInvoices extends javax.swing.JPanel {
             @Override
             public void delete(InvoicesModel entity) {
                 if (tblInvoices.getSelectedRowCount() > 0) {
-                    MessageDialog dialogResult = new MessageDialog(new FrmLogin());
+                    MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
                     dialogResult.showMessage(null, "¿Estas seguro de eliminar el proveedor?");
                     
-                    if (dialogResult.getMessageType() == MessageDialog.MessageType.OK) {
+                    if (dialogResult.getMessageType() == MessageErrorDialog.MessageType.OK) {
                         
                         InvoicesDao invD = new InvoicesDao();
 //                    ArrayList<Object> selectedtRow = new ArrayList<>();

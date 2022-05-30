@@ -1,6 +1,6 @@
 package com.trojasviejas.component.main;
 
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.demo.form.FrmLogin;
 import com.trojasviejas.demo.form.FrmMain;
 import java.awt.Color;

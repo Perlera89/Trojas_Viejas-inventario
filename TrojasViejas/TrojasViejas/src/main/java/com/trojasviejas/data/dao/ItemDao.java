@@ -1,6 +1,6 @@
 package com.trojasviejas.data.dao;
 
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.data.connectiondb.Conexion;
 import com.trojasviejas.demo.form.FrmLogin;
 import com.trojasviejas.models.entity.ItemModel;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class ItemDao {
- MessageDialog dialogResult = new MessageDialog(new FrmLogin());
+ MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
  
     public ArrayList<ItemModel> ListItems() {
         ItemModel item = null;

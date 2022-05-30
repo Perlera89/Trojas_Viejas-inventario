@@ -13,7 +13,7 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
-public class MessageDialog extends javax.swing.JDialog {
+public class MessageErrorDialog extends javax.swing.JDialog {
     
     private final JFrame window;
     private Glass glass;
@@ -21,7 +21,7 @@ public class MessageDialog extends javax.swing.JDialog {
     private boolean show;
     private MessageType messageType = MessageType.CANCEL;
 
-    public MessageDialog(JFrame window) {
+    public MessageErrorDialog(JFrame window) {
         super(window, true);
         this.window = window;
         initComponents();

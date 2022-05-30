@@ -4,7 +4,7 @@
  */
 package com.trojasviejas.data.dao;
 
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.data.connectiondb.Conexion;
 import com.trojasviejas.models.utility.InvoicesAverageReport;
 import com.trojasviejas.models.utility.PurchaseReport;
@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class DashboardDao {
     //mensajes personalizados
-    MessageDialog message = new MessageDialog(new JFrame());
+    MessageErrorDialog message = new MessageErrorDialog(new JFrame());
     
     //variable para la conexion
     Connection connection = null;

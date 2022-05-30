@@ -1,6 +1,6 @@
 package com.trojasviejas.data.dao;
 
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.data.connectiondb.Conexion;
 import com.trojasviejas.models.viewmodel.ActivityVM;
 import com.trojasviejas.models.entity.ActivityModel;
@@ -20,7 +20,7 @@ public class ActivityDao{
         Connection connection = null;
         
         //Mensajes personalizados
-        MessageDialog message = new MessageDialog(new JFrame());
+        MessageErrorDialog message = new MessageErrorDialog(new JFrame());
         
     public ArrayList<ActivityVM> list() {
 

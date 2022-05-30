@@ -1,5 +1,5 @@
 package com.trojasviejas.demo.form;
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.data.dao.ItemDao;
 import static com.trojasviejas.demo.form.FrmMain.getStringSearch;
@@ -22,7 +22,7 @@ public class FrmItems extends javax.swing.JPanel {
         initCard(0, 0, 0);
         initTableData();
     }
-      MessageDialog dialogResult = new MessageDialog(new FrmLogin());
+      MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
     
     private void initCard(int contadorItem, int contador_tools, int contador_accesories) {
         pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Artículos", String.valueOf(contadorItem)));
@@ -97,7 +97,7 @@ public class FrmItems extends javax.swing.JPanel {
                    
                     dialogResult.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el articulo " + entity.getName() + "?");
 
-                    if (dialogResult.getMessageType() == MessageDialog.MessageType.OK) {
+                    if (dialogResult.getMessageType() == MessageErrorDialog.MessageType.OK) {
                         ItemDao item = new ItemDao();
                         ArrayList<Object> selectedtRow = new ArrayList<>();
                         selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
@@ -370,8 +370,8 @@ public class FrmItems extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
