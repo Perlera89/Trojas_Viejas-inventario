@@ -30,12 +30,12 @@ call sp_i_users('Carlos', '7581');
 call sp_i_users('Manu', '3333');
 
 /*facturas*/
-call sp_i_invoices(58.36, '2022-02-24', '', 1);
-call sp_i_invoices(45, '2022-05-25', '', 4);
-call sp_i_invoices(10.56, '2022-07-25', '', 6);
-call sp_i_invoices(15.68, '2022-08-25', '', 8);
-call sp_i_invoices(78.4, '2022-09-25', '', 2);
-call sp_i_invoices(58.96, '2022-12-25', '', 5);
+call sp_i_invoices(58.36, '2022-02-24', null, 1);
+call sp_i_invoices(45, '2022-05-25', null, 4);
+call sp_i_invoices(10.56, '2022-07-25', null, 6);
+call sp_i_invoices(15.68, '2022-08-25', null, 8);
+call sp_i_invoices(78.4, '2022-09-25', null, 2);
+call sp_i_invoices(58.96, '2022-12-25', null, 5);
 
 /*detalles de facturas*/
 call sp_i_invoice_details(20, 0.8, 4, 2);

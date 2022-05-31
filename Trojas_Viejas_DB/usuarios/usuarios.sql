@@ -2,7 +2,7 @@ use trojas_viejas_db;
 
 /*Insertar*/
 Delimiter $$
-CREATE PROCEDURE sp_i_users(
+CREATE PROCEDURE sp_i_user(
 	p_usr_name VARCHAR(45),
     p_usr_password VARCHAR(45),
     p_usr_verify_pass VARCHAR(45)
@@ -24,16 +24,18 @@ $$
 
 /*Actualizar*/
 Delimiter $$
-CREATE PROCEDURE sp_u_users(
-	p_usr_id INT,
+CREATE PROCEDURE sp_u_user(
+	p_usr_id int,
 	p_usr_name VARCHAR(50),
-    p_usr_password VARCHAR(50)
+    p_usr_password VARCHAR(50),
+    p_usr_verify_pass VARCHAR(50)
 )
 BEGIN
 	UPDATE users
     SET `usr_name` = p_usr_name, 
-		`usr_password` = sha1(p_usr_password)
-        WHERE (`usr_id` = p_usr_id);
+		`usr_password` = sha1(p_usr_password),
+        `usr_verify_pass` = sha1(p_usr_password)
+        WHERE `usr_id` = usr_id AND `usr_verify_pass` = sha1(p_usr_verify_pass);
 END
 $$
 

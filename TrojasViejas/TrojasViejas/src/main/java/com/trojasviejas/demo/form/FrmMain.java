@@ -3,6 +3,7 @@ package com.trojasviejas.demo.form;
 import com.trojasviejas.component.main.PanelHeader;
 import com.trojasviejas.component.main.event.IEventMenuSelected;
 import com.trojasviejas.component.main.event.IFindFunctions;
+import com.trojasviejas.models.viewmodel.LoginVM;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import java.awt.*;
 import javax.swing.JComponent;
@@ -18,6 +19,9 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     private FrmInventory inventory;
     private FrmActivity activity;
     private FrmSetting setting;
+    
+    public static LoginVM login;
+    public static int idLogin;
 
     public FrmMain() {
         initComponents();

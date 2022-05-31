@@ -1,25 +1,22 @@
 package com.trojasviejas.demo.form;
-import com.trojasviejas.component.login.MessageErrorDialog;
-import com.trojasviejas.component.main.event.IItemEventAction;
-import com.trojasviejas.data.dao.ItemDao;
-import com.trojasviejas.demo.form.window.*;
-import com.trojasviejas.models.utility.*;
-import com.trojasviejas.swing.scroll.ScrollBar;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import com.trojasviejas.models.entity.ItemModel;
-import java.util.ArrayList;
-import java.util.Arrays;
-import javax.swing.table.DefaultTableModel;
+
+import com.trojasviejas.data.dao.*;
+import com.trojasviejas.models.entity.UserModel;
 
 public class FrmSetting extends javax.swing.JPanel {
+    private int id;
+    private String user;
+    private String previousPass;
+    private String newPass;
+    
     public FrmSetting() {
         setOpaque(false);
         initComponents();
+        user = FrmMain.login.getUsername();
+        
+        txtUser.setText(user);
     }
     
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -31,8 +28,8 @@ public class FrmSetting extends javax.swing.JPanel {
         lblUser = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtUser = new com.trojasviejas.swing.fields.MyTextField();
-        txtPass = new com.trojasviejas.swing.fields.MyPasswordField();
-        txtConfirmPass = new com.trojasviejas.swing.fields.MyPasswordField();
+        txtPreviousPass = new com.trojasviejas.swing.fields.MyPasswordField();
+        txtNewPass = new com.trojasviejas.swing.fields.MyPasswordField();
         panelBorder1 = new com.trojasviejas.swing.panels.PanelBorder();
         lblLogo = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -52,6 +49,11 @@ public class FrmSetting extends javax.swing.JPanel {
         btnUpdate.setBackground(new java.awt.Color(27, 152, 224));
         btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdate.setText("Actualizar");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         lblUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/userBig.png"))); // NOI18N
@@ -65,15 +67,15 @@ public class FrmSetting extends javax.swing.JPanel {
         txtUser.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         txtUser.setHint("Nombre de usuario");
 
-        txtPass.setForeground(new java.awt.Color(0, 100, 148));
-        txtPass.setColorFont(new java.awt.Color(27, 152, 224));
-        txtPass.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txtPass.setHint("Contraseña");
+        txtPreviousPass.setForeground(new java.awt.Color(0, 100, 148));
+        txtPreviousPass.setColorFont(new java.awt.Color(27, 152, 224));
+        txtPreviousPass.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txtPreviousPass.setHint("Contraseña antigua");
 
-        txtConfirmPass.setForeground(new java.awt.Color(0, 100, 148));
-        txtConfirmPass.setColorFont(new java.awt.Color(27, 152, 224));
-        txtConfirmPass.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txtConfirmPass.setHint("Confirmar contraseña");
+        txtNewPass.setForeground(new java.awt.Color(0, 100, 148));
+        txtNewPass.setColorFont(new java.awt.Color(27, 152, 224));
+        txtNewPass.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txtNewPass.setHint("Contraseña nueva");
 
         javax.swing.GroupLayout pnlUserLayout = new javax.swing.GroupLayout(pnlUser);
         pnlUser.setLayout(pnlUserLayout);
@@ -88,8 +90,8 @@ public class FrmSetting extends javax.swing.JPanel {
                 .addGroup(pnlUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(txtUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtConfirmPass, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtPreviousPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(101, 101, 101))
         );
@@ -105,9 +107,9 @@ public class FrmSetting extends javax.swing.JPanel {
                     .addGroup(pnlUserLayout.createSequentialGroup()
                         .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPreviousPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtConfirmPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(30, Short.MAX_VALUE))
@@ -215,6 +217,20 @@ public class FrmSetting extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        UserDao service = new UserDao();
+        UserModel model;
+        
+        id = FrmMain.idLogin;
+        user = txtUser.getText();
+        previousPass = String.valueOf(txtPreviousPass.getPassword());
+        newPass = String.valueOf(txtNewPass.getPassword());
+        
+        model = new UserModel(id, user, newPass, previousPass);
+        
+        service.Update(model);
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.buttons.Button btnUpdate;
@@ -230,8 +246,8 @@ public class FrmSetting extends javax.swing.JPanel {
     private javax.swing.JLayeredPane pnlContainer;
     private com.trojasviejas.swing.panels.PanelBorder pnlTable;
     private com.trojasviejas.swing.panels.PanelBorder pnlUser;
-    private com.trojasviejas.swing.fields.MyPasswordField txtConfirmPass;
-    private com.trojasviejas.swing.fields.MyPasswordField txtPass;
+    private com.trojasviejas.swing.fields.MyPasswordField txtNewPass;
+    private com.trojasviejas.swing.fields.MyPasswordField txtPreviousPass;
     private com.trojasviejas.swing.fields.MyTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

@@ -151,18 +151,19 @@ public class FrmLogin extends javax.swing.JFrame {
     }
 
     private void login() {
-//        LoginVM data = login.getDataLogin();
-//        try {
-//            if (service.login(data)) {
+        LoginVM data = login.getDataLogin();
+        try {
+            if (service.login(data)) {
                 this.dispose();
+                FrmMain.login = data;
                 FrmMain.main();
-//            } else {
-//                showMessage(PanelMessage.MessageType.ERROR, "Usuario y contraseña incorrectos");
-//            }
-//
-//        } catch (SQLException e) {
-//            showMessage(PanelMessage.MessageType.ERROR, e.getMessage());
-//        }
+            } else {
+                showMessage(PanelMessage.MessageType.ERROR, "Usuario y contraseña incorrectos");
+            }
+
+        } catch (SQLException e) {
+            showMessage(PanelMessage.MessageType.ERROR, e.getMessage());
+        }
     }
     
     private void showMessage(PanelMessage.MessageType messageType, String message) {

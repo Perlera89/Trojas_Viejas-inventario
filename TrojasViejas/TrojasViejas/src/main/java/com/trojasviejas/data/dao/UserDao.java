@@ -2,6 +2,7 @@ package com.trojasviejas.data.dao;
 
 import com.trojasviejas.data.Hash;
 import com.trojasviejas.data.connectiondb.Conexion;
+import com.trojasviejas.demo.form.FrmMain;
 import com.trojasviejas.models.entity.*;
 import com.trojasviejas.models.viewmodel.LoginVM;
 import java.sql.CallableStatement;
@@ -9,15 +10,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class UserDao {
-    
-      public ArrayList<UserModel> ListUser() throws SQLException {
+
+    public ArrayList<UserModel> ListUser() throws SQLException {
         UserModel user = null;
         Connection connection = null;
         CallableStatement query = null;
@@ -25,20 +23,19 @@ public class UserDao {
 
         ArrayList<UserModel> users = null;
 
-        
-            connection = Conexion.getConnection();
-            users = new ArrayList<UserModel>();
+        connection = Conexion.getConnection();
+        users = new ArrayList<UserModel>();
 
-            query = connection.prepareCall("{call sp_s_users}");
-            result = query.executeQuery();
+        query = connection.prepareCall("{call sp_s_users}");
+        result = query.executeQuery();
 
-            while (result.next()) {
-                
-                user = new UserModel();
-                user.setUserId(result.getInt("usr_id"));
-                user.setUsername(result.getString("usr_name"));
-                user.setPassword(result.getString("usr_password"));
-              
+        while (result.next()) {
+
+            user = new UserModel();
+            user.setUserId(result.getInt("usr_id"));
+            user.setUsername(result.getString("usr_name"));
+            user.setPassword(result.getString("usr_password"));
+
             users.add(user);
 
             Conexion.close(result);
@@ -63,39 +60,52 @@ public class UserDao {
         Conexion.close(connection);
     }
 
-    public void Update(UserModel model) throws SQLException {
+    public void Update(UserModel model) {
 
         Connection connection = null;
-        CallableStatement query = null;
+        PreparedStatement query = null;
+        int result = 0;
 
-        connection = Conexion.getConnection();
-        query = connection.prepareCall("{call sp_u_users(?,?,?)}");
+        try {
+            connection = Conexion.getConnection();
+            query = connection.prepareStatement("{call sp_u_user(?,?,?,?)}");
 
-        query.setInt(1, model.getUserId());
-        query.setString(2, model.getUsername());
-        query.setString(3, model.getPassword());
-        query.execute();
-
-        JOptionPane.showMessageDialog(null, "Actualizado exitosamente.");
-
-        Conexion.close(query);
-        Conexion.close(connection);
-
+            query.setInt(1, model.getUserId());
+            query.setString(2, model.getUsername());
+            query.setString(3, model.getPassword());
+            query.setString(4, model.getVerifyPassword());
+            
+            result = query.executeUpdate();
+            
+            if(result == 1){
+                JOptionPane.showMessageDialog(null, "Actualizado exitosamente.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            } else{
+                JOptionPane.showMessageDialog(null, "Contraseña no coincide.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se han podido actualizar sus datos. \n" + ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                Conexion.close(query);
+                Conexion.close(connection);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
-   public void delete(int id) throws SQLException{
-      Connection connection = Conexion.getConnection();
-      CallableStatement query = connection.prepareCall("call sp_d_users(?)");
-   
+    public void delete(int id) throws SQLException {
+        Connection connection = Conexion.getConnection();
+        CallableStatement query = connection.prepareCall("call sp_d_users(?)");
+
         query.setInt(1, id);
         query.execute();
-        
+
         Conexion.close(query);
         Conexion.close(connection);
     }
-   
-   
-   
+
     public boolean login(LoginVM login) throws SQLException {
         boolean isLogin = false;
         Connection connection = Conexion.getConnection();
@@ -106,6 +116,7 @@ public class UserDao {
 
         ResultSet result = query.executeQuery();
         if (result.next()) {
+            FrmMain.idLogin = result.getInt("usr_id");
             isLogin = true;
         }
 
