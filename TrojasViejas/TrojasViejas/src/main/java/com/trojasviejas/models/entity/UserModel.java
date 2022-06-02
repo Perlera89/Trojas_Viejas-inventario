@@ -8,6 +8,7 @@ public class UserModel {
     private String username;
     private String password;
     private String verifyPassword;
+    private String verifyCode;
 
     public UserModel() {
     }
@@ -28,6 +29,14 @@ public class UserModel {
         this.username = username;
         this.password = password;
         this.verifyPassword = verifyPassword;
+    }
+
+    public UserModel(int userId, String username, String password, String verifyPassword, String verifyCode) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.verifyPassword = verifyPassword;
+        this.verifyCode = verifyCode;
     }
     
     public Object[] toRowTable(IUserEventAction event) {
@@ -64,5 +73,13 @@ public class UserModel {
 
     public void setVerifyPassword(String verifyPassword) {
         this.verifyPassword = verifyPassword;
+    }
+    
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
     }
 }

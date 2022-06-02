@@ -1,10 +1,14 @@
 package com.trojasviejas.demo.form;
 
 import com.trojasviejas.component.login.PanelCover;
+import com.trojasviejas.component.login.PanelLoading;
 import com.trojasviejas.component.login.PanelLogin;
 import com.trojasviejas.component.login.PanelMessage;
+import com.trojasviejas.component.login.PanelVerify;
+import com.trojasviejas.data.SendMail;
 import com.trojasviejas.data.connectiondb.Conexion;
 import com.trojasviejas.data.dao.UserDao;
+import com.trojasviejas.models.entity.MessageModel;
 import com.trojasviejas.models.entity.UserModel;
 import com.trojasviejas.models.viewmodel.LoginVM;
 import java.awt.Color;
@@ -26,6 +30,8 @@ public class FrmLogin extends javax.swing.JFrame {
     private MigLayout layout;
     private PanelCover cover;
     private PanelLogin login;
+    private PanelLoading loading;
+    private PanelVerify verify;
 
     private boolean isLogin;
     private final double addSize = 30;
@@ -44,6 +50,8 @@ public class FrmLogin extends javax.swing.JFrame {
         service = new UserDao();
         layout = new MigLayout("fill, insets 0");
         cover = new PanelCover();
+        loading = new PanelLoading();
+        verify = new PanelVerify();
         ActionListener eventRegister = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -112,14 +120,36 @@ public class FrmLogin extends javax.swing.JFrame {
         animator.setDeceleration(0.5f);
         animator.setResolution(0); //smooth animation        
         pnlBg.setLayout(layout);
-
+        pnlBg.setLayer(loading, JLayeredPane.POPUP_LAYER);
+        pnlBg.setLayer(verify, JLayeredPane.POPUP_LAYER);
         pnlBg.add(cover, "width " + coverSize + "%, pos 0al 0 n 100%");
         pnlBg.add(login, "width " + loginSize + "%, pos 1al 0 n 100%"); // 1al es 100%
+        pnlBg.add(loading, "pos 0 0 100% 100%");
+        pnlBg.add(verify, "pos 0 0 100% 100%");
         cover.addEvent(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!animator.isRunning()) {
                     animator.start();
+                }
+            }
+        });
+        verify.addEventButtonOK(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    UserModel user = login.getUser();
+                    if (service.verifyCodeUser(verify.getInputCode())) {
+                        service.doneVerify(user.getUserId());
+                        showMessage(PanelMessage.MessageType.SUCCESS, "Se ha registrado correctamente");
+                        verify.setVisible(false);
+                    } else {
+                        showMessage(PanelMessage.MessageType.ERROR, "Codigo de verificacion incorrecto");
+                    }
+                } catch (SQLException e) {
+                    System.out.println();
+                    //showMessage(PanelMessage.MessageType.ERROR, "Ha ocurrido un error");
+                    JOptionPane.showMessageDialog(null, e.getMessage());
                 }
             }
         });
@@ -140,10 +170,14 @@ public class FrmLogin extends javax.swing.JFrame {
                     showMessage(PanelMessage.MessageType.ERROR, "La contraseña no coincide");
                 } else {
                     try {
-                        service.register(user);
-                        showMessage(PanelMessage.MessageType.SUCCESS, "Se ha registrado correctamente");
+                        if (service.checkDuplicateUser(user.getUsername())) {
+                            showMessage(PanelMessage.MessageType.ERROR, "El nombre de usuario ya existe");
+                        } else {
+                            service.register(user);
+                            sendMail(user);
+                        }
                     } catch (SQLException e) {
-                        showMessage(PanelMessage.MessageType.ERROR, e.getMessage());
+                        JOptionPane.showMessageDialog(null, e.getMessage());
                     }
                 }
             }
@@ -165,7 +199,24 @@ public class FrmLogin extends javax.swing.JFrame {
             showMessage(PanelMessage.MessageType.ERROR, e.getMessage());
         }
     }
-    
+
+    private void sendMail(UserModel user) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                loading.setVisible(true);
+                MessageModel ms = new SendMail().sendMail("trojasviejas.inventario@gmail.com", user.getVerifyCode());
+                if (ms.isSuccess()) {
+                    loading.setVisible(false);
+                    verify.setVisible(true);
+                } else {
+                    loading.setVisible(false);
+                    showMessage(PanelMessage.MessageType.ERROR, ms.getMessage());
+                }
+            }
+        }).start();
+    }
+
     private void showMessage(PanelMessage.MessageType messageType, String message) {
         PanelMessage ms = new PanelMessage();
         ms.showMessage(messageType, message);
