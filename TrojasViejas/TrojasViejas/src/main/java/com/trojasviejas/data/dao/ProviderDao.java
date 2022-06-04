@@ -62,6 +62,50 @@ public class ProviderDao {
         }
         return aLProvM;
     }
+    
+    public ArrayList<ProviderModel> ListProviders(String name) {
+        ProviderModel provM = null;
+        Connection connection = null;
+        CallableStatement query = null;
+        ResultSet result = null;
+
+        ArrayList<ProviderModel> aLProvM = null;
+
+        try {
+            connection = Conexion.getConnection();
+            aLProvM = new ArrayList<ProviderModel>();
+
+            query = connection.prepareCall("{call sp_find_providers(?)}");
+            query.setString(1, name);
+            result = query.executeQuery();
+
+            while (result.next()) {
+
+                provM = new ProviderModel();
+
+                provM.setId(result.getInt("prov_id"));
+                provM.setName(result.getString("prov_name"));
+                provM.setNumberPhone(result.getString("prov_num_phone"));
+                provM.setEmail(result.getString("prov_email"));
+                provM.setAddress(result.getString("prov_direction"));
+                provM.setType(ProviderType.values()[result.getInt("prov_tp") - 1]);
+                
+                aLProvM.add(provM);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se han podido mostrar los proveedores. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                Conexion.close(result);
+                Conexion.close(query);
+                Conexion.close(connection);
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return aLProvM;
+    }
 
     public void AddProvider(ProviderModel provM) {
 

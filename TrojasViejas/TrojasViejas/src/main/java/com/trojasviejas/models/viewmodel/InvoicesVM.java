@@ -1,32 +1,31 @@
 package com.trojasviejas.models.viewmodel;
 
+import com.trojasviejas.component.main.event.IInvoicesEventAction;
+import com.trojasviejas.models.utility.InvoiceActionModel;
 import com.trojasviejas.models.utility.ProviderType;
 import java.util.Date;
 
 public class InvoicesVM {
     private int id;
     private Double totalAmount;
-    private Date buyDate;
+    private String buyDate;
     private byte[] picture;
     private String name;
-    private String numberPhone;
-    private String email;
-    private String address;
-    private ProviderType type;
+    
 
     public InvoicesVM() {
     }
 
-    public InvoicesVM(int id, Double totalAmount, Date buyDate, byte[] picture, String name, String numberPhone, String email, String address, ProviderType type) {
+    public InvoicesVM(int id, Double totalAmount, String buyDate, byte[] picture, String name) {
         this.id = id;
         this.totalAmount = totalAmount;
         this.buyDate = buyDate;
         this.picture = picture;
         this.name = name;
-        this.numberPhone = numberPhone;
-        this.email = email;
-        this.address = address;
-        this.type = type;
+    }
+    
+    public Object[] toRowTable(IInvoicesEventAction event) {
+        return new Object[]{id, name, totalAmount, buyDate, picture, new InvoiceActionModel(this, event)};
     }
 
     public int getId() {
@@ -45,11 +44,11 @@ public class InvoicesVM {
         this.totalAmount = totalAmount;
     }
 
-    public Date getBuyDate() {
+    public String getBuyDate() {
         return buyDate;
     }
 
-    public void setBuyDate(Date buyDate) {
+    public void setBuyDate(String buyDate) {
         this.buyDate = buyDate;
     }
 
@@ -67,37 +66,5 @@ public class InvoicesVM {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getNumberPhone() {
-        return numberPhone;
-    }
-
-    public void setNumberPhone(String numberPhone) {
-        this.numberPhone = numberPhone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public ProviderType getType() {
-        return type;
-    }
-
-    public void setType(ProviderType type) {
-        this.type = type;
     }
 }

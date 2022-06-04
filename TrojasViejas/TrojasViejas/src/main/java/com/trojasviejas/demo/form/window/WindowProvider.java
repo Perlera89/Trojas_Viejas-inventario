@@ -2,22 +2,35 @@ package com.trojasviejas.demo.form.window;
 
 import com.trojasviejas.data.dao.ProviderDao;
 import com.trojasviejas.demo.form.FrmProviders;
-import com.trojasviejas.demo.form.FrmProviders;
-import com.trojasviejas.demo.form.window.WindowHome;
 import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.ProviderType;
 
 public class WindowProvider extends javax.swing.JPanel {
 
-    public FrmProviders frmProviders;
+    public FrmProviders frmProvider;
     public WindowHome home;
-    public int id = 0;
-    
+    public int id;
+
     public WindowProvider() {
         setOpaque(false);
         initComponents();
         txtName.requestFocus();
-        CargarComboBox();
+    }
+
+    public void CargarComboBox() {
+
+        for (var i : ProviderType.values()) {
+            cbbType.addItem(i.toString());
+        }
+
+    }
+
+    public void clean() {
+        txtName.setText("");
+        txtPhone.setText("");
+        txtEmail.setText("");
+        txtAddress.setText("");
+        cbbType.setSelectedItem(ProviderType.values()[0].toString());
     }
 
     @SuppressWarnings("unchecked")
@@ -38,6 +51,8 @@ public class WindowProvider extends javax.swing.JPanel {
         txtName.setLabelText("Nombre");
 
         cbbType.setForeground(new java.awt.Color(100, 100, 100));
+        cbbType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tipo", "Vendedores", "Donadores" }));
+        cbbType.setSelectedIndex(-1);
         cbbType.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbbType.setLabeText("Tipo");
 
@@ -52,7 +67,6 @@ public class WindowProvider extends javax.swing.JPanel {
 
         btnAdd.setBackground(new java.awt.Color(0, 184, 82));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save.png"))); // NOI18N
         btnAdd.setText("Agregar");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,7 +76,6 @@ public class WindowProvider extends javax.swing.JPanel {
 
         btnCancel.setBackground(new java.awt.Color(255, 5, 0));
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/exit.png"))); // NOI18N
         btnCancel.setText("Cancelar");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,7 +104,7 @@ public class WindowProvider extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
+                .addContainerGap(50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -107,55 +120,41 @@ public class WindowProvider extends javax.swing.JPanel {
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void CargarComboBox() {
-
-        for (var i : ProviderType.values()) {
-            cbbType.addItem(i.toString());
-        }
-    }
-
-    //Método para limpiar cajas de texto
-    public void clean() {
-        txtName.setText("");
-        txtPhone.setText("");
-        txtEmail.setText("");
-        txtAddress.setText("");
-        cbbType.setSelectedItem(ProviderType.values()[0].toString());
-    }
-
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        //Agregar o Actualizar
         if (id > 0) {
-            ProviderModel prvM = new ProviderModel();
-            ProviderDao prvD = new ProviderDao();
+            ProviderModel provM = new ProviderModel();
+            ProviderDao provD = new ProviderDao();
 
-            prvM.setId(id);
-            prvM.setName(txtName.getText());
-            prvM.setNumberPhone(txtPhone.getText());
-            prvM.setEmail(txtEmail.getText());
-            prvM.setAddress(txtAddress.getText());
-            prvM.setType(ProviderType.values()[cbbType.getSelectedIndex()]);
+            provM.setId(id);
+            provM.setName(txtName.getText());
+            provM.setNumberPhone(txtPhone.getText());
+            provM.setEmail(txtEmail.getText());
+            provM.setAddress(txtAddress.getText());
+            provM.setType(ProviderType.values()[cbbType.getSelectedIndex()]);
 
-            prvD.UpdateProvider(prvM);
-            frmProviders.initTableData();
+            provD.UpdateProvider(provM);
+            frmProvider.initTableData();
+            //this.dispose();
             clean();
 
         } else {
-            ProviderModel prvM = new ProviderModel();
-            ProviderDao prvD = new ProviderDao();
+            ProviderModel provM = new ProviderModel();
+            ProviderDao provD = new ProviderDao();
 
-            prvM.setName(txtName.getText());
-            prvM.setNumberPhone(txtPhone.getText());
-            prvM.setEmail(txtEmail.getText());
-            prvM.setAddress(txtAddress.getText());
-            prvM.setType(ProviderType.values()[cbbType.getSelectedIndex()]);
+            provM.setId(id);
+            provM.setName(txtName.getText());
+            provM.setNumberPhone(txtPhone.getText());
+            provM.setEmail(txtEmail.getText());
+            provM.setAddress(txtAddress.getText());
+            provM.setType(ProviderType.values()[cbbType.getSelectedIndex()]);
 
-            prvD.AddProvider(prvM);
-            frmProviders.initTableData();
+            provD.AddProvider(provM);
+            frmProvider.initTableData();
+            //this.dispose();
             clean();
         }
     }//GEN-LAST:event_btnAddActionPerformed

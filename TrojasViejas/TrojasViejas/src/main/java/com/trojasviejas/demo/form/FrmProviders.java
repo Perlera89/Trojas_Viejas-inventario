@@ -1,7 +1,6 @@
 package com.trojasviejas.demo.form;
 
-import com.trojasviejas.demo.form.window.WindowProvider;
-import com.trojasviejas.component.login.MessageErrorDialog;
+import com.trojasviejas.component.login.MessageDialog;
 import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.entity.ProviderModel;
@@ -11,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import com.trojasviejas.component.main.event.IProviderEventAction;
 import com.trojasviejas.data.dao.ProviderDao;
+import com.trojasviejas.models.viewmodel.InvoicesVM;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -27,40 +27,33 @@ public class FrmProviders extends javax.swing.JPanel {
     }
 
     private void initCard() {
-        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Comerciales", contador_commercial + ""));
-        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Donadores", contador_donor + ""));
-        pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Proveedores", contador_provider + ""));
+        pnlCardProvider.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Proveedores", contador_provider + ""));
+        pnlCardComercial.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Comerciales", contador_commercial + ""));
+        pnlCardDonor.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Donadores", contador_donor + ""));
+        
 
-//        pnlCardCount.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Artículos", String.valueOf(contadorItem)));
-//        pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "HERRAMIENTAS", String.valueOf(contador_tools)));
-//        pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "ACCESORIOS", String.valueOf(contador_accesories)));
-//
-//        pnlCardCountItems.setFilter(new MouseAdapter() {
-//            @Override
-//            public void mousePressed(MouseEvent e) {
-//                showItems("ALL", f_eventAction);
-//                JOptionPane.showMessageDialog(null, "Filtrando contador de artículos");
-//            }
-//
-//        });
-//
-//        pnlCardCountCategory1.setFilter(new MouseAdapter() {
-//            @Override
-//            public void mousePressed(MouseEvent e) {
-//                showItems(String.valueOf(CategoryType.HERRAMIENTAS), f_eventAction);
-//                JOptionPane.showMessageDialog(null, "Filtrando contador herramientas");
-//
-//            }
-//
-//        });
-//        pnlCardCountCategory2.setFilter(new MouseAdapter() {
-//            @Override
-//            public void mousePressed(MouseEvent e) {
-//                showItems(String.valueOf(CategoryType.ACCESORIOS), f_eventAction);
-//                JOptionPane.showMessageDialog(null, "Filtrando contador accesorios");
-//            }
-//
-//        });
+        pnlCardComercial.setFilter(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showProviders(String.valueOf(ProviderType.COMERCIAL), f_eventAction);
+            }
+
+        });
+
+        pnlCardDonor.setFilter(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showProviders(String.valueOf(ProviderType.DONANTE), f_eventAction);
+            }
+
+        });
+        pnlCardProvider.setFilter(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showProviders("ALL", f_eventAction);
+            }
+
+        });
     }
 
     FrmProviders form = this;
@@ -81,7 +74,7 @@ public class FrmProviders extends javax.swing.JPanel {
 
                     //Pasar datos al formulario de Windows
                     WindowProvider formulario = new WindowProvider();
-                    formulario.frmProviders = form;
+                    formulario.frmProvider = form;
 
                     formulario.id = (int) tblProviders.getValueAt(IndexRow, 0);
                     formulario.txtName.setText(tblProviders.getValueAt(IndexRow, 1).toString());
@@ -106,10 +99,10 @@ public class FrmProviders extends javax.swing.JPanel {
             @Override
             public void delete(ProviderModel entity) {
                 if (tblProviders.getSelectedRowCount() > 0) {
-                    MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
+                    MessageDialog dialogResult = new MessageDialog(new FrmLogin());
                     dialogResult.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el proveedor " + entity.getName() + "?");
 
-                    if (dialogResult.getMessageType() == MessageErrorDialog.MessageType.OK) {
+                    if (dialogResult.getMessageType() == MessageDialog.MessageType.OK) {
 
                         ProviderDao prvD = new ProviderDao();
 //                    ArrayList<Object> selectedtRow = new ArrayList<>();
@@ -155,10 +148,13 @@ public class FrmProviders extends javax.swing.JPanel {
 
     private void clearRowsInTable() {
         try {
+            tblProviders.selectAll();
             DefaultTableModel modelo = (DefaultTableModel) tblProviders.getModel();
-            int filas = tblProviders.getRowCount();
-            for (int i = 0; filas > i; i++) {
-                modelo.removeRow(0);
+            int rowsSelected[] = tblProviders.getSelectedRows();
+            int indexRow = rowsSelected.length - 1;
+            for (int i = 0; i < rowsSelected.length; i++) {
+                modelo.removeRow(indexRow);
+                indexRow--;
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
@@ -174,6 +170,15 @@ public class FrmProviders extends javax.swing.JPanel {
 //        }
     }
 
+    ArrayList<ProviderModel> listFound = null;
+    
+    public void filterByStringSearch(String busqueda){
+        ProviderDao prvDao = new ProviderDao();
+        
+        listFound = prvDao.ListProviders(busqueda);
+        showProviders("ALL", f_eventAction);
+    }
+    
     private int contador_commercial = 0;
     private int contador_donor = 0;
     private int contador_provider = 0;
@@ -186,13 +191,18 @@ public class FrmProviders extends javax.swing.JPanel {
 
         //Limpiando la tabla
         clearRowsInTable();
-
+        
         ProviderDao prvD = new ProviderDao();
+        ArrayList<ProviderModel> providers = prvD.ListProviders();
+        
+        if(listFound != null){
+            providers = listFound;
+        }
 
         //Mostrar todos los datos
         switch (tipo_filtro) {
             case "ALL" -> {
-                for (var item : prvD.ListProviders()) {
+                for (var item : providers) {
                     if (item.getType().equals(ProviderType.COMERCIAL)) {
                         contador_commercial++;
                     }
@@ -211,7 +221,7 @@ public class FrmProviders extends javax.swing.JPanel {
 
             //filtrar las filas por la categoria de "COMERCIAL"
             case "COMERCIAL" -> {
-                for (var i : prvD.ListProviders()) {
+                for (var i : providers) {
                     if (i.getType().equals(ProviderType.COMERCIAL)) {
                         contador_commercial++;
 
@@ -226,7 +236,7 @@ public class FrmProviders extends javax.swing.JPanel {
             }
             //Filtrar filas por tipo de "DONANTE"
             case "DONANTE" -> {
-                for (var i : prvD.ListProviders()) {
+                for (var i : providers) {
                     if (i.getType().equals(ProviderType.DONANTE)) {
                         contador_donor++;
 
@@ -262,30 +272,31 @@ public class FrmProviders extends javax.swing.JPanel {
     private void initComponents() {
 
         pnlContainer = new javax.swing.JLayeredPane();
-        pnlCard3 = new com.trojasviejas.component.main.PanelCard();
-        pnlCard1 = new com.trojasviejas.component.main.PanelCard();
-        pnlCard2 = new com.trojasviejas.component.main.PanelCard();
+        pnlCardProvider = new com.trojasviejas.component.main.PanelCard();
+        pnlCardComercial = new com.trojasviejas.component.main.PanelCard();
+        pnlCardDonor = new com.trojasviejas.component.main.PanelCard();
         pnlTable = new com.trojasviejas.swing.panels.PanelBorder();
         lblProviders = new javax.swing.JLabel();
         scroll = new javax.swing.JScrollPane();
         tblProviders = new com.trojasviejas.swing.tables.ProvidersTable();
         btnNew = new com.trojasviejas.swing.Buttons.ActionButton();
+        btnRefresh = new com.trojasviejas.swing.Buttons.ActionButton();
 
         setBackground(new java.awt.Color(232, 241, 242));
 
         pnlContainer.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
-        pnlCard3.setColor1(new java.awt.Color(0, 40, 85));
-        pnlCard3.setColor2(new java.awt.Color(2, 62, 125));
-        pnlContainer.add(pnlCard3);
+        pnlCardProvider.setColor1(new java.awt.Color(0, 40, 85));
+        pnlCardProvider.setColor2(new java.awt.Color(2, 62, 125));
+        pnlContainer.add(pnlCardProvider);
 
-        pnlCard1.setColor1(new java.awt.Color(0, 40, 85));
-        pnlCard1.setColor2(new java.awt.Color(2, 62, 125));
-        pnlContainer.add(pnlCard1);
+        pnlCardComercial.setColor1(new java.awt.Color(0, 40, 85));
+        pnlCardComercial.setColor2(new java.awt.Color(2, 62, 125));
+        pnlContainer.add(pnlCardComercial);
 
-        pnlCard2.setColor1(new java.awt.Color(255, 123, 0));
-        pnlCard2.setColor2(new java.awt.Color(255, 136, 0));
-        pnlContainer.add(pnlCard2);
+        pnlCardDonor.setColor1(new java.awt.Color(255, 123, 0));
+        pnlCardDonor.setColor2(new java.awt.Color(255, 136, 0));
+        pnlContainer.add(pnlCardDonor);
 
         pnlTable.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -333,6 +344,18 @@ public class FrmProviders extends javax.swing.JPanel {
             }
         });
 
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refresh.png"))); // NOI18N
+        btnRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnRefreshMousePressed(evt);
+            }
+        });
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
         pnlTable.setLayout(pnlTableLayout);
         pnlTableLayout.setHorizontalGroup(
@@ -340,24 +363,27 @@ public class FrmProviders extends javax.swing.JPanel {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE)
                     .addGroup(pnlTableLayout.createSequentialGroup()
                         .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(scroll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE)
-                            .addGroup(pnlTableLayout.createSequentialGroup()
-                                .addComponent(lblProviders)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(20, 20, 20))))
+                            .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblProviders))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20))
         );
         pnlTableLayout.setVerticalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTableLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblProviders)
-                .addGap(20, 20, 20)
-                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlTableLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(lblProviders)
+                        .addGap(20, 20, 20)
+                        .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlTableLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -387,17 +413,27 @@ public class FrmProviders extends javax.swing.JPanel {
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         WindowProvider provider = new WindowProvider();
-        provider.frmProviders = form;
+        provider.frmProvider = form;
         WindowHome.main(WindowType.PROVIDER, provider, false);
     }//GEN-LAST:event_btnNewActionPerformed
+
+    private void btnRefreshMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMousePressed
+        initTableData();
+    }//GEN-LAST:event_btnRefreshMousePressed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        listFound = null;
+        showProviders("ALL", f_eventAction);
+    }//GEN-LAST:event_btnRefreshActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.Buttons.ActionButton btnNew;
+    private com.trojasviejas.swing.Buttons.ActionButton btnRefresh;
     private javax.swing.JLabel lblProviders;
-    private com.trojasviejas.component.main.PanelCard pnlCard1;
-    private com.trojasviejas.component.main.PanelCard pnlCard2;
-    private com.trojasviejas.component.main.PanelCard pnlCard3;
+    private com.trojasviejas.component.main.PanelCard pnlCardComercial;
+    private com.trojasviejas.component.main.PanelCard pnlCardDonor;
+    private com.trojasviejas.component.main.PanelCard pnlCardProvider;
     private javax.swing.JLayeredPane pnlContainer;
     private com.trojasviejas.swing.panels.PanelBorder pnlTable;
     private javax.swing.JScrollPane scroll;

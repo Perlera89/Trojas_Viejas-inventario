@@ -9,14 +9,15 @@ import java.util.Date;
 public class InvoicesModel {
     private int id;
     private Double totalAmount;
-    private String buyDate;
+    private Date buyDate;
     private byte[] picture;
     private int fkProv;
+    private String fkProv_name;
 
     public InvoicesModel() {
     }
 
-    public InvoicesModel(int id, Double totalAmount, String buyDate, int fkProv) {
+    public InvoicesModel(int id, Double totalAmount, Date buyDate, int fkProv) {
         this.id = id;
         this.totalAmount = totalAmount;
         this.buyDate = buyDate;
@@ -24,9 +25,19 @@ public class InvoicesModel {
         this.fkProv = fkProv;
     }
     
-    public Object[] toRowTable(IInvoicesEventAction event) {
-        return new Object[]{id, totalAmount, buyDate, fkProv, new InvoiceActionModel(this, event)};
+    public InvoicesModel(int id, Double totalAmount, Date buyDate, String fkProv_name, int fkProv) {
+        this.id = id;
+        this.totalAmount = totalAmount;
+        this.buyDate = buyDate;
+        //this.picture = picture;
+        this.fkProv_name = fkProv_name;
+        this.fkProv = fkProv;
     }
+   
+    
+//    public Object[] toRowTable(IInvoicesEventAction event) {
+//        return new Object[]{id, totalAmount, buyDate, fkProv_name, fkProv,  new InvoiceActionModel(this, event)};
+//    }
 
     public int getId() {
         return id;
@@ -44,11 +55,11 @@ public class InvoicesModel {
         this.totalAmount = totalAmount;
     }
 
-    public String getBuyDate() {
+    public Date getBuyDate() {
         return buyDate;
     }
 
-    public void setBuyDate(String buyDate) {
+    public void setBuyDate(Date buyDate) {
         this.buyDate = buyDate;
     }
 
@@ -66,6 +77,14 @@ public class InvoicesModel {
 
     public void setFkProv(int fkProv) {
         this.fkProv = fkProv;
+    }
+
+    public String getFkProv_name() {
+        return fkProv_name;
+    }
+
+    public void setFkProv_name(String fkProv_name) {
+        this.fkProv_name = fkProv_name;
     }
     
     

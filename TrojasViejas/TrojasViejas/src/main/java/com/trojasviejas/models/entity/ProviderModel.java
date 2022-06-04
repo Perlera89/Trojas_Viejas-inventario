@@ -15,7 +15,7 @@ public class ProviderModel {
     private ProviderType type;
 
     public ProviderModel(int id, String name, String numberPhone, String email, String address, ProviderType type) {
-        this. id = id;
+        this.id = id;
         this.name = name;
         this.numberPhone = numberPhone;
         this.email = email;
