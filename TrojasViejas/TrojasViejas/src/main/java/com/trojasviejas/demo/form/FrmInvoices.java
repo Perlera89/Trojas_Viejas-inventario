@@ -1,6 +1,7 @@
 package com.trojasviejas.demo.form;
 
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
+import com.trojasviejas.component.login.MessageSuccessDialog;
 import com.trojasviejas.component.main.event.IInvoicesEventAction;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.entity.*;
@@ -37,21 +38,22 @@ public class FrmInvoices extends javax.swing.JPanel {
         pnlCardTotal.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total", "$" + contador_total));
 
     }
-
+    //mensajes personalizados
+    MessageErrorDialog errorDialogResult = new MessageErrorDialog(new FrmLogin());
+    MessageSuccessDialog successDialogResult = new MessageSuccessDialog(new FrmLogin());
+    
     public static Date getDateFormat(String date) {
-//        SimpleDateFormat formatter = new SimpleDateFormat(formatPattern);
-//        return formatter.parse(date);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Date fechaConvertida = null;
+        Date dateWithFormat = null;
 
         try {
             Date parsed = dateFormat.parse(date);
-            fechaConvertida = new Date(parsed.getTime());
+            dateWithFormat = new Date(parsed.getTime());
         } catch (Exception e) {
             System.out.println("Error occurred" + e.getMessage());
         }
-        return fechaConvertida;
+        return dateWithFormat;
     }
 
     FrmInvoices form = this;
@@ -64,51 +66,19 @@ public class FrmInvoices extends javax.swing.JPanel {
             int IndexRow;
 
             @Override
-            public void update(InvoicesVM entity) {
-                InvoicesDao invD = new InvoicesDao();
-                String provName;
-                WindowInvoice formulario = new WindowInvoice();
-                formulario.frmInvoice = form;
-
-                if (tblInvoices.getSelectedRowCount() > 0) {
-                    IndexRow = tblInvoices.getSelectedRow();
-
-                    formulario.id = (int) tblInvoices.getValueAt(IndexRow, 0);
-                    formulario.cbbProvider.setSelectedItem((tblInvoices.getValueAt(IndexRow, 1)).toString());
-                    formulario.txtTotal.setText(tblInvoices.getValueAt(IndexRow, 2).toString());
-                    //Pasando fecha al JDateChooser
-                    //String fecha = (tblInvoices.getValueAt(IndexRow, 3)).toString();
-                    formulario.txtDate.setDate(getDateFormat(tblInvoices.getValueAt(IndexRow, 3).toString()));
-
-//                    formulario.txtDate.setDate(fechaParse);
-                    //formulario.rutaByte[0] = entity.getPicture();
-//                formulario.id = (int) selectedtRow.get(0);
-//                formulario.txtName.setText(selectedtRow.get(1).toString());
-//                formulario.txtPhone.setText(selectedtRow.get(2).toString());
-//                formulario.txtEmail.setText(selectedtRow.get(3).toString());
-//                formulario.txtAddress.setText(selectedtRow.get(3).toString());                
-//                formulario.cbbType.setSelectedItem(selectedtRow.get(5).toString());
-                    WindowHome.main(WindowType.INVOICE, formulario, false);
-                    repaint();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Para actualizar un registro debe seleccionar uno previamente", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-                }
-
-            }
-
-            @Override
             public void delete(InvoicesVM entity) {
                 if (tblInvoices.getSelectedRowCount() > 0) {
-                    MessageDialog dialogResult = new MessageDialog(new FrmLogin());
-                    dialogResult.showMessage(null, "¿Estas seguro de eliminar el proveedor?");
+                    MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
+                    dialogResult.showMessage("ADVERTENCIA", 
+                            "Ésta es una acción grave: cada factura tiene configurado un borrado en cascada,"
+                           + " por consecuencia, se borrarán todos los detalles de la factura, todos los registros"
+                           + " de los artículos en el inventario y todas la entradas/salidas relacionadas. Esta acción no es"
+                           + " reversible. ¿Realmente desea eliminar esta factura?");
 
-                    if (dialogResult.getMessageType() == MessageDialog.MessageType.OK) {
+                    if (dialogResult.getMessageType() == MessageErrorDialog.MessageType.OK) {
 
                         InvoicesDao invD = new InvoicesDao();
-//                    ArrayList<Object> selectedtRow = new ArrayList<>();
-//                    selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
-
-                        int IndexRow = tblInvoices.getSelectedRow();
+                        IndexRow = tblInvoices.getSelectedRow();
                         invD.DeleteInvoice(Integer.parseInt(tblInvoices.getValueAt(IndexRow, 0).toString()));
                         clearRowsInTable();
                         initTableData();
@@ -116,16 +86,56 @@ public class FrmInvoices extends javax.swing.JPanel {
                         repaint();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Para eliminar un registro debe seleccionar uno previamente", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+                    errorDialogResult.showMessage("Advertencia","Para eliminar un registro debe seleccionar uno previamente");
                 }
             }
 
+            //ver detalles de facturas
             @Override
             public void view(InvoicesVM entity) {
-                System.out.println("Ver a " + entity.getId());
+                int indexRow;
+                if (tblInvoices.getSelectedRowCount() > 0) {
+                    //obtenemos el id de la fila seleccionada
+                    indexRow = tblInvoices.getSelectedRow();
+
+                    FrmDetails detailsForm = new FrmDetails(entity.getId());
+                    //detailsForm.idInvoice = (int)tblInvoices.getValueAt(indexRow, 0);
+                    detailsForm.lblProvider.setText(tblInvoices.getValueAt(indexRow, 1).toString());
+                    detailsForm.lblPrice.setText(tblInvoices.getValueAt(indexRow, 2).toString());
+                    detailsForm.lblBuyDate.setText(tblInvoices.getValueAt(indexRow, 3).toString());
+                    System.out.println((int)tblInvoices.getValueAt(indexRow, 0));
+                    
+                    detailsForm.formInvoices = form;
+                    detailsForm.setVisible(true);
+                } else {
+                    errorDialogResult.showMessage("ERROR", "Seleccione previamente una factura para ver sus detalles.");
+                }
+
+            }
+            //
+            @Override
+            public void image(InvoicesVM entity) {
+                int indexRow;
+                if (tblInvoices.getSelectedRowCount() > 0) {
+                    //obtenemos el id de la fila seleccionada
+                    indexRow = tblInvoices.getSelectedRow();
+                    
+                    byte[] img = (byte[])tblInvoices.getValueAt(indexRow, 4);
+                    //conviertiendo los bytes en imagen, y la imagen en IconImagen
+                    ImageIcon image = new ImageIcon(byteToImage(img));
+                    FrmImage frmImage= new FrmImage();
+                    //ImageIcon mIcono = new ImageIcon(img.getScaledInstance(frm.getWidth(), lblImagen.getHeight(), 0));
+
+                    frmImage.lblPurchaseImage.setIcon(image);
+                    frmImage.setVisible(true);
+                    
+                } else {
+                    errorDialogResult.showMessage("ERROR", "Seleccione previamente una factura para ver su foto.");
+                }                
             }
             
         };
+        
 
         scroll.setVerticalScrollBar(new ScrollBar());
         scroll.getVerticalScrollBar().setBackground(Color.white);
@@ -150,17 +160,12 @@ public class FrmInvoices extends javax.swing.JPanel {
         tblInvoices.getColumnModel().getColumn(0).setResizable(false);
     }
 
+    private Image byteToImage(byte[] image){
+        Image img=new ImageIcon(image).getImage();
+        return img;
+    }
     //Método para limpiar la tabla
     private void clearRowsInTable() {
-//        try {
-//            DefaultTableModel modelo = (DefaultTableModel) tblInvoices.getModel();
-//            int filas = tblInvoices.getRowCount();
-//            for (int i = 0; filas > i; i++) {
-//                modelo.removeRow(0);
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
-//        }
         try {
             tblInvoices.selectAll();
             DefaultTableModel modelo = (DefaultTableModel) tblInvoices.getModel();
@@ -197,7 +202,7 @@ public class FrmInvoices extends javax.swing.JPanel {
             }
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Formato de busqueda no valido" + ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            errorDialogResult.showMessage("Error","Formato de busqueda no valido" + ex.toString());
         }
     }
 
@@ -238,15 +243,12 @@ public class FrmInvoices extends javax.swing.JPanel {
 
     private void add_rows_to_table(InvoicesVM invM, IInvoicesEventAction eventAction) {
 
-        //Date fech = new Date(formatter.format(invM.getBuyDate()));
         tblInvoices.addRow(new InvoicesVM(
                 invM.getId(),
                 invM.getTotalAmount(),
                 invM.getBuyDate(),
-                //invM.getPicture(),
                 invM.getPicture(),
                 invM.getName()
-        //name
         ).toRowTable(eventAction));
 
     }
@@ -310,16 +312,9 @@ public class FrmInvoices extends javax.swing.JPanel {
                 "Id", "Proveedor", "Total", "Fecha de compra", "Picture", "Acciones"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Byte.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, true
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -351,14 +346,13 @@ public class FrmInvoices extends javax.swing.JPanel {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
+                    .addComponent(scroll)
                     .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblProviders))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addComponent(lblProviders)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
         pnlTableLayout.setVerticalGroup(
@@ -376,7 +370,7 @@ public class FrmInvoices extends javax.swing.JPanel {
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)))
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -387,7 +381,7 @@ public class FrmInvoices extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE))
+                    .addComponent(pnlContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(

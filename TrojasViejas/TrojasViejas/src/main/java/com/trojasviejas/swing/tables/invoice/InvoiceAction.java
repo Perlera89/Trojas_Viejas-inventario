@@ -9,9 +9,6 @@ public class InvoiceAction extends javax.swing.JPanel {
 
     public InvoiceAction(InvoiceActionModel data) {
         initComponents();
-        btnEdit.addActionListener((ActionEvent ae) -> {
-            data.getEvent().update(data.getInvoice());
-        });
 
         btnDelete.addActionListener((ActionEvent ae) -> {
             data.getEvent().delete(data.getInvoice());
@@ -22,7 +19,7 @@ public class InvoiceAction extends javax.swing.JPanel {
         });
         
         btnImage.addActionListener((ActionEvent ae) -> {
-            data.getEvent().view(data.getInvoice());
+            data.getEvent().image(data.getInvoice());
         });
     }
 

@@ -25,7 +25,7 @@
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="pnlTable" max="32767" attributes="0"/>
-                  <Component id="pnlContainer" pref="880" max="32767" attributes="0"/>
+                  <Component id="pnlContainer" pref="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
           </Group>
@@ -97,15 +97,14 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="scroll" pref="840" max="32767" attributes="0"/>
+                      <Component id="scroll" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="btnNew" min="-2" pref="124" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="btnNew" min="-2" pref="124" max="-2" attributes="0"/>
+                              <Component id="lblProviders" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnRefresh" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="lblProviders" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -130,7 +129,7 @@
                       </Group>
                   </Group>
                   <Component id="scroll" min="-2" pref="281" max="-2" attributes="0"/>
-                  <EmptySpace pref="18" max="32767" attributes="0"/>
+                  <EmptySpace pref="14" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -188,7 +187,7 @@
                     <Column editable="false" title="Proveedor" type="java.lang.Object"/>
                     <Column editable="false" title="Total" type="java.lang.Object"/>
                     <Column editable="false" title="Fecha de compra" type="java.lang.Object"/>
-                    <Column editable="false" title="Picture" type="java.lang.Byte"/>
+                    <Column editable="false" title="Picture" type="java.lang.Object"/>
                     <Column editable="true" title="Acciones" type="java.lang.Object"/>
                   </Table>
                 </Property>

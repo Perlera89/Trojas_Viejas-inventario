@@ -1,6 +1,7 @@
 package com.trojasviejas.demo.form;
 
-import com.trojasviejas.component.login.MessageDialog;
+import com.trojasviejas.component.login.MessageSuccessDialog;
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.entity.ProviderModel;
@@ -25,6 +26,9 @@ public class FrmProviders extends javax.swing.JPanel {
         initCard();
         initTableData();
     }
+    //mensajes personalizados
+    MessageErrorDialog errotDialogResult = new MessageErrorDialog(new FrmLogin());
+    MessageSuccessDialog successDialogResult = new MessageSuccessDialog(new FrmLogin());
 
     private void initCard() {
         pnlCardProvider.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Proveedores", contador_provider + ""));
@@ -92,17 +96,17 @@ public class FrmProviders extends javax.swing.JPanel {
                     WindowHome.main(WindowType.PROVIDER, formulario, false);
                     repaint();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Para actualizar un registro debe seleccionar uno previamente", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+                    errotDialogResult.showMessage("Advertencia","Para actualizar un registro debe seleccionar uno previamente");
                 }
             }
 
             @Override
             public void delete(ProviderModel entity) {
                 if (tblProviders.getSelectedRowCount() > 0) {
-                    MessageDialog dialogResult = new MessageDialog(new FrmLogin());
+                    MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
                     dialogResult.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el proveedor " + entity.getName() + "?");
 
-                    if (dialogResult.getMessageType() == MessageDialog.MessageType.OK) {
+                    if (dialogResult.getMessageType() == MessageErrorDialog.MessageType.OK) {
 
                         ProviderDao prvD = new ProviderDao();
 //                    ArrayList<Object> selectedtRow = new ArrayList<>();

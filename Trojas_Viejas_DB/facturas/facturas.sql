@@ -64,41 +64,34 @@ BEGIN
 END$$
 
 /*Otros*/
-/*Filtar las facturas por año*/
+
+/*Filtar las facturas por year y mes y año*/
 Delimiter $$
-CREATE PROCEDURE sp_filter_by_year_invoices(
-	search_string INT
+CREATE PROCEDURE sp_filter_invoices(
+	p_month VARCHAR(20),
+    years INT
 )
 BEGIN
-	SELECT a.invc_id, b.prov_name, a.invc_total_amount, a.invc_buy_date, a.invc_picture FROM invoices AS a
-		INNER JOIN providers AS b ON a.invc_prov_id_fk = b.prov_id
-    WHERE 
-    YEAR(a.invc_buy_date) = search_string;
+		IF(p_month = 'NULL')
+		THEN
+			SET lc_time_names = 'es_SV';
+			SELECT a.invc_id, b.prov_name, a.invc_total_amount, a.invc_buy_date, a.invc_picture FROM invoices AS a
+				INNER JOIN providers AS b ON a.invc_prov_id_fk = b.prov_id
+			WHERE 
+			YEAR(a.invc_buy_date) = years
+            ORDER BY invc_id;
+		ELSEIF(p_month != 'NULL')
+		THEN
+			SET lc_time_names = 'es_SV';
+			SELECT a.invc_id, b.prov_name, a.invc_total_amount, a.invc_buy_date, a.invc_picture FROM invoices AS a
+				INNER JOIN providers AS b ON a.invc_prov_id_fk = b.prov_id
+			WHERE 
+			YEAR(a.invc_buy_date) = years AND monthname(a.invc_buy_date) = p_month
+			ORDER BY invc_id;
+        END IF;
 END$$
-
-/*Filtar las facturas por año*/
-Delimiter $$
-CREATE PROCEDURE sp_find_months_in_year_invoices(
-	search_string INT
-)
-BEGIN
-	SET lc_time_names = 'es_SV';
-	SELECT DISTINCT monthname(a.invc_buy_date), MONTH(a.invc_buy_date) FROM invoices AS a
-    WHERE YEAR(a.invc_buy_date) = search_string
-    ORDER BY MONTH(a.invc_buy_date);
-END$$
-
-/*Filtar las facturas por mes y año*/
-Delimiter $$
-CREATE PROCEDURE sp_filter_by_year_and_month_invoices(
-	years INT,
-    months VARCHAR(20)
-)
-BEGIN
-	SET lc_time_names = 'es_SV';
-	SELECT a.invc_id, b.prov_name, a.invc_total_amount, a.invc_buy_date, a.invc_picture FROM invoices AS a
-		INNER JOIN providers AS b ON a.invc_prov_id_fk = b.prov_id
-    WHERE 
-    YEAR(a.invc_buy_date) = years AND monthname(a.invc_buy_date) = months;
-END$$
-
+        
+        
+        
+        
+        

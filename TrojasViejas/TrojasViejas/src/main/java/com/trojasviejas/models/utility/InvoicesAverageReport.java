@@ -9,22 +9,25 @@ package com.trojasviejas.models.utility;
  * @author Willian
  */
 public class InvoicesAverageReport {
-    private int amoutPurchases;
+    private int amountPurchases;
     private int amountItems;
     private double value;
     
-    public InvoicesAverageReport(int amoutPurchases, int amountItems, double value) {
-        this.amoutPurchases = amoutPurchases;
+    public InvoicesAverageReport(){
+        
+    }
+    public InvoicesAverageReport(int amountPurchases, int amountItems, double value) {
+        this.amountPurchases = amountPurchases;
         this.amountItems = amountItems;
         this.value = value;
     }
 
-    public int getAmoutPurchases() {
-        return amoutPurchases;
+    public int getAmountPurchases() {
+        return amountPurchases;
     }
 
-    public void setAmoutPurchases(int amoutPurchases) {
-        this.amoutPurchases = amoutPurchases;
+    public void setAmountPurchases(int amountPurchases) {
+        this.amountPurchases = amountPurchases;
     }
 
     public int getAmountItems() {

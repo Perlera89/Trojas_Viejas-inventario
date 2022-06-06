@@ -1,16 +1,15 @@
 package com.trojasviejas.models.utility;
 
 import com.trojasviejas.component.main.event.*;
-import com.trojasviejas.models.entity.InvoicesModel;
 import com.trojasviejas.models.viewmodel.InvoicesVM;
 
 public class InvoiceActionModel {
 
-    public InvoicesModel getInvoice() {
+    public InvoicesVM getInvoice() {
         return invoice;
     }
 
-    public void setInvoice(InvoicesModel invoice) {
+    public void setInvoice(InvoicesVM invoice) {
         this.invoice = invoice;
     }
 
@@ -22,7 +21,7 @@ public class InvoiceActionModel {
         this.event = event;
     }
 
-    public InvoiceActionModel(InvoicesModel invoice, IInvoicesEventAction event) {
+    public InvoiceActionModel(InvoicesVM invoice, IInvoicesEventAction event) {
         this.invoice = invoice;
         this.event = event;
     }
@@ -30,6 +29,6 @@ public class InvoiceActionModel {
     public InvoiceActionModel() {
     }
 
-    private InvoicesModel invoice;
+    private InvoicesVM invoice;
     private IInvoicesEventAction event;
 }

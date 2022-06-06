@@ -43,8 +43,9 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
             @Override
             public void selected(int index) {
                 if(index == 0){
+                    home.reloadData();
                     setForm(home);
-                     panelHeader1.txtSearch.setToolTipText("Busrcar aquí...");                   
+                     panelHeader1.txtSearch.setToolTipText("Buscar aquí...");                   
                     //indice del dashboard
                     indexForm = 0;
                 } else if(index == 1){

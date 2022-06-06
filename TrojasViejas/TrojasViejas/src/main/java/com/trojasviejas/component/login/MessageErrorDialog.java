@@ -115,6 +115,7 @@ public class MessageErrorDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        setPreferredSize(null);
 
         backgroundDialog1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
@@ -152,6 +153,7 @@ public class MessageErrorDialog extends javax.swing.JDialog {
         lblContent.setForeground(new java.awt.Color(76, 76, 76));
         lblContent.setText("Contenido\ndel mensaje\n");
         lblContent.setFocusable(false);
+        lblContent.setPreferredSize(new java.awt.Dimension(97, 100));
 
         javax.swing.GroupLayout backgroundDialog1Layout = new javax.swing.GroupLayout(backgroundDialog1);
         backgroundDialog1.setLayout(backgroundDialog1Layout);
@@ -176,11 +178,11 @@ public class MessageErrorDialog extends javax.swing.JDialog {
             backgroundDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundDialog1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(lblTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(lblContent, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addComponent(lblContent, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(backgroundDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))

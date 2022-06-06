@@ -19,18 +19,18 @@ public class DetailTable extends JTable {
         setShowHorizontalLines(true);
         setGridColor(new Color(230, 230, 230));
         setRowHeight(40);
-        getTableHeader().setReorderingAllowed(false);
+        getTableHeader().setReorderingAllowed(false);     
         getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                 TableHeader header = new TableHeader(o + "");
-                if (i1 == 4) {
+                if (i1 == 5) {
                     header.setHorizontalAlignment(JLabel.CENTER);
                 }
                 return header;
             }
-        });
-        setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        });      
+        setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {           
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean selected, boolean bln1, int i, int i1) {
                 Component com = super.getTableCellRendererComponent(jtable, o, selected, bln1, i, i1);

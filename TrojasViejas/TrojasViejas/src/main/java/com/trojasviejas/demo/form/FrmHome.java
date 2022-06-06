@@ -156,7 +156,7 @@ public class FrmHome extends javax.swing.JPanel {
         //se puede obtener un promedio
         if (amountYears > 0) {
             for (var i : averages) {
-                purchases += i.getAmoutPurchases();
+                purchases += i.getAmountPurchases();
                 items += i.getAmountItems();
                 value += i.getValue();
             }
@@ -203,7 +203,6 @@ public class FrmHome extends javax.swing.JPanel {
     }
     
     private void setDatatoChartOne(){
-
         for (var i : dashboardDao.getDataCharI()) {
           barChart.addData(new ChartModel(
                   i.getMonth().toString(), 
@@ -216,7 +215,6 @@ public class FrmHome extends javax.swing.JPanel {
         
     }
     private void setDatatoChartTwo(){
-
         for (var i : dashboardDao.getDataCharII()) {
           lineChart.addData(new ChartModel(
                   i.getMonth().toString(), 
@@ -227,6 +225,12 @@ public class FrmHome extends javax.swing.JPanel {
         }
     }
 
+    public void reloadData(){
+       InitGaugeCharts(year);
+       barChart.start();
+       lineChart.start();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

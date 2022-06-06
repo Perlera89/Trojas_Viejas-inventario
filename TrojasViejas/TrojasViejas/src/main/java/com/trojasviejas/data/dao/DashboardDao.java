@@ -54,12 +54,19 @@ public class DashboardDao {
             result = query.executeQuery();
             
             //agregando los datos al array
+            PurchaseReport purchase = new PurchaseReport();
+            int amountPurchases = 0;
+            int amountItems = 0;
+            double value = 0.0;
             while(result.next()){
-                report.add(new PurchaseReport(
-                        result.getInt("amount_purshases"), 
-                        result.getInt("amount_items"),
-                        result.getDouble("value")));     
-            }     
+                amountPurchases += result.getInt("amount_purshases");
+                amountItems += result.getInt("amount_items");
+                value += result.getDouble("value");
+            }
+            purchase.setAmountPurchases(amountPurchases);
+            purchase.setAmountItems(amountItems);
+            purchase.setValue(value);
+            report.add(purchase);
             
         } catch (SQLException e) {
                         JOptionPane.showMessageDialog(
@@ -98,22 +105,26 @@ public class DashboardDao {
             
             //obtendremos los promedios por cada año  en donde hay facturas
             for (Integer i : years) {
-                System.out.println("Year: "+i);
                 //buscando los promedios por años
                 _query = connection.prepareCall("{call sp_report_purchases(?,?)}");
                 _query.setString(1, "NULL");
                 _query.setInt(2, i);
                 _result = _query.executeQuery();
-                while (_result.next()) {                    
-                    averages.add(new InvoicesAverageReport(
-                            //agregando los promedios por año al array
-                            _result.getInt("amount_purshases"),
-                            _result.getInt("amount_items"),
-                            _result.getDouble("value")  
-                    ));
-
-                }
                 
+                InvoicesAverageReport purchase = new InvoicesAverageReport();
+                int amountPurchases = 0;
+                int amountItems = 0;
+                double value = 0.0;
+                while(_result.next()){
+                    amountPurchases += _result.getInt("amount_purshases");
+                    amountItems += _result.getInt("amount_items");
+                    value += _result.getDouble("value");
+                }
+                purchase.setAmountPurchases(amountPurchases);
+                purchase.setAmountItems(amountItems);
+                purchase.setValue(value);
+                averages.add(purchase);
+             
                 //cerrando conexiones
                 Conexion.close(_result);
                 Conexion.close(_query);
@@ -341,14 +352,17 @@ public class DashboardDao {
             
             report.setMonth(month);
             //agregando los datos al array
+            int amountPurchases = 0;
+            int amountItems = 0;
+            double value = 0.0;
             while(result.next()){
-                    report.setAmountPurchases(result.getInt("amount_purshases"));
-                     report.setAmountItems(result.getInt("amount_items"));
-                     report.setValue(result.getDouble("value"));
-   
-            }   
-            
-        
+                amountPurchases += result.getInt("amount_purshases");
+                amountItems += result.getInt("amount_items");
+                value += result.getDouble("value");
+            }
+            report.setAmountPurchases(amountPurchases);
+            report.setAmountItems(amountItems);
+            report.setValue(value);      
             
         } catch (SQLException e) {
                         JOptionPane.showMessageDialog(

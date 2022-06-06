@@ -193,8 +193,6 @@ public class InvoicesDao {
             query.setInt(4, invM.getFkProv());
             query.execute();
 
-            JOptionPane.showMessageDialog(null, "Agregado exitosamente.");
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se ha podido agregar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         } finally {

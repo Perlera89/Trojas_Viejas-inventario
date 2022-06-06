@@ -21,7 +21,7 @@ public class InvoicesTable extends JTable {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                 TableHeader header = new TableHeader(o + "");
-                if (i1 == 4) {
+                if (i1 == 5) {
                     header.setHorizontalAlignment(JLabel.CENTER);
                 }
                 return header;
@@ -57,7 +57,7 @@ public class InvoicesTable extends JTable {
 
     @Override
     public TableCellEditor getCellEditor(int row, int col) {
-        if (col == 4) {
+        if (col == 5) {
             return new InvoiceCellAction();
         } else {
             return super.getCellEditor(row, col);

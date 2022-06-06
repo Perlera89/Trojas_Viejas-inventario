@@ -25,7 +25,7 @@ public class InvoiceDetailsDao {
     //variable para establecer una conexion a la db
     Connection connection = null;
     
-    public ArrayList<InvoiceDetailsVM> list(int idFactura){
+    public ArrayList<InvoiceDetailsVM> list(int idInvoice){
        
         ArrayList<InvoiceDetailsVM> invoiceDetalis = null;
         CallableStatement query = null;
@@ -36,7 +36,7 @@ public class InvoiceDetailsDao {
             invoiceDetalis = new ArrayList<>();
             //preparando la consulta
             query = connection.prepareCall("{call sp_s_invoice_details(?)}");
-            query.setInt(1, idFactura);
+            query.setInt(1, idInvoice);
             //ejecutando la consulta y almacenando el resultado
             result = query.executeQuery();
 

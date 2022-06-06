@@ -9,25 +9,23 @@ BEGIN
 		IF(p_month = 'NULL')
 		THEN
 			SELECT 
-					COUNT(DISTINCT d.invc_id)`amount_purshases`,
-					SUM(b.dtl_amount)`amount_items`,
-					SUM(d.invc_total_amount)`value`
-			FROM inventories AS a
-				INNER JOIN invoice_details AS b ON a.inventory_invc_dtl_id_fk = b.dtl_id
-				INNER JOIN items AS c ON b.dtl_item_id_fk = c.item_id
-				INNER JOIN invoices AS d ON b.dtl_invc_id_fk = d.invc_id
-			WHERE YEAR(d.invc_buy_date) = p_year;  
+					COUNT(DISTINCT b.invc_id)`amount_purshases`,
+					SUM(a.dtl_amount)`amount_items`,
+					b.invc_total_amount`value`
+			FROM invoice_details AS a
+				INNER JOIN invoices AS b ON a.dtl_invc_id_fk = b.invc_id
+			WHERE YEAR(b.invc_buy_date) = p_year
+            GROUP BY b.invc_id; 
 		ELSEIF(p_month != 'NULL')
 		THEN
 			SELECT 
-					COUNT(DISTINCT d.invc_id)`amount_purshases`,
-					SUM(b.dtl_amount)`amount_items`,
-					SUM(d.invc_total_amount)`value`
-			FROM inventories AS a
-				INNER JOIN invoice_details AS b ON a.inventory_invc_dtl_id_fk = b.dtl_id
-				INNER JOIN items AS c ON b.dtl_item_id_fk = c.item_id
-				INNER JOIN invoices AS d ON b.dtl_invc_id_fk = d.invc_id
-			WHERE YEAR(d.invc_buy_date) = p_year AND MONTH(d.invc_buy_date) = CAST(p_month AS REAL);
+					COUNT(DISTINCT b.invc_id)`amount_purshases`,
+					SUM(a.dtl_amount)`amount_items`,
+					b.invc_total_amount`value`
+			FROM invoice_details AS a
+				INNER JOIN invoices AS b ON a.dtl_invc_id_fk = b.invc_id
+			WHERE YEAR(b.invc_buy_date) = p_year AND MONTH(b.invc_buy_date) = CAST(p_month AS REAL)
+            GROUP BY b.invc_id; 
 		END IF;
 END$$
 
