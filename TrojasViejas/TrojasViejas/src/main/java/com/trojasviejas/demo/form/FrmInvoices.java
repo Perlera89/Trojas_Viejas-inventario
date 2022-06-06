@@ -117,17 +117,22 @@ public class FrmInvoices extends javax.swing.JPanel {
             public void image(InvoicesVM entity) {
                 int indexRow;
                 if (tblInvoices.getSelectedRowCount() > 0) {
-                    //obtenemos el id de la fila seleccionada
-                    indexRow = tblInvoices.getSelectedRow();
-                    
-                    byte[] img = (byte[])tblInvoices.getValueAt(indexRow, 4);
-                    //conviertiendo los bytes en imagen, y la imagen en IconImagen
-                    ImageIcon image = new ImageIcon(byteToImage(img));
-                    FrmImage frmImage= new FrmImage();
-                    //ImageIcon mIcono = new ImageIcon(img.getScaledInstance(frm.getWidth(), lblImagen.getHeight(), 0));
+                        //obtenemos el id de la fila seleccionada
+                        indexRow = tblInvoices.getSelectedRow();
+                        
+                    //comprobando que la factura tenga foto (no hay: donante, hay: comercial)
+                    if (tblInvoices.getValueAt(indexRow, 4) != null) {
+                        byte[] img = (byte[]) tblInvoices.getValueAt(indexRow, 4);
+                        //conviertiendo los bytes en imagen, y la imagen en IconImagen
+                        ImageIcon image = new ImageIcon(byteToImage(img));
+                        FrmImage frmImage = new FrmImage();
+                        //ImageIcon mIcono = new ImageIcon(img.getScaledInstance(frm.getWidth(), lblImagen.getHeight(), 0));
 
-                    frmImage.lblPurchaseImage.setIcon(image);
-                    frmImage.setVisible(true);
+                        frmImage.lblPurchaseImage.setIcon(image);
+                        frmImage.setVisible(true);                       
+                    }else{
+                        errorDialogResult.showMessage("ERROR", "Las facturas con un proveedor tipo DONANTE no tienen foto.");                       
+                    }
                     
                 } else {
                     errorDialogResult.showMessage("ERROR", "Seleccione previamente una factura para ver su foto.");

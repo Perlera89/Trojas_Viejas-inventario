@@ -31,7 +31,6 @@ public class WindowInvoice extends javax.swing.JPanel {
 
     public FrmInvoices frmInvoice;
     public WindowHome home;
-    public int id;
 
     public WindowInvoice() {
         setOpaque(false);
@@ -73,7 +72,7 @@ public class WindowInvoice extends javax.swing.JPanel {
             ids[index] = i.getId();
             index++;
         }
-        cbbProvider.setSelectedIndex(-1);
+        cbbProvider.setSelectedIndex(0);
         
     }
 
@@ -97,9 +96,9 @@ public class WindowInvoice extends javax.swing.JPanel {
         cbbProvider.setForeground(new java.awt.Color(100, 100, 100));
         cbbProvider.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbbProvider.setLabeText("Proveedor");
-        cbbProvider.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbProviderActionPerformed(evt);
+        cbbProvider.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbProviderItemStateChanged(evt);
             }
         });
 
@@ -189,8 +188,8 @@ public class WindowInvoice extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cbbProvider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar))
+                            .addComponent(btnBuscar)
+                            .addComponent(cbbProvider, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(20, 20, 20)
                         .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblImagen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -256,34 +255,16 @@ public class WindowInvoice extends javax.swing.JPanel {
     }//GEN-LAST:event_lblRutaActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        //verificando que se haya eligido un proveedor
-        if (cbbProvider.getSelectedItem() != null
-             && cbbProvider.getSelectedIndex()!=-1
-                ) {
-            //verificando que las campos de total, ruta de la imagen y la fecha no esten vacios
-            if (!txtTotal.getText().isBlank() && !txtTotal.getText().isEmpty()
-                && txtDate.getDate() != null && !lblRuta.getText().equals("  Agrega una imagen")) {
-                try {
-                        FrmDetails detailsForm = new FrmDetails(0);
-                        detailsForm.dateInvoice = txtDate.getDate();
-                        detailsForm.lblBuyDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(txtDate.getDate()));
-                        detailsForm.lblPrice.setText(txtTotal.getText());
-                        detailsForm.rutaByte = rutaByte;
-                        detailsForm.idProvider = ids[cbbProvider.getSelectedIndex()];
-                        detailsForm.lblProvider.setText(cbbProvider.getSelectedItem().toString());
-                        detailsForm.formInvoices = frmInvoice;
-                        detailsForm.setVisible(true);
-                        cerrarVentana();
-                } catch (Exception e) {
-                    errorMessage.showMessage("ERROR", "Valor no válido. Verifique el total ingresado."+e.toString());
-                }          
+               if (cbbProvider.getSelectedItem() != null && cbbProvider.getSelectedIndex() >= 0) {
+            //verificando si es un proveedor de tipo donador
+            if (getProviderType(cbbProvider.getSelectedItem().toString()).equals(" DONANTE")) {
+                //factura especial para donaciones
+                saveDonorTypeInvoice();
             }else{
-                errorMessage.showMessage("ERROR", "Campos de fecha, imagen y total nulos o vacios.");
-            }         
-        }else{
-            errorMessage.showMessage("ERROR", "Campo del proveedor nulo o vacío. Elija un proveedor.");
+                //factura comercial
+                saveComercialTypeInvoce();
+            }
         }
-
         
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -296,14 +277,100 @@ public class WindowInvoice extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        CargarComboBox(cbbProvider.getSelectedItem().toString());
-        System.out.println(cbbProvider.getSelectedIndex());
+        if (cbbProvider.getSelectedItem() != null) {
+            CargarComboBox(cbbProvider.getSelectedItem().toString());
+        }else{
+            errorMessage.showMessage("ERROR", "Nombre del proveedor nulo o vacío. Ingrese un nombre para realizar la busqueda.");
+        }
+        //System.out.println(cbbProvider.getSelectedIndex());
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void cbbProviderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbProviderActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbbProviderActionPerformed
+    private void cbbProviderItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbProviderItemStateChanged
+        //verificando que se haya seleccionado un proveedor del combo
+        if (cbbProvider.getSelectedItem() != null && cbbProvider.getSelectedIndex() >= 0) {
+            //verificando si es un proveedor de tipo donador
+            if (getProviderType(cbbProvider.getSelectedItem().toString()).equals(" DONANTE")) {
+                txtTotal.setEnabled(false);
+                txtTotal.setText("0.00");
+                lblRuta.setEnabled(false);
+                lblRuta.setText(" Foto de factura no requerida");
+            }else{
+                txtTotal.setEnabled(true);
+                lblRuta.setEnabled(true);
+                lblRuta.setText("  Agrega una imagen");
+            }
+        }
+    }//GEN-LAST:event_cbbProviderItemStateChanged
 
+    //retorna el tipo de proveedor concantenado al final del nombre del proveedor
+    private String getProviderType(String provider){
+        String _provider[] = provider.split(",");
+        return _provider[1];
+    }
+    
+    private void saveComercialTypeInvoce(){
+        //verificando que se haya eligido un proveedor
+        if (cbbProvider.getSelectedItem() != null
+             && cbbProvider.getSelectedIndex()!=-1
+                ) {
+            //verificando que las campos de total, ruta de la imagen y la fecha no esten vacios
+            if (!txtTotal.getText().isBlank() && !txtTotal.getText().isEmpty()
+                && txtDate.getDate() != null && !lblRuta.getText().equals("  Agrega una imagen")) {
+                try {
+                    FrmDetails detailsForm = new FrmDetails(0);
+                    detailsForm.dateInvoice = txtDate.getDate();
+                    detailsForm.lblBuyDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(txtDate.getDate()));
+
+                    //verificando que el total sea mayor a cero
+                    if (Double.parseDouble(txtTotal.getText()) > 0) {
+                        detailsForm.lblPrice.setText(txtTotal.getText());
+                        detailsForm.rutaByte = rutaByte;
+                        detailsForm.idProvider = ids[cbbProvider.getSelectedIndex()];
+                        detailsForm.lblProvider.setText(cbbProvider.getSelectedItem().toString());
+                        detailsForm.formInvoices = frmInvoice;
+                        detailsForm.setVisible(true);
+                        cerrarVentana();
+                    }else{
+                        errorMessage.showMessage("ERROR", "El total de la factura no puede ser cero. Ingrese una cantidad válida.");
+                    }
+
+                } catch (Exception e) {
+                    errorMessage.showMessage("ERROR", "Valor no válido. Verifique el total ingresado."+e.toString());
+                }          
+            }else{
+                errorMessage.showMessage("ERROR", "Campos de fecha, imagen y total nulos o vacíos.");
+            }         
+        }else{
+            errorMessage.showMessage("ERROR", "Campo del proveedor nulo o vacío. Elija un proveedor.");
+        }
+    }
+    
+    private void saveDonorTypeInvoice(){
+         //verificando que se haya eligido un proveedor
+        if (cbbProvider.getSelectedItem() != null
+             && cbbProvider.getSelectedIndex()!=-1
+                ) {
+            //verificando que lel campo de la fecha no esten vacio
+            if (txtDate.getDate() != null && lblRuta.getText().equals(" Foto de factura no requerida")) {
+                        FrmDetails detailsForm = new FrmDetails(0);
+                        detailsForm.dateInvoice = txtDate.getDate();
+                        detailsForm.lblBuyDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(txtDate.getDate()));
+                        detailsForm.lblPrice.setText(txtTotal.getText());
+                        detailsForm.rutaByte = rutaByte;
+                        detailsForm.idProvider = ids[cbbProvider.getSelectedIndex()];
+                        detailsForm.lblProvider.setText(cbbProvider.getSelectedItem().toString());
+                        detailsForm.formInvoices = frmInvoice;
+                        detailsForm.txtCU.setText("0.00");
+                        detailsForm.txtCU.setEditable(false);
+                        detailsForm.setVisible(true);
+                        cerrarVentana();        
+            }else{
+                errorMessage.showMessage("ERROR", "Campos de fecha nulo o vacío.");
+            }         
+        }else{
+            errorMessage.showMessage("ERROR", "Campo del proveedor nulo o vacío. Elija un proveedor.");
+        }      
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.buttons.Button btnAdd;

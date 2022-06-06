@@ -315,7 +315,8 @@ Delimiter $$
 CREATE PROCEDURE sp_s_invoices()
 BEGIN
 	SELECT a.invc_id, b.prov_name, a.invc_total_amount, a.invc_buy_date, a.invc_picture FROM invoices AS a
-    INNER JOIN providers AS b ON a.invc_prov_id_fk = b.prov_id; 
+    INNER JOIN providers AS b ON a.invc_prov_id_fk = b.prov_id
+        ORDER BY invc_id;  
 END$$
 
 /*Otros*/

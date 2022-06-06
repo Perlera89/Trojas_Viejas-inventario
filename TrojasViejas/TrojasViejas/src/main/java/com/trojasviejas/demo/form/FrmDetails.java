@@ -523,11 +523,11 @@ public class FrmDetails extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -552,7 +552,11 @@ public class FrmDetails extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         if (indexRowSelected == -1) {
-           addRowToTable(); 
+           addRowToTable();
+           //si es una factura especial(donacion) es valor por defecto del c/u es 0.00
+            if (getProviderType(lblProvider.getText()).equals(" DONANTE")) {
+                txtCU.setText("0.00");
+            }
         }else{
             errorMessage.showMessage("ACCIÓN INVÁLIDA", "No puede agregar más detalles mientras se esta actualizando un registro");
         }
@@ -591,6 +595,11 @@ public class FrmDetails extends javax.swing.JFrame {
             
             //colocando el indicador de la fila seleccionada como no seleccionada luego de haber seleccionado
             indexRowSelected = -1;
+            
+            //si es una factura especial para donandor entoces el c/u es por defecto 0.0
+            if (getProviderType(lblProvider.getText()).equals(" DONANTE")) {
+                txtCU.setText("0.00");
+            }
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
@@ -674,7 +683,7 @@ public class FrmDetails extends javax.swing.JFrame {
         return invoiceDao.ListInvoices().get(index).getId();
     }
     
-    private void saveDetails(int idNewInvoice){
+    private void saveDetails(int lastIdInvoice){
         InvoiceDetailsDao detailsDao = new InvoiceDetailsDao();
 
         //indica el indice de la columna que se esta guardando
@@ -686,7 +695,7 @@ public class FrmDetails extends javax.swing.JFrame {
                             (int) detailTable.getValueAt(indexRow, 1),
                             (double) detailTable.getValueAt(indexRow, 3),
                             (int) detailTable.getValueAt(indexRow, 0),
-                            idNewInvoice
+                            lastIdInvoice
                     )
             );
             //aumenta en uno para guardar la fila en el indice siguiente
@@ -787,8 +796,13 @@ public class FrmDetails extends javax.swing.JFrame {
             //aumentando en uno para guardar el otro id en el siguiente indice
             index++;
         }
-        //no debe haber un item seleccionado por defecto 
-        cbbItems.setSelectedIndex(-1);
+
+        if (!items.isEmpty()) {
+            //seleccionando el primer elemento
+          cbbItems.setSelectedIndex(0);
+          //guardando el id del elemento seleccionado
+          idSelected = itemsIDs[cbbItems.getSelectedIndex()];          
+        }
 
     }
     
@@ -827,6 +841,11 @@ public class FrmDetails extends javax.swing.JFrame {
         //si no, es una nueva y todo se muestra con normalidad
     }
     
+    //retorna el tipo de proveedor concantenado al final del nombre del proveedor
+    private String getProviderType(String provider){
+        String _provider[] = provider.split(",");
+        return _provider[1];
+    }
 //    public static void main(int _idInvoice) {
 //        /* Set the Nimbus look and feel */
 //        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -890,7 +909,7 @@ public class FrmDetails extends javax.swing.JFrame {
     private com.trojasviejas.swing.panels.PanelBorder pnlTable1;
     private javax.swing.JScrollPane scrollTable;
     private com.trojasviejas.swing.fields.MyTextField txtAmount;
-    private com.trojasviejas.swing.fields.MyTextField txtCU;
+    public com.trojasviejas.swing.fields.MyTextField txtCU;
     private com.trojasviejas.swing.fields.MyTextField txtItem;
     // End of variables declaration//GEN-END:variables
 }
