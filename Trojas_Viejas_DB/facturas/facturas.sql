@@ -59,9 +59,22 @@ END$$
 Delimiter $$
 CREATE PROCEDURE sp_s_invoices()
 BEGIN
-	SELECT a.invc_id, b.prov_name, a.invc_total_amount, a.invc_buy_date, a.invc_picture FROM invoices AS a
-    INNER JOIN providers AS b ON a.invc_prov_id_fk = b.prov_id
-        ORDER BY invc_id;  
+	SELECT 
+			DISTINCT d.invc_id,
+            e.prov_name,
+            d.invc_total_amount,
+            d.invc_buy_date,
+            d.invc_picture,
+            SUM(b.dtl_amount)`dtl_amount`,
+            SUM(a.inventory_stock)`inventory_stock`
+    FROM inventories AS a
+    INNER JOIN invoice_details AS b ON a.inventory_invc_dtl_id_fk = b.dtl_id
+    INNER JOIN items AS c ON b.dtl_item_id_fk = c.item_id
+    INNER JOIN invoices AS d ON b.dtl_invc_id_fk = d.invc_id
+    INNER JOIN providers AS e ON d.invc_prov_id_fk = e.prov_id
+    
+    GROUP BY invc_id
+    ORDER BY invc_id; 
 END$$
 
 /*Otros*/
@@ -76,18 +89,42 @@ BEGIN
 		IF(p_month = 'NULL')
 		THEN
 			SET lc_time_names = 'es_SV';
-			SELECT a.invc_id, b.prov_name, a.invc_total_amount, a.invc_buy_date, a.invc_picture FROM invoices AS a
-				INNER JOIN providers AS b ON a.invc_prov_id_fk = b.prov_id
+			SELECT 
+					DISTINCT d.invc_id,
+					e.prov_name,
+					d.invc_total_amount,
+					d.invc_buy_date,
+					d.invc_picture,
+					SUM(b.dtl_amount)`dtl_amount`,
+					SUM(a.inventory_stock)`inventory_stock`
+			FROM inventories AS a
+				INNER JOIN invoice_details AS b ON a.inventory_invc_dtl_id_fk = b.dtl_id
+				INNER JOIN items AS c ON b.dtl_item_id_fk = c.item_id
+				INNER JOIN invoices AS d ON b.dtl_invc_id_fk = d.invc_id
+				INNER JOIN providers AS e ON d.invc_prov_id_fk = e.prov_id
 			WHERE 
-			YEAR(a.invc_buy_date) = years
+			YEAR(d.invc_buy_date) = years
+            GROUP BY invc_id
             ORDER BY invc_id;
 		ELSEIF(p_month != 'NULL')
 		THEN
 			SET lc_time_names = 'es_SV';
-			SELECT a.invc_id, b.prov_name, a.invc_total_amount, a.invc_buy_date, a.invc_picture FROM invoices AS a
-				INNER JOIN providers AS b ON a.invc_prov_id_fk = b.prov_id
+			SELECT 
+					DISTINCT d.invc_id,
+					e.prov_name,
+					d.invc_total_amount,
+					d.invc_buy_date,
+					d.invc_picture,
+					SUM(b.dtl_amount)`dtl_amount`,
+					SUM(a.inventory_stock)`inventory_stock`
+			FROM inventories AS a
+				INNER JOIN invoice_details AS b ON a.inventory_invc_dtl_id_fk = b.dtl_id
+				INNER JOIN items AS c ON b.dtl_item_id_fk = c.item_id
+				INNER JOIN invoices AS d ON b.dtl_invc_id_fk = d.invc_id
+				INNER JOIN providers AS e ON d.invc_prov_id_fk = e.prov_id
 			WHERE 
-			YEAR(a.invc_buy_date) = years AND monthname(a.invc_buy_date) = p_month
+			YEAR(d.invc_buy_date) = years AND monthname(d.invc_buy_date) = p_month
+            GROUP BY invc_id
 			ORDER BY invc_id;
         END IF;
 END$$

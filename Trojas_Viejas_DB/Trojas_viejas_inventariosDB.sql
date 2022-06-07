@@ -47,9 +47,10 @@ CREATE TABLE users(
     usr_password VARCHAR(255) NOT NULL,
     usr_verify_pass VARCHAR(255) NOT NULL,
     usr_verify_code VARCHAR(45),
-    usr_status VARCHAR(45)
+    usr_status VARCHAR(45),
     PRIMARY KEY (usr_id)
-);$$
+);
+$$
 
 Delimiter $$
 /*------------------------- ENTIDADES DEBILES---------------------------- */

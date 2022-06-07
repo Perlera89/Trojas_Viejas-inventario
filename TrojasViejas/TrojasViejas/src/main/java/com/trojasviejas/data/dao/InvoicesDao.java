@@ -50,6 +50,8 @@ public class InvoicesDao {
                 invM.setPicture(result.getBytes("invc_picture"));
                 //Solucionar problema con la fk de invoices
                 invM.setName(result.getString("prov_name"));
+                invM.setAmountItems(result.getInt("dtl_amount"));
+                invM.setStock(result.getInt("inventory_stock"));
                 
                 invA.add(invM);
             }
@@ -95,6 +97,8 @@ public class InvoicesDao {
                 invM.setPicture(result.getBytes("invc_picture"));
                 //Solucionar problema con la fk de invoices
                 invM.setName(result.getString("prov_name"));
+                invM.setAmountItems(result.getInt("dtl_amount"));
+                invM.setStock(result.getInt("inventory_stock"));
                 
                 invA.add(invM);
             }
@@ -115,35 +119,41 @@ public class InvoicesDao {
     
     
 
-//    public ArrayList<String> SelectNameProv(String ) {
-//        Connection connection = null;
-//        CallableStatement query = null;
-//        ResultSet result = null;
-//        ArrayList<String> nameA = null;
-//        try {
-//            nameA = new ArrayList<String>();
-//            connection = Conexion.getConnection();
-//            query = connection.prepareCall("select prov_name from Providers");
-//            result = query.executeQuery();
-//
-//            while (result.next()) {
-//                nameA.add(result.getString("prov_name"));
-//            }
-//            return nameA;
-//
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "No se ha podido retornar un proveedor. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-//        } finally {
-//            try {
-//                Conexion.close(query);
-//                Conexion.close(connection);
-//                Conexion.close(result);
-//            } catch (SQLException e) {
-//                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
-//        return null;
-//    }
+    public int getLastIdInvoice() {
+        Connection connection = null;
+        CallableStatement query = null;
+        ResultSet result = null;
+        ArrayList<Integer> ids = null;
+        int id = 0;
+        int index = 0;
+        try {
+            ids = new ArrayList<>();
+            connection = Conexion.getConnection();
+            query = connection.prepareCall("SELECT * FROM invoices;");
+            result = query.executeQuery();
+
+            
+            while (result.next()) {
+                ids.add(result.getInt("invc_id"));
+            }
+            //obtenemos el numero de elementos
+            index = ids.size();
+            //restamos uno para que coincida con el ultimo indice del arreglo y retornamos el id
+            id = ids.get(index - 1);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se ha podido retornar el id de la última factura. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                Conexion.close(query);
+                Conexion.close(connection);
+                Conexion.close(result);
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return id;
+    }
     
     public String SelectNameProvWfk(int id) {
         Connection connection = null;

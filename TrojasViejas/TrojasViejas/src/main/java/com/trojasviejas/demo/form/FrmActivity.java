@@ -22,6 +22,7 @@ public class FrmActivity extends javax.swing.JPanel {
         initComponents();
         initCard();
         initTableData();
+        scroll.setBorder(BorderFactory.createEmptyBorder());
     }
 
     private void initCard() {

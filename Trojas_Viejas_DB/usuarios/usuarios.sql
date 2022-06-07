@@ -42,6 +42,13 @@ BEGIN
 END
 $$
 
+/*mostrar*/
+Delimiter $$
+CREATE PROCEDURE sp_s_users()
+BEGIN
+	SELECT * FROM users;
+END$$
+
 /*Otros*/
 Delimiter $$
 CREATE PROCEDURE sp_s_user(

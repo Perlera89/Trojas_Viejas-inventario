@@ -25,6 +25,7 @@ public class FrmProviders extends javax.swing.JPanel {
         initComponents();
         initCard();
         initTableData();
+        scroll.setBorder(BorderFactory.createEmptyBorder());
     }
     //mensajes personalizados
     MessageErrorDialog errotDialogResult = new MessageErrorDialog(new FrmLogin());

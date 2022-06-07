@@ -30,12 +30,13 @@ public class FrmInvoices extends javax.swing.JPanel {
         initComponents();
         initCard();
         initTableData();
+        scroll.setBorder(BorderFactory.createEmptyBorder());
     }
 
     private void initCard() {
-        pnlCardInvoices.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Facturas", contador_factura + ""));
-        pnlCardItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total Arcticulos", "1"));
-        pnlCardTotal.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total", "$" + contador_total));
+        pnlCardInvoices.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Facturas", amoutPurshases + ""));
+        pnlCardItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total Arcticulos", amount_items + ""));
+        pnlCardTotal.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total", "$" + sumTotals));
 
     }
     //mensajes personalizados
@@ -102,7 +103,7 @@ public class FrmInvoices extends javax.swing.JPanel {
                     //detailsForm.idInvoice = (int)tblInvoices.getValueAt(indexRow, 0);
                     detailsForm.lblProvider.setText(tblInvoices.getValueAt(indexRow, 1).toString());
                     detailsForm.lblPrice.setText(tblInvoices.getValueAt(indexRow, 2).toString());
-                    detailsForm.lblBuyDate.setText(tblInvoices.getValueAt(indexRow, 3).toString());
+                    detailsForm.lblBuyDate.setText(tblInvoices.getValueAt(indexRow, 5).toString());
                     System.out.println((int)tblInvoices.getValueAt(indexRow, 0));
                     
                     detailsForm.formInvoices = form;
@@ -211,15 +212,15 @@ public class FrmInvoices extends javax.swing.JPanel {
         }
     }
 
-    private int contador_factura = 0;
-    //private int  = 0;
-    private double contador_total = 0;
+    int amoutPurshases = 0;
+    int amount_items = 0;
+    double sumTotals = 0;
 
     public void showInvoices(String tipo_filtro, IInvoicesEventAction eventAction) {
         //Reseteando los contadores     
-        contador_factura = 0;
-//        contador_tools = 0;
-        contador_total = 0;
+        amoutPurshases = 0;
+        amount_items = 0;
+        sumTotals = 0;
 
         //Limpiando la tabla
         clearRowsInTable();
@@ -236,9 +237,9 @@ public class FrmInvoices extends javax.swing.JPanel {
             case "ALL" -> {
                 for (var i : invoices) {
                     add_rows_to_table(i, eventAction);
-                    contador_factura++;
-
-                    contador_total += i.getTotalAmount();
+                    amoutPurshases++;
+                    amount_items += i.getAmountItems();
+                    sumTotals += i.getTotalAmount();
                 }
                 initCard();
             }
@@ -253,7 +254,9 @@ public class FrmInvoices extends javax.swing.JPanel {
                 invM.getTotalAmount(),
                 invM.getBuyDate(),
                 invM.getPicture(),
-                invM.getName()
+                invM.getName(),
+                invM.getAmountItems(),
+                invM.getStock()
         ).toRowTable(eventAction));
 
     }
@@ -274,6 +277,7 @@ public class FrmInvoices extends javax.swing.JPanel {
         btnRefresh = new com.trojasviejas.swing.Buttons.ActionButton();
 
         setBackground(new java.awt.Color(232, 241, 242));
+        setPreferredSize(new java.awt.Dimension(916, 664));
 
         pnlContainer.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
@@ -314,11 +318,11 @@ public class FrmInvoices extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Id", "Proveedor", "Total", "Fecha de compra", "Picture", "Acciones"
+                "Id", "Proveedor", "Total", "Artículos", "Existencias", "Fecha de compra", "Picture", "Acciones"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+                false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -327,9 +331,9 @@ public class FrmInvoices extends javax.swing.JPanel {
         });
         scroll.setViewportView(tblInvoices);
         if (tblInvoices.getColumnModel().getColumnCount() > 0) {
-            tblInvoices.getColumnModel().getColumn(4).setMinWidth(0);
-            tblInvoices.getColumnModel().getColumn(4).setPreferredWidth(0);
-            tblInvoices.getColumnModel().getColumn(4).setMaxWidth(0);
+            tblInvoices.getColumnModel().getColumn(6).setMinWidth(0);
+            tblInvoices.getColumnModel().getColumn(6).setPreferredWidth(0);
+            tblInvoices.getColumnModel().getColumn(6).setMaxWidth(0);
         }
 
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refresh.png"))); // NOI18N
@@ -354,9 +358,12 @@ public class FrmInvoices extends javax.swing.JPanel {
                     .addComponent(scroll)
                     .addGroup(pnlTableLayout.createSequentialGroup()
                         .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblProviders))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(pnlTableLayout.createSequentialGroup()
+                                .addComponent(lblProviders)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(pnlTableLayout.createSequentialGroup()
+                                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );

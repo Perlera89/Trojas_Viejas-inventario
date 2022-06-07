@@ -21,6 +21,7 @@ public class FrmItems extends javax.swing.JPanel {
         initComponents();
         initCard(0, 0, 0);
         initTableData();
+        scroll.setBorder(BorderFactory.createEmptyBorder());
     }
       MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
     

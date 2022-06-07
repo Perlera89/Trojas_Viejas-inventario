@@ -28,7 +28,7 @@ public class FrmDetails extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         idInvoice = _idInvoice;
         addOrShowPurchase();
-
+        scrollTable.setBorder(BorderFactory.createEmptyBorder());
     }
 
     //FACTURA==========================
@@ -674,13 +674,8 @@ public class FrmDetails extends javax.swing.JFrame {
     }
     
     private int getLastIdInvoice(){
-        int index;
-       InvoicesDao invoiceDao = new InvoicesDao();       
-        //obtenemos el numero de elementos y restamos uno para que coincida con el ultimo indice del arreglo
-        index = invoiceDao.ListInvoices().size()-1;
-        //obtenenmos el id de la ultima fila y lo retornamos
-
-        return invoiceDao.ListInvoices().get(index).getId();
+        InvoicesDao invoiceDao = new InvoicesDao();       
+        return invoiceDao.getLastIdInvoice();
     }
     
     private void saveDetails(int lastIdInvoice){

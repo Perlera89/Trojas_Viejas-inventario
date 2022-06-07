@@ -14,7 +14,9 @@ BEGIN
 					b.invc_total_amount`value`
 			FROM invoice_details AS a
 				INNER JOIN invoices AS b ON a.dtl_invc_id_fk = b.invc_id
-			WHERE YEAR(b.invc_buy_date) = p_year
+                INNER JOIN providers AS c ON b.invc_prov_id_fk = c.prov_id
+			WHERE YEAR(b.invc_buy_date) = p_year 
+				AND (c.prov_tp+0) = 1
             GROUP BY b.invc_id; 
 		ELSEIF(p_month != 'NULL')
 		THEN
@@ -24,7 +26,10 @@ BEGIN
 					b.invc_total_amount`value`
 			FROM invoice_details AS a
 				INNER JOIN invoices AS b ON a.dtl_invc_id_fk = b.invc_id
-			WHERE YEAR(b.invc_buy_date) = p_year AND MONTH(b.invc_buy_date) = CAST(p_month AS REAL)
+                INNER JOIN providers AS c ON b.invc_prov_id_fk = c.prov_id
+			WHERE YEAR(b.invc_buy_date) = p_year 
+				AND MONTH(b.invc_buy_date) = CAST(p_month AS REAL)
+                AND (c.prov_tp+0) = 1
             GROUP BY b.invc_id; 
 		END IF;
 END$$
@@ -39,7 +44,9 @@ END$$
 		SELECT 
 			DISTINCT YEAR(b.invc_buy_date)`years_with_invoices`
 		FROM invoice_details AS a
-			INNER JOIN invoices AS b ON a.dtl_invc_id_fk = b.invc_id;
+			INNER JOIN invoices AS b ON a.dtl_invc_id_fk = b.invc_id
+            INNER JOIN providers AS c ON b.invc_prov_id_fk = c.prov_id
+            WHERE (c.prov_tp+0) = 1;
     END$$
     
     

@@ -22,6 +22,7 @@ public class FrmInventory extends javax.swing.JPanel {
         initComponents();
         initCard();
         initTableData();
+        scroll.setBorder(BorderFactory.createEmptyBorder());
     }
     MessageErrorDialog message = new MessageErrorDialog(new JFrame());
 

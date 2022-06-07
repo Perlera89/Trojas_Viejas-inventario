@@ -143,6 +143,7 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
         //llama al metodo en la entidad que ejecuta la busqueda
         System.out.println("buscando en invoices: "+ stringSearch);
         //invoices <- objeto de la entidad donde se buscara en metodo que ejecuta la busqueda
+        invoices.filterByStringSearch(stringSearch);
     }
 
     @Override

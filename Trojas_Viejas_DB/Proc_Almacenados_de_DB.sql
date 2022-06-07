@@ -2,53 +2,51 @@ USE trojas_viejas_db;
 
 /*======================usuarios=================================================================================================================================
 
+use trojas_viejas_db;
+
 /*Insertar*/
 Delimiter $$
-CREATE PROCEDURE sp_i_users(
+CREATE PROCEDURE sp_i_user(
 	p_usr_name VARCHAR(45),
     p_usr_password VARCHAR(45),
-    p_usr_verify_pass VARCHAR(45)
+    p_usr_verify_pass VARCHAR(45),
+    p_usr_verify_code VARCHAR(45)
 )
 BEGIN
 
 	INSERT INTO users(
     `usr_name`, 
     `usr_password`, 
-    `usr_verify_pass`
+    `usr_verify_pass`,
+    `usr_verify_code`
     ) 
     VALUES(
     p_usr_name,
     sha1(p_usr_password),
-    sha1(p_usr_verify_pass)
+    sha1(p_usr_verify_pass),
+    p_usr_verify_code
     );
 END
 $$
 
 /*Actualizar*/
 Delimiter $$
-CREATE PROCEDURE sp_u_users(
-	p_usr_id INT,
-	p_usr_name VARCHAR(50),
-    p_usr_password VARCHAR(50)
+CREATE PROCEDURE sp_u_user(
+	p_usr_id int,
+	p_usr_name VARCHAR(45),
+    p_usr_password VARCHAR(45),
+    p_usr_verify_pass VARCHAR(45)
 )
 BEGIN
 	UPDATE users
     SET `usr_name` = p_usr_name, 
-		`usr_password` = sha1(p_usr_password)
-        WHERE (`usr_id` = p_usr_id);
+		`usr_password` = sha1(p_usr_password),
+        `usr_verify_pass` = sha1(p_usr_password)
+        WHERE `usr_id` = usr_id AND `usr_verify_pass` = sha1(p_usr_verify_pass);
 END
 $$
 
-/*Eliminar*/
-Delimiter $$
-CREATE PROCEDURE sp_d_users(
-	p_usr_id INT
-)
-BEGIN
-	DELETE FROM users WHERE (`usr_id` = p_usr_id);
-END$$
-
-/*Mostrar*/
+/*mostrar*/
 Delimiter $$
 CREATE PROCEDURE sp_s_users()
 BEGIN
@@ -58,15 +56,40 @@ END$$
 /*Otros*/
 Delimiter $$
 CREATE PROCEDURE sp_s_user(
-	p_usr_name VARCHAR(50),
-    p_usr_password VARCHAR(255)
+	p_usr_name VARCHAR(45),
+    usr_verify_pass VARCHAR(255)
 )
 BEGIN
 	SELECT usr_id, usr_name, usr_password 
     FROM users 
-    WHERE usr_name = p_usr_name AND usr_password = p_usr_password  LIMIT 1;
+    WHERE usr_name = p_usr_name AND usr_verify_pass = usr_verify_pass AND usr_status = 'Verified'  LIMIT 1;
 END$$
 
+Delimiter $$
+CREATE PROCEDURE sp_s_check_duplicate_user(
+	p_usr_name VARCHAR(45)
+)
+BEGIN
+	SELECT usr_id FROM users WHERE usr_name=p_usr_name AND usr_status='Verified' LIMIT 1;
+END$$
+
+Delimiter $$
+CREATE PROCEDURE sp_u_done_verify(
+	p_usr_id INT
+)
+BEGIN
+	UPDATE users SET usr_verify_pass='', usr_status='Verified' WHERE usr_id=p_usr_id LIMIT 1;
+END$$
+
+Delimiter $$
+CREATE PROCEDURE sp_s_verify_code_user(
+    p_usr_verify_code VARCHAR(45)
+)
+BEGIN
+	SELECT usr_id 
+    FROM users 
+    WHERE usr_verify_code = p_usr_verify_code  LIMIT 1;
+END$$
 
 
 /*==========================proveedores==============================================================================================================*/
@@ -314,9 +337,22 @@ END$$
 Delimiter $$
 CREATE PROCEDURE sp_s_invoices()
 BEGIN
-	SELECT a.invc_id, b.prov_name, a.invc_total_amount, a.invc_buy_date, a.invc_picture FROM invoices AS a
-    INNER JOIN providers AS b ON a.invc_prov_id_fk = b.prov_id
-        ORDER BY invc_id;  
+	SELECT 
+			DISTINCT d.invc_id,
+            e.prov_name,
+            d.invc_total_amount,
+            d.invc_buy_date,
+            d.invc_picture,
+            SUM(b.dtl_amount)`dtl_amount`,
+            SUM(a.inventory_stock)`inventory_stock`
+    FROM inventories AS a
+    INNER JOIN invoice_details AS b ON a.inventory_invc_dtl_id_fk = b.dtl_id
+    INNER JOIN items AS c ON b.dtl_item_id_fk = c.item_id
+    INNER JOIN invoices AS d ON b.dtl_invc_id_fk = d.invc_id
+    INNER JOIN providers AS e ON d.invc_prov_id_fk = e.prov_id
+    
+    GROUP BY invc_id
+    ORDER BY invc_id; 
 END$$
 
 /*Otros*/
@@ -331,18 +367,42 @@ BEGIN
 		IF(p_month = 'NULL')
 		THEN
 			SET lc_time_names = 'es_SV';
-			SELECT a.invc_id, b.prov_name, a.invc_total_amount, a.invc_buy_date, a.invc_picture FROM invoices AS a
-				INNER JOIN providers AS b ON a.invc_prov_id_fk = b.prov_id
+			SELECT 
+					DISTINCT d.invc_id,
+					e.prov_name,
+					d.invc_total_amount,
+					d.invc_buy_date,
+					d.invc_picture,
+					SUM(b.dtl_amount)`dtl_amount`,
+					SUM(a.inventory_stock)`inventory_stock`
+			FROM inventories AS a
+				INNER JOIN invoice_details AS b ON a.inventory_invc_dtl_id_fk = b.dtl_id
+				INNER JOIN items AS c ON b.dtl_item_id_fk = c.item_id
+				INNER JOIN invoices AS d ON b.dtl_invc_id_fk = d.invc_id
+				INNER JOIN providers AS e ON d.invc_prov_id_fk = e.prov_id
 			WHERE 
-			YEAR(a.invc_buy_date) = years
+			YEAR(d.invc_buy_date) = years
+            GROUP BY invc_id
             ORDER BY invc_id;
 		ELSEIF(p_month != 'NULL')
 		THEN
 			SET lc_time_names = 'es_SV';
-			SELECT a.invc_id, b.prov_name, a.invc_total_amount, a.invc_buy_date, a.invc_picture FROM invoices AS a
-				INNER JOIN providers AS b ON a.invc_prov_id_fk = b.prov_id
+			SELECT 
+					DISTINCT d.invc_id,
+					e.prov_name,
+					d.invc_total_amount,
+					d.invc_buy_date,
+					d.invc_picture,
+					SUM(b.dtl_amount)`dtl_amount`,
+					SUM(a.inventory_stock)`inventory_stock`
+			FROM inventories AS a
+				INNER JOIN invoice_details AS b ON a.inventory_invc_dtl_id_fk = b.dtl_id
+				INNER JOIN items AS c ON b.dtl_item_id_fk = c.item_id
+				INNER JOIN invoices AS d ON b.dtl_invc_id_fk = d.invc_id
+				INNER JOIN providers AS e ON d.invc_prov_id_fk = e.prov_id
 			WHERE 
-			YEAR(a.invc_buy_date) = years AND monthname(a.invc_buy_date) = p_month
+			YEAR(d.invc_buy_date) = years AND monthname(d.invc_buy_date) = p_month
+            GROUP BY invc_id
 			ORDER BY invc_id;
         END IF;
 END$$
@@ -731,7 +791,9 @@ BEGIN
 					b.invc_total_amount`value`
 			FROM invoice_details AS a
 				INNER JOIN invoices AS b ON a.dtl_invc_id_fk = b.invc_id
-			WHERE YEAR(b.invc_buy_date) = p_year
+                INNER JOIN providers AS c ON b.invc_prov_id_fk = c.prov_id
+			WHERE YEAR(b.invc_buy_date) = p_year 
+				AND (c.prov_tp+0) = 1
             GROUP BY b.invc_id; 
 		ELSEIF(p_month != 'NULL')
 		THEN
@@ -741,7 +803,10 @@ BEGIN
 					b.invc_total_amount`value`
 			FROM invoice_details AS a
 				INNER JOIN invoices AS b ON a.dtl_invc_id_fk = b.invc_id
-			WHERE YEAR(b.invc_buy_date) = p_year AND MONTH(b.invc_buy_date) = CAST(p_month AS REAL)
+                INNER JOIN providers AS c ON b.invc_prov_id_fk = c.prov_id
+			WHERE YEAR(b.invc_buy_date) = p_year 
+				AND MONTH(b.invc_buy_date) = CAST(p_month AS REAL)
+                AND (c.prov_tp+0) = 1
             GROUP BY b.invc_id; 
 		END IF;
 END$$
@@ -756,7 +821,9 @@ END$$
 		SELECT 
 			DISTINCT YEAR(b.invc_buy_date)`years_with_invoices`
 		FROM invoice_details AS a
-			INNER JOIN invoices AS b ON a.dtl_invc_id_fk = b.invc_id;
+			INNER JOIN invoices AS b ON a.dtl_invc_id_fk = b.invc_id
+            INNER JOIN providers AS c ON b.invc_prov_id_fk = c.prov_id
+            WHERE (c.prov_tp+0) = 1;
     END$$
     
     

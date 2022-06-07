@@ -11,21 +11,26 @@ public class InvoicesVM {
     private String buyDate;
     private byte[] picture;
     private String name;
+
+    private int amountItems;
+    private int stock;
     
 
     public InvoicesVM() {
     }
 
-    public InvoicesVM(int id, Double totalAmount, String buyDate, byte[] picture, String name) {
+    public InvoicesVM(int id, Double totalAmount, String buyDate, byte[] picture, String name, int amountItems, int stock) {
         this.id = id;
         this.totalAmount = totalAmount;
         this.buyDate = buyDate;
         this.picture = picture;
         this.name = name;
+        this.amountItems = amountItems;
+        this.stock = stock;
     }
     
     public Object[] toRowTable(IInvoicesEventAction event) {
-        return new Object[]{id, name, totalAmount, buyDate, picture, new InvoiceActionModel(this, event)};
+        return new Object[]{id, name, totalAmount, amountItems, stock, buyDate, picture, new InvoiceActionModel(this, event)};
     }
 
     public int getId() {
@@ -66,5 +71,21 @@ public class InvoicesVM {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public int getAmountItems() {
+        return amountItems;
+    }
+
+    public void setAmountItems(int amountItems) {
+        this.amountItems = amountItems;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }
