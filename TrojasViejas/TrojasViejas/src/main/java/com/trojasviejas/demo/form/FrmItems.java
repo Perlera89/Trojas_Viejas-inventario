@@ -1,5 +1,8 @@
 package com.trojasviejas.demo.form;
+
 import com.trojasviejas.component.login.MessageErrorDialog;
+import com.trojasviejas.component.login.PanelMessage;
+import com.trojasviejas.component.main.FrmPassword;
 import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.data.dao.ItemDao;
 import static com.trojasviejas.demo.form.FrmMain.getStringSearch;
@@ -10,11 +13,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import com.trojasviejas.models.entity.ItemModel;
+import com.trojasviejas.models.entity.UserModel;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmItems extends javax.swing.JPanel {
+
+    MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
+    private FrmPassword password;
+    FrmItems form = this;
+    private IItemEventAction f_eventAction;
 
     public FrmItems() {
         setOpaque(false);
@@ -23,8 +33,7 @@ public class FrmItems extends javax.swing.JPanel {
         initTableData();
         scroll.setBorder(BorderFactory.createEmptyBorder());
     }
-      MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
-    
+
     private void initCard(int contadorItem, int contador_tools, int contador_accesories) {
         pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Artículos", String.valueOf(contadorItem)));
         pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "HERRAMIENTAS", String.valueOf(contador_tools)));
@@ -34,7 +43,6 @@ public class FrmItems extends javax.swing.JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 showItems("ALL", f_eventAction);
-             
             }
 
         });
@@ -43,7 +51,6 @@ public class FrmItems extends javax.swing.JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 showItems(String.valueOf(CategoryType.HERRAMIENTAS), f_eventAction);
-             
 
             }
 
@@ -52,64 +59,75 @@ public class FrmItems extends javax.swing.JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 showItems(String.valueOf(CategoryType.ACCESORIOS), f_eventAction);
-              
             }
 
         });
     }
-
-    FrmItems form = this;
-    private IItemEventAction f_eventAction;
 
     public void initTableData() {
         //Agregar registro
         IItemEventAction eventAction = new IItemEventAction() {
             @Override
             public void update(ItemModel entity) {
+                if (tblItems.getSelectedRowCount() > 0) {
+                    int index = tblItems.getSelectedRow(); //saber que fila se ha seleccionado
 
-               if (tblItems.getSelectedRowCount()> 0) {
-                 int index = tblItems.getSelectedRow(); //saber que fila se ha seleccionado
+                    //Pasar datos al formulario de Windows
+                    WindowItem formulario = new WindowItem();
+                    formulario.frmItem = form;
 
-                //Pasar datos al formulario de Windows
-                WindowItem formulario = new WindowItem();
-                formulario.frmItem = form;
+                    //Se ejecuta solo si hay una fila selecionada una fila
+                    formulario.idRegistro = (int) tblItems.getValueAt(index, 0);
+                    formulario.txtName.setText(tblItems.getValueAt(index, 1).toString());
+                    formulario.txtAmount.setText(tblItems.getValueAt(index, 2).toString());
+                    formulario.txtDescription.setText(tblItems.getValueAt(index, 3).toString());
+                    formulario.cbbCategory.setSelectedItem(tblItems.getValueAt(index, 4).toString());
+                    formulario.cbbItemType.setSelectedItem(tblItems.getValueAt(index, 5).toString());
 
-                //Se ejecuta solo si hay una fila selecionada una fila
-                formulario.idRegistro = (int) tblItems.getValueAt(index, 0);
-                formulario.txtName.setText(tblItems.getValueAt(index, 1).toString());
-                formulario.txtAmount.setText(tblItems.getValueAt(index, 2).toString());
-                formulario.txtDescription.setText(tblItems.getValueAt(index, 3).toString());
-                formulario.cbbCategory.setSelectedItem(tblItems.getValueAt(index, 4).toString());
-                formulario.cbbItemType.setSelectedItem(tblItems.getValueAt(index, 5).toString());
+                    WindowHome.main(WindowType.ITEM, formulario, true);
+                    repaint();
+                } else {
 
-                WindowHome.main(WindowType.ITEM, formulario, true);
-                repaint(); 
-                }else{
-                
-                dialogResult.showMessage("ADVERTENCIA","Para actualizar debe seleccionar un registro.");
-                
+                    dialogResult.showMessage("ADVERTENCIA", "Para actualizar debe seleccionar un registro.");
+
                 }
-              
+
             }
 
             @Override
             public void delete(ItemModel entity) {
-               if (tblItems.getSelectedRowCount() > 0) {
-                   
+                if (tblItems.getSelectedRowCount() > 0) {
+
                     dialogResult.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el articulo " + entity.getName() + "?");
 
                     if (dialogResult.getMessageType() == MessageErrorDialog.MessageType.OK) {
+                        password = new FrmPassword();
+                        password.setVisible(true);
+                        password.toFront();
                         ItemDao item = new ItemDao();
                         ArrayList<Object> selectedtRow = new ArrayList<>();
                         selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
-                        item.DeleteItem(Integer.parseInt(selectedtRow.get(0).toString()));
+                        password.addEventButtonOK(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent ae) {
+                                if (FrmMain.login.getPassword().equals(password.getInputCode())) {
+                                    item.DeleteItem(Integer.parseInt(selectedtRow.get(0).toString()));
+                                    password.setVisible(false);
+                                    listFound = null;
+                                    showItems("ALL", f_eventAction);
+
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Contraseña incorrecta. \n", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+                        });
                         reloadChoosedFilter();
                     } else {
                         repaint();
                     }
                 } else {
-           
-                  dialogResult.showMessage("ADVERTENCIA", "Para eliminar debe seleccionar un registro.");
+
+                    dialogResult.showMessage("ADVERTENCIA", "Para eliminar debe seleccionar un registro.");
                 }
             }
         };
@@ -140,12 +158,10 @@ public class FrmItems extends javax.swing.JPanel {
         tblItems.getColumnModel().getColumn(3).setResizable(false);
 
     }
-    
-    
 
     //Método para limpiar la tabla
     private void clearRowsInTable() {
-         try {
+        try {
             DefaultTableModel modelo = (DefaultTableModel) tblItems.getModel();
 
             tblItems.selectAll();
@@ -161,17 +177,16 @@ public class FrmItems extends javax.swing.JPanel {
             dialogResult.showMessage("Error", "Error al limpiar la tabla.");
         }
     }
-    
+
     //METODO BUSAR
     ArrayList<ItemModel> listFound = null;
-    
-    public void filterByStringSearch(String search_string){
-    listFound = null;
-    ItemDao item = new ItemDao();
-    listFound = item.findItem(search_string);
+
+    public void filterByStringSearch(String search_string) {
+        listFound = null;
+        ItemDao item = new ItemDao();
+        listFound = item.findItem(search_string);
         showItems("ALL", f_eventAction);//Filtrar todos los datos
     }
-    
 
     private int contador_item = 0;
     private int contador_tools = 0;
@@ -188,10 +203,9 @@ public class FrmItems extends javax.swing.JPanel {
 
         ItemDao itemDao = new ItemDao();
         ArrayList<ItemModel> items = itemDao.ListItems();
-        if (listFound !=null) {
-            items = listFound; 
+        if (listFound != null) {
+            items = listFound;
         }
-        
 
         //Mostrar todos los datos
         switch (tipo_filtro) {
@@ -259,17 +273,14 @@ public class FrmItems extends javax.swing.JPanel {
                 item.getType()
         ).toRowTable(eventAction));
     }
-    
-   
-    public void reloadChoosedFilter(){
-    
-        if (listFound !=null) {
-             filterByStringSearch(getStringSearch()); //Obtiene el texto de la busqueda realizada
-        }else{
+
+    public void reloadChoosedFilter() {
+        if (listFound != null) {
+            filterByStringSearch(getStringSearch()); //Obtiene el texto de la busqueda realizada
+        } else {
             showItems("ALL", f_eventAction);
         }
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -351,13 +362,15 @@ public class FrmItems extends javax.swing.JPanel {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+                    .addComponent(scroll)
                     .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addComponent(lblProviders)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlTableLayout.createSequentialGroup()
+                                .addComponent(lblProviders)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(pnlTableLayout.createSequentialGroup()
+                                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
@@ -383,7 +396,7 @@ public class FrmItems extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE))
+                    .addComponent(pnlContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
@@ -401,12 +414,12 @@ public class FrmItems extends javax.swing.JPanel {
         WindowItem item = new WindowItem();
         item.frmItem = form;
         WindowHome.main(WindowType.ITEM, item, false);
-        
+
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnRefreshMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMousePressed
-       listFound = null;
-       showItems("ALL", f_eventAction);
+        listFound = null;
+        showItems("ALL", f_eventAction);
     }//GEN-LAST:event_btnRefreshMousePressed
 
 
