@@ -119,8 +119,10 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
         @Override
     public void findForDasboard(String stringSearch) {
         //llama al metodo en la entidad que ejecuta la busqueda
-        System.out.println("buscando en dashboard: "+ stringSearch);
+        //System.out.println("buscando en dashboard: "+ stringSearch);
         //home <- objeto de la entidad donde se buscara en metodo que ejecuta la busqueda
+        home.filterByStringSearch(stringSearch);
+        setForm(home);
     }
 
     @Override

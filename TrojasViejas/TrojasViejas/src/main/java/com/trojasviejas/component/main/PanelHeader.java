@@ -122,21 +122,22 @@ public class PanelHeader extends javax.swing.JPanel {
     public FrmMain frmMain = null;
     
     private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
-        setSearch(txtSearch.getText());
+        getAndSendStringSearchToMenu();      
+    }//GEN-LAST:event_btnSearchMouseClicked
+
+   private void getAndSendStringSearchToMenu(){
+         setSearch(txtSearch.getText());
         
         if (getSearch().isBlank() || getSearch().isEmpty()) {
             txtSearch.setText("");
         }else{
             frmMain.findIn(getSearch());
         }
-        
-    }//GEN-LAST:event_btnSearchMouseClicked
-
-   
+   }
     
     private void txtSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            System.out.println("enter");
+            getAndSendStringSearchToMenu();
         }
     }//GEN-LAST:event_txtSearchKeyPressed
 

@@ -1,5 +1,6 @@
 package com.trojasviejas.demo.form;
 
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.data.dao.DashboardDao;
 import com.trojasviejas.models.utility.InvoicesAverageReport;
 import com.trojasviejas.swing.chart.ChartModel;
@@ -27,6 +28,9 @@ public class FrmHome extends javax.swing.JPanel {
         lblChartOne.setText(lblChartOne.getText()+" "+year);
         lblChartTwo.setText(lblChartTwo.getText()+" "+year);
     }
+    //mensajes personalizados
+    MessageErrorDialog errorMessage = new MessageErrorDialog(new JFrame());
+    
         //obteniendo año actual
     int year = LocalDateTime.now().getYear();
     //obteniendo el mes actual
@@ -35,6 +39,7 @@ public class FrmHome extends javax.swing.JPanel {
     DashboardDao dashboardDao = new DashboardDao();
 
     private void InitGaugeCharts(int year) {
+        lblYear.setText(""+year);
 
         //primer año
         setReportDataByYearOneToCard(year);
@@ -45,7 +50,7 @@ public class FrmHome extends javax.swing.JPanel {
         
         
         //colocando los promedios de los años anteriores al actual
-        setAverages();
+        setAverages(year);
         
         //Colocando los porcentajes a los graficos si hay un promedio
         //FACTURAS
@@ -140,12 +145,12 @@ public class FrmHome extends javax.swing.JPanel {
     int items = 0;
     double value = 0;
 
-    private void setAverages() {
+    private void setAverages(int year) {
        DashboardDao averageDao = new DashboardDao();
 
        //getAverage() retorna un array con los years en los que hay registros de facturas
        //getYears() retorna la lista de years menores al year actual en los que hay registros
-        ArrayList<InvoicesAverageReport> averages = averageDao.getAverages(averageDao.getYears());
+        ArrayList<InvoicesAverageReport> averages = averageDao.getAverages(averageDao.getYears(year));
         int amountYears = averages.size();
 
         purchases = 0;
@@ -167,6 +172,14 @@ public class FrmHome extends javax.swing.JPanel {
                 lblAverageValue.setText("$" + String.valueOf(formatNumber.format(value / (double) amountYears)));
             }
         }
+        else{
+            //si no hay datos en years anteriores al actual los promedios
+            lblAverageItems.setText("0");
+            lblAveragePurchases.setText("0");
+            lblAverageValue.setText("$0");
+            // y de los promedios dependen los graficos de los card, que tambien se vuelven 0
+        }
+        
 
         
     }
@@ -229,6 +242,21 @@ public class FrmHome extends javax.swing.JPanel {
        InitGaugeCharts(year);
        barChart.start();
        lineChart.start();
+    }
+    
+    public void filterByStringSearch(String busqueda) {
+
+        try {
+
+            int yearSelected = Integer.parseInt(busqueda);
+            //actualizando los datos tomando el year elejido
+            //System.out.println(yearSelected);
+            year = yearSelected;
+            InitGaugeCharts(year);
+
+        } catch (Exception ex) {
+            errorMessage.showMessage("Error","Formato de busqueda no valido" + ex.toString());
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -294,6 +322,7 @@ public class FrmHome extends javax.swing.JPanel {
         txtCantidadArticulos = new javax.swing.JTextField();
         lblData9 = new javax.swing.JLabel();
         txtCostoTotal = new javax.swing.JTextField();
+        lblYear = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(232, 241, 242));
 
@@ -383,7 +412,7 @@ public class FrmHome extends javax.swing.JPanel {
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblPurchaseYear3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
                             .addComponent(lblPurchaseYear2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPurchaseYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
+                            .addComponent(lblPurchaseYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnlCardLayout.createSequentialGroup()
@@ -512,7 +541,7 @@ public class FrmHome extends javax.swing.JPanel {
                         .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblItemsYear3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
                             .addComponent(lblItemsYear2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblItemsYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
+                            .addComponent(lblItemsYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))
                         .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnlCard1Layout.createSequentialGroup()
@@ -641,7 +670,7 @@ public class FrmHome extends javax.swing.JPanel {
                         .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblValueYear3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
                             .addComponent(lblValueYear2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblValueYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
+                            .addComponent(lblValueYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))
                         .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnlCard11Layout.createSequentialGroup()
@@ -791,6 +820,10 @@ public class FrmHome extends javax.swing.JPanel {
         txtCostoTotal.setBackground(new java.awt.Color(95, 209, 69));
         txtCostoTotal.setBorder(null);
 
+        lblYear.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
+        lblYear.setForeground(new java.awt.Color(27, 152, 224));
+        lblYear.setText("0000");
+
         javax.swing.GroupLayout pnlBgLayout = new javax.swing.GroupLayout(pnlBg);
         pnlBg.setLayout(pnlBgLayout);
         pnlBgLayout.setHorizontalGroup(
@@ -799,44 +832,41 @@ public class FrmHome extends javax.swing.JPanel {
                 .addGap(15, 15, 15)
                 .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBgLayout.createSequentialGroup()
+                        .addGap(5, 5, 5)
                         .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlBgLayout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnlBgLayout.createSequentialGroup()
-                                        .addComponent(lblData3)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(txtEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(lblData5)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(txtCantidadEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(lblData4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(lblData6)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(txtCantidadSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(pnlBgLayout.createSequentialGroup()
-                                        .addComponent(lblData7)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(txtCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(lblData8)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(txtCantidadArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(lblData9)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(txtCostoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(lblData3)
+                                .addGap(10, 10, 10)
+                                .addComponent(txtEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(lblData5)
+                                .addGap(10, 10, 10)
+                                .addComponent(txtCantidadEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(lblData4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(lblData6)
+                                .addGap(10, 10, 10)
+                                .addComponent(txtCantidadSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlBgLayout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(lblChartOne))
+                                .addComponent(lblData7)
+                                .addGap(10, 10, 10)
+                                .addComponent(txtCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(lblData8)
+                                .addGap(10, 10, 10)
+                                .addComponent(txtCantidadArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(lblData9)
+                                .addGap(10, 10, 10)
+                                .addComponent(txtCostoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblChartOne)
                             .addGroup(pnlBgLayout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(lblReportYear)))
+                                .addComponent(lblReportYear)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblYear)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlBgLayout.createSequentialGroup()
                         .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -858,7 +888,9 @@ public class FrmHome extends javax.swing.JPanel {
             pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBgLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(lblReportYear)
+                .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblReportYear)
+                    .addComponent(lblYear))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlCard1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -953,6 +985,7 @@ public class FrmHome extends javax.swing.JPanel {
     private javax.swing.JLabel lblValueYear1;
     private javax.swing.JLabel lblValueYear2;
     private javax.swing.JLabel lblValueYear3;
+    private javax.swing.JLabel lblYear;
     private com.trojasviejas.swing.chart.LineChart lineChart;
     private com.trojasviejas.swing.panels.PanelShadow panelShadow1;
     private com.trojasviejas.swing.panels.PanelShadow panelShadow2;

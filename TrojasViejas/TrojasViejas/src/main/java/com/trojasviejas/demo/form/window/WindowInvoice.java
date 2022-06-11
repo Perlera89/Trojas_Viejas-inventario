@@ -133,6 +133,8 @@ public class WindowInvoice extends javax.swing.JPanel {
         lblRuta.setText("  Agrega una imagen");
         lblRuta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblRuta.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblRuta.setMaximumSize(new java.awt.Dimension(330, 34));
+        lblRuta.setPreferredSize(new java.awt.Dimension(330, 34));
         lblRuta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblRutaMouseEntered(evt);
@@ -169,7 +171,7 @@ public class WindowInvoice extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblRuta, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                    .addComponent(lblRuta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbbProvider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBuscar)

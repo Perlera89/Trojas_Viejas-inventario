@@ -147,7 +147,7 @@ public class DashboardDao {
     }
     
     
-    public ArrayList<Integer> getYears(){
+    public ArrayList<Integer> getYears(int year){
         ArrayList<Integer> years = null;
         //variable para preparar la consulta a la db
         CallableStatement query = null;
@@ -161,13 +161,13 @@ public class DashboardDao {
             query = connection.prepareCall("{call sp_years_in_invoices()}");
             result= query.executeQuery();
             
-                //obteniendo año actual
-            int currentYear = LocalDateTime.now().getYear();
+//                //obteniendo año actual
+//            int currentYear = LocalDateTime.now().getYear();
             
             while (result.next()) {
-                //solo mostramos los year que hay facturas en los menores al year actual
-                if (result.getInt("years_with_invoices")<currentYear) {
-                    System.out.println(result.getInt("years_with_invoices"));
+                //solo mostramos los year que hay facturas en los menores al year actual o al year elejido por el usuario
+                if (result.getInt("years_with_invoices")<year) {
+                    System.out.println("Lista"+result.getInt("years_with_invoices")+"\n");
                     years.add(result.getInt("years_with_invoices"));                  
                 }
 

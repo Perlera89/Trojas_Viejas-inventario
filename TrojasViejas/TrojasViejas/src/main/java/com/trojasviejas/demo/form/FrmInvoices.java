@@ -13,6 +13,7 @@ import com.trojasviejas.component.main.event.IProviderEventAction;
 import com.trojasviejas.data.dao.InvoicesDao;
 import com.trojasviejas.data.dao.ProviderDao;
 import com.trojasviejas.models.viewmodel.InvoicesVM;
+import com.trojasviejas.swing.tables.invoice.InvoiceAction;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
@@ -21,7 +22,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.awt.Graphics;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 public class FrmInvoices extends javax.swing.JPanel {
 
@@ -122,8 +126,8 @@ public class FrmInvoices extends javax.swing.JPanel {
                         indexRow = tblInvoices.getSelectedRow();
                         
                     //comprobando que la factura tenga foto (no hay: donante, hay: comercial)
-                    if (tblInvoices.getValueAt(indexRow, 4) != null) {
-                        byte[] img = (byte[]) tblInvoices.getValueAt(indexRow, 4);
+                    if (tblInvoices.getValueAt(indexRow, 6) != null) {
+                        byte[] img = (byte[]) tblInvoices.getValueAt(indexRow, 6);
                         //conviertiendo los bytes en imagen, y la imagen en IconImagen
                         ImageIcon image = new ImageIcon(byteToImage(img));
                         FrmImage frmImage = new FrmImage();
@@ -241,6 +245,7 @@ public class FrmInvoices extends javax.swing.JPanel {
                     amount_items += i.getAmountItems();
                     sumTotals += i.getTotalAmount();
                 }
+                //paintInvoicesWithZeroStock();
                 initCard();
             }
         }
@@ -258,7 +263,17 @@ public class FrmInvoices extends javax.swing.JPanel {
                 invM.getAmountItems(),
                 invM.getStock()
         ).toRowTable(eventAction));
+       
+    }
+    private void paintInvoicesWithZeroStock(){
+        //int index = tblInvoices.getRowCount() - 1;
+        for (int i = 0; i < tblInvoices.getRowCount(); i++) {
+            if ((int)tblInvoices.getValueAt(i, 4) == 0) {
+                //codigo para pintar aqui
 
+            }
+        }
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -358,12 +373,9 @@ public class FrmInvoices extends javax.swing.JPanel {
                     .addComponent(scroll)
                     .addGroup(pnlTableLayout.createSequentialGroup()
                         .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlTableLayout.createSequentialGroup()
-                                .addComponent(lblProviders)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(pnlTableLayout.createSequentialGroup()
-                                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(lblProviders)
+                            .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
