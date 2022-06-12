@@ -148,7 +148,12 @@ public class LineChart extends javax.swing.JPanel {
         model.clear();
         repaint();
     }
-
+    
+    public void updateLineChart(int index, ChartModel chart){
+        model.set(index, chart);
+        repaint();
+    }
+    
     public void start() {
         showLabel = null;
         if (!animator.isRunning()) {

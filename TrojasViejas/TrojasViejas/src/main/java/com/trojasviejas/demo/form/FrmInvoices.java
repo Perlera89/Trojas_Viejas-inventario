@@ -2,6 +2,7 @@ package com.trojasviejas.demo.form;
 
 import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.component.login.MessageSuccessDialog;
+import com.trojasviejas.component.main.FrmPassword;
 import com.trojasviejas.component.main.event.IInvoicesEventAction;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.entity.*;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -46,6 +49,7 @@ public class FrmInvoices extends javax.swing.JPanel {
     //mensajes personalizados
     MessageErrorDialog errorDialogResult = new MessageErrorDialog(new FrmLogin());
     MessageSuccessDialog successDialogResult = new MessageSuccessDialog(new FrmLogin());
+    private FrmPassword password;
     
     public static Date getDateFormat(String date) {
 
@@ -81,12 +85,28 @@ public class FrmInvoices extends javax.swing.JPanel {
                            + " reversible. ¿Realmente desea eliminar esta factura?");
 
                     if (dialogResult.getMessageType() == MessageErrorDialog.MessageType.OK) {
+                        password = new FrmPassword();
+                        password.setVisible(true);
+                        password.toFront();
+                        InvoicesDao item = new InvoicesDao();
+                        ArrayList<Object> selectedtRow = new ArrayList<>();
+                        selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
+                        password.addEventButtonOK(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent ae) {
+                                if (FrmMain.login.getPassword().equals(password.getInputCode())) {
+                                    item.DeleteInvoice(Integer.parseInt(selectedtRow.get(0).toString()));
+                                    password.setVisible(false);
+                                    listFound = null;
+                                    showInvoices("ALL", f_eventAction);
 
-                        InvoicesDao invD = new InvoicesDao();
-                        IndexRow = tblInvoices.getSelectedRow();
-                        invD.DeleteInvoice(Integer.parseInt(tblInvoices.getValueAt(IndexRow, 0).toString()));
-                        clearRowsInTable();
-                        initTableData();
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Contraseña incorrecta. \n", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+                        });
+                        //reloadChoosedFilter();
+                        showInvoices("ALL", f_eventAction);
                     } else {
                         repaint();
                     }

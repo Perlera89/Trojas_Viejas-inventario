@@ -74,7 +74,7 @@ BEGIN
     INNER JOIN providers AS e ON d.invc_prov_id_fk = e.prov_id
     
     GROUP BY invc_id
-    ORDER BY invc_id; 
+    ORDER BY invc_id DESC; 
 END$$
 
 /*Otros*/
@@ -105,7 +105,7 @@ BEGIN
 			WHERE 
 			YEAR(d.invc_buy_date) = years
             GROUP BY invc_id
-            ORDER BY invc_id;
+            ORDER BY invc_id DESC;
 		ELSEIF(p_month != 'NULL')
 		THEN
 			SET lc_time_names = 'es_SV';
@@ -125,7 +125,7 @@ BEGIN
 			WHERE 
 			YEAR(d.invc_buy_date) = years AND monthname(d.invc_buy_date) = p_month
             GROUP BY invc_id
-			ORDER BY invc_id;
+			ORDER BY invc_id DESC;
         END IF;
 END$$
         

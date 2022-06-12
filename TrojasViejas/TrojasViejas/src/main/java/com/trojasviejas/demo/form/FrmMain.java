@@ -128,8 +128,9 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     @Override
     public void findForProviders(String stringSearch) {
         //llama al metodo en la entidad que ejecuta la busqueda
-        System.out.println("buscando en providers: "+ stringSearch);
+        //System.out.println("buscando en providers: "+ stringSearch);
         //providers <- objeto de la entidad donde se buscara en metodo que ejecuta la busqueda
+        providers.filterByStringSearch(stringSearch);
     }
 
     @Override

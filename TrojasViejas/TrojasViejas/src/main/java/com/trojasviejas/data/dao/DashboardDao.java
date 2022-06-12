@@ -290,14 +290,14 @@ public class DashboardDao {
 
     }
 
-  //obteniendo año actual
-    int year = LocalDateTime.now().getYear();
-    //obteniendo el mes actual
-    int month = LocalDateTime.now().getMonthValue();
+//  //obteniendo año actual
+//    int year = LocalDateTime.now().getYear();
+//    //obteniendo el mes actual
+//    int month = LocalDateTime.now().getMonthValue();
     
     /*obteniendo las entradas y salidas de los ultimos 6 meses*/
     
-    public ArrayList<TypeRegisterReport> getDataCharI(){
+    public ArrayList<TypeRegisterReport> getDataCharI(int month, int year){
         ArrayList<TypeRegisterReport> reportList = new ArrayList<>();
         //agregagos seis filas para agregar los datos del final al inicio
         for (int i = 0; i < 6; i++) {
@@ -390,7 +390,7 @@ public class DashboardDao {
     
         /*obteniendo las compras de los ultimos 6 meses*/
     
-    public ArrayList<PurchaseReport> getDataCharII(){
+    public ArrayList<PurchaseReport> getDataCharII(int month, int year){
         ArrayList<PurchaseReport> reportList = new ArrayList<>();
         
         for (int i = 0; i < 6; i++) {

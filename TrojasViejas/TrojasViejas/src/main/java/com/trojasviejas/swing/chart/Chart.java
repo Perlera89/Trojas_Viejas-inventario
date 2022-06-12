@@ -152,6 +152,10 @@ public class Chart extends javax.swing.JPanel {
         repaint();
     }
 
+    public void updateChart(int index, ChartModel chart){
+        model.set(index, chart);
+        repaint();
+    }
     public void start() {
         showLabel = null;
         if (!animator.isRunning()) {

@@ -68,7 +68,8 @@ BEGIN
             a.prov_email, 
             a.prov_direction, 
             (a.prov_tp+0)`prov_tp`
-	FROM providers AS a;
+	FROM providers AS a
+	ORDER BY prov_id;
 END$$
 
 /*Otros*/
@@ -87,5 +88,6 @@ BEGIN
 	FROM providers AS a
     WHERE 
     a.prov_name LIKE concat('%',search_string,'%') OR
-    a.prov_tp LIKE concat('%',search_string,'%');
+    a.prov_tp LIKE concat('%',search_string,'%')
+    ORDER BY prov_id;
 END$$
