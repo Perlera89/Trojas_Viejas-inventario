@@ -24,7 +24,7 @@ public class ProvidersTable extends JTable {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                 TableHeader header = new TableHeader(o + "");
-                if (i1 == 4 | i1 == 5) {
+                if (i1 == 5 | i1 == 6) {
                     header.setHorizontalAlignment(JLabel.CENTER);
                 }
                 return header;

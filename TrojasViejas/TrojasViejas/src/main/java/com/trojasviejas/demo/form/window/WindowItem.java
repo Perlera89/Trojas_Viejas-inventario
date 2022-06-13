@@ -40,7 +40,7 @@ public class WindowItem extends javax.swing.JPanel {
         CargarComboBox();
     }
     
-    MessageErrorDialog dialogResult = new MessageErrorDialog(new JFrame());
+    MessageErrorDialog errorMessage = new MessageErrorDialog(new JFrame());
     
     public void CargarComboBox() {
 
@@ -56,7 +56,7 @@ public class WindowItem extends javax.swing.JPanel {
     public void clean() {
         txtName.setText("");
         txtAmount.setText("");
-        txtDescription.setText("");
+        txtDescription.setText("Sin descripción");
         cbbCategory.setSelectedItem(CategoryType.values()[0].toString());
         cbbItemType.setSelectedItem(ItemType.values()[0].toString());
     }
@@ -82,6 +82,11 @@ public class WindowItem extends javax.swing.JPanel {
         cbbCategory.setForeground(new java.awt.Color(100, 100, 100));
         cbbCategory.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbbCategory.setLabeText("Categoria");
+        cbbCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbCategoryActionPerformed(evt);
+            }
+        });
 
         txtAmount.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtAmount.setLabelText("Cantidad minima");
@@ -115,7 +120,7 @@ public class WindowItem extends javax.swing.JPanel {
         txtDescription.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtDescription.setForeground(new java.awt.Color(150, 150, 150));
         txtDescription.setRows(5);
-        txtDescription.setText("Sin descripcion");
+        txtDescription.setText("Sin descripción");
         txtDescription.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txtDescriptionMouseEntered(evt);
@@ -192,8 +197,8 @@ public class WindowItem extends javax.swing.JPanel {
                     item.setName(txtName.getText());
                     item.setMinimunAmount(Integer.parseInt(txtAmount.getText()));
                     item.setDescription(txtDescription.getText());
-                    item.setCategory(CategoryType.values()[cbbCategory.getSelectedIndex()]);
-                    item.setType(ItemType.values()[cbbItemType.getSelectedIndex()]);
+                    item.setCategory(CategoryType.valueOf(cbbCategory.getSelectedItem().toString()));
+                    item.setType(ItemType.valueOf(cbbItemType.getSelectedItem().toString()));
 
                     items.UpdateItems(item);
                     frmItem.reloadChoosedFilter();
@@ -207,20 +212,20 @@ public class WindowItem extends javax.swing.JPanel {
                     item.setName(txtName.getText());
                     item.setMinimunAmount(Integer.parseInt(txtAmount.getText()));
                     item.setDescription(txtDescription.getText());
-                    item.setCategory(CategoryType.values()[cbbCategory.getSelectedIndex()]);
-                    item.setType(ItemType.values()[cbbItemType.getSelectedIndex()]);
+                    item.setCategory(CategoryType.valueOf(cbbCategory.getSelectedItem().toString()));
+                    item.setType(ItemType.valueOf(cbbItemType.getSelectedItem().toString()));
 
                     items.AddItem(item);
                     frmItem.reloadChoosedFilter();
                     clean();
                 }
             } else {
-                dialogResult.showMessage("ERROR", "El campo de catidad mínima solo acepta valores mayores a cero.");
+                errorMessage.showMessage("ERROR", "El campo de catidad mínima solo acepta valores mayores a cero.");
 
             }
 
         } else {
-            dialogResult.showMessage("ERROR", "No puede guardar un registro con valores nulos o vacios.");
+            errorMessage.showMessage("ERROR", "No puede guardar un registro con valores nulos o vacios.");
         }
 
 
@@ -241,6 +246,16 @@ public class WindowItem extends javax.swing.JPanel {
             txtDescription.setBorder(BorderFactory.createLineBorder(new Color(3,155,216), 0));
         }
     }//GEN-LAST:event_txtDescriptionMousePressed
+
+    private void cbbCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbCategoryActionPerformed
+        cbbItemType.removeAllItems();
+        if (cbbCategory.getSelectedItem().toString().equals(CategoryType.HERRAMIENTAS.toString())) {
+            cbbItemType.addItem(ItemType.GENERICO);
+        }else{
+            cbbItemType.addItem(ItemType.GALVANIZADO);  
+            cbbItemType.addItem(ItemType.PVC);
+        }
+    }//GEN-LAST:event_cbbCategoryActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

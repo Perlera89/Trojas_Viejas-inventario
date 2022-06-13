@@ -5,30 +5,19 @@ import com.trojasviejas.component.login.MessageSuccessDialog;
 import com.trojasviejas.component.main.FrmPassword;
 import com.trojasviejas.component.main.event.IInvoicesEventAction;
 import com.trojasviejas.demo.form.window.*;
-import com.trojasviejas.models.entity.*;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
-import com.trojasviejas.component.main.event.IProviderEventAction;
 import com.trojasviejas.data.dao.InvoicesDao;
-import com.trojasviejas.data.dao.ProviderDao;
 import com.trojasviejas.models.viewmodel.InvoicesVM;
-import com.trojasviejas.swing.tables.invoice.InvoiceAction;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 public class FrmInvoices extends javax.swing.JPanel {
 
@@ -41,9 +30,9 @@ public class FrmInvoices extends javax.swing.JPanel {
     }
 
     private void initCard() {
-        pnlCardInvoices.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Facturas", amoutPurshases + ""));
-        pnlCardItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total Arcticulos", amount_items + ""));
-        pnlCardTotal.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Total", "$" + sumTotals));
+        pnlCardInvoices.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/invoice.png")), "FACTURAS", amoutPurshases + ""));
+        pnlCardItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "ARTÍCULOS", amount_items + ""));
+        pnlCardTotal.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/dollar.png")), "TOTAL", "$" + sumTotals));
 
     }
     //mensajes personalizados
@@ -263,7 +252,7 @@ public class FrmInvoices extends javax.swing.JPanel {
                     add_rows_to_table(i, eventAction);
                     amoutPurshases++;
                     amount_items += i.getAmountItems();
-                    sumTotals += i.getTotalAmount();
+                    sumTotals += Double.parseDouble(i.getTotalAmount());
                 }
                 //paintInvoicesWithZeroStock();
                 initCard();
@@ -276,7 +265,7 @@ public class FrmInvoices extends javax.swing.JPanel {
 
         tblInvoices.addRow(new InvoicesVM(
                 invM.getId(),
-                invM.getTotalAmount(),
+                "$"+invM.getTotalAmount(),
                 invM.getBuyDate(),
                 invM.getPicture(),
                 invM.getName(),
@@ -324,8 +313,8 @@ public class FrmInvoices extends javax.swing.JPanel {
         pnlCardItems.setColor2(new java.awt.Color(255, 136, 0));
         pnlContainer.add(pnlCardItems);
 
-        pnlCardTotal.setColor1(new java.awt.Color(0, 40, 85));
-        pnlCardTotal.setColor2(new java.awt.Color(2, 62, 125));
+        pnlCardTotal.setColor1(new java.awt.Color(0, 105, 104));
+        pnlCardTotal.setColor2(new java.awt.Color(0, 120, 113));
         pnlContainer.add(pnlCardTotal);
 
         pnlTable.setBackground(new java.awt.Color(255, 255, 255));

@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class InvoicesVM {
     private int id;
-    private Double totalAmount;
+    private String totalAmount;
     private String buyDate;
     private byte[] picture;
     private String name;
@@ -19,7 +19,7 @@ public class InvoicesVM {
     public InvoicesVM() {
     }
 
-    public InvoicesVM(int id, Double totalAmount, String buyDate, byte[] picture, String name, int amountItems, int stock) {
+    public InvoicesVM(int id, String totalAmount, String buyDate, byte[] picture, String name, int amountItems, int stock) {
         this.id = id;
         this.totalAmount = totalAmount;
         this.buyDate = buyDate;
@@ -41,11 +41,11 @@ public class InvoicesVM {
         this.id = id;
     }
 
-    public Double getTotalAmount() {
+    public String getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Double totalAmount) {
+    public void setTotalAmount(String totalAmount) {
         this.totalAmount = totalAmount;
     }
 

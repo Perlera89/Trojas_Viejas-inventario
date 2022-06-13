@@ -136,7 +136,7 @@ public class FrmSetting extends javax.swing.JPanel {
 
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Todos los derechos reservados a Wilian Leiva");
+        jLabel7.setText("Todos los derechos reservados");
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);

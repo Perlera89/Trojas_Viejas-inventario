@@ -180,11 +180,11 @@ public class FrmDetails extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(100, 100, 100));
-        jLabel8.setText("Fecha de compra");
+        jLabel8.setText("Fecha de compra:");
 
         jLabel9.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(100, 100, 100));
-        jLabel9.setText("Valor de compra");
+        jLabel9.setText("Valor de compra:");
 
         lblPrice.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblPrice.setForeground(new java.awt.Color(100, 100, 100));
@@ -209,7 +209,7 @@ public class FrmDetails extends javax.swing.JFrame {
                         .addGroup(pnlDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addComponent(lblBuyDate, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(53, Short.MAX_VALUE))
+                        .addContainerGap(30, Short.MAX_VALUE))
                     .addGroup(pnlDataLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -312,7 +312,7 @@ public class FrmDetails extends javax.swing.JFrame {
         pnlBoxesContainer.setBackground(new java.awt.Color(255, 255, 255));
 
         cbbItems.setEditable(true);
-        cbbItems.setLabeText("Articulo");
+        cbbItems.setLabeText("Artículo");
         cbbItems.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbItemsItemStateChanged(evt);
@@ -455,11 +455,11 @@ public class FrmDetails extends javax.swing.JFrame {
 
         lblTotal.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         lblTotal.setForeground(new java.awt.Color(27, 152, 224));
-        lblTotal.setText("0.00");
+        lblTotal.setText("$0.00");
 
         jLabel4.setFont(new java.awt.Font("Anton", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(27, 152, 224));
-        jLabel4.setText("Total: $");
+        jLabel4.setText("Total: ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -613,7 +613,7 @@ public class FrmDetails extends javax.swing.JFrame {
             cleanDataInBoxes();
             
             //actualizando el total
-            lblTotal.setText(String.valueOf(updateTotal()));
+            lblTotal.setText("$"+updateTotal());
             
             //colocamos el indicador de la fila seleccionada como -1 para indicar que no hay una seleccionada
             //se obliga al usuario a dar click nuevamente 
@@ -634,15 +634,15 @@ public class FrmDetails extends javax.swing.JFrame {
 
         //verificar que hallan detalles agregados
         if (detailTable.getRowCount()>0) {
-            double pricePurchase = Double.parseDouble(lblPrice.getText());
-            double detailsTotal = Double.parseDouble(lblTotal.getText());
+            double pricePurchase = Double.parseDouble(lblPrice.getText().substring(1, lblPrice.getText().length()));
+            double detailsTotal = Double.parseDouble(lblTotal.getText().substring(1, lblTotal.getText().length()));
             //verificar si el precio de la factura es igual a la sumatoria de los subtotales
             if (pricePurchase==detailsTotal) {
                 //saveInvoice guarda la factura y retorna el id de la ultima agregada
                 //y saveDetails guarda los detalles a esa ultma factura
                 saveInvoice();
                 int lastIdInvoice = getLastIdInvoice();
-                System.out.println("Ultima factura: "+ lastIdInvoice);
+                //System.out.println("Ultima factura: "+ lastIdInvoice);
                 saveDetails(lastIdInvoice);
                 
                 //recargando datos de las facturas
@@ -712,10 +712,10 @@ public class FrmDetails extends javax.swing.JFrame {
                     String item = txtItem.getText();
 
                         detailTable.addRow(new Object[]{
-                            idSelected, amount, item, pricePerUnit, amount * pricePerUnit, idInvoice
+                            idSelected, amount, item, "$"+pricePerUnit, "$"+amount * pricePerUnit, idInvoice
                         });
                         //sumando los subtotales
-                        lblTotal.setText(String.valueOf(updateTotal()));
+                        lblTotal.setText("$"+updateTotal());
                         cleanDataInBoxes();
                     
                 }else{
@@ -734,7 +734,8 @@ public class FrmDetails extends javax.swing.JFrame {
     private double updateTotal(){
         double total = 0.0;
         for (int i = 0; i < detailTable.getRowCount(); i++) {
-            total += (double)detailTable.getValueAt(i, 4);
+            String subtotal = detailTable.getValueAt(i, 4).toString();
+            total += Double.parseDouble(subtotal.substring(1, subtotal.length()));
         }
         
         return total;
@@ -762,7 +763,7 @@ public class FrmDetails extends javax.swing.JFrame {
                     cleanDataInBoxes();
 
                     //actualizando el total
-                    lblTotal.setText(String.valueOf(updateTotal()));
+                    lblTotal.setText("$"+updateTotal());
                 }
 
 
@@ -824,15 +825,15 @@ public class FrmDetails extends javax.swing.JFrame {
                     i.getId(),
                     i.getAmount(),
                     i.getItemName(),
-                    i.getPricerPerUnit(),
-                    i.getSubtotal(),
+                    "$"+i.getPricerPerUnit(),
+                    "$"+i.getSubtotal(),
                     i.getInvoiceFk()
                 });
 
             }
-            lblTotal.setText(String.valueOf(updateTotal()));
+            lblTotal.setText("$"+updateTotal());
         }
-        System.out.println(idInvoice);
+        //System.out.println(idInvoice);
         //si no, es una nueva y todo se muestra con normalidad
     }
     

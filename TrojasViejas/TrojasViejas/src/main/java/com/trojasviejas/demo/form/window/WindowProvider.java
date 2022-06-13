@@ -1,20 +1,29 @@
 package com.trojasviejas.demo.form.window;
 
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.data.dao.ProviderDao;
 import com.trojasviejas.demo.form.FrmProviders;
 import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.ProviderType;
+import javax.swing.JFrame;
 
 public class WindowProvider extends javax.swing.JPanel {
 
+    //almacena el objeto actual del formulario principal
     public FrmProviders frmProvider;
+    //almacena el objeto del frame principal para los crud
     public WindowHome home;
+    //id del proveedor
     public int id;
 
+    //mensaje personalizado
+    MessageErrorDialog errorMessage = new MessageErrorDialog(new JFrame());
+    
     public WindowProvider() {
         setOpaque(false);
         initComponents();
         txtName.requestFocus();
+        CargarComboBox();
     }
 
     public void CargarComboBox() {
@@ -51,7 +60,6 @@ public class WindowProvider extends javax.swing.JPanel {
         txtName.setLabelText("Nombre");
 
         cbbType.setForeground(new java.awt.Color(100, 100, 100));
-        cbbType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tipo", "Vendedores", "Donadores" }));
         cbbType.setSelectedIndex(-1);
         cbbType.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbbType.setLabeText("Tipo");
@@ -104,7 +112,7 @@ public class WindowProvider extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
+                .addContainerGap(54, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -120,43 +128,67 @@ public class WindowProvider extends javax.swing.JPanel {
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        if (id > 0) {
-            ProviderModel provM = new ProviderModel();
-            ProviderDao provD = new ProviderDao();
+        //verificando que el nombre y la direccion no esta vacia
+        if ((!txtName.getText().isEmpty() && !txtName.getText().isBlank())
+                && (!txtAddress.getText().isEmpty() && !txtAddress.getText().isBlank())) {
+            //verificando que se haya seleccionado un tipo
+            if (cbbType.getSelectedIndex() != -1 && cbbType.getSelectedItem() != null) {
+                if (id > 0) {
+                    ProviderModel provM = new ProviderModel();
+                    ProviderDao provD = new ProviderDao();
 
-            provM.setId(id);
-            provM.setName(txtName.getText());
-            provM.setNumberPhone(txtPhone.getText());
-            provM.setEmail(txtEmail.getText());
-            provM.setAddress(txtAddress.getText());
-            provM.setType(ProviderType.values()[cbbType.getSelectedIndex()]);
+                    //dando valores por defecto sin no hay numero y email
+                    if (txtPhone.getText().isEmpty() && txtPhone.getText().isBlank()){
+                        provM.setNumberPhone("Sin número");                       
+                    }
+                    if (txtEmail.getText().isEmpty() && txtEmail.getText().isBlank()){
+                        provM.setEmail("Sin dirección");                       
+                    }
+                    provM.setId(id);
+                    provM.setName(txtName.getText());
+                    provM.setAddress(txtAddress.getText());
+                    provM.setType(ProviderType.values()[cbbType.getSelectedIndex()]);
+                    provD.UpdateProvider(provM);
+                    
+                    //recargando datos en el formulario principal
+                    frmProvider.initTableData();
+ 
+                    home.dispose();
 
-            provD.UpdateProvider(provM);
-            frmProvider.initTableData();
-            //this.dispose();
-            clean();
+                } else {
+                    ProviderModel provM = new ProviderModel();
+                    ProviderDao provD = new ProviderDao();
 
-        } else {
-            ProviderModel provM = new ProviderModel();
-            ProviderDao provD = new ProviderDao();
+                    if (txtPhone.getText().isEmpty() && txtPhone.getText().isBlank()){
+                        provM.setNumberPhone("Sin número");                       
+                    }
+                    if (txtEmail.getText().isEmpty() && txtEmail.getText().isBlank()){
+                        provM.setEmail("Sin dirección");                       
+                    }
+                    provM.setName(txtName.getText());
+                    provM.setAddress(txtAddress.getText());
+                    provM.setType(ProviderType.values()[cbbType.getSelectedIndex()]);
 
-            provM.setId(id);
-            provM.setName(txtName.getText());
-            provM.setNumberPhone(txtPhone.getText());
-            provM.setEmail(txtEmail.getText());
-            provM.setAddress(txtAddress.getText());
-            provM.setType(ProviderType.values()[cbbType.getSelectedIndex()]);
+                    provD.AddProvider(provM);
+                    
+                    //recargando datos en el formulario principal
+                    frmProvider.initTableData();
+                    //limpiando para agregar más
+                    clean();
+                }              
+            }else{
+                errorMessage.showMessage("ERROR", "Es obligatorio definir un tipo de proveedor.");
+            }
 
-            provD.AddProvider(provM);
-            frmProvider.initTableData();
-            //this.dispose();
-            clean();
+        }else{
+            errorMessage.showMessage("ERROR", "Campos obligatorios nulos o vacíos.");
         }
+
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed

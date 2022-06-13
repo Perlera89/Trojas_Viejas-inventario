@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class FrmItems extends javax.swing.JPanel {
 
-    MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
+    MessageErrorDialog errorMessage = new MessageErrorDialog(new FrmLogin());
     private FrmPassword password;
     FrmItems form = this;
     private IItemEventAction f_eventAction;
@@ -35,9 +35,9 @@ public class FrmItems extends javax.swing.JPanel {
     }
 
     private void initCard(int contadorItem, int contador_tools, int contador_accesories) {
-        pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "Total Artículos", String.valueOf(contadorItem)));
-        pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "HERRAMIENTAS", String.valueOf(contador_tools)));
-        pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "ACCESORIOS", String.valueOf(contador_accesories)));
+        pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "ARTÍCULOS",""+contadorItem));
+        pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/tools.png")), "HERRAMIENTAS",""+contador_tools));
+        pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/accessories.png")), "ACCESORIOS",""+contador_accesories));
 
         pnlCardCountItems.setFilter(new MouseAdapter() {
             @Override
@@ -88,7 +88,7 @@ public class FrmItems extends javax.swing.JPanel {
                     repaint();
                 } else {
 
-                    dialogResult.showMessage("ADVERTENCIA", "Para actualizar debe seleccionar un registro.");
+                    errorMessage.showMessage("ADVERTENCIA", "Para actualizar debe seleccionar un registro.");
 
                 }
 
@@ -98,9 +98,9 @@ public class FrmItems extends javax.swing.JPanel {
             public void delete(ItemModel entity) {
                 if (tblItems.getSelectedRowCount() > 0) {
 
-                    dialogResult.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el articulo " + entity.getName() + "?");
+                    errorMessage.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el articulo " + entity.getName() + "?");
 
-                    if (dialogResult.getMessageType() == MessageErrorDialog.MessageType.OK) {
+                    if (errorMessage.getMessageType() == MessageErrorDialog.MessageType.OK) {
                         password = new FrmPassword();
                         password.setVisible(true);
                         password.toFront();
@@ -127,7 +127,7 @@ public class FrmItems extends javax.swing.JPanel {
                     }
                 } else {
 
-                    dialogResult.showMessage("ADVERTENCIA", "Para eliminar debe seleccionar un registro.");
+                    errorMessage.showMessage("ADVERTENCIA", "Para eliminar debe seleccionar un registro.");
                 }
             }
         };
@@ -173,8 +173,7 @@ public class FrmItems extends javax.swing.JPanel {
                 index--;
             }
         } catch (Exception e) {
-
-            dialogResult.showMessage("Error", "Error al limpiar la tabla.");
+            errorMessage.showMessage("Error", "Error al limpiar la tabla.");
         }
     }
 
@@ -298,6 +297,7 @@ public class FrmItems extends javax.swing.JPanel {
         btnRefresh = new com.trojasviejas.swing.Buttons.ActionButton();
 
         setBackground(new java.awt.Color(232, 241, 242));
+        setPreferredSize(new java.awt.Dimension(1000, 664));
 
         pnlContainer.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
@@ -362,15 +362,12 @@ public class FrmItems extends javax.swing.JPanel {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scroll)
+                    .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(pnlTableLayout.createSequentialGroup()
                         .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlTableLayout.createSequentialGroup()
-                                .addComponent(lblProviders)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(pnlTableLayout.createSequentialGroup()
-                                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(lblProviders)
+                            .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );

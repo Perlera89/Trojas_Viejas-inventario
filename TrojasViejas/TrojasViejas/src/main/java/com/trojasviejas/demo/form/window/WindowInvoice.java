@@ -35,10 +35,10 @@ public class WindowInvoice extends javax.swing.JPanel {
     public WindowInvoice() {
         setOpaque(false);
         initComponents();
-        cbbProvider.requestFocus();
+        //cbbProvider1.requestFocus();
+       
         
     }
-    
     //mensajes personalizados
     MessageErrorDialog errorMessage = new MessageErrorDialog(new FrmLogin());
     MessageSuccessDialog successMessage = new MessageSuccessDialog(new FrmLogin());
@@ -63,16 +63,17 @@ public class WindowInvoice extends javax.swing.JPanel {
         
         ArrayList<ProviderModel> invA = invDao.ListProviders(name);
         ids = new int[invA.size()];
-        
-        cbbProvider.removeAllItems();
-        
-        int index = 0;
-        for (var i : invA) {
-            cbbProvider.addItem(i.getName()+", "+i.getType());
-            ids[index] = i.getId();
-            index++;
+        if (!invA.isEmpty()) {
+            cbbProvider.removeAllItems();
+
+          int index = 0;
+          for (var i : invA) {
+              cbbProvider.addItem(i.getName()+", "+i.getType());
+              ids[index] = i.getId();
+              index++;
+          }
+          cbbProvider.setSelectedIndex(0);          
         }
-        cbbProvider.setSelectedIndex(0);
         
     }
 
@@ -80,7 +81,6 @@ public class WindowInvoice extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cbbProvider = new com.trojasviejas.swing.ComboBox();
         txtTotal = new com.trojasviejas.swing.fields.LinearTextField();
         btnAdd = new com.trojasviejas.swing.buttons.Button();
         btnCancel = new com.trojasviejas.swing.buttons.Button();
@@ -88,19 +88,9 @@ public class WindowInvoice extends javax.swing.JPanel {
         txtDate = new com.toedter.calendar.JDateChooser();
         lblImagen = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
+        cbbProvider = new com.trojasviejas.swing.ComboBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
-
-        cbbProvider.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        cbbProvider.setEditable(true);
-        cbbProvider.setForeground(new java.awt.Color(100, 100, 100));
-        cbbProvider.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbbProvider.setLabeText("Proveedor");
-        cbbProvider.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbbProviderItemStateChanged(evt);
-            }
-        });
 
         txtTotal.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtTotal.setLabelText("Total");
@@ -162,17 +152,30 @@ public class WindowInvoice extends javax.swing.JPanel {
             }
         });
 
+        cbbProvider.setEditable(true);
+        cbbProvider.setForeground(new java.awt.Color(100, 100, 100));
+        cbbProvider.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        cbbProvider.setLabeText("Proveedor");
+        cbbProvider.setLineColor(new java.awt.Color(255, 255, 255));
+        cbbProvider.setVerifyInputWhenFocusTarget(false);
+        cbbProvider.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbProviderItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblRuta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbbProvider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblRuta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cbbProvider, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBuscar)
                 .addGap(30, 30, 30)
@@ -186,12 +189,12 @@ public class WindowInvoice extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnBuscar)
-                            .addComponent(cbbProvider, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbbProvider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(20, 20, 20)
                         .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblImagen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -199,7 +202,7 @@ public class WindowInvoice extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(28, 28, 28)
@@ -270,18 +273,25 @@ public class WindowInvoice extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnAddActionPerformed
 
-    public void cerrarVentana(){
-        Window w = SwingUtilities.getWindowAncestor(this);
-        w.setVisible(false);
-    }
+//    public void cerrarVentana(){
+//        Window w = SwingUtilities.getWindowAncestor(this);
+//        w.setVisible(false);
+//    }
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        cerrarVentana();
+        home.dispose();
+        
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         if (cbbProvider.getSelectedItem() != null) {
-            CargarComboBox(cbbProvider.getSelectedItem().toString());
+            if (!cbbProvider.getSelectedItem().toString().isBlank() && !cbbProvider.getSelectedItem().toString().isEmpty()) {
+               CargarComboBox(cbbProvider.getSelectedItem().toString());              
+            }else{             
+                cbbProvider.setSelectedItem("");
+                errorMessage.showMessage("ERROR", "Nombre del proveedor nulo o vacío. Ingrese un nombre para realizar la busqueda.");
+            }
         }else{
+            cbbProvider.setSelectedItem("");
             errorMessage.showMessage("ERROR", "Nombre del proveedor nulo o vacío. Ingrese un nombre para realizar la busqueda.");
         }
         //System.out.println(cbbProvider.getSelectedIndex());
@@ -325,13 +335,13 @@ public class WindowInvoice extends javax.swing.JPanel {
 
                     //verificando que el total sea mayor a cero
                     if (Double.parseDouble(txtTotal.getText()) > 0) {
-                        detailsForm.lblPrice.setText(txtTotal.getText());
+                        detailsForm.lblPrice.setText("$"+txtTotal.getText());
                         detailsForm.rutaByte = rutaByte;
                         detailsForm.idProvider = ids[cbbProvider.getSelectedIndex()];
                         detailsForm.lblProvider.setText(cbbProvider.getSelectedItem().toString());
                         detailsForm.formInvoices = frmInvoice;
                         detailsForm.setVisible(true);
-                        cerrarVentana();
+                        home.dispose();
                     }else{
                         errorMessage.showMessage("ERROR", "El total de la factura no puede ser cero. Ingrese una cantidad válida.");
                     }
@@ -357,7 +367,7 @@ public class WindowInvoice extends javax.swing.JPanel {
                         FrmDetails detailsForm = new FrmDetails(0);
                         detailsForm.dateInvoice = txtDate.getDate();
                         detailsForm.lblBuyDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(txtDate.getDate()));
-                        detailsForm.lblPrice.setText(txtTotal.getText());
+                        detailsForm.lblPrice.setText("$"+txtTotal.getText());
                         detailsForm.rutaByte = rutaByte;
                         detailsForm.idProvider = ids[cbbProvider.getSelectedIndex()];
                         detailsForm.lblProvider.setText(cbbProvider.getSelectedItem().toString());
@@ -365,7 +375,7 @@ public class WindowInvoice extends javax.swing.JPanel {
                         detailsForm.txtCU.setText("0.00");
                         detailsForm.txtCU.setEditable(false);
                         detailsForm.setVisible(true);
-                        cerrarVentana();        
+                        home.dispose();        
             }else{
                 errorMessage.showMessage("ERROR", "Campos de fecha nulo o vacío.");
             }         

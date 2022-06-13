@@ -1,6 +1,7 @@
 package com.trojasviejas.data.dao;
 
 import com.trojasviejas.component.login.MessageErrorDialog;
+import com.trojasviejas.component.login.MessageSuccessDialog;
 import com.trojasviejas.data.connectiondb.Conexion;
 import com.trojasviejas.demo.form.FrmLogin;
 import com.trojasviejas.models.entity.ItemModel;
@@ -10,11 +11,14 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class ItemDao {
- MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
+    MessageErrorDialog errorMessage = new MessageErrorDialog(new JFrame());
+    MessageSuccessDialog successMessage = new MessageSuccessDialog(new JFrame());
  
     public ArrayList<ItemModel> ListItems() {
         ItemModel item = null;
@@ -46,14 +50,14 @@ public class ItemDao {
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se han podido mostrar los articulos. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            errorMessage.showMessage("ERROR", "No se ha podido mostrar los articulos. \n" + e.toString());
         } finally {
             try {
                 Conexion.close(result);
                 Conexion.close(query);
                 Conexion.close(connection);
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+                errorMessage.showMessage("ERROR", "No se ha cerrado la conexión correctamente.");
             }
         }
 
@@ -76,16 +80,16 @@ public class ItemDao {
             query.setInt(5, itemM.getType().ordinal() + 1);
             query.execute();
 
-            JOptionPane.showMessageDialog(null, "Agregado exitosamente.");
+            successMessage.showMessage("ÉXITO", "El artículo "+itemM.getName()+" ha sido agregado exitosamente.");
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "No se ha podido agregar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            errorMessage.showMessage("ERROR", "No se ha podido agregar el articulo. \n" + e.toString());
         } finally {
             try {
                 Conexion.close(query);
                 Conexion.close(connection);
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+                errorMessage.showMessage("ERROR", "No se ha cerrado la conexión correctamente.");
             }
         }
 
@@ -107,17 +111,17 @@ public class ItemDao {
             query.setInt(6, itemM.getType().ordinal() + 1);
             query.execute();
 
-            JOptionPane.showMessageDialog(null, "Actualizado exitosamente.");
+            successMessage.showMessage("ÉXITO", "Artículo actualizado exitosamente.");
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se ha podido actualizar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            errorMessage.showMessage("ERROR", "No se ha podido actualizar el articulo. \n" + e.toString());
         } finally {
             try {
 
                 Conexion.close(query);
                 Conexion.close(connection);
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+                errorMessage.showMessage("ERROR",  "No se ha cerrado la conexión correctamente.");
             }
 
         }
@@ -130,21 +134,28 @@ public class ItemDao {
 
         try {
             connection = Conexion.getConnection();
-            query = connection.prepareCall("call sp_d_items(?)");
+            query = connection.prepareCall("{call sp_d_items(?)}");
 
             query.setInt(1, id);
             query.execute();
-            JOptionPane.showMessageDialog(null, "Eliminado exitosamente.");
+            successMessage.showMessage("ÉXITO",  "Artículo eliminado exitosamente.");
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se han podido eliminar el articulo. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+             try{
+                SQLIntegrityConstraintViolationException ex = (SQLIntegrityConstraintViolationException) e;
+                errorMessage.showMessage("ERROR", "Este artículo está siendo referenciado en una o más facturas. "
+                        + "Puede actualizar sus datos, no eliminarlo. \n" + ex.toString());
+            }catch(Exception ez){
+                errorMessage.showMessage("ERROR", "No se han podido eliminar el articulo. \n" + e.toString());
+            }
+            
         } finally {
             try {
 
                 Conexion.close(query);
                 Conexion.close(connection);
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+                errorMessage.showMessage("ERROR", "No se ha cerrado la conexión correctamente.");
             }
 
         }
@@ -186,14 +197,14 @@ public class ItemDao {
             }
 
         } catch (SQLException e) {
-            dialogResult.showMessage("ERROR", "No se pudo mostrar los articulos. \n" + e.toString());
+            errorMessage.showMessage("ERROR", "No se pudo mostrar los articulos. \n" + e.toString());
         } finally {
             try {
                 Conexion.close(result);
                 Conexion.close(query);
                 Conexion.close(connection);
             } catch (SQLException e) {
-                dialogResult.showMessage(null, "No se ha cerrado la conexión");
+                errorMessage.showMessage("ERROR", "No se ha cerrado la conexión correctamente.");
             }
         }
 

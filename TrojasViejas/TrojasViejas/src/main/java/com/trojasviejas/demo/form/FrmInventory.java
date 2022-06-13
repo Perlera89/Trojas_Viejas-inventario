@@ -27,11 +27,11 @@ public class FrmInventory extends javax.swing.JPanel {
     MessageErrorDialog message = new MessageErrorDialog(new JFrame());
 
     private void initCard() {
-        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "ARTÍCULOS", String.valueOf(countItem)));
-        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "EXISTENCIAS", String.valueOf(countStock)));
-        pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "BAJO EL LÍMITE", String.valueOf(countItemOnLimit)));
-        pnlCard4.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "HERRAMIENTAS", String.valueOf(countTools)));
-        pnlCard5.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "ACCESORIOS", String.valueOf(countAccesories)));
+        pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "ARTÍCULOS", ""+countItem));
+        pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "EXISTENCIAS", ""+countStock));
+        pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/limit.png")), "BAJO EL LÍMITE", String.valueOf(countItemOnLimit)));
+        pnlCard4.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/tools.png")), "HERRAMIENTAS", String.valueOf(countTools)));
+        pnlCard5.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/accessories.png")), "ACCESORIOS", String.valueOf(countAccesories)));
 
         //MUESTRA TODOS LOS REGISTROS NUEVAMENTE
         pnlCard1.setFilter(new MouseAdapter() {

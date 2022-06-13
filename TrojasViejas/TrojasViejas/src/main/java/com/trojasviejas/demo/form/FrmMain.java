@@ -45,28 +45,28 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
                 if(index == 0){
                     home.reloadData();
                     setForm(home);
-                     panelHeader1.txtSearch.setToolTipText("Buscar aquí...");                   
+                     panelHeader1.txtSearch.setToolTipText("Año por el cual desea filtrar las información");                   
                     //indice del dashboard
                     indexForm = 0;
                 } else if(index == 1){
-                    panelHeader1.txtSearch.setToolTipText("Busrcar aquí...");              
+                    panelHeader1.txtSearch.setToolTipText("Nombre del proveedor | Tipo de proveedor");              
                     //indice del proveedores
                     indexForm = 1;
                     setForm(providers);
                 } else if(index == 2){
                     
                     setForm(items);
-                    panelHeader1.txtSearch.setToolTipText("Busrcar aquí...");                    
+                    panelHeader1.txtSearch.setToolTipText("Nombre del artículo | Categoría de artículo | Tipo de artículo");                    
                     //indice del proveedores
                     indexForm = 2;
                 } else if(index == 3){
                     setForm(invoices);
-                    panelHeader1.txtSearch.setToolTipText("Busrcar aquí...");
+                    panelHeader1.txtSearch.setToolTipText("_año | mes_año");
                     //indice del facturas
                     indexForm = 3;
                 } else if(index == 4){
                     setForm(inventory);
-                    panelHeader1.txtSearch.setToolTipText("Nombre del Artículo");
+                    panelHeader1.txtSearch.setToolTipText("Nombre del artículo | Categoría de artículo | Tipo de artículo");
                     //indice del inventario
                     indexForm = 4;
                 } else if(index == 5){
@@ -74,7 +74,7 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
                     
                     //indice del registros de actividad
                     indexForm = 5;
-                    panelHeader1.txtSearch.setToolTipText("_año ó mes_año");
+                    panelHeader1.txtSearch.setToolTipText("_año | mes_año");
                 } else if(index == 6){
                     
                     //indice del reportes

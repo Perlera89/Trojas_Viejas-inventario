@@ -65,20 +65,20 @@
         <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCardComercial">
           <Properties>
             <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="55" green="28" red="0" type="rgb"/>
+              <Color blue="12" green="0" red="aa" type="rgb"/>
             </Property>
             <Property name="color2" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="7d" green="3e" red="2" type="rgb"/>
+              <Color blue="0" green="0" red="bf" type="rgb"/>
             </Property>
           </Properties>
         </Component>
         <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCardDonor">
           <Properties>
             <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="7b" red="ff" type="rgb"/>
+              <Color blue="68" green="69" red="0" type="rgb"/>
             </Property>
             <Property name="color2" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="88" red="ff" type="rgb"/>
+              <Color blue="71" green="78" red="0" type="rgb"/>
             </Property>
           </Properties>
         </Component>

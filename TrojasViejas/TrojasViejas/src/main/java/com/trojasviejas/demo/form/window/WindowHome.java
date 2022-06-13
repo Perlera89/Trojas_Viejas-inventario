@@ -22,21 +22,26 @@ public class WindowHome extends javax.swing.JFrame {
             window.home = this;
             if (isUpdate) {
                 setForm(component);
-                lblEncabezado.setText("Actualizar Articulo");
+                lblEncabezado.setText("Actualizar Artículo");
             } else{
                 setForm(component);
-                lblEncabezado.setText("Agregar Articulo");
+                lblEncabezado.setText("Agregar Artículo");
               
                 
             }
         } else if(type == type.PROVIDER){
+            WindowProvider window = (WindowProvider) component;
+            window.home = this;
             if(isUpdate){
-                
+                lblEncabezado.setText("Actualizar Proveedor");
+                setForm(component);
             } else{
                 setForm(component);
                 lblEncabezado.setText("Agregar Proveedor");
             }
         } else if(type == type.INVOICE){
+            WindowInvoice window = (WindowInvoice) component;
+            window.home = this;
             if(isUpdate){
                 
             } else{

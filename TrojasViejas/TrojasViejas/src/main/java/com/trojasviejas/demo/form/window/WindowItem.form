@@ -91,6 +91,9 @@
         </Property>
         <Property name="labeText" type="java.lang.String" value="Categoria"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbbCategoryActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
@@ -160,7 +163,7 @@
               <Color blue="96" green="96" red="96" type="rgb"/>
             </Property>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="Sin descripcion"/>
+            <Property name="text" type="java.lang.String" value="Sin descripci&#xf3;n"/>
           </Properties>
           <Events>
             <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtDescriptionMouseEntered"/>

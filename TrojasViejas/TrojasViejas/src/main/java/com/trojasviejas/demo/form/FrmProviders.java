@@ -32,9 +32,9 @@ public class FrmProviders extends javax.swing.JPanel {
     MessageSuccessDialog successDialogResult = new MessageSuccessDialog(new FrmLogin());
 
     private void initCard() {
-        pnlCardProvider.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Proveedores", contador_provider + ""));
-        pnlCardComercial.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "Comerciales", contador_commercial + ""));
-        pnlCardDonor.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "Donadores", contador_donor + ""));
+        pnlCardProvider.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/provider.png")), "PROVEEDORES", contador_provider + ""));
+        pnlCardComercial.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/seller.png")), "COMERCIALES", contador_commercial + ""));
+        pnlCardDonor.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/donor.png")), "DONADORES", contador_donor + ""));
         
 
         pnlCardComercial.setFilter(new MouseAdapter() {
@@ -72,8 +72,6 @@ public class FrmProviders extends javax.swing.JPanel {
 
             @Override
             public void update(ProviderModel entity) {
-//                ArrayList<Object> selectedtRow = new ArrayList<>();
-//                selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
                 if (tblProviders.getSelectedRowCount() > 0) {
                     IndexRow = tblProviders.getSelectedRow();
 
@@ -87,14 +85,8 @@ public class FrmProviders extends javax.swing.JPanel {
                     formulario.txtEmail.setText(tblProviders.getValueAt(IndexRow, 3).toString());
                     formulario.txtAddress.setText(tblProviders.getValueAt(IndexRow, 4).toString());
                     formulario.cbbType.setSelectedItem(tblProviders.getValueAt(IndexRow, 5).toString());
-//                formulario.id = (int) selectedtRow.get(0);
-//                formulario.txtName.setText(selectedtRow.get(1).toString());
-//                formulario.txtPhone.setText(selectedtRow.get(2).toString());
-//                formulario.txtEmail.setText(selectedtRow.get(3).toString());
-//                formulario.txtAddress.setText(selectedtRow.get(3).toString());                
-//                formulario.cbbType.setSelectedItem(selectedtRow.get(5).toString());
-
-                    WindowHome.main(WindowType.PROVIDER, formulario, false);
+                    
+                    WindowHome.main(WindowType.PROVIDER, formulario, true);
                     repaint();
                 } else {
                     errotDialogResult.showMessage("Advertencia","Para actualizar un registro debe seleccionar uno previamente");
@@ -295,12 +287,12 @@ public class FrmProviders extends javax.swing.JPanel {
         pnlCardProvider.setColor2(new java.awt.Color(2, 62, 125));
         pnlContainer.add(pnlCardProvider);
 
-        pnlCardComercial.setColor1(new java.awt.Color(0, 40, 85));
-        pnlCardComercial.setColor2(new java.awt.Color(2, 62, 125));
+        pnlCardComercial.setColor1(new java.awt.Color(170, 0, 18));
+        pnlCardComercial.setColor2(new java.awt.Color(191, 0, 0));
         pnlContainer.add(pnlCardComercial);
 
-        pnlCardDonor.setColor1(new java.awt.Color(255, 123, 0));
-        pnlCardDonor.setColor2(new java.awt.Color(255, 136, 0));
+        pnlCardDonor.setColor1(new java.awt.Color(0, 105, 104));
+        pnlCardDonor.setColor2(new java.awt.Color(0, 120, 113));
         pnlContainer.add(pnlCardDonor);
 
         pnlTable.setBackground(new java.awt.Color(255, 255, 255));

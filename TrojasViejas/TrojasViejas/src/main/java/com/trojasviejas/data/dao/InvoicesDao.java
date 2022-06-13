@@ -35,7 +35,7 @@ public class InvoicesDao {
 
         try {
             connection = Conexion.getConnection();
-            invA = new ArrayList<InvoicesVM>();
+            invA = new ArrayList<>();
 
             query = connection.prepareCall("{call sp_s_invoices()}");
             result = query.executeQuery();
@@ -45,7 +45,7 @@ public class InvoicesDao {
                 invM = new InvoicesVM();
 
                 invM.setId(result.getInt("invc_id"));
-                invM.setTotalAmount(result.getDouble("invc_total_amount"));
+                invM.setTotalAmount(result.getString("invc_total_amount"));
                 invM.setBuyDate(formatter.format((result.getDate("invc_buy_date"))));
                 invM.setPicture(result.getBytes("invc_picture"));
                 //Solucionar problema con la fk de invoices
@@ -80,7 +80,7 @@ public class InvoicesDao {
 
         try {
             connection = Conexion.getConnection();
-            invA = new ArrayList<InvoicesVM>();
+            invA = new ArrayList<>();
 
             query = connection.prepareCall("{call sp_filter_invoices(?,?)}");
             query.setString(1, months);
@@ -92,7 +92,7 @@ public class InvoicesDao {
                 invM = new InvoicesVM();
 
                 invM.setId(result.getInt("invc_id"));
-                invM.setTotalAmount(result.getDouble("invc_total_amount"));
+                invM.setTotalAmount(result.getString("invc_total_amount"));
                 invM.setBuyDate(formatter.format((result.getDate("invc_buy_date"))));
                 invM.setPicture(result.getBytes("invc_picture"));
                 //Solucionar problema con la fk de invoices
