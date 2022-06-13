@@ -8,6 +8,7 @@ import com.trojasviejas.models.utility.CategoryType;
 import com.trojasviejas.models.utility.ItemType;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -28,7 +29,6 @@ public class WindowItem extends javax.swing.JPanel {
     public WindowItem() {
         setOpaque(false);
         initComponents();
-        txtName.requestFocus();
         txtDescription.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 100), 0));
         txtDescription.setLineWrap(true);
         scroll.setVerticalScrollBar(new ScrollBar());
@@ -38,6 +38,7 @@ public class WindowItem extends javax.swing.JPanel {
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
         CargarComboBox();
+        txtName.requestFocus();
     }
     
     MessageErrorDialog errorMessage = new MessageErrorDialog(new JFrame());
@@ -47,10 +48,9 @@ public class WindowItem extends javax.swing.JPanel {
         for (var i : CategoryType.values()) {
             cbbCategory.addItem(i.toString());
         }
-        for (var i : ItemType.values()) {
-            cbbItemType.addItem(i.toString());
-        }
+        cbbCategory.setSelectedIndex(0);
     }
+    
 
     //Método para limpiar cajas de texto
     public void clean() {
@@ -59,6 +59,7 @@ public class WindowItem extends javax.swing.JPanel {
         txtDescription.setText("Sin descripción");
         cbbCategory.setSelectedItem(CategoryType.values()[0].toString());
         cbbItemType.setSelectedItem(ItemType.values()[0].toString());
+        txtName.requestFocus();
     }
 
     @SuppressWarnings("unchecked")
@@ -76,10 +77,17 @@ public class WindowItem extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
+        txtName.setToolTipText("Nombre del artículo");
         txtName.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtName.setLabelText("Nombre");
+        txtName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNameKeyReleased(evt);
+            }
+        });
 
         cbbCategory.setForeground(new java.awt.Color(100, 100, 100));
+        cbbCategory.setToolTipText("Categoría del artículo");
         cbbCategory.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbbCategory.setLabeText("Categoria");
         cbbCategory.addActionListener(new java.awt.event.ActionListener() {
@@ -87,10 +95,19 @@ public class WindowItem extends javax.swing.JPanel {
                 cbbCategoryActionPerformed(evt);
             }
         });
+        cbbCategory.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cbbCategoryKeyReleased(evt);
+            }
+        });
 
+        txtAmount.setToolTipText("Alerta de cantidad mínima del artículo");
         txtAmount.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtAmount.setLabelText("Cantidad minima");
         txtAmount.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAmountKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtAmountKeyTyped(evt);
             }
@@ -121,6 +138,7 @@ public class WindowItem extends javax.swing.JPanel {
         txtDescription.setForeground(new java.awt.Color(150, 150, 150));
         txtDescription.setRows(5);
         txtDescription.setText("Sin descripción");
+        txtDescription.setToolTipText("Descripción, comentarios, recordatorio, etc., del artículo");
         txtDescription.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txtDescriptionMouseEntered(evt);
@@ -129,11 +147,22 @@ public class WindowItem extends javax.swing.JPanel {
                 txtDescriptionMousePressed(evt);
             }
         });
+        txtDescription.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDescriptionKeyReleased(evt);
+            }
+        });
         scroll.setViewportView(txtDescription);
 
         cbbItemType.setForeground(new java.awt.Color(100, 100, 100));
+        cbbItemType.setToolTipText("Tipo del artículo según la categoría");
         cbbItemType.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbbItemType.setLabeText("Tipo");
+        cbbItemType.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cbbItemTypeKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -256,6 +285,38 @@ public class WindowItem extends javax.swing.JPanel {
             cbbItemType.addItem(ItemType.PVC);
         }
     }//GEN-LAST:event_cbbCategoryActionPerformed
+
+    private void txtNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtAmount.requestFocus();
+        }
+    }//GEN-LAST:event_txtNameKeyReleased
+
+    private void txtAmountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAmountKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cbbCategory.requestFocus();
+            cbbCategory.showPopup();
+        }
+    }//GEN-LAST:event_txtAmountKeyReleased
+
+    private void cbbCategoryKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbbCategoryKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cbbItemType.requestFocus();
+            cbbItemType.showPopup();
+        }
+    }//GEN-LAST:event_cbbCategoryKeyReleased
+
+    private void cbbItemTypeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbbItemTypeKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtDescription.requestFocus();
+        }
+    }//GEN-LAST:event_cbbItemTypeKeyReleased
+
+    private void txtDescriptionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescriptionKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnAdd.doClick();
+        }
+    }//GEN-LAST:event_txtDescriptionKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

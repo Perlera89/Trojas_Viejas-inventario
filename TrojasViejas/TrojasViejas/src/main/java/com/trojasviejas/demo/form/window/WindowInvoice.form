@@ -82,6 +82,7 @@
   <SubComponents>
     <Component class="com.trojasviejas.swing.fields.LinearTextField" name="txtTotal">
       <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Valor total de la factura, valor &gt; 0"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Roboto" size="14" style="0"/>
         </Property>
@@ -131,6 +132,7 @@
           <Image iconType="3" name="/icons/image.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="  Agrega una imagen"/>
+        <Property name="toolTipText" type="java.lang.String" value="Imagen de la factura"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Roboto" size="14" style="0"/>
         </Property>
@@ -159,6 +161,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="64" green="64" red="64" type="rgb"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Fecha de la factura | fecha de recepci&#xf3;n de donaci&#xf3;n"/>
         <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Roboto" size="14" style="0"/>
@@ -190,6 +193,7 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Nombre del proveedor a buscar"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Roboto" size="14" style="0"/>
         </Property>
@@ -201,6 +205,7 @@
       </Properties>
       <Events>
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbbProviderItemStateChanged"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbbProviderActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

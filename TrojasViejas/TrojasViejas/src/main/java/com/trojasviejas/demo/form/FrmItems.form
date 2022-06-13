@@ -57,6 +57,7 @@
       <SubComponents>
         <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCardCountItems">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Quita los filtros aplicados"/>
             <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="55" green="28" red="0" type="rgb"/>
             </Property>
@@ -67,6 +68,7 @@
         </Component>
         <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCardCountCategory1">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Filtra y cuenta los articulos que pertenezcan a la categor&#xed;a de herramientas"/>
             <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="7b" red="ff" type="rgb"/>
             </Property>
@@ -76,6 +78,9 @@
           </Properties>
         </Component>
         <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCardCountCategory2">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Filtra y cuenta los articulos que pertenezcan a la categor&#xed;a de accesorios"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -147,6 +152,7 @@
               <Image iconType="3" name="/icons/add.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Nuevo"/>
+            <Property name="toolTipText" type="java.lang.String" value="Nuevo registro de art&#xed;culo"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="16" style="1"/>
             </Property>
@@ -232,6 +238,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icons/refresh.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Resetea los filtros aplicados y/o los datos de la busqueda realizada"/>
           </Properties>
           <Events>
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnRefreshMousePressed"/>

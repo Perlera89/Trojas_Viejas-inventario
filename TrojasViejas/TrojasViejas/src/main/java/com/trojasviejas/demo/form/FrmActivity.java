@@ -270,6 +270,7 @@ public class FrmActivity extends javax.swing.JPanel {
         btnRegister.setForeground(new java.awt.Color(255, 255, 255));
         btnRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/update.png"))); // NOI18N
         btnRegister.setText("Registro");
+        btnRegister.setToolTipText("Actualizar registro de entrada o salida");
         btnRegister.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         btnRegister.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnRegister.addActionListener(new java.awt.event.ActionListener() {
@@ -279,6 +280,7 @@ public class FrmActivity extends javax.swing.JPanel {
         });
 
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refresh.png"))); // NOI18N
+        btnRefresh.setToolTipText("Resetea los filtros aplicados y/o los datos de la busqueda realizada");
         btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshActionPerformed(evt);
@@ -338,14 +340,17 @@ public class FrmActivity extends javax.swing.JPanel {
 
         pnlContainer.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
+        pnlCard1.setToolTipText("Quita los filtros aplicados");
         pnlCard1.setColor1(new java.awt.Color(0, 40, 85));
         pnlCard1.setColor2(new java.awt.Color(2, 62, 125));
         pnlContainer.add(pnlCard1);
 
+        pnlCard2.setToolTipText("Filtra y cuenta los registros de tipo entrada");
         pnlCard2.setColor1(new java.awt.Color(0, 58, 1));
         pnlCard2.setColor2(new java.awt.Color(0, 71, 2));
         pnlContainer.add(pnlCard2);
 
+        pnlCard3.setToolTipText("Filtra y cuenta los registros de tipo salida");
         pnlCard3.setColor1(new java.awt.Color(108, 5, 0));
         pnlCard3.setColor2(new java.awt.Color(162, 0, 0));
         pnlContainer.add(pnlCard3);

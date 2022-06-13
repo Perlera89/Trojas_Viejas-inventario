@@ -29,6 +29,7 @@ public class FrmDetails extends javax.swing.JFrame {
         idInvoice = _idInvoice;
         addOrShowPurchase();
         scrollTable.setBorder(BorderFactory.createEmptyBorder());
+        cbbItems.requestFocus();
     }
 
     //FACTURA==========================
@@ -312,28 +313,43 @@ public class FrmDetails extends javax.swing.JFrame {
         pnlBoxesContainer.setBackground(new java.awt.Color(255, 255, 255));
 
         cbbItems.setEditable(true);
+        cbbItems.setToolTipText("Nombre del artículo | Categoría del artículo | Tipo del artículo");
         cbbItems.setLabeText("Artículo");
         cbbItems.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbItemsItemStateChanged(evt);
             }
         });
+        cbbItems.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cbbItemsKeyReleased(evt);
+            }
+        });
 
+        txtAmount.setToolTipText("Cantidad del artículo");
         txtAmount.setColorFont(new java.awt.Color(27, 152, 224));
         txtAmount.setHint("Cantidad:");
         txtAmount.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAmountKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtAmountKeyTyped(evt);
             }
         });
 
         txtItem.setEditable(false);
+        txtItem.setToolTipText("Nombre del artículo seleccionado");
         txtItem.setColorFont(new java.awt.Color(27, 152, 224));
         txtItem.setHint("Articulo:");
 
+        txtCU.setToolTipText("Precio por unidad del artículo");
         txtCU.setColorFont(new java.awt.Color(27, 152, 224));
         txtCU.setHint("C/U:");
         txtCU.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCUKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCUKeyTyped(evt);
             }
@@ -557,6 +573,8 @@ public class FrmDetails extends javax.swing.JFrame {
             if (getProviderType(lblProvider.getText()).equals(" DONANTE")) {
                 txtCU.setText("0.00");
             }
+            //cbbItems.requestFocus();
+            //cbbItems.showPopup();
         }else{
             errorMessage.showMessage("ACCIÓN INVÁLIDA", "No puede agregar más detalles mientras se esta actualizando un registro");
         }
@@ -584,7 +602,8 @@ public class FrmDetails extends javax.swing.JFrame {
         //mandando los datos a las cajas
         txtAmount.setText(detailTable.getValueAt(indexRowSelected, 1).toString());
         txtItem.setText(detailTable.getValueAt(indexRowSelected, 2).toString());
-        txtCU.setText(detailTable.getValueAt(indexRowSelected, 3).toString());
+        String pricePerUnit = detailTable.getValueAt(indexRowSelected, 3).toString();
+        txtCU.setText(pricePerUnit.substring(1, pricePerUnit.length()));
     }//GEN-LAST:event_detailTableMouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -618,6 +637,9 @@ public class FrmDetails extends javax.swing.JFrame {
             //colocamos el indicador de la fila seleccionada como -1 para indicar que no hay una seleccionada
             //se obliga al usuario a dar click nuevamente 
             indexRowSelected = -1;
+            
+            cbbItems.requestFocus();
+            cbbItems.showPopup();
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -627,6 +649,8 @@ public class FrmDetails extends javax.swing.JFrame {
             idSelected = itemsIDs[cbbItems.getSelectedIndex()];
             //colocando el item seleccionado en la caja
             txtItem.setText(cbbItems.getSelectedItem().toString());
+            
+            txtAmount.requestFocus();
         }
     }//GEN-LAST:event_cbbItemsItemStateChanged
 
@@ -634,13 +658,13 @@ public class FrmDetails extends javax.swing.JFrame {
 
         //verificar que hallan detalles agregados
         if (detailTable.getRowCount()>0) {
-            double pricePurchase = Double.parseDouble(lblPrice.getText().substring(1, lblPrice.getText().length()));
-            double detailsTotal = Double.parseDouble(lblTotal.getText().substring(1, lblTotal.getText().length()));
+            double pricePurchase = Double.parseDouble(lblPrice.getText().substring(1));
+            double detailsTotal = Double.parseDouble(lblTotal.getText().substring(1));
             //verificar si el precio de la factura es igual a la sumatoria de los subtotales
             if (pricePurchase==detailsTotal) {
                 //saveInvoice guarda la factura y retorna el id de la ultima agregada
                 //y saveDetails guarda los detalles a esa ultma factura
-                saveInvoice();
+                saveInvoice(pricePurchase);
                 int lastIdInvoice = getLastIdInvoice();
                 //System.out.println("Ultima factura: "+ lastIdInvoice);
                 saveDetails(lastIdInvoice);
@@ -659,17 +683,36 @@ public class FrmDetails extends javax.swing.JFrame {
             errorMessage.showMessage("ERROR", "No puede guardar una factura sin detalles de factura.");
         }
     }//GEN-LAST:event_btnFinishActionPerformed
+
+    private void cbbItemsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbbItemsKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnSearch.doClick();
+            cbbItems.showPopup();
+        }
+    }//GEN-LAST:event_cbbItemsKeyReleased
+
+    private void txtAmountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAmountKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtCU.requestFocus();
+        }
+    }//GEN-LAST:event_txtAmountKeyReleased
+
+    private void txtCUKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCUKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnAdd.doClick();
+        }
+    }//GEN-LAST:event_txtCUKeyReleased
     
     //registrará la factura y retornará el id de la ultima factura creada
-    private void saveInvoice(){
+    private void saveInvoice(double price){
         
         InvoicesDao invoiceDao = new InvoicesDao();
-        InvoicesModel detail = new InvoicesModel();
-        detail.setTotalAmount(Double.parseDouble(lblPrice.getText()));
-        detail.setBuyDate(dateInvoice);
-        detail.setPicture(rutaByte);
-        detail.setFkProv(idProvider);
-        invoiceDao.AddInvoice(detail);
+        InvoicesModel invoice = new InvoicesModel();
+        invoice.setTotalAmount(price);
+        invoice.setBuyDate(dateInvoice);
+        invoice.setPicture(rutaByte);
+        invoice.setFkProv(idProvider);
+        invoiceDao.AddInvoice(invoice);
 
     }
     
@@ -688,7 +731,7 @@ public class FrmDetails extends javax.swing.JFrame {
             detailsDao.save(
                     new InvoiceDetailsModel(
                             (int) detailTable.getValueAt(indexRow, 1),
-                            (double) detailTable.getValueAt(indexRow, 3),
+                            Double.parseDouble(detailTable.getValueAt(indexRow, 3).toString().substring(1)),
                             (int) detailTable.getValueAt(indexRow, 0),
                             lastIdInvoice
                     )
@@ -708,20 +751,28 @@ public class FrmDetails extends javax.swing.JFrame {
             try {
                 if (cbbItems.getSelectedItem()!=null) {
                     int amount = Integer.parseInt(txtAmount.getText());
-                    double pricePerUnit = Double.parseDouble(txtCU.getText());
-                    String item = txtItem.getText();
+                    if (amount > 0) {
+                        double pricePerUnit = Double.parseDouble(txtCU.getText());
+                        String item = txtItem.getText();
 
                         detailTable.addRow(new Object[]{
                             idSelected, amount, item, "$"+pricePerUnit, "$"+amount * pricePerUnit, idInvoice
                         });
                         //sumando los subtotales
                         lblTotal.setText("$"+updateTotal());
-                        cleanDataInBoxes();
+                        cleanDataInBoxes(); 
+                        
+                        cbbItems.requestFocus();
+                        cbbItems.showPopup();
+                    }else{
+                        txtAmount.setText("");
+                        txtAmount.requestFocus();
+                    }
                     
                 }else{
                     errorMessage.showMessage("ERROR", "Debe seleccionar un artículo previamente para poder guardar el detalle de factura");
                 }
-
+                txtAmount.requestFocus();
             } catch (Exception e) {
                 errorMessage.showMessage("ERROR", "Valores inválidos, verifique las datos ingresados.\n" + e.toString());
             }
@@ -735,7 +786,7 @@ public class FrmDetails extends javax.swing.JFrame {
         double total = 0.0;
         for (int i = 0; i < detailTable.getRowCount(); i++) {
             String subtotal = detailTable.getValueAt(i, 4).toString();
-            total += Double.parseDouble(subtotal.substring(1, subtotal.length()));
+            total += Double.parseDouble(subtotal.substring(1));
         }
         
         return total;
@@ -752,29 +803,35 @@ public class FrmDetails extends javax.swing.JFrame {
                 int amount = Integer.parseInt(txtAmount.getText());
                 double pricePerUnit = Double.parseDouble(txtCU.getText());
                 String item = txtItem.getText();
+                //si no se ha seleccionado un item no importa, pues como ya se ha agregado uno, si no lo 
+                //cambia se toma el actual
+                if (amount > 0) {
+                    if (indexRow >= 0) {
+                        detailTable.setValueAt(idSelected, indexRow, 0);
+                        detailTable.setValueAt(amount, indexRow, 1);
+                        detailTable.setValueAt(item, indexRow, 2);
+                        detailTable.setValueAt("$"+pricePerUnit, indexRow, 3);
+                        detailTable.setValueAt("$"+ (amount * pricePerUnit), indexRow, 4);
+                        detailTable.setValueAt(idInvoice, indexRow, 5);
+                        cleanDataInBoxes();
 
-                if (indexRow >= 0) {
-                    detailTable.setValueAt(idSelected, indexRow, 0);
-                    detailTable.setValueAt(amount, indexRow, 1);
-                    detailTable.setValueAt(item, indexRow, 2);
-                    detailTable.setValueAt(pricePerUnit, indexRow, 3);
-                    detailTable.setValueAt(amount * pricePerUnit, indexRow, 4);
-                    detailTable.setValueAt(idInvoice, indexRow, 5);
-                    cleanDataInBoxes();
-
-                    //actualizando el total
-                    lblTotal.setText("$"+updateTotal());
+                        //actualizando el total
+                        lblTotal.setText("$" + updateTotal());
+                        cbbItems.requestFocus();
+                        cbbItems.showPopup();
+                    }                 
                 }
 
 
-                //si no se ha seleccionado un item no importa, pues como ya se ha agregado uno, si no lo 
-                //cambia se toma el actual
-
             } catch (Exception e) {
                 errorMessage.showMessage("ERROR", "Valores inválidos, verifique las datos ingresados.\n" + e.toString());
+                cbbItems.requestFocus();
+                cbbItems.showPopup();
             }
 
         } else {
+            cbbItems.requestFocus();
+            cbbItems.showPopup();
             errorMessage.showMessage("ERROR", "Valores inválidos, campos vacios.");
         }
     }

@@ -14,6 +14,7 @@ import java.awt.Color;
 //import java.awt.Font;
 import java.awt.Image;
 import java.awt.Window;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -34,10 +35,7 @@ public class WindowInvoice extends javax.swing.JPanel {
 
     public WindowInvoice() {
         setOpaque(false);
-        initComponents();
-        //cbbProvider1.requestFocus();
-       
-        
+        initComponents();       
     }
     //mensajes personalizados
     MessageErrorDialog errorMessage = new MessageErrorDialog(new FrmLogin());
@@ -72,7 +70,8 @@ public class WindowInvoice extends javax.swing.JPanel {
               ids[index] = i.getId();
               index++;
           }
-          cbbProvider.setSelectedIndex(0);          
+          cbbProvider.setSelectedIndex(0);  
+          cbbProvider.showPopup();
         }
         
     }
@@ -92,6 +91,7 @@ public class WindowInvoice extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
+        txtTotal.setToolTipText("Valor total de la factura, valor > 0");
         txtTotal.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtTotal.setLabelText("Total");
         txtTotal.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -121,6 +121,7 @@ public class WindowInvoice extends javax.swing.JPanel {
         lblRuta.setForeground(new java.awt.Color(150, 150, 150));
         lblRuta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/image.png"))); // NOI18N
         lblRuta.setText("  Agrega una imagen");
+        lblRuta.setToolTipText("Imagen de la factura");
         lblRuta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblRuta.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblRuta.setMaximumSize(new java.awt.Dimension(330, 34));
@@ -141,6 +142,7 @@ public class WindowInvoice extends javax.swing.JPanel {
 
         txtDate.setBackground(new java.awt.Color(255, 255, 255));
         txtDate.setForeground(new java.awt.Color(100, 100, 100));
+        txtDate.setToolTipText("Fecha de la factura | fecha de recepción de donación");
         txtDate.setDateFormatString("dd/MM/yyyy");
         txtDate.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
@@ -154,6 +156,7 @@ public class WindowInvoice extends javax.swing.JPanel {
 
         cbbProvider.setEditable(true);
         cbbProvider.setForeground(new java.awt.Color(100, 100, 100));
+        cbbProvider.setToolTipText("Nombre del proveedor a buscar");
         cbbProvider.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbbProvider.setLabeText("Proveedor");
         cbbProvider.setLineColor(new java.awt.Color(255, 255, 255));
@@ -161,6 +164,11 @@ public class WindowInvoice extends javax.swing.JPanel {
         cbbProvider.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbProviderItemStateChanged(evt);
+            }
+        });
+        cbbProvider.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbProviderActionPerformed(evt);
             }
         });
 
@@ -283,18 +291,7 @@ public class WindowInvoice extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        if (cbbProvider.getSelectedItem() != null) {
-            if (!cbbProvider.getSelectedItem().toString().isBlank() && !cbbProvider.getSelectedItem().toString().isEmpty()) {
-               CargarComboBox(cbbProvider.getSelectedItem().toString());              
-            }else{             
-                cbbProvider.setSelectedItem("");
-                errorMessage.showMessage("ERROR", "Nombre del proveedor nulo o vacío. Ingrese un nombre para realizar la busqueda.");
-            }
-        }else{
-            cbbProvider.setSelectedItem("");
-            errorMessage.showMessage("ERROR", "Nombre del proveedor nulo o vacío. Ingrese un nombre para realizar la busqueda.");
-        }
-        //System.out.println(cbbProvider.getSelectedIndex());
+        findProvider();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void cbbProviderItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbProviderItemStateChanged
@@ -314,6 +311,25 @@ public class WindowInvoice extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbbProviderItemStateChanged
 
+    private void cbbProviderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbProviderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbbProviderActionPerformed
+
+    //busca un proveedor
+    private void findProvider(){
+        if (cbbProvider.getSelectedItem() != null) {
+            if (!cbbProvider.getSelectedItem().toString().isBlank() && !cbbProvider.getSelectedItem().toString().isEmpty()) {
+                CargarComboBox(cbbProvider.getSelectedItem().toString());
+            } else {
+                cbbProvider.setSelectedItem("");
+                errorMessage.showMessage("ERROR", "Nombre del proveedor nulo o vacío. Ingrese un nombre para realizar la busqueda.");
+            }
+        } else {
+            cbbProvider.setSelectedItem("");
+            errorMessage.showMessage("ERROR", "Nombre del proveedor nulo o vacío. Ingrese un nombre para realizar la busqueda.");
+        }
+        
+    }
     //retorna el tipo de proveedor concantenado al final del nombre del proveedor
     private String getProviderType(String provider){
         String _provider[] = provider.split(",");
@@ -360,8 +376,7 @@ public class WindowInvoice extends javax.swing.JPanel {
     private void saveDonorTypeInvoice(){
          //verificando que se haya eligido un proveedor
         if (cbbProvider.getSelectedItem() != null
-             && cbbProvider.getSelectedIndex()!=-1
-                ) {
+             && cbbProvider.getSelectedIndex()!=-1) {
             //verificando que lel campo de la fecha no esten vacio
             if (txtDate.getDate() != null && lblRuta.getText().equals(" Foto de factura no requerida")) {
                         FrmDetails detailsForm = new FrmDetails(0);

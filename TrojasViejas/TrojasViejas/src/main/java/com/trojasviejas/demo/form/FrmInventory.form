@@ -54,6 +54,7 @@
       <SubComponents>
         <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCard1">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Quita los filtros aplicados"/>
             <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="55" green="28" red="0" type="rgb"/>
             </Property>
@@ -64,6 +65,7 @@
         </Component>
         <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCard2">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Cantidad total de art&#xed;culos en el Invertario"/>
             <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="a5" green="0" red="4d" type="rgb"/>
             </Property>
@@ -74,6 +76,7 @@
         </Component>
         <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCard3">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Filtra y cuenta cantidad de art&#xed;culos con existencias &#x2264; al l&#xed;mite establecido"/>
             <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="5" red="6c" type="rgb"/>
             </Property>
@@ -84,6 +87,7 @@
         </Component>
         <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCard4">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Filtra y cuenta los articulos que pertenezcan a la categor&#xed;a de accesorios"/>
             <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="1" green="3a" red="0" type="rgb"/>
             </Property>
@@ -94,6 +98,7 @@
         </Component>
         <Component class="com.trojasviejas.component.main.PanelCard" name="pnlCard5">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Filtra y cuenta los articulos que pertenezcan a la categor&#xed;a de herramientas"/>
             <Property name="color1" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="7b" red="ff" type="rgb"/>
             </Property>
@@ -184,6 +189,7 @@
               <Image iconType="3" name="/icons/add.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Registro"/>
+            <Property name="toolTipText" type="java.lang.String" value="Actualizar registro de entrada o salida"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="16" style="1"/>
             </Property>
@@ -285,6 +291,7 @@
               </StringArray>
             </Property>
             <Property name="selectedIndex" type="int" value="-1"/>
+            <Property name="toolTipText" type="java.lang.String" value="Filtro que muestra los articulos con existencias o sin existencias"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="16" style="0"/>
             </Property>
@@ -300,6 +307,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icons/refresh.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Resetea los filtros aplicados y/o los datos de la busqueda realizada"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefreshActionPerformed"/>

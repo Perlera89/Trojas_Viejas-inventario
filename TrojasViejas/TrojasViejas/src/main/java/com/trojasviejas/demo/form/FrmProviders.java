@@ -283,14 +283,17 @@ public class FrmProviders extends javax.swing.JPanel {
 
         pnlContainer.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
+        pnlCardProvider.setToolTipText("Quita los filtros aplicados");
         pnlCardProvider.setColor1(new java.awt.Color(0, 40, 85));
         pnlCardProvider.setColor2(new java.awt.Color(2, 62, 125));
         pnlContainer.add(pnlCardProvider);
 
+        pnlCardComercial.setToolTipText("Filtra y cuenta los proveedores que pertenezcan a la categoría de comercial");
         pnlCardComercial.setColor1(new java.awt.Color(170, 0, 18));
         pnlCardComercial.setColor2(new java.awt.Color(191, 0, 0));
         pnlContainer.add(pnlCardComercial);
 
+        pnlCardDonor.setToolTipText("Filtra y cuenta los proveedores que pertenezcan a la categoría de donadores");
         pnlCardDonor.setColor1(new java.awt.Color(0, 105, 104));
         pnlCardDonor.setColor2(new java.awt.Color(0, 120, 113));
         pnlContainer.add(pnlCardDonor);
@@ -333,6 +336,7 @@ public class FrmProviders extends javax.swing.JPanel {
         btnNew.setForeground(new java.awt.Color(255, 255, 255));
         btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png"))); // NOI18N
         btnNew.setText("Nuevo");
+        btnNew.setToolTipText("Nuevo registro de proveedor");
         btnNew.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         btnNew.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnNew.addActionListener(new java.awt.event.ActionListener() {
@@ -342,6 +346,7 @@ public class FrmProviders extends javax.swing.JPanel {
         });
 
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refresh.png"))); // NOI18N
+        btnRefresh.setToolTipText("Resetea los filtros aplicados y/o los datos de la busqueda realizada");
         btnRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnRefreshMousePressed(evt);

@@ -13,6 +13,7 @@ import java.util.Date;
 import javax.swing.*;
 import javax.swing.BorderFactory;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 
 public class WindowInventory extends javax.swing.JFrame {
 
@@ -25,6 +26,7 @@ public class WindowInventory extends javax.swing.JFrame {
         initMoving(this);
         currentDate();
         setDataToCombobox();
+        cbbActionType.requestFocus();
     }
 
     private int x;
@@ -172,6 +174,7 @@ public class WindowInventory extends javax.swing.JFrame {
         txtDescription.setForeground(new java.awt.Color(150, 150, 150));
         txtDescription.setRows(5);
         txtDescription.setText("Sin descripcion");
+        txtDescription.setToolTipText("Descripción del  motivo, objetivo, comentarios, recordatorio, etc., del registro");
         txtDescription.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txtDescriptionMouseEntered(evt);
@@ -180,9 +183,15 @@ public class WindowInventory extends javax.swing.JFrame {
                 txtDescriptionMousePressed(evt);
             }
         });
+        txtDescription.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDescriptionKeyReleased(evt);
+            }
+        });
         scroll.setViewportView(txtDescription);
 
         cbbActionType.setForeground(new java.awt.Color(100, 100, 100));
+        cbbActionType.setToolTipText("Tipo de retiro a realizar");
         cbbActionType.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbbActionType.setLabeText("Tipo de accion");
         cbbActionType.addActionListener(new java.awt.event.ActionListener() {
@@ -191,6 +200,7 @@ public class WindowInventory extends javax.swing.JFrame {
             }
         });
 
+        txtAmount.setToolTipText("Cantidad del articulos que entrarán o saldrán del inventario");
         txtAmount.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtAmount.setLabelText("Cantidad a retirar");
         txtAmount.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -204,6 +214,7 @@ public class WindowInventory extends javax.swing.JFrame {
 
         txtDate.setBackground(new java.awt.Color(255, 255, 255));
         txtDate.setForeground(new java.awt.Color(100, 100, 100));
+        txtDate.setToolTipText("Fecha en que se realizó el registro");
         txtDate.setDateFormatString("dd/MM/yyyy");
         txtDate.setEnabled(false);
         txtDate.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -473,7 +484,11 @@ public class WindowInventory extends javax.swing.JFrame {
     //almcacena el tipo de accion del registro para la validacion
     private ActionType selection;
     private void txtAmountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAmountKeyReleased
-        validatingSelectedIndex();   
+        validatingSelectedIndex();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+          txtDescription.requestFocus();          
+        }
+
     }//GEN-LAST:event_txtAmountKeyReleased
 
     private void cbbActionTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbActionTypeActionPerformed
@@ -481,8 +496,16 @@ public class WindowInventory extends javax.swing.JFrame {
             selection = ActionType.values()[cbbActionType.getSelectedIndex()];
             txtAmount.setBackground(Color.WHITE);
             txtAmount.setText("");
+            
+            txtAmount.requestFocus();
         }
     }//GEN-LAST:event_cbbActionTypeActionPerformed
+
+    private void txtDescriptionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescriptionKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnAdd.doClick();
+        }
+    }//GEN-LAST:event_txtDescriptionKeyReleased
     private void validatingSelectedIndex() {
             //trae desde invemtario la cantidad de existencias
         int itemStock = Integer.parseInt(this.lblStock.getText());
@@ -519,7 +542,6 @@ public class WindowInventory extends javax.swing.JFrame {
                 default -> {
                 }
             }
-
         } catch (NumberFormatException e) {
             txtAmount.setText("");
         }

@@ -23,6 +23,7 @@ public class WindowActivity extends javax.swing.JFrame {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
         initMoving(this);
+        txtDescription.requestFocus();
     }
 
     private int x;
@@ -171,6 +172,7 @@ public class WindowActivity extends javax.swing.JFrame {
         txtDescription.setForeground(new java.awt.Color(150, 150, 150));
         txtDescription.setRows(5);
         txtDescription.setText("Sin descripcion");
+        txtDescription.setToolTipText("Descripción del  motivo, objetivo, comentarios, recordatorio, etc., del registro");
         txtDescription.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txtDescriptionMouseEntered(evt);

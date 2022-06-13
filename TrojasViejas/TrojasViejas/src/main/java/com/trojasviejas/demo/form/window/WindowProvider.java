@@ -5,6 +5,7 @@ import com.trojasviejas.data.dao.ProviderDao;
 import com.trojasviejas.demo.form.FrmProviders;
 import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.ProviderType;
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 
 public class WindowProvider extends javax.swing.JPanel {
@@ -22,8 +23,8 @@ public class WindowProvider extends javax.swing.JPanel {
     public WindowProvider() {
         setOpaque(false);
         initComponents();
-        txtName.requestFocus();
         CargarComboBox();
+        txtName.requestFocus();
     }
 
     public void CargarComboBox() {
@@ -40,6 +41,7 @@ public class WindowProvider extends javax.swing.JPanel {
         txtEmail.setText("");
         txtAddress.setText("");
         cbbType.setSelectedItem(ProviderType.values()[0].toString());
+        txtName.requestFocus();
     }
 
     @SuppressWarnings("unchecked")
@@ -56,22 +58,51 @@ public class WindowProvider extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
+        txtName.setToolTipText("Nombre del proveedor");
         txtName.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtName.setLabelText("Nombre");
+        txtName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNameKeyReleased(evt);
+            }
+        });
 
         cbbType.setForeground(new java.awt.Color(100, 100, 100));
-        cbbType.setSelectedIndex(-1);
+        cbbType.setToolTipText("Tipo de proveedor");
         cbbType.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbbType.setLabeText("Tipo");
+        cbbType.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cbbTypeKeyReleased(evt);
+            }
+        });
 
+        txtEmail.setToolTipText("Correo electrónico del proveedor");
         txtEmail.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtEmail.setLabelText("Correo");
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmailKeyReleased(evt);
+            }
+        });
 
+        txtPhone.setToolTipText("Número de teléfono del proveedor");
         txtPhone.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtPhone.setLabelText("Telefono");
+        txtPhone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPhoneKeyReleased(evt);
+            }
+        });
 
+        txtAddress.setToolTipText("Dirección del negocio del proveedor ");
         txtAddress.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtAddress.setLabelText("Direccion");
+        txtAddress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAddressKeyReleased(evt);
+            }
+        });
 
         btnAdd.setBackground(new java.awt.Color(0, 184, 82));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
@@ -190,10 +221,41 @@ public class WindowProvider extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_btnAddActionPerformed
-
+    
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         home.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void txtNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtPhone.requestFocus();
+        }
+    }//GEN-LAST:event_txtNameKeyReleased
+
+    private void txtPhoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneKeyReleased
+         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtEmail.requestFocus();
+        }
+    }//GEN-LAST:event_txtPhoneKeyReleased
+
+    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtAddress.requestFocus();
+        }
+    }//GEN-LAST:event_txtEmailKeyReleased
+
+    private void txtAddressKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAddressKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cbbType.requestFocus();
+            cbbType.showPopup();
+        }
+    }//GEN-LAST:event_txtAddressKeyReleased
+
+    private void cbbTypeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbbTypeKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnAdd.doClick();
+        }
+    }//GEN-LAST:event_cbbTypeKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

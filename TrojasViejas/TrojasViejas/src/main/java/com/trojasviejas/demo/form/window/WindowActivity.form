@@ -259,6 +259,7 @@
                     </Property>
                     <Property name="rows" type="int" value="5"/>
                     <Property name="text" type="java.lang.String" value="Sin descripcion"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Descripci&#xf3;n del  motivo, objetivo, comentarios, recordatorio, etc., del registro"/>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtDescriptionMouseEntered"/>

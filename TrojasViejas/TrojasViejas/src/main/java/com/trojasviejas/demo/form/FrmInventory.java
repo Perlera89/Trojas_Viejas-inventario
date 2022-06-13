@@ -29,9 +29,9 @@ public class FrmInventory extends javax.swing.JPanel {
     private void initCard() {
         pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "ARTÍCULOS", ""+countItem));
         pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/stock.png")), "EXISTENCIAS", ""+countStock));
-        pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/limit.png")), "BAJO EL LÍMITE", String.valueOf(countItemOnLimit)));
-        pnlCard4.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/tools.png")), "HERRAMIENTAS", String.valueOf(countTools)));
-        pnlCard5.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/accessories.png")), "ACCESORIOS", String.valueOf(countAccesories)));
+        pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/limit.png")), "BAJO EL LÍMITE", ""+countItemOnLimit));
+        pnlCard4.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/tools.png")), "ACCESORIOS", ""+ countAccesories));
+        pnlCard5.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/accessories.png")), "HERRAMIENTAS", ""+countTools));
 
         //MUESTRA TODOS LOS REGISTROS NUEVAMENTE
         pnlCard1.setFilter(new MouseAdapter() {
@@ -305,22 +305,27 @@ public class FrmInventory extends javax.swing.JPanel {
 
         pnlContainer.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
+        pnlCard1.setToolTipText("Quita los filtros aplicados");
         pnlCard1.setColor1(new java.awt.Color(0, 40, 85));
         pnlCard1.setColor2(new java.awt.Color(2, 62, 125));
         pnlContainer.add(pnlCard1);
 
+        pnlCard2.setToolTipText("Cantidad total de artículos en el Invertario");
         pnlCard2.setColor1(new java.awt.Color(77, 0, 165));
         pnlCard2.setColor2(new java.awt.Color(83, 0, 204));
         pnlContainer.add(pnlCard2);
 
+        pnlCard3.setToolTipText("Filtra y cuenta cantidad de artículos con existencias ≤ al límite establecido");
         pnlCard3.setColor1(new java.awt.Color(108, 5, 0));
         pnlCard3.setColor2(new java.awt.Color(162, 0, 0));
         pnlContainer.add(pnlCard3);
 
+        pnlCard4.setToolTipText("Filtra y cuenta los articulos que pertenezcan a la categoría de accesorios");
         pnlCard4.setColor1(new java.awt.Color(0, 58, 1));
         pnlCard4.setColor2(new java.awt.Color(0, 71, 2));
         pnlContainer.add(pnlCard4);
 
+        pnlCard5.setToolTipText("Filtra y cuenta los articulos que pertenezcan a la categoría de herramientas");
         pnlCard5.setColor1(new java.awt.Color(255, 123, 0));
         pnlCard5.setColor2(new java.awt.Color(255, 136, 0));
         pnlContainer.add(pnlCard5);
@@ -335,6 +340,7 @@ public class FrmInventory extends javax.swing.JPanel {
         btnRegister.setForeground(new java.awt.Color(255, 255, 255));
         btnRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png"))); // NOI18N
         btnRegister.setText("Registro");
+        btnRegister.setToolTipText("Actualizar registro de entrada o salida");
         btnRegister.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         btnRegister.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnRegister.addActionListener(new java.awt.event.ActionListener() {
@@ -380,6 +386,7 @@ public class FrmInventory extends javax.swing.JPanel {
 
         cbbStock.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Existencias", "Agotados" }));
         cbbStock.setSelectedIndex(-1);
+        cbbStock.setToolTipText("Filtro que muestra los articulos con existencias o sin existencias");
         cbbStock.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         cbbStock.setLabeText("Elija existencia");
         cbbStock.addItemListener(new java.awt.event.ItemListener() {
@@ -394,6 +401,7 @@ public class FrmInventory extends javax.swing.JPanel {
         });
 
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refresh.png"))); // NOI18N
+        btnRefresh.setToolTipText("Resetea los filtros aplicados y/o los datos de la busqueda realizada");
         btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshActionPerformed(evt);

@@ -489,26 +489,31 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Nombre del art&#xed;culo | Categor&#xed;a del art&#xed;culo | Tipo del art&#xed;culo"/>
                 <Property name="labeText" type="java.lang.String" value="Art&#xed;culo"/>
               </Properties>
               <Events>
                 <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbbItemsItemStateChanged"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="cbbItemsKeyReleased"/>
               </Events>
             </Component>
             <Component class="com.trojasviejas.swing.fields.MyTextField" name="txtAmount">
               <Properties>
+                <Property name="toolTipText" type="java.lang.String" value="Cantidad del art&#xed;culo"/>
                 <Property name="colorFont" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e0" green="98" red="1b" type="rgb"/>
                 </Property>
                 <Property name="hint" type="java.lang.String" value="Cantidad:"/>
               </Properties>
               <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtAmountKeyReleased"/>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtAmountKeyTyped"/>
               </Events>
             </Component>
             <Component class="com.trojasviejas.swing.fields.MyTextField" name="txtItem">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="toolTipText" type="java.lang.String" value="Nombre del art&#xed;culo seleccionado"/>
                 <Property name="colorFont" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e0" green="98" red="1b" type="rgb"/>
                 </Property>
@@ -517,12 +522,14 @@
             </Component>
             <Component class="com.trojasviejas.swing.fields.MyTextField" name="txtCU">
               <Properties>
+                <Property name="toolTipText" type="java.lang.String" value="Precio por unidad del art&#xed;culo"/>
                 <Property name="colorFont" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e0" green="98" red="1b" type="rgb"/>
                 </Property>
                 <Property name="hint" type="java.lang.String" value="C/U:"/>
               </Properties>
               <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCUKeyReleased"/>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCUKeyTyped"/>
               </Events>
               <AuxValues>

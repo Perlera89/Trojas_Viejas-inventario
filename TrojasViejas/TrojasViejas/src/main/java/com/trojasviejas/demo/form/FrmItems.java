@@ -301,13 +301,17 @@ public class FrmItems extends javax.swing.JPanel {
 
         pnlContainer.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
+        pnlCardCountItems.setToolTipText("Quita los filtros aplicados");
         pnlCardCountItems.setColor1(new java.awt.Color(0, 40, 85));
         pnlCardCountItems.setColor2(new java.awt.Color(2, 62, 125));
         pnlContainer.add(pnlCardCountItems);
 
+        pnlCardCountCategory1.setToolTipText("Filtra y cuenta los articulos que pertenezcan a la categoría de herramientas");
         pnlCardCountCategory1.setColor1(new java.awt.Color(255, 123, 0));
         pnlCardCountCategory1.setColor2(new java.awt.Color(255, 136, 0));
         pnlContainer.add(pnlCardCountCategory1);
+
+        pnlCardCountCategory2.setToolTipText("Filtra y cuenta los articulos que pertenezcan a la categoría de accesorios");
         pnlContainer.add(pnlCardCountCategory2);
 
         pnlTable.setBackground(new java.awt.Color(255, 255, 255));
@@ -320,6 +324,7 @@ public class FrmItems extends javax.swing.JPanel {
         btnNew.setForeground(new java.awt.Color(255, 255, 255));
         btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png"))); // NOI18N
         btnNew.setText("Nuevo");
+        btnNew.setToolTipText("Nuevo registro de artículo");
         btnNew.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         btnNew.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnNew.addActionListener(new java.awt.event.ActionListener() {
@@ -349,6 +354,7 @@ public class FrmItems extends javax.swing.JPanel {
         scroll.setViewportView(tblItems);
 
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refresh.png"))); // NOI18N
+        btnRefresh.setToolTipText("Resetea los filtros aplicados y/o los datos de la busqueda realizada");
         btnRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnRefreshMousePressed(evt);
