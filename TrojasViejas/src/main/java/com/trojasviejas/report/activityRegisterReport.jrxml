@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a03c0486-2235-4697-bfe1-ccdc2b884003">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<parameter name="parameter2" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[IF(($P{parameter1} = 'NULL'))
+        THEN
+		SET lc_time_names = 'es_SV';
+		SELECT
+			
+	  a.rgtr_tp_action, 
+            d.item_name, 
+            a.rgtr_current_stock, 
+            a.rgtr_amount, 
+            (a.rgtr_current_stock + a.rgtr_amount)`rgtr_new_stock`,
+            a.rgtr_description,
+            c.dtl_price_per_unit`dtl_price_per_unit`,
+            d.item_cat,
+            d.item_tp,
+            e.invc_buy_date,
+            a.rgtr_date
+            
+        FROM activity_registers AS a
+			INNER JOIN inventories AS b ON a.rgtr_dtl_id_fk = b.inventory_invc_dtl_id_fk
+            INNER JOIN invoice_details AS c ON b.inventory_invc_dtl_id_fk = c.dtl_id
+            INNER JOIN items AS d ON c.dtl_item_id_fk = d.item_id
+			INNER JOIN invoices AS e ON c.dtl_invc_id_fk = e.invc_id 
+		WHERE YEAR(a.rgtr_date) = p_years 
+		ORDER BY rgtr_id;
+
+
+        ELSEIF($P{parameter1}!='NULL')
+        THEN
+		SET lc_time_names = 'es_SV';
+		SELECT
+			
+			a.rgtr_tp_action, 
+            d.item_name,
+            a.rgtr_current_stock,
+            a.rgtr_amount,
+            (a.rgtr_current_stock + a.rgtr_amount)`rgtr_new_stock`,
+            a.rgtr_description,
+            c.dtl_price_per_unit`dtl_price_per_unit`,
+            d.item_cat,
+            d.item_tp,
+            e.invc_buy_date,
+            a.rgtr_date
+            
+        FROM activity_registers AS a
+			INNER JOIN inventories AS b ON a.rgtr_dtl_id_fk = b.inventory_invc_dtl_id_fk
+            INNER JOIN invoice_details AS c ON b.inventory_invc_dtl_id_fk = c.dtl_id
+            INNER JOIN items AS d ON c.dtl_item_id_fk = d.item_id
+			INNER JOIN invoices AS e ON c.dtl_invc_id_fk = e.invc_id 
+		WHERE YEAR(a.rgtr_date) = p_years AND MONTHNAME(a.rgtr_date) = $P{parameter2}
+		ORDER BY rgtr_id;
+        END IF;]]>
+	</queryString>
+	<field name="rgtr_tp_action" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rgtr_current_stock" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rgtr_amount" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rgtr_new_stock" class="java.lang.Double"/>
+	<field name="rgtr_description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dtl_price_per_unit" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_cat" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_tp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="invc_buy_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rgtr_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="275" y="0" width="300" height="64" uuid="bf677abd-f3fd-41c6-a375-4087260edf6f"/>
+				<imageExpression><![CDATA["leaf_banner_gray.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="4b04d60f-b446-43fd-a056-54a987e10030"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Leaf Gray Title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="117" y="46" width="157" height="22" uuid="ca703fb2-01e1-4a03-84f2-f10d3583dd2b"/>
+				<text><![CDATA[Leaf Gray SubTitle]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="a1e53def-e131-47e7-bcdb-7bc79a1eea09"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="50" height="15" uuid="13c1af3e-07bc-4747-a9f2-3ac1e27dd408"/>
+				<text><![CDATA[rgtr_tp_action]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="50" y="19" width="50" height="15" uuid="4adee3c1-e021-4724-8a05-38eb5ae3fe6f"/>
+				<text><![CDATA[item_name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="100" y="19" width="50" height="15" uuid="2cfe3abd-ee14-4c30-bf59-dd2ba71a78a9"/>
+				<text><![CDATA[rgtr_current_stock]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="150" y="19" width="50" height="15" uuid="d0033ae6-cf1d-41c9-82a5-1c40361e8d6c"/>
+				<text><![CDATA[rgtr_amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="200" y="19" width="50" height="15" uuid="5787d288-1797-4edc-9792-4417f443f355"/>
+				<text><![CDATA[rgtr_new_stock]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="250" y="19" width="50" height="15" uuid="74ed807d-4132-4315-8316-57f83e2299a0"/>
+				<text><![CDATA[rgtr_description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="300" y="19" width="50" height="15" uuid="d4d91157-eb9b-4150-a5d2-0379a3fd3d1a"/>
+				<text><![CDATA[dtl_price_per_unit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="350" y="19" width="50" height="15" uuid="31582f30-97ce-4861-9919-a123fad3748a"/>
+				<text><![CDATA[item_cat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="400" y="19" width="50" height="15" uuid="b52a9ad1-ef2d-4a29-8f4d-3c1a1a0e9c39"/>
+				<text><![CDATA[item_tp]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="450" y="19" width="50" height="15" uuid="584d7b1b-e5fe-486d-a06f-0f0a0a1e1f9f"/>
+				<text><![CDATA[invc_buy_date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="500" y="19" width="50" height="15" uuid="1e70b355-f213-445f-a89d-1788652a1167"/>
+				<text><![CDATA[rgtr_date]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="7f8338d5-491b-4f74-819b-20f2667f9b67"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="50" height="15" uuid="5f7fb6b6-7d9e-4728-ab43-1cc14a7178d4"/>
+				<textFieldExpression><![CDATA[$F{rgtr_tp_action}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="50" y="0" width="50" height="15" uuid="d9f3d2d8-9599-45ca-9d5b-2becf6571fdc"/>
+				<textFieldExpression><![CDATA[$F{item_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="100" y="0" width="50" height="15" uuid="ef108b14-6e4b-41cb-b9f5-ed5bb719ac4e"/>
+				<textFieldExpression><![CDATA[$F{rgtr_current_stock}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="150" y="0" width="50" height="15" uuid="01589371-8750-4ba4-bc0d-29a643df31d0"/>
+				<textFieldExpression><![CDATA[$F{rgtr_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="200" y="0" width="50" height="15" uuid="b1916404-0964-48de-b2f0-21d6f250209b"/>
+				<textFieldExpression><![CDATA[$F{rgtr_new_stock}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="250" y="0" width="50" height="15" uuid="eebda05d-971d-4960-ac84-ecf131f5bcd2"/>
+				<textFieldExpression><![CDATA[$F{rgtr_description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="300" y="0" width="50" height="15" uuid="111518d5-e670-42fc-a00b-410955076ee1"/>
+				<textFieldExpression><![CDATA[$F{dtl_price_per_unit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="350" y="0" width="50" height="15" uuid="92f9dabb-bf69-4404-b61a-ccd24830f254"/>
+				<textFieldExpression><![CDATA[$F{item_cat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="400" y="0" width="50" height="15" uuid="72568bdb-2c70-4358-8fe8-c7221a3d9e82"/>
+				<textFieldExpression><![CDATA[$F{item_tp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="450" y="0" width="50" height="15" uuid="4e1e6f38-6be4-47df-9a71-28eb8b4959f1"/>
+				<textFieldExpression><![CDATA[$F{invc_buy_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="500" y="0" width="50" height="15" uuid="a8275492-de8c-412f-a9d4-62bd02c950cd"/>
+				<textFieldExpression><![CDATA[$F{rgtr_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="b6cae3db-ca68-4ea8-8082-1360f7f6f242"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="0e20be80-c7c4-4979-84eb-4f7c71a512ca"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="80708880-3a8b-41f0-9fa5-b23b25af5c71"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="3582890c-ff9f-4a10-8d4d-04a9bb26f1bb"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

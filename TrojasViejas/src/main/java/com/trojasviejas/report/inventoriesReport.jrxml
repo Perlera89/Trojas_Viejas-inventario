@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1530e1b4-3f90-486f-84ea-950d7e2b3482">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[call sp_r_inventories()]]>
+	</queryString>
+	<field name="dtl_amount" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inventory_stock" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dtl_price_per_unit" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_cat" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_tp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="invc_buy_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="32" width="281" height="33" uuid="93cc9dc5-2a0b-4c89-bd30-2edc3c2eab4a"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Reporte de inventario]]></text>
+			</staticText>
+			<image>
+				<reportElement x="432" y="3" width="121" height="97" uuid="732fbcad-48fa-4e24-95b7-66af563c91f9"/>
+				<imageExpression><![CDATA["C:\\Users\\cb272\\Desktop\\TrojasViejas\\src\\main\\resources\\img\\isotipo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="f9d328e8-1877-418b-86ed-b81d0f85509b"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="64" height="15" uuid="18d8259c-e859-452d-b44e-b4c5a24dade8"/>
+				<text><![CDATA[Comprado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="64" y="21" width="79" height="15" uuid="89e86af4-0f11-4f9c-9bfe-759f510d1e43"/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="143" y="20" width="68" height="15" uuid="d06f9c4b-6102-43b2-9b05-791106b3ab2d"/>
+				<text><![CDATA[Existencias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="211" y="19" width="45" height="15" uuid="cb61b240-17d4-4419-ad38-5e929fc0b489"/>
+				<text><![CDATA[C/U]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="256" y="19" width="79" height="15" uuid="3aa7abfe-ce8b-4cf8-9409-6e7862b0a6d4"/>
+				<text><![CDATA[Categoría]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="335" y="21" width="79" height="15" uuid="23f9324c-6e34-42e5-a437-162acf2f04ed"/>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="439" y="19" width="114" height="15" uuid="7c4d617d-cedb-4df6-a76c-536615b1f00b"/>
+				<text><![CDATA[Fecha de compra]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="18ac8e52-44cc-47be-88c1-c79062bd6a41"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="64" height="15" uuid="b63510e6-8e5e-44fd-aab8-bc9ea83b52cd"/>
+				<textFieldExpression><![CDATA[$F{dtl_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="143" y="0" width="68" height="15" uuid="5c9f5a95-ad94-4047-8222-0fcbcd81613e"/>
+				<textFieldExpression><![CDATA[$F{inventory_stock}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="256" y="1" width="79" height="15" uuid="e6ba9691-498e-487a-a946-ce29db45bb4d"/>
+				<textFieldExpression><![CDATA[$F{item_cat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="335" y="1" width="97" height="15" uuid="09946d80-c79a-4546-8b73-86ec262c6315"/>
+				<textFieldExpression><![CDATA[$F{item_tp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="439" y="1" width="114" height="15" uuid="5358373b-4791-46fc-b08f-e5050e6f39dc"/>
+				<textFieldExpression><![CDATA[$F{invc_buy_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="64" y="1" width="79" height="15" uuid="176dc0f7-fc0f-44d5-8d4b-21e2f97bb8e5"/>
+				<textFieldExpression><![CDATA[$F{item_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="211" y="1" width="45" height="15" uuid="ee3834d4-334c-4015-adbe-cff97a26f4cf"/>
+				<textFieldExpression><![CDATA[$F{dtl_price_per_unit}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="69464489-1ec6-4824-a97d-854e59546bb1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="daef1269-43e6-4b65-96a0-ef91f81f50ab"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="f83bdbdc-bc5c-49c4-bf65-8dcf73a75179"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="944b4f5e-6813-455e-9d95-06cacd799be5"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="367e02b1-2827-485e-a533-a8585ade30f6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+		d.invc_id,
+		e.prov_name,
+		SUM(b.dtl_amount)`dtl_amount`,
+		d.invc_total_amount,
+		d.invc_buy_date 
+
+	FROM
+		inventories AS a 
+		INNER JOIN invoice_details AS b ON a.inventory_invc_dtl_id_fk = b.dtl_id
+		INNER JOIN items AS c ON b.dtl_item_id_fk = c.item_id
+		INNER JOIN invoices AS d ON b.dtl_invc_id_fk = d.invc_id
+		INNER JOIN providers AS e ON d.invc_prov_id_fk = e.prov_id
+	WHERE
+		YEAR(d.invc_buy_date) = $P{parameter1}
+	GROUP BY invc_id
+	ORDER BY invc_id;
+]]>
+	</queryString>
+	<field name="invc_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prov_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dtl_amount" class="java.math.BigDecimal"/>
+	<field name="invc_total_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="invc_buy_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="99" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="35" width="263" height="33" uuid="f6a16cb5-7d83-4499-9eb9-8b4bc57a1525"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Facturas]]></text>
+			</staticText>
+			<image>
+				<reportElement x="432" y="0" width="121" height="97" uuid="afa0ba00-4871-47bc-be90-a25a88ed0341"/>
+				<imageExpression><![CDATA["C:\\Users\\cb272\\Desktop\\TrojasViejas\\src\\main\\resources\\img\\isotipo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="d0d13004-2a88-4136-aacf-4d3cb34f21c5"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="111" height="15" uuid="4a5ab93c-5493-4cdc-be51-d0a55dfebacd"/>
+				<text><![CDATA[invc_id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="111" y="19" width="111" height="15" uuid="54e88b1a-eb3b-41b1-8860-225f17248bae"/>
+				<text><![CDATA[prov_name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="222" y="19" width="111" height="15" uuid="67ba9d53-fe62-4249-95bf-fb34028e76bd"/>
+				<text><![CDATA[dtl_amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="333" y="19" width="111" height="15" uuid="5d3e4390-d5e1-4273-9e2e-8cc7fb4be7da"/>
+				<text><![CDATA[invc_total_amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="444" y="19" width="111" height="15" uuid="88fafa3b-1375-42ed-973c-e4c95ac65a64"/>
+				<text><![CDATA[invc_buy_date]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="1c611bad-7e9c-4a1b-b686-f135324ac1ed"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="111" height="15" uuid="9cf5a072-5ce3-4c56-abbb-eb1add48c38e"/>
+				<textFieldExpression><![CDATA[$F{invc_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="111" y="0" width="111" height="15" uuid="ca1f965b-d1de-41f7-951d-b24f7e46e668"/>
+				<textFieldExpression><![CDATA[$F{prov_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="222" y="0" width="111" height="15" uuid="0db0f860-d2ad-46a7-868e-7b3c6a92649c"/>
+				<textFieldExpression><![CDATA[$F{dtl_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="333" y="0" width="111" height="15" uuid="3e3d7a25-838d-4408-965c-f7fe1306c704"/>
+				<textFieldExpression><![CDATA[$F{invc_total_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="444" y="0" width="111" height="15" uuid="c5de0652-c109-4a12-ae2c-c64be3d842ee"/>
+				<textFieldExpression><![CDATA[$F{invc_buy_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="82ac0276-be36-4e4a-b1c8-180a71c77111"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="e4fb4968-7f52-443a-be9c-c6205efc5dd8"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="65e5befa-46e7-419c-ab5f-f931fa7cd750"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="572a6edb-3b67-4ed8-9fe0-bf0babab4e39"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
