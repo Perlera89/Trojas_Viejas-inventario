@@ -10,7 +10,7 @@
 	<parameter name="parameter1" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT DISTINCT
-		d.invc_id,
+
 		e.prov_name,
 		SUM(b.dtl_amount)`dtl_amount`,
 		d.invc_total_amount,
@@ -25,12 +25,8 @@
 	WHERE
 		YEAR(d.invc_buy_date) = $P{parameter1}
 	GROUP BY invc_id
-	ORDER BY invc_id;
-]]>
+	ORDER BY invc_id;]]>
 	</queryString>
-	<field name="invc_id" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="prov_name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -69,24 +65,20 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" x="0" y="19" width="111" height="15" uuid="4a5ab93c-5493-4cdc-be51-d0a55dfebacd"/>
-				<text><![CDATA[invc_id]]></text>
+				<reportElement style="Column header" x="0" y="19" width="111" height="15" uuid="54e88b1a-eb3b-41b1-8860-225f17248bae"/>
+				<text><![CDATA[Proveedor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="111" y="19" width="111" height="15" uuid="54e88b1a-eb3b-41b1-8860-225f17248bae"/>
-				<text><![CDATA[prov_name]]></text>
+				<reportElement style="Column header" x="142" y="19" width="111" height="15" uuid="67ba9d53-fe62-4249-95bf-fb34028e76bd"/>
+				<text><![CDATA[Artículos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="222" y="19" width="111" height="15" uuid="67ba9d53-fe62-4249-95bf-fb34028e76bd"/>
-				<text><![CDATA[dtl_amount]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="333" y="19" width="111" height="15" uuid="5d3e4390-d5e1-4273-9e2e-8cc7fb4be7da"/>
-				<text><![CDATA[invc_total_amount]]></text>
+				<reportElement style="Column header" x="292" y="19" width="111" height="15" uuid="5d3e4390-d5e1-4273-9e2e-8cc7fb4be7da"/>
+				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="444" y="19" width="111" height="15" uuid="88fafa3b-1375-42ed-973c-e4c95ac65a64"/>
-				<text><![CDATA[invc_buy_date]]></text>
+				<text><![CDATA[Fecha de compra]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -99,24 +91,20 @@
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement style="Detail" x="0" y="0" width="111" height="15" uuid="9cf5a072-5ce3-4c56-abbb-eb1add48c38e"/>
-				<textFieldExpression><![CDATA[$F{invc_id}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="Detail" x="111" y="0" width="111" height="15" uuid="ca1f965b-d1de-41f7-951d-b24f7e46e668"/>
+				<reportElement style="Detail" x="0" y="1" width="111" height="15" uuid="ca1f965b-d1de-41f7-951d-b24f7e46e668"/>
 				<textFieldExpression><![CDATA[$F{prov_name}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="Detail" x="222" y="0" width="111" height="15" uuid="0db0f860-d2ad-46a7-868e-7b3c6a92649c"/>
-				<textFieldExpression><![CDATA[$F{dtl_amount}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="Detail" x="333" y="0" width="111" height="15" uuid="3e3d7a25-838d-4408-965c-f7fe1306c704"/>
-				<textFieldExpression><![CDATA[$F{invc_total_amount}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Detail" x="444" y="0" width="111" height="15" uuid="c5de0652-c109-4a12-ae2c-c64be3d842ee"/>
 				<textFieldExpression><![CDATA[$F{invc_buy_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="292" y="1" width="111" height="15" uuid="3e3d7a25-838d-4408-965c-f7fe1306c704"/>
+				<textFieldExpression><![CDATA[$F{invc_total_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="142" y="1" width="111" height="15" uuid="0db0f860-d2ad-46a7-868e-7b3c6a92649c"/>
+				<textFieldExpression><![CDATA[$F{dtl_amount}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
