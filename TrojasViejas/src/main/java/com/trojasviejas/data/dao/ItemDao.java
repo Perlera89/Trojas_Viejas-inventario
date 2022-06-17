@@ -3,7 +3,6 @@ package com.trojasviejas.data.dao;
 import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.component.login.MessageSuccessDialog;
 import com.trojasviejas.data.connectiondb.Conexion;
-import com.trojasviejas.demo.form.FrmLogin;
 import com.trojasviejas.models.entity.ItemModel;
 import com.trojasviejas.models.utility.CategoryType;
 import com.trojasviejas.models.utility.ItemType;
@@ -14,13 +13,12 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 public class ItemDao {
     MessageErrorDialog errorMessage = new MessageErrorDialog(new JFrame());
     MessageSuccessDialog successMessage = new MessageSuccessDialog(new JFrame());
  
-    public ArrayList<ItemModel> ListItems() {
+    public ArrayList<ItemModel> ListItems(int state) {
         ItemModel item = null;
         Connection connection = null;
         CallableStatement query = null;
@@ -32,7 +30,8 @@ public class ItemDao {
             connection = Conexion.getConnection();
             items = new ArrayList<>();
 
-            query = connection.prepareCall("{call sp_s_items()}");
+            query = connection.prepareCall("{call sp_s_items(?)}");
+            query.setInt(1, state);
             result = query.executeQuery();
 
             while (result.next()) {
@@ -71,13 +70,15 @@ public class ItemDao {
 
         try {
             connection = Conexion.getConnection();
-            query = connection.prepareCall("{call sp_i_items(?,?,?,?,?)}");
+            query = connection.prepareCall("{call sp_i_items(?,?,?,?,?,?)}");
 
             query.setString(1, itemM.getName());
             query.setString(2, itemM.getDescription());
             query.setInt(3, itemM.getMinimunAmount());
             query.setInt(4, itemM.getCategory().ordinal() + 1);
             query.setInt(5, itemM.getType().ordinal() + 1);
+            query.setInt(6, 1);
+            
             query.execute();
 
             successMessage.showMessage("ÉXITO", "El artículo "+itemM.getName()+" ha sido agregado exitosamente.");
@@ -127,18 +128,19 @@ public class ItemDao {
         }
     }
 
-    public void DeleteItem(int id) {
+    public void changeStateInItem(int id, int state) {
 
         Connection connection = null;
         CallableStatement query = null;
 
         try {
             connection = Conexion.getConnection();
-            query = connection.prepareCall("{call sp_d_items(?)}");
+            query = connection.prepareCall("{call sp_change_state_items(?,?)}");
 
             query.setInt(1, id);
+            query.setInt(2, state);
             query.execute();
-            successMessage.showMessage("ÉXITO",  "Artículo eliminado exitosamente.");
+            successMessage.showMessage("ÉXITO",  "Datos de estado actualizados exitosamente.");
 
         } catch (SQLException e) {
              try{
@@ -151,7 +153,6 @@ public class ItemDao {
             
         } finally {
             try {
-
                 Conexion.close(query);
                 Conexion.close(connection);
             } catch (SQLException e) {
@@ -162,7 +163,7 @@ public class ItemDao {
 
     }
 
-    public ArrayList<ItemModel> findItem(String search_string) {
+    public ArrayList<ItemModel> findItem(String search_string, int state) {
 
         ItemModel item = null;
         Connection connection = null;
@@ -176,9 +177,9 @@ public class ItemDao {
 
             items = new ArrayList<>(); //entiende el tipo que es
 
-            query = connection.prepareCall("{call sp_find_items(?)}");
-            
+            query = connection.prepareCall("{call sp_find_items(?,?)}");         
             query.setString(1, search_string);
+            query.setInt(2, state);
             
             result = query.executeQuery();
 

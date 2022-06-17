@@ -6,13 +6,9 @@ package com.trojasviejas.data.dao;
 
 import com.trojasviejas.data.connectiondb.Conexion;
 import com.trojasviejas.models.entity.InvoicesModel;
-import com.trojasviejas.models.entity.ProviderModel;
-import com.trojasviejas.models.utility.Months;
-import com.trojasviejas.models.utility.ProviderType;
 import com.trojasviejas.models.viewmodel.InvoicesVM;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;

@@ -154,7 +154,8 @@ public class FrmReport extends javax.swing.JPanel {
 //        Map parametro = new HashMap();
 //        parametro.put("parameter1", txtDate.getText());
         
-        String archive = "C:/Users/cb272/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/itemsReport.jasper";
+        //String archive = "C:/Users/cb272/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/itemsReport.jasper";
+        String archive = "C:/Users/Willian/Desktop/Proyecto/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/itemsReport.jasper";
         try {
             connection = Conexion.getConnection();
             jr = (JasperReport) JRLoader.loadObjectFromFile(archive);
@@ -177,7 +178,8 @@ public class FrmReport extends javax.swing.JPanel {
 //        Map parametro = new HashMap();
 //        parametro.put("parameter1", txtDate.getText());
         
-        String archive = "C:/Users/cb272/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/inventoriesReport.jasper";
+        //String archive = "C:/Users/cb272/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/inventoriesReport.jasper";
+        String archive = "C:/Users/Willian/Desktop/Proyecto/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/itemsReport.jasper";
         try {
             connection = Conexion.getConnection();
             jr = (JasperReport) JRLoader.loadObjectFromFile(archive);
@@ -200,7 +202,8 @@ public class FrmReport extends javax.swing.JPanel {
         Map parametro = new HashMap();
         parametro.put("parameter1", txtDate.getText());
         
-        String archive = "C:/Users/cb272/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/invoiceReport.jasper";
+       // String archive = "C:/Users/cb272/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/invoiceReport.jasper";
+        String archive = "C:/Users/Willian/Desktop/Proyecto/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/itemsReport.jasper";
         try {
             connection = Conexion.getConnection();
             jr = (JasperReport) JRLoader.loadObjectFromFile(archive);

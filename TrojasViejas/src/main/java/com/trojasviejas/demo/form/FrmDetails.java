@@ -559,7 +559,7 @@ public class FrmDetails extends javax.swing.JFrame {
         ItemDao itemDao = new ItemDao();
         //enviando al metodo de relleno del combo el array con los items encontrados
         //segun la busqueda
-        setDataToComboBoxItem(itemDao.findItem(cbbItems.getSelectedItem().toString()));         
+        setDataToComboBoxItem(itemDao.findItem(cbbItems.getSelectedItem().toString(),1));         
         }else{
            errorMessage.showMessage("ERROR", "Busqueda vacía. Defina previamente el nombre del item que desea buscar.");
         }

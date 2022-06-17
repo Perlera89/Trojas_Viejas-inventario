@@ -246,35 +246,71 @@ END$$
 
 /*Mostrar*/
 Delimiter $$
-CREATE PROCEDURE sp_s_items()
+CREATE PROCEDURE sp_s_items(
+	p_state INT
+)
 BEGIN
-	SELECT a.item_id,
-			a.item_name,
-            a.item_minimun_amount,
-            a.item_description,
-            (a.item_cat+0)`item_cat`,
-            (a.item_tp+0)`item_tp` 
-	FROM items AS a;
+	IF(p_state = 1)
+    THEN
+		SELECT a.item_id,
+				a.item_name,
+				a.item_minimun_amount,
+				a.item_description,
+				(a.item_cat+0)`item_cat`,
+				(a.item_tp+0)`item_tp`,
+				a.item_state
+		FROM items AS a
+    WHERE a.item_state = 1;
+    ELSEIF(p_state = 0)
+    THEN
+			SELECT a.item_id,
+				a.item_name,
+				a.item_minimun_amount,
+				a.item_description,
+				(a.item_cat+0)`item_cat`,
+				(a.item_tp+0)`item_tp`,
+				a.item_state
+		FROM items AS a
+		WHERE a.item_state = 0;
+    END IF;
 END$$
 
 /*Otros*/
 /*Encontrar un articulo*/
 Delimiter $$
 CREATE PROCEDURE sp_find_items(
-	search_string VARCHAR (50)
+	search_string VARCHAR (50),
+    p_state INT
 )
 BEGIN
-	SELECT a.item_id,
-			a.item_name,
-            a.item_minimun_amount,
-            a.item_description,
-            (a.item_cat+0)'item_cat',
-            (a.item_tp+0)'item_tp'
-	FROM items AS a
-    WHERE 
-    a.item_name LIKE concat('%',search_string,'%') OR
-    a.item_cat LIKE concat('%',search_string,'%') OR 
-    a.item_tp LIKE concat('%',search_string,'%') ;
+	IF(p_state = 0)
+    THEN
+		SELECT a.item_id,
+				a.item_name,
+				a.item_minimun_amount,
+				a.item_description,
+				(a.item_cat+0)'item_cat',
+				(a.item_tp+0)'item_tp'
+		FROM items AS a
+		WHERE item_state = 0 AND
+		(a.item_name LIKE concat('%',search_string,'%') OR
+		a.item_cat LIKE concat('%',search_string,'%') OR 
+		a.item_tp LIKE concat('%',search_string,'%')) ;    
+    ELSEIF(p_state = 1)
+    THEN
+		SELECT a.item_id,
+				a.item_name,
+				a.item_minimun_amount,
+				a.item_description,
+				(a.item_cat+0)'item_cat',
+				(a.item_tp+0)'item_tp'
+		FROM items AS a
+		WHERE item_state = 1 AND
+		(a.item_name LIKE concat('%',search_string,'%') OR
+		a.item_cat LIKE concat('%',search_string,'%') OR 
+		a.item_tp LIKE concat('%',search_string,'%')) ;        
+    END IF;
+
 END$$
 
 
@@ -328,11 +364,10 @@ END$$
 /*Eliminar*/
 Delimiter $$
 CREATE PROCEDURE sp_d_invoices(
-	p_invc_id INT
+	p_item_id int
 )
 BEGIN
-	DELETE FROM invoices
-	WHERE(`invc_id` = p_invc_id);
+	UPDATE items set item_state = 0 WHERE (`item_id` = p_item_id);
 END$$
 
 /*Mostrar*/

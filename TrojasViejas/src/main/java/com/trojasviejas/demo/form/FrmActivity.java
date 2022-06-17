@@ -3,6 +3,7 @@ package com.trojasviejas.demo.form;
 import com.trojasviejas.component.login.MessageErrorDialog;
 
 import com.trojasviejas.data.dao.ActivityDao;
+import static com.trojasviejas.demo.form.FrmMain.getStringSearch;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.utility.*;
 import com.trojasviejas.swing.scroll.ScrollBar;
@@ -29,7 +30,7 @@ public class FrmActivity extends javax.swing.JPanel {
         pnlCard1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/register.png")), "REGISTROS", String.valueOf(countRegisters)));
         pnlCard2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/income.png")), "ENTRADAS", String.valueOf(countEntries)));
         pnlCard3.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/output.png")), "SALIDAS", String.valueOf(countOutputs)));
-    
+
         //muestra todos los registros nuevamente
         pnlCard1.setFilter(new MouseAdapter() {
             @Override
@@ -57,7 +58,7 @@ public class FrmActivity extends javax.swing.JPanel {
             }
 
         });
-    
+
     }
 
     private void initTableData() {
@@ -72,7 +73,7 @@ public class FrmActivity extends javax.swing.JPanel {
 
         //cargando datos a la tabla
         showActivityRegistersFilterBy("ALL");
-        
+
         if (FrmMain.main.getExtendedState() == JFrame.NORMAL) {
             tblActivity.getColumnModel().getColumn(0).setMaxWidth(0);
             tblActivity.getColumnModel().getColumn(0).setMinWidth(0);
@@ -88,30 +89,26 @@ public class FrmActivity extends javax.swing.JPanel {
         listFound = null;
         if (!_search.isBlank() || !_search.isEmpty()) {
 
-            int year=0;
-            String month="";
+            int year = 0;
+            String month = "";
             //obteniendo el mes y año
             try {
                 String search[] = _search.split("_");
                 month = search[0];
                 year = Math.abs(Integer.parseInt(search[1]));
-                
-                System.out.println("mes: "+month+" año: "+year);
-
-                ActivityDao activitiesDao = new ActivityDao();
 
                 //verificando que los resultados de la busqueda no vengan vacios
-                if (month.isBlank()==true) {
-                   // if (!activitiesDao.findBy("NULL", year).isEmpty()) { 
-                         //guardando la busqueda en una array para ser usada en los filtros de cajas          
-                        listFound = activitiesDao.findBy("NULL", year);                   
+                if (month.isBlank() == true) {
+                    // if (!activitiesDao.findBy("NULL", year).isEmpty()) { 
+                    //guardando la busqueda en una array para ser usada en los filtros de cajas          
+                    listFound = activitiesDao.findBy("NULL", year);
                     //}
 
                 } else {
                     //verificando que los resultados de la busqueda no vengan vacios
-                       // if ( !activitiesDao.findBy(month, year).isEmpty()) {
-                        //guardando la busqueda en una array para ser usada en los filtros de cajas          
-                        listFound = activitiesDao.findBy(month, year); 
+                    // if ( !activitiesDao.findBy(month, year).isEmpty()) {
+                    //guardando la busqueda en una array para ser usada en los filtros de cajas          
+                    listFound = activitiesDao.findBy(month, year);
                     //}
 
                 }
@@ -126,90 +123,94 @@ public class FrmActivity extends javax.swing.JPanel {
             }
 
         }
-        
+
         typeFilterAplicated = "SEARCH";
     }
-        
-        
-        
-        int countRegisters = 0;
-        int countEntries = 0;
-        int countOutputs = 0;
-    public void showActivityRegistersFilterBy(String tipo_filtro){
+
+    int countRegisters = 0;
+    int countEntries = 0;
+    int countOutputs = 0;
+
+    ActivityDao activitiesDao = null;
+    ArrayList<ActivityVM> activity = null;
+
+    public void showActivityRegistersFilterBy(String tipo_filtro) {
         //RESETEANDO LOS CONTADORES      
         countRegisters = 0;
         countEntries = 0;
         countOutputs = 0;
 
-        
         //LIMPIANDO LA TABLA
         clearRowsInTable();
-        
-       ActivityDao activitiesDao = new ActivityDao();
-       ArrayList<ActivityVM> activity = activitiesDao.list();  
-        
+
+        activitiesDao = new ActivityDao();
+        activity = activitiesDao.list();
+
         if (listFound != null) {
             activity = listFound;
         }
-        //MOSTRAR TODOS LOS DATOS
-        switch (tipo_filtro) {
-            case "ALL" -> {
-                for (var i : activity) {
-                    if (i.getTypeAction().equals(ActionType.ENTRADA)) {
-                        countEntries++;
-                    }
-                    if (i.getTypeAction().equals(ActionType.SALIDA)) {
-                        countOutputs++;
-                    }
+        if (!activity.isEmpty()) {
+            //MOSTRAR TODOS LOS DATOS
+            switch (tipo_filtro) {
+                case "ALL" -> {
+                    for (var i : activity) {
+                        if (i.getTypeAction().equals(ActionType.ENTRADA)) {
+                            countEntries++;
+                        }
+                        if (i.getTypeAction().equals(ActionType.SALIDA)) {
+                            countOutputs++;
+                        }
 
-                    //AGREGANDO LA FILA A LA TABLA
-                    add_rows_to_table(i);
-                    //Sumando los registros de actividades
-                    countRegisters ++;
-                }
-                //ACTUALIZANDO LOS CONTADORES
-                initCard();
-            }
-
-            //FILTRAR LAAS FILAS POR LA ACCION DE ENTRADA
-            case "ENTRADA" -> {
-                for (var i : activity) {
-                    if (i.getTypeAction().equals(ActionType.ENTRADA)) {
-
-                        //contando los registros de tipo entrada
-                        countEntries++;
                         //AGREGANDO LA FILA A LA TABLA
                         add_rows_to_table(i);
+                        //Sumando los registros de actividades
                         countRegisters++;
                     }
                 }
-                //ACTUALIZANDO LOS CONTADORES
-                initCard();
-            }
-            //FILTRAR LAS FILAS POR LA CATEGORIA DE ACCESORIOS
-            case "SALIDA" -> {
-                for (var i : activity) {
-                    if (i.getTypeAction().equals(ActionType.SALIDA)) {
-                        
-                        //contando los registros de tipo salida
-                        countOutputs ++; 
-                        
-                        //AGREGANDO LA FILA A LA TABLA 
-                        add_rows_to_table(i);
-                        countRegisters++;
-                    }
-                }
-                //ACTUALIZANDO LOS CONTADORES
-                initCard();
 
+                //FILTRAR LAAS FILAS POR LA ACCION DE ENTRADA
+                case "ENTRADA" -> {
+                    for (var i : activity) {
+                        if (i.getTypeAction().equals(ActionType.ENTRADA)) {
+
+                            //contando los registros de tipo entrada
+                            countEntries++;
+                            //AGREGANDO LA FILA A LA TABLA
+                            add_rows_to_table(i);
+                            countRegisters++;
+                        }
+                    }
+                }
+                //FILTRAR LAS FILAS POR LA CATEGORIA DE ACCESORIOS
+                case "SALIDA" -> {
+                    for (var i : activity) {
+                        if (i.getTypeAction().equals(ActionType.SALIDA)) {
+
+                            //contando los registros de tipo salida
+                            countOutputs++;
+
+                            //AGREGANDO LA FILA A LA TABLA 
+                            add_rows_to_table(i);
+                            countRegisters++;
+                        }
+                    }
+
+                }
+                default -> {
+                }
             }
-            default -> {
-            }
-        } 
+            //ACTUALIZANDO LOS CONTADORES
+            initCard();
+        } else {
+            //ACTUALIZANDO LOS CONTADORES
+            initCard();
+        }
+
     }
-    
-      //formato para la fecha
-     SimpleDateFormat formatDate  = new SimpleDateFormat("dd-MM-yyyy");
+
+    //formato para la fecha
+    SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
+
     private void add_rows_to_table(ActivityVM register) {
         //AGREGANDO FILA A  lA TABLA
         tblActivity.addRow(new Object[]{
@@ -227,19 +228,29 @@ public class FrmActivity extends javax.swing.JPanel {
             formatDate.format(register.getDate())
         });
     }
-    //borrado de las filas de la tabla
-    private void clearRowsInTable(){
+
+        DefaultTableModel modelo = null;
+    int filas[] = null;
+    int index;
+    //Método para limpiar la tabla
+    private void clearRowsInTable() {
         try {
-            DefaultTableModel modelo = (DefaultTableModel) tblActivity.getModel();
-            int filas = tblActivity.getRowCount();
-            for (int i = 0; filas > i; i++) {
-                modelo.removeRow(0);
+            modelo = (DefaultTableModel) tblActivity.getModel();
+
+            tblActivity.selectAll();
+
+            filas = tblActivity.getSelectedRows();
+            index = filas.length - 1;
+            for (int i = 0; i < filas.length; i++) {
+                modelo.removeRow(index);
+                index--;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+             MessageErrorDialog message = new MessageErrorDialog(new JFrame());
+            message.showMessage("Error", "Error al limpiar la tabla.");
         }
     }
-        
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -378,16 +389,16 @@ public class FrmActivity extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     FrmActivity thisForm = this;
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-       
-        if (tblActivity.getSelectedRowCount() > 0) {
-              WindowActivity updateRegister = new WindowActivity();
-            updateRegister =  transferDataToForm(updateRegister);
-            updateRegister.activity = thisForm;
-            WindowActivity.main(updateRegister);          
 
-       }else{
-            MessageErrorDialog message =  new MessageErrorDialog(new JFrame());
-            message.showMessage("Error","Debe seleccionar un registro previamente para "
+        if (tblActivity.getSelectedRowCount() > 0) {
+            WindowActivity updateRegister = new WindowActivity();
+            updateRegister = transferDataToForm(updateRegister);
+            updateRegister.activity = thisForm;
+            WindowActivity.main(updateRegister);
+
+        } else {
+            MessageErrorDialog message = new MessageErrorDialog(new JFrame());
+            message.showMessage("Error", "Debe seleccionar un registro previamente para "
                     + "actualizar su descripción.");
         }
 
@@ -425,20 +436,22 @@ public class FrmActivity extends javax.swing.JPanel {
         typeFilterAplicated = "ALL";
     }//GEN-LAST:event_btnRefreshActionPerformed
 
-    String typeFilterAplicated="";
-    FrmMain frmMenu;
-    public void showByFilterSelected(){
+    String typeFilterAplicated = "";
+
+    public void showByFilterSelected() {
         switch (typeFilterAplicated) {
-            case "SALIDA" -> showActivityRegistersFilterBy(ActionType.SALIDA.toString());
-            case "ENTRADA" -> showActivityRegistersFilterBy(ActionType.ENTRADA.toString());
-            case "SEARCH" -> 
-                      runSearch(frmMenu.getStringSearch());          
+            case "SALIDA" ->
+                showActivityRegistersFilterBy(ActionType.SALIDA.toString());
+            case "ENTRADA" ->
+                showActivityRegistersFilterBy(ActionType.ENTRADA.toString());
+            case "SEARCH" ->
+                runSearch(getStringSearch());
             default -> {
-                    showActivityRegistersFilterBy("ALL");
+                showActivityRegistersFilterBy("ALL");
             }
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.Buttons.ActionButton btnRefresh;
     private com.trojasviejas.swing.Buttons.ActionButton btnRegister;

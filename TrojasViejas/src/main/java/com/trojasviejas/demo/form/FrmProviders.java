@@ -2,7 +2,6 @@ package com.trojasviejas.demo.form;
 
 import com.trojasviejas.component.login.MessageSuccessDialog;
 import com.trojasviejas.component.login.MessageErrorDialog;
-import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.demo.form.window.*;
 import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.*;
@@ -11,11 +10,9 @@ import javax.swing.*;
 import java.awt.*;
 import com.trojasviejas.component.main.event.IProviderEventAction;
 import com.trojasviejas.data.dao.ProviderDao;
-import com.trojasviejas.models.viewmodel.InvoicesVM;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmProviders extends javax.swing.JPanel {
@@ -71,49 +68,44 @@ public class FrmProviders extends javax.swing.JPanel {
             int IndexRow;
 
             @Override
-            public void update(ProviderModel entity) {
-                if (tblProviders.getSelectedRowCount() > 0) {
+            public void update(ProviderModel entity) {            
+                    if (tblProviders.getSelectedRowCount() > 0) {
                     IndexRow = tblProviders.getSelectedRow();
 
                     //Pasar datos al formulario de Windows
                     WindowProvider formulario = new WindowProvider();
                     formulario.frmProvider = form;
 
-                    formulario.id = (int) tblProviders.getValueAt(IndexRow, 0);
+                    formulario.id = (int)tblProviders.getValueAt(IndexRow, 0);
                     formulario.txtName.setText(tblProviders.getValueAt(IndexRow, 1).toString());
                     formulario.txtPhone.setText(tblProviders.getValueAt(IndexRow, 2).toString());
                     formulario.txtEmail.setText(tblProviders.getValueAt(IndexRow, 3).toString());
                     formulario.txtAddress.setText(tblProviders.getValueAt(IndexRow, 4).toString());
                     formulario.cbbType.setSelectedItem(tblProviders.getValueAt(IndexRow, 5).toString());
-                    
+
                     WindowHome.main(WindowType.PROVIDER, formulario, true);
                     repaint();
                 } else {
-                    errotDialogResult.showMessage("Advertencia","Para actualizar un registro debe seleccionar uno previamente");
+                    errotDialogResult.showMessage("Advertencia", "Para actualizar un registro debe seleccionar uno previamente");
                 }
             }
 
             @Override
             public void delete(ProviderModel entity) {
                 if (tblProviders.getSelectedRowCount() > 0) {
-                    MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
-                    dialogResult.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el proveedor " + entity.getName() + "?");
+                    // MessageErrorDialog dialogResult = new MessageErrorDialog(new FrmLogin());
+                    errotDialogResult.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el proveedor " + entity.getName() + "?");
 
-                    if (dialogResult.getMessageType() == MessageErrorDialog.MessageType.OK) {
-
-                        ProviderDao prvD = new ProviderDao();
-//                    ArrayList<Object> selectedtRow = new ArrayList<>();
-//                    selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
-
-                        int IndexRow = tblProviders.getSelectedRow();
-                        prvD.DeleteProvider(Integer.parseInt(tblProviders.getValueAt(IndexRow, 0).toString()));
+                    if (errotDialogResult.getMessageType() == MessageErrorDialog.MessageType.OK) {
+                        IndexRow = tblProviders.getSelectedRow();
+                        prvD.DeleteProvider((int)tblProviders.getValueAt(IndexRow, 0));
                         clearRowsInTable();
                         initTableData();
                     } else {
                         repaint();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Para eliminar un registro debe seleccionar uno previamente", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+                    errotDialogResult.showMessage("ADVERTENCIA", "Para eliminar un registro debe seleccionar uno previamente");
                 }
 
             }
@@ -126,9 +118,7 @@ public class FrmProviders extends javax.swing.JPanel {
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(Color.white);
 
-        //tblProviders.addRow(new ProviderModel("Manuel Perlera", "7738-8921", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.VENDEDOR).toRowTable(eventAction));
-        //tblProviders.addRow(new ProviderModel("Maria Pineda", "7738-8921", "manuenitoo@gmail.com", "Barrio el carmen", ProviderType.DONADOR).toRowTable(eventAction));
-        //Cargando datos a la tabla
+       //Cargando datos a la tabla
         f_eventAction = eventAction;
         showProviders("ALL", f_eventAction);
 
@@ -142,13 +132,17 @@ public class FrmProviders extends javax.swing.JPanel {
         tblProviders.getColumnModel().getColumn(0).setResizable(false);
 
     }
-
+ 
+   
+    DefaultTableModel modelo = null;
+    int rowsSelected[] = null;
     private void clearRowsInTable() {
+            int indexRow;
         try {
             tblProviders.selectAll();
-            DefaultTableModel modelo = (DefaultTableModel) tblProviders.getModel();
-            int rowsSelected[] = tblProviders.getSelectedRows();
-            int indexRow = rowsSelected.length - 1;
+            modelo = (DefaultTableModel) tblProviders.getModel();
+            rowsSelected = tblProviders.getSelectedRows();
+            indexRow = rowsSelected.length - 1;
             for (int i = 0; i < rowsSelected.length; i++) {
                 modelo.removeRow(indexRow);
                 indexRow--;
@@ -156,30 +150,24 @@ public class FrmProviders extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
         }
-
-//        tblProviders.selectAll();
-//
-//        int rowsSelected[] = tblProviders.getSelectedRows();
-//        int indexRow = rowsSelected.length - 1;
-//        for (int i = 0; i < rowsSelected.length; i++) {
-//            modelo.removeRow(indexRow);
-//            indexRow--;
-//        }
     }
 
     ArrayList<ProviderModel> listFound = null;
     
     public void filterByStringSearch(String busqueda){
-        ProviderDao prvDao = new ProviderDao();
         
-        listFound = prvDao.ListProviders(busqueda);
+        listFound = prvD.ListProviders(busqueda);
         showProviders("ALL", f_eventAction);
     }
     
-    private int contador_commercial = 0;
-    private int contador_donor = 0;
-    private int contador_provider = 0;
+    int contador_commercial = 0;
+    int contador_donor = 0;
+    int contador_provider = 0;
 
+    
+        
+    ProviderDao prvD = new ProviderDao();
+    ArrayList<ProviderModel> providers = null;
     public void showProviders(String tipo_filtro, IProviderEventAction eventAction) {
         //Reseteando los contadores     
         contador_commercial = 0;
@@ -188,80 +176,76 @@ public class FrmProviders extends javax.swing.JPanel {
 
         //Limpiando la tabla
         clearRowsInTable();
-        
-        ProviderDao prvD = new ProviderDao();
-        ArrayList<ProviderModel> providers = prvD.ListProviders();
+         providers = prvD.ListProviders();
         
         if(listFound != null){
             providers = listFound;
         }
 
-        //Mostrar todos los datos
-        switch (tipo_filtro) {
-            case "ALL" -> {
-                for (var item : providers) {
-                    if (item.getType().equals(ProviderType.COMERCIAL)) {
-                        contador_commercial++;
-                    }
-                    if (item.getType().equals(ProviderType.DONANTE)) {
-                        contador_donor++;
-                    }
-
-                    //Agregando la fila a la tabla y los botones de acciones
-                    add_rows_to_table(item, eventAction);
-                    contador_provider++;
-                }
-
-                //Actualizando los contadores
-                initCard();
-            }
-
-            //filtrar las filas por la categoria de "COMERCIAL"
-            case "COMERCIAL" -> {
-                for (var i : providers) {
-                    if (i.getType().equals(ProviderType.COMERCIAL)) {
-                        contador_commercial++;
+        if (!providers.isEmpty()) {
+            //Mostrar todos los datos
+            switch (tipo_filtro) {
+                case "ALL" -> {
+                    for (var item : providers) {
+                        if (item.getType().equals(ProviderType.COMERCIAL)) {
+                            contador_commercial++;
+                        }
+                        if (item.getType().equals(ProviderType.DONANTE)) {
+                            contador_donor++;
+                        }
 
                         //Agregando la fila a la tabla y los botones de acciones
-                        add_rows_to_table(i, eventAction);
+                        add_rows_to_table(item, eventAction);
                         contador_provider++;
                     }
+
                 }
-                //Actualizando los contadores
-                initCard();
 
-            }
-            //Filtrar filas por tipo de "DONANTE"
-            case "DONANTE" -> {
-                for (var i : providers) {
-                    if (i.getType().equals(ProviderType.DONANTE)) {
-                        contador_donor++;
+                //filtrar las filas por la categoria de "COMERCIAL"
+                case "COMERCIAL" -> {
+                    for (var i : providers) {
+                        if (i.getType().equals(ProviderType.COMERCIAL)) {
+                            contador_commercial++;
 
-                        //Agregando la fila a la tabla y los botones
-                        add_rows_to_table(i, eventAction);
-                        contador_provider++;
+                            //Agregando la fila a la tabla y los botones de acciones
+                            add_rows_to_table(i, eventAction);
+                            contador_provider++;
+                        }
                     }
                 }
+                //Filtrar filas por tipo de "DONANTE"
+                case "DONANTE" -> {
+                    for (var i : providers) {
+                        if (i.getType().equals(ProviderType.DONANTE)) {
+                            contador_donor++;
 
-                //Actualizando los contadores
-                initCard();
+                            //Agregando la fila a la tabla y los botones
+                            add_rows_to_table(i, eventAction);
+                            contador_provider++;
+                        }
+                    }              
+                }
+                default -> {
+                }
+                
             }
-            default -> {
-            }
+             initCard();
+        }else{
+                 initCard();
         }
+
     }
 
+    ProviderModel prvM = null;
     private void add_rows_to_table(ProviderModel prvM, IProviderEventAction eventAction) {
         //Agregando fila a la tabla
-        tblProviders.addRow(new ProviderModel(
-                prvM.getId(),
-                prvM.getName(),
-                prvM.getNumberPhone(),
-                prvM.getEmail(),
-                prvM.getAddress(),
-                prvM.getType()
-        ).toRowTable(eventAction));
-
+                prvM.getId();
+                prvM.getName();
+                prvM.getNumberPhone();
+                prvM.getEmail();
+                prvM.getAddress();
+                prvM.getType();
+        tblProviders.addRow(prvM.toRowTable(eventAction));
     }
 
     @SuppressWarnings("unchecked")

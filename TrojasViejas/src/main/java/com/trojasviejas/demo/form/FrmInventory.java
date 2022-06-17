@@ -51,20 +51,21 @@ public class FrmInventory extends javax.swing.JPanel {
 
         });
 
-        //EJECUTA FILTRO DE FILAS POR LAS QUE PERTENECEN A HERRAMIENTAS
+
+                //EJECUTA FILTRO DE LAS FILAS QUE PERTECEN A ACCESORIOS
         pnlCard4.setFilter(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                showInventory("TOOLS");
+                showInventory("ACCESORIES");
             }
 
         });
 
-        //EJECUTA FILTRO DE LAS FILAS QUE PERTECEN A ACCESORIOS
+        //EJECUTA FILTRO DE FILAS POR LAS QUE PERTENECEN A HERRAMIENTAS
         pnlCard5.setFilter(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                showInventory("ACCESORIES");
+                showInventory("TOOLS");
             }
 
         });
@@ -85,14 +86,17 @@ public class FrmInventory extends javax.swing.JPanel {
 
     }
 
+    DefaultTableModel modelo = null;
+    int filas[] = null;
+    int index ;
     private void clearRowsInTable() {
         try {
-            DefaultTableModel modelo = (DefaultTableModel) tblInventory.getModel();
+            modelo = (DefaultTableModel) tblInventory.getModel();
 
             tblInventory.selectAll();
 
-            int filas[] = tblInventory.getSelectedRows();
-            int index = filas.length - 1;
+            filas = tblInventory.getSelectedRows();
+            index = filas.length - 1;
             for (int i = 0; i < filas.length; i++) {
                 modelo.removeRow(index);
                 index--;
@@ -112,19 +116,18 @@ public class FrmInventory extends javax.swing.JPanel {
     public void filterByStringSearch(String _search) {
         //resetendo el array de busqueda
         listFound = null;
-
-        InventoryDao inventories = new InventoryDao();
+        
         if (cbbStock.getSelectedIndex() >= 0) {
 
             //guardando la busqueda en una array para ser usada en los filtros de cajas
             //y filtrando los items con stock
             if (cbbStock.getSelectedItem().equals("Agotados")) {
-                listFound = itemsWithStock(inventories.findBy(_search), 0);
+                listFound = itemsWithStock(inventoryDao.findBy(_search), 0);
             }else{
-                listFound = itemsWithStock(inventories.findBy(_search), 1);
+                listFound = itemsWithStock(inventoryDao.findBy(_search), 1);
             }
         } else {
-            listFound = itemsWithStock(inventories.findBy(_search), 1);
+            listFound = itemsWithStock(inventoryDao.findBy(_search), 1);
         }
         showInventory("ALL");
 
@@ -138,6 +141,8 @@ public class FrmInventory extends javax.swing.JPanel {
     private int countTools = 0;
     private int countAccesories = 0;
 
+    InventoryDao inventoryDao = null;
+    ArrayList<InventoryVM> inventories = null;
     public void showInventory(String tipo_filtro) {
         //RESETEANDO LOS CONTADORES      
         countItem = 0;
@@ -149,13 +154,15 @@ public class FrmInventory extends javax.swing.JPanel {
         //LIMPIANDO LA TABLA
         clearRowsInTable();
 
-        InventoryDao inventory = new InventoryDao();
-        ArrayList<InventoryVM> inventories = itemsWithStock(inventory.list(), 1);
+        inventoryDao = new InventoryDao();
+        inventories = itemsWithStock(inventoryDao.list(), 1);
 
         if (listFound != null) {
             inventories = listFound;
         }
-        //MOSTRAR TODOS LOS DATOS
+        
+        if (!inventories.isEmpty()) {
+  //MOSTRAR TODOS LOS DATOS
         switch (tipo_filtro) {
             case "ALL" -> {
                 for (var i : inventories) {
@@ -174,8 +181,6 @@ public class FrmInventory extends javax.swing.JPanel {
                     countStock += i.getStock();
                     countItem++;
                 }
-                //ACTUALIZANDO LOS CONTADORES
-                initCard();
             }
             //FILTRAR LAAS FILAS POR ITEMS BAJO EL MINIMO
             case "ITEMS_ON_LIMIT" -> {
@@ -198,8 +203,6 @@ public class FrmInventory extends javax.swing.JPanel {
                     }
 
                 }
-                //ACTUALIZANDO LOS CONTADORES
-                initCard();
             }
             //FILTRAR LAAS FILAS POR LA CATEGORIA DE HERRAMIENTAS
             case "TOOLS" -> {
@@ -217,8 +220,6 @@ public class FrmInventory extends javax.swing.JPanel {
                         countItem++;
                     }
                 }
-                //ACTUALIZANDO LOS CONTADORES
-                initCard();
             }
             //FILTRAR LAS FILAS POR LA CATEGORIA DE ACCESORIOS
             case "ACCESORIES" -> {
@@ -237,13 +238,19 @@ public class FrmInventory extends javax.swing.JPanel {
                         countItem++;
                     }
                 }
-                //ACTUALIZANDO LOS CONTADORES
-                initCard();
+
 
             }
             default -> {
             }
         }
+                //ACTUALIZANDO LOS CONTADORES
+                initCard();
+        }else{
+                //ACTUALIZANDO LOS CONTADORES
+                initCard();          
+        }
+        
     }
 
     private void add_rows_to_table(InventoryVM inventory) {
@@ -274,7 +281,7 @@ public class FrmInventory extends javax.swing.JPanel {
             }
         } else {
             for (var i : inventories) {
-                //filtrando por las filas que tienen exitencias 0
+                //filtrando por las filas que tienen exitencias > 0
                 if (i.getStock() > 0) {
                     inventary.add(i);
                 }

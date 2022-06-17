@@ -91,7 +91,6 @@ public class WindowHome extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtProveedor1 = new com.trojasviejas.swing.fields.LinearTextField();
         pnlHome = new com.trojasviejas.swing.panels.PanelRound();
         pnlHeader = new com.trojasviejas.swing.panels.PanelBorder();
         btnClose = new com.trojasviejas.swing.Buttons.ActionButton();
@@ -99,9 +98,6 @@ public class WindowHome extends javax.swing.JFrame {
         lblEncabezado = new javax.swing.JLabel();
         panelBorder2 = new com.trojasviejas.swing.panels.PanelBorder();
         pnlContainer = new javax.swing.JPanel();
-
-        txtProveedor1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtProveedor1.setLabelText("Nombre");
 
         setLocationByPlatform(true);
         setUndecorated(true);
@@ -265,6 +261,5 @@ public class WindowHome extends javax.swing.JFrame {
     private javax.swing.JPanel pnlContainer;
     private com.trojasviejas.swing.panels.PanelBorder pnlHeader;
     private com.trojasviejas.swing.panels.PanelRound pnlHome;
-    private com.trojasviejas.swing.fields.LinearTextField txtProveedor1;
     // End of variables declaration//GEN-END:variables
 }

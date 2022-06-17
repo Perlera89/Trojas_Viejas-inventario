@@ -12,14 +12,15 @@ import javax.swing.JFrame;
 public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     
     public static FrmMain main;
-    private FrmHome home;
-    private FrmProviders providers;
-    private FrmItems items;
-    private FrmInvoices invoices;
-    private FrmInventory inventory;
-    private FrmActivity activity;
-    private FrmSetting setting;
-    private FrmReport report;
+   // private FrmHome home;
+    //private FrmProviders providers;
+    //private FrmItems items;
+    //private FrmInvoices invoices;
+   // private FrmInventory inventory;
+    //private FrmActivity activity;
+    //private FrmSetting setting;
+    
+    private JComponent currentForm;
     
     public static LoginVM login;
     public static int idLogin;
@@ -31,58 +32,70 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
         pnlMenu.initWinButton(this, pnlContainer);
         
         main = this;
-        home = new FrmHome();
-        providers = new FrmProviders();
-        items = new FrmItems();
-        invoices = new FrmInvoices();
-        inventory = new FrmInventory();
-        activity = new FrmActivity();
-        setting = new FrmSetting();
-        report = new FrmReport();
+        //home = new FrmHome();
+       // providers = new FrmProviders();
+       // items = new FrmItems();
+       // invoices = new FrmInvoices();
+        //inventory = new FrmInventory();
+       // activity = new FrmActivity();
+       // setting = new FrmSetting();
         
         pnlMenu.initMoving(this);
         pnlMenu.addEventMenuSelected(new IEventMenuSelected(){
             @Override
             public void selected(int index) {
                 if(index == 0){
-                    home.reloadData();
-                    setForm(home);
+                    
+                    //home.reloadData();
+                    currentForm = new FrmHome();
+                    setForm(currentForm);
                      panelHeader1.txtSearch.setToolTipText("Año por el cual desea filtrar las información");                   
                     //indice del dashboard
                     indexForm = 0;
+                    
                 } else if(index == 1){
+                    currentForm = new FrmProviders();             
+                    setForm(currentForm);
                     panelHeader1.txtSearch.setToolTipText("Nombre del proveedor | Tipo de proveedor");              
                     //indice del proveedores
                     indexForm = 1;
-                    setForm(providers);
-                } else if(index == 2){
                     
-                    setForm(items);
+                } else if(index == 2){
+                    currentForm = new FrmItems(); 
+                    setForm(currentForm);
                     panelHeader1.txtSearch.setToolTipText("Nombre del artículo | Categoría de artículo | Tipo de artículo");                    
-                    //indice del proveedores
-                    indexForm = 2;
+                    //indice del items
+                    indexForm = 2;                                      
+
                 } else if(index == 3){
-                    setForm(invoices);
+                    currentForm = new FrmInvoices(); 
+                    setForm(currentForm);             
                     panelHeader1.txtSearch.setToolTipText("_año | mes_año");
                     //indice del facturas
                     indexForm = 3;
+                    
                 } else if(index == 4){
-                    setForm(inventory);
+                    currentForm = new FrmInventory(); 
+                    setForm(currentForm);
                     panelHeader1.txtSearch.setToolTipText("Nombre del artículo | Categoría de artículo | Tipo de artículo");
                     //indice del inventario
                     indexForm = 4;
                 } else if(index == 5){
-                    setForm(activity);
+                    currentForm = new FrmActivity(); 
+                    setForm(currentForm);
                     
                     //indice del registros de actividad
                     indexForm = 5;
                     panelHeader1.txtSearch.setToolTipText("_año | mes_año");
                 } else if(index == 6){
-                    setForm(report);
+                    
                     //indice del reportes
                     indexForm = 6;
+                    currentForm = new FrmReport(); 
+                    setForm(currentForm);
                 }else if(index == 11){
-                    setForm(setting);
+                    currentForm = new FrmSetting(); 
+                    setForm(currentForm);
                 } 
             }
         });
@@ -123,8 +136,9 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
         //llama al metodo en la entidad que ejecuta la busqueda
         //System.out.println("buscando en dashboard: "+ stringSearch);
         //home <- objeto de la entidad donde se buscara en metodo que ejecuta la busqueda
-        home.filterByStringSearch(stringSearch);
-        setForm(home);
+            FrmHome home = (FrmHome)currentForm;
+            home.filterByStringSearch(stringSearch);
+       // setForm(home);
     }
 
     @Override
@@ -132,6 +146,7 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
         //llama al metodo en la entidad que ejecuta la busqueda
         //System.out.println("buscando en providers: "+ stringSearch);
         //providers <- objeto de la entidad donde se buscara en metodo que ejecuta la busqueda
+        FrmProviders providers = (FrmProviders)currentForm;
         providers.filterByStringSearch(stringSearch);
     }
 
@@ -139,6 +154,7 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     public void findForItems(String stringSearch) {
         //llama al metodo en la entidad que ejecuta la busqueda
         //items <- objeto de la entidad donde se buscara en metodo que ejecuta la busqueda
+        FrmItems items = (FrmItems)currentForm;
         items.filterByStringSearch(stringSearch);
         
     }
@@ -146,15 +162,15 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     @Override
     public void findForInvoices(String stringSearch) {
         //llama al metodo en la entidad que ejecuta la busqueda
-        System.out.println("buscando en invoices: "+ stringSearch);
         //invoices <- objeto de la entidad donde se buscara en metodo que ejecuta la busqueda
+        FrmInvoices invoices = (FrmInvoices)currentForm;
         invoices.filterByStringSearch(stringSearch);
     }
 
     @Override
     public void findForInventory(String stringSearch) { 
         //llama al metodo en la entidad que ejecuta la busqueda
-        System.out.println("buscando en inventory: " + stringSearch);   
+        FrmInventory inventory = (FrmInventory)currentForm;
         inventory.filterByStringSearch(stringSearch);
         inventory.showInventory("ALL");
     }
@@ -166,22 +182,18 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
 
     @Override
     public void findForActivityRegisters(String stringSearch) {
-                
+         
+        FrmActivity activity = (FrmActivity)currentForm;
         //llama al metodo en la entidad que ejecuta la busqueda
-        System.out.println("buscando en registers: "+ stringSearch);
         activity.runSearch(stringSearch);
         //hara que se muestren los datos, y los contadores udaran la informacion de la busqueda para ;os filtros
         activity.showActivityRegistersFilterBy("ALL");
-        
-        activity.frmMenu = formMain;
        
         
     }
 
     @Override
     public void findForReports(String stringSearch) {
-        //llama al metodo en la entidad que ejecuta la busqueda
-        System.out.println("buscando en reports: "+ stringSearch);
 
         
     }

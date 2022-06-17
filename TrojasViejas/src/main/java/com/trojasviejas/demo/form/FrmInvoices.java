@@ -183,13 +183,16 @@ public class FrmInvoices extends javax.swing.JPanel {
         Image img=new ImageIcon(image).getImage();
         return img;
     }
+    
+    int rowsSelected[] = null;
+    int indexRow;
     //Método para limpiar la tabla
     private void clearRowsInTable() {
         try {
             tblInvoices.selectAll();
             DefaultTableModel modelo = (DefaultTableModel) tblInvoices.getModel();
-            int rowsSelected[] = tblInvoices.getSelectedRows();
-            int indexRow = rowsSelected.length - 1;
+            rowsSelected = tblInvoices.getSelectedRows();
+            indexRow = rowsSelected.length - 1;
             for (int i = 0; i < rowsSelected.length; i++) {
                 modelo.removeRow(indexRow);
                 indexRow--;
@@ -201,10 +204,10 @@ public class FrmInvoices extends javax.swing.JPanel {
     }
 
     ArrayList<InvoicesVM> listFound = null;
-
+    InvoicesDao invDao =  null;
     public void filterByStringSearch(String busqueda) {
         listFound = null;
-        InvoicesDao invDao = new InvoicesDao();
+        invDao = new InvoicesDao();
 
         String[] Separador = busqueda.split("_");
 
@@ -228,7 +231,9 @@ public class FrmInvoices extends javax.swing.JPanel {
     int amoutPurshases = 0;
     int amount_items = 0;
     double sumTotals = 0;
-
+    
+    InvoicesDao invD = null;
+    ArrayList<InvoicesVM> invoices =null;
     public void showInvoices(String tipo_filtro, IInvoicesEventAction eventAction) {
         //Reseteando los contadores     
         amoutPurshases = 0;
@@ -238,28 +243,30 @@ public class FrmInvoices extends javax.swing.JPanel {
         //Limpiando la tabla
         clearRowsInTable();
 
-        InvoicesDao invD = new InvoicesDao();
-        ArrayList<InvoicesVM> invoices = invD.ListInvoices();
+        invD = new InvoicesDao();
+        invoices = invD.ListInvoices();
 
         if (listFound != null) {
             invoices = listFound;
         }
 
         //Mostrar todos los datos
-        switch (tipo_filtro) {
-            case "ALL" -> {
-                for (var i : invoices) {
-                    add_rows_to_table(i, eventAction);
-                    amoutPurshases++;
-                    amount_items += i.getAmountItems();
-                    sumTotals += Double.parseDouble(i.getTotalAmount());
+        if (!invoices.isEmpty()) {
+            switch (tipo_filtro) {
+                case "ALL" -> {
+                    for (var i : invoices) {
+                        add_rows_to_table(i, eventAction);
+                        amoutPurshases++;
+                        amount_items += i.getAmountItems();
+                        sumTotals += Double.parseDouble(i.getTotalAmount());
+                    }
+                    //paintInvoicesWithZeroStock();
+                    initCard();
                 }
-                //paintInvoicesWithZeroStock();
-                initCard();
             }
         }
+        
     }
-    //Actualizando los contadores
 
     private void add_rows_to_table(InvoicesVM invM, IInvoicesEventAction eventAction) {
 
@@ -273,16 +280,6 @@ public class FrmInvoices extends javax.swing.JPanel {
                 invM.getStock()
         ).toRowTable(eventAction));
        
-    }
-    private void paintInvoicesWithZeroStock(){
-        //int index = tblInvoices.getRowCount() - 1;
-        for (int i = 0; i < tblInvoices.getRowCount(); i++) {
-            if ((int)tblInvoices.getValueAt(i, 4) == 0) {
-                //codigo para pintar aqui
-
-            }
-        }
-        
     }
 
     @SuppressWarnings("unchecked")

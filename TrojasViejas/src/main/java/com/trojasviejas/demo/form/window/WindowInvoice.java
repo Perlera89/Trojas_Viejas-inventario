@@ -55,12 +55,14 @@ public class WindowInvoice extends javax.swing.JPanel {
     
 
     int[] ids = null;
+    ProviderDao invDao = null;
+    ArrayList<ProviderModel> invA = null;
     public void CargarComboBox(String name) {
         
-        ProviderDao invDao = new ProviderDao();
-        
-        ArrayList<ProviderModel> invA = invDao.ListProviders(name);
+        invDao = new ProviderDao();    
+        invA = invDao.ListProviders(name);
         ids = new int[invA.size()];
+        
         if (!invA.isEmpty()) {
             cbbProvider.removeAllItems();
 
@@ -88,6 +90,7 @@ public class WindowInvoice extends javax.swing.JPanel {
         lblImagen = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         cbbProvider = new com.trojasviejas.swing.ComboBox();
+        txtProvider = new com.trojasviejas.swing.fields.LinearTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -146,6 +149,8 @@ public class WindowInvoice extends javax.swing.JPanel {
         txtDate.setDateFormatString("dd/MM/yyyy");
         txtDate.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
+        lblImagen.setToolTipText("Imagen en vertical");
+
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/search.png"))); // NOI18N
         btnBuscar.setContentAreaFilled(false);
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -154,11 +159,10 @@ public class WindowInvoice extends javax.swing.JPanel {
             }
         });
 
-        cbbProvider.setEditable(true);
         cbbProvider.setForeground(new java.awt.Color(100, 100, 100));
-        cbbProvider.setToolTipText("Nombre del proveedor a buscar");
+        cbbProvider.setToolTipText("Nombre del proveedor a elegir");
         cbbProvider.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbbProvider.setLabeText("Proveedor");
+        cbbProvider.setLabeText("Elige el proveedor");
         cbbProvider.setLineColor(new java.awt.Color(255, 255, 255));
         cbbProvider.setVerifyInputWhenFocusTarget(false);
         cbbProvider.addItemListener(new java.awt.event.ItemListener() {
@@ -172,21 +176,32 @@ public class WindowInvoice extends javax.swing.JPanel {
             }
         });
 
+        txtProvider.setToolTipText("Nombre del proveedor a buscar");
+        txtProvider.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtProvider.setLabelText("Proveedor");
+        txtProvider.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtProviderKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblRuta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(cbbProvider, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtProvider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbbProvider, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBuscar)
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -196,28 +211,31 @@ public class WindowInvoice extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtProvider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar))
+                        .addGap(25, 25, 25)
+                        .addComponent(cbbProvider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
+                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnBuscar)
-                            .addComponent(cbbProvider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
-                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblImagen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
                         .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(25, 25, 25)
                         .addComponent(lblRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -315,19 +333,19 @@ public class WindowInvoice extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbbProviderActionPerformed
 
+    private void txtProviderKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProviderKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtProviderKeyTyped
+
     //busca un proveedor
     private void findProvider(){
-        if (cbbProvider.getSelectedItem() != null) {
-            if (!cbbProvider.getSelectedItem().toString().isBlank() && !cbbProvider.getSelectedItem().toString().isEmpty()) {
-                CargarComboBox(cbbProvider.getSelectedItem().toString());
+            if (!txtProvider.getText().isBlank() && !txtProvider.getText().isEmpty()) {
+                CargarComboBox(txtProvider.getText());
             } else {
-                cbbProvider.setSelectedItem("");
+                txtProvider.setText("");
+                txtProvider.requestFocus();
                 errorMessage.showMessage("ERROR", "Nombre del proveedor nulo o vacío. Ingrese un nombre para realizar la busqueda.");
             }
-        } else {
-            cbbProvider.setSelectedItem("");
-            errorMessage.showMessage("ERROR", "Nombre del proveedor nulo o vacío. Ingrese un nombre para realizar la busqueda.");
-        }
         
     }
     //retorna el tipo de proveedor concantenado al final del nombre del proveedor
@@ -407,6 +425,7 @@ public class WindowInvoice extends javax.swing.JPanel {
     private javax.swing.JLabel lblImagen;
     public com.trojasviejas.swing.buttons.ButtonOutline lblRuta;
     public com.toedter.calendar.JDateChooser txtDate;
+    public com.trojasviejas.swing.fields.LinearTextField txtProvider;
     public com.trojasviejas.swing.fields.LinearTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

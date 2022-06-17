@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class FrmItems extends javax.swing.JPanel {
 
-    MessageErrorDialog errorMessage = new MessageErrorDialog(new FrmLogin());
+    MessageErrorDialog errorMessage = new MessageErrorDialog(new JFrame());
     private FrmPassword password;
     FrmItems form = this;
     private IItemEventAction f_eventAction;
@@ -29,13 +29,13 @@ public class FrmItems extends javax.swing.JPanel {
     public FrmItems() {
         setOpaque(false);
         initComponents();
-        initCard(0, 0, 0);
+        initCard();
         initTableData();
         scroll.setBorder(BorderFactory.createEmptyBorder());
     }
 
-    private void initCard(int contadorItem, int contador_tools, int contador_accesories) {
-        pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "ARTÍCULOS",""+contadorItem));
+    private void initCard() {
+        pnlCardCountItems.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/item.png")), "ARTÍCULOS",""+contador_item));
         pnlCardCountCategory1.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/tools.png")), "HERRAMIENTAS",""+contador_tools));
         pnlCardCountCategory2.setData(new CardModel(new ImageIcon(getClass().getResource("/icons/accessories.png")), "ACCESORIOS",""+contador_accesories));
 
@@ -101,30 +101,9 @@ public class FrmItems extends javax.swing.JPanel {
                     errorMessage.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el articulo " + entity.getName() + "?");
 
                     if (errorMessage.getMessageType() == MessageErrorDialog.MessageType.OK) {
-                        password = new FrmPassword();
-                        password.setVisible(true);
-                        password.toFront();
-                        ItemDao item = new ItemDao();
-                        ArrayList<Object> selectedtRow = new ArrayList<>();
-                        selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
-                        password.addEventButtonOK(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent ae) {
-                                if (FrmMain.login.getPassword().equals(password.getInputCode())) {
-                                    item.DeleteItem(Integer.parseInt(selectedtRow.get(0).toString()));
-                                    password.setVisible(false);
-                                    listFound = null;
-                                    showItems("ALL", f_eventAction);
-
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Contraseña incorrecta. \n", "Error", JOptionPane.ERROR_MESSAGE);
-                                }
-                            }
-                        });
-                        reloadChoosedFilter();
-                    } else {
-                        repaint();
-                    }
+                                    itemDao.changeStateInItem((int)tblItems.getValueAt(tblItems.getSelectedRow(), 0), 0);
+                                    reloadChoosedFilter();
+                    } 
                 } else {
 
                     errorMessage.showMessage("ADVERTENCIA", "Para eliminar debe seleccionar un registro.");
@@ -144,30 +123,22 @@ public class FrmItems extends javax.swing.JPanel {
         showItems("ALL", f_eventAction);
 
         //Agregndo los contadores
-        initCard(contador_item, contador_tools, contador_accesories);
-
-        //Ocultando columnas de la tabla tblItems
-        tblItems.getColumnModel().getColumn(0).setMaxWidth(0);
-        tblItems.getColumnModel().getColumn(0).setMinWidth(0);
-        tblItems.getColumnModel().getColumn(0).setPreferredWidth(0);
-        tblItems.getColumnModel().getColumn(0).setResizable(false);
-
-        tblItems.getColumnModel().getColumn(3).setMaxWidth(0);
-        tblItems.getColumnModel().getColumn(3).setMinWidth(0);
-        tblItems.getColumnModel().getColumn(3).setPreferredWidth(0);
-        tblItems.getColumnModel().getColumn(3).setResizable(false);
+        initCard();
 
     }
 
+    DefaultTableModel modelo = null;
+    int filas[] = null;
+    int index;
     //Método para limpiar la tabla
     private void clearRowsInTable() {
         try {
-            DefaultTableModel modelo = (DefaultTableModel) tblItems.getModel();
+            modelo = (DefaultTableModel) tblItems.getModel();
 
             tblItems.selectAll();
 
-            int filas[] = tblItems.getSelectedRows();
-            int index = filas.length - 1;
+            filas = tblItems.getSelectedRows();
+            index = filas.length - 1;
             for (int i = 0; i < filas.length; i++) {
                 modelo.removeRow(index);
                 index--;
@@ -181,16 +152,34 @@ public class FrmItems extends javax.swing.JPanel {
     ArrayList<ItemModel> listFound = null;
 
     public void filterByStringSearch(String search_string) {
-        listFound = null;
-        ItemDao item = new ItemDao();
-        listFound = item.findItem(search_string);
-        showItems("ALL", f_eventAction);//Filtrar todos los datos
+
+        //habilitados
+        switch (cbbState.getSelectedIndex()) {
+            case 0 -> {
+                listFound = itemDao.findItem(search_string,1);
+                showItems("ALL", f_eventAction);
+                filter = "HABILITADOS";
+                //desabilitados
+            }
+            case 1 -> {
+                listFound = itemDao.findItem(search_string, 0);
+                showItems("ALL",f_eventAction);
+                filter = "DESABILITADOS";
+            }
+            default -> {
+                    listFound = itemDao.findItem(search_string,1);
+                    showItems("ALL", f_eventAction);
+                    filter = "HABILITADOS";
+            }
+        }
     }
 
     private int contador_item = 0;
     private int contador_tools = 0;
     private int contador_accesories = 0;
-
+    
+    ItemDao itemDao = new ItemDao();
+    ArrayList<ItemModel> items = null;
     public void showItems(String tipo_filtro, IItemEventAction eventAction) {
         //Reseteando los contadores     
         contador_item = 0;
@@ -199,66 +188,63 @@ public class FrmItems extends javax.swing.JPanel {
 
         //Limpiando la tabla
         clearRowsInTable();
-
-        ItemDao itemDao = new ItemDao();
-        ArrayList<ItemModel> items = itemDao.ListItems();
+        items = itemDao.ListItems(1);
+        
         if (listFound != null) {
             items = listFound;
         }
 
-        //Mostrar todos los datos
-        switch (tipo_filtro) {
-            case "ALL" -> {
-                for (var item : items) {
-                    if (item.getCategory().equals(CategoryType.HERRAMIENTAS)) {
-                        contador_tools++;
-                    }
-                    if (item.getCategory().equals(CategoryType.ACCESORIOS)) {
-                        contador_accesories++;
-                    }
-
-                    //Agregando la fila a la tabla y los botones de acciones
-                    add_rows_to_table(item, eventAction);
-                    contador_item++;
-                }
-
-                //Actualizando los contadores
-                initCard(contador_item, contador_tools, contador_accesories);
-            }
-
-            //Filtrar filas por categoría de "HERRAMIENTAS"
-            case "HERRAMIENTAS" -> {
-                for (var item : items) {
-                    if (item.getCategory().equals(CategoryType.HERRAMIENTAS)) {
-                        contador_tools++;
-
-                        //Agregando la fila a la tabla y los botones
-                        add_rows_to_table(item, eventAction);
-                        contador_item++;
-                    }
-                }
-
-                //Actualizando los contadores
-                initCard(contador_item, contador_tools, contador_accesories);
-            }
-            //filtrar las filas por la categoria de "ACCESORIOS"
-            case "ACCESORIOS" -> {
-                for (var item : items) {
-                    if (item.getCategory().equals(CategoryType.ACCESORIOS)) {
-                        contador_accesories++;
+        if (!items.isEmpty()) {
+            //Mostrar todos los datos
+            switch (tipo_filtro) {
+                case "ALL" -> {
+                    for (var item : items) {
+                        if (item.getCategory().equals(CategoryType.HERRAMIENTAS)) {
+                            contador_tools++;
+                        }
+                        if (item.getCategory().equals(CategoryType.ACCESORIOS)) {
+                            contador_accesories++;
+                        }
 
                         //Agregando la fila a la tabla y los botones de acciones
                         add_rows_to_table(item, eventAction);
                         contador_item++;
                     }
                 }
-                //Actualizando los contadores
-                initCard(contador_item, contador_tools, contador_accesories);
 
+                //Filtrar filas por categoría de "HERRAMIENTAS"
+                case "HERRAMIENTAS" -> {
+                    for (var item : items) {
+                        if (item.getCategory().equals(CategoryType.HERRAMIENTAS)) {
+                            contador_tools++;
+
+                            //Agregando la fila a la tabla y los botones
+                            add_rows_to_table(item, eventAction);
+                            contador_item++;
+                        }
+                    }
+                }
+                //filtrar las filas por la categoria de "ACCESORIOS"
+                case "ACCESORIOS" -> {
+                    for (var item : items) {
+                        if (item.getCategory().equals(CategoryType.ACCESORIOS)) {
+                            contador_accesories++;
+
+                            //Agregando la fila a la tabla y los botones de acciones
+                            add_rows_to_table(item, eventAction);
+                            contador_item++;
+                        }
+                    }
+                }
+                default -> {
+                }
             }
-            default -> {
-            }
+
+            initCard();
+        } else {
+            initCard();
         }
+
     }
 
     private void add_rows_to_table(ItemModel item, IItemEventAction eventAction) {
@@ -276,8 +262,15 @@ public class FrmItems extends javax.swing.JPanel {
     public void reloadChoosedFilter() {
         if (listFound != null) {
             filterByStringSearch(getStringSearch()); //Obtiene el texto de la busqueda realizada
-        } else {
-            showItems("ALL", f_eventAction);
+        } else if(cbbState.getSelectedIndex()==0){
+            listFound = itemDao.ListItems(1);
+            showItems(filter, f_eventAction);
+        }else if(cbbState.getSelectedIndex()==1){
+            listFound = itemDao.ListItems(0);
+            showItems(filter, f_eventAction);
+        }else{
+            listFound = itemDao.ListItems(1);
+            showItems(filter, f_eventAction);
         }
     }
 
@@ -295,6 +288,8 @@ public class FrmItems extends javax.swing.JPanel {
         scroll = new javax.swing.JScrollPane();
         tblItems = new com.trojasviejas.swing.tables.item.ItemsTable();
         btnRefresh = new com.trojasviejas.swing.Buttons.ActionButton();
+        cbbState = new com.trojasviejas.swing.ComboBox();
+        btnUpdateState = new com.trojasviejas.swing.Buttons.ActionButton();
 
         setBackground(new java.awt.Color(232, 241, 242));
         setPreferredSize(new java.awt.Dimension(1000, 664));
@@ -352,12 +347,43 @@ public class FrmItems extends javax.swing.JPanel {
             }
         });
         scroll.setViewportView(tblItems);
+        if (tblItems.getColumnModel().getColumnCount() > 0) {
+            tblItems.getColumnModel().getColumn(0).setMinWidth(0);
+            tblItems.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblItems.getColumnModel().getColumn(0).setMaxWidth(0);
+            tblItems.getColumnModel().getColumn(3).setMinWidth(0);
+            tblItems.getColumnModel().getColumn(3).setPreferredWidth(0);
+            tblItems.getColumnModel().getColumn(3).setMaxWidth(0);
+        }
 
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refresh.png"))); // NOI18N
         btnRefresh.setToolTipText("Resetea los filtros aplicados y/o los datos de la busqueda realizada");
         btnRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnRefreshMousePressed(evt);
+            }
+        });
+
+        cbbState.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Habilitados", "Desabilitados" }));
+        cbbState.setSelectedIndex(-1);
+        cbbState.setToolTipText("Filtro que muestra los articulos habilitados y desabilitados");
+        cbbState.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        cbbState.setLabeText("Elija estado del artículo");
+        cbbState.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbStateActionPerformed(evt);
+            }
+        });
+
+        btnUpdateState.setBackground(new java.awt.Color(0, 102, 102));
+        btnUpdateState.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdateState.setText("Actualizar estado");
+        btnUpdateState.setToolTipText("Actualizar estado del artículo");
+        btnUpdateState.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        btnUpdateState.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnUpdateState.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateStateActionPerformed(evt);
             }
         });
 
@@ -368,12 +394,17 @@ public class FrmItems extends javax.swing.JPanel {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
                     .addGroup(pnlTableLayout.createSequentialGroup()
                         .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblProviders)
-                            .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(pnlTableLayout.createSequentialGroup()
+                                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnUpdateState, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(cbbState, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
@@ -381,14 +412,18 @@ public class FrmItems extends javax.swing.JPanel {
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblProviders)
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlTableLayout.createSequentialGroup()
+                        .addComponent(lblProviders)
+                        .addGap(19, 19, 19)
+                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUpdateState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cbbState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -425,10 +460,47 @@ public class FrmItems extends javax.swing.JPanel {
         showItems("ALL", f_eventAction);
     }//GEN-LAST:event_btnRefreshMousePressed
 
+    String filter = "ALL";
+    private void cbbStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbStateActionPerformed
+        //habilitados
+        if (cbbState.getSelectedIndex() == 0) {
+            //colocando el array de las listas de busqueda como nula
+            //para que solo se carguen los que estan desabilitados
+            listFound = itemDao.ListItems(1);
+
+            //recargando todos los datos
+            showItems("ALL", f_eventAction);
+
+            filter = "HABILITADOS";
+            btnUpdateState.setVisible(false);
+            //desabilitados
+        } else if (cbbState.getSelectedIndex() == 1) {
+
+            //colocando en la lista de filtrado los datos de los items desabilitados
+            listFound = itemDao.ListItems(0);
+            showItems("ALL",f_eventAction);
+
+            filter = "DESABILITADOS";
+            btnUpdateState.setVisible(true);
+        }
+    }//GEN-LAST:event_cbbStateActionPerformed
+
+    private void btnUpdateStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStateActionPerformed
+            if (tblItems.getSelectedRowCount() > 0) {
+             itemDao.changeStateInItem((int)tblItems.getValueAt(tblItems.getSelectedRow(), 0),1);
+             listFound = itemDao.ListItems(0);
+                showItems("ALL", f_eventAction);
+        }else{
+                errorMessage.showMessage("ERROR","Para actualizar el estado debe elegir el artículo previamente.");
+            }
+    }//GEN-LAST:event_btnUpdateStateActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.Buttons.ActionButton btnNew;
     private com.trojasviejas.swing.Buttons.ActionButton btnRefresh;
+    private com.trojasviejas.swing.Buttons.ActionButton btnUpdateState;
+    private com.trojasviejas.swing.ComboBox cbbState;
     private javax.swing.JLabel lblProviders;
     private com.trojasviejas.component.main.PanelCard pnlCardCountCategory1;
     private com.trojasviejas.component.main.PanelCard pnlCardCountCategory2;

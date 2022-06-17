@@ -5,10 +5,8 @@ import com.trojasviejas.data.dao.ProviderDao;
 import com.trojasviejas.demo.form.FrmProviders;
 import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.ProviderType;
-import java.awt.Window;
 import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 public class WindowProvider extends javax.swing.JPanel {
 
@@ -176,9 +174,11 @@ public class WindowProvider extends javax.swing.JPanel {
                     ProviderDao provD = new ProviderDao();
 
                     //dando valores por defecto sin no hay numero y email
+                    provM.setNumberPhone(txtPhone.getText());
                     if (txtPhone.getText().isEmpty() && txtPhone.getText().isBlank()){
                         provM.setNumberPhone("Sin número");                       
                     }
+                    provM.setEmail(txtEmail.getText()); 
                     if (txtEmail.getText().isEmpty() && txtEmail.getText().isBlank()){
                         provM.setEmail("Sin dirección");                       
                     }
@@ -197,9 +197,11 @@ public class WindowProvider extends javax.swing.JPanel {
                     ProviderModel provM = new ProviderModel();
                     ProviderDao provD = new ProviderDao();
 
+                    provM.setNumberPhone(txtPhone.getText()); 
                     if (txtPhone.getText().isEmpty() && txtPhone.getText().isBlank()){
                         provM.setNumberPhone("Sin número");                       
                     }
+                    provM.setEmail(txtEmail.getText());    
                     if (txtEmail.getText().isEmpty() && txtEmail.getText().isBlank()){
                         provM.setEmail("Sin dirección");                       
                     }
@@ -221,15 +223,11 @@ public class WindowProvider extends javax.swing.JPanel {
         }else{
             errorMessage.showMessage("ERROR", "Campos obligatorios nulos o vacíos.");
         }
-        cerrarVentana();
 
     }//GEN-LAST:event_btnAddActionPerformed
-    public void cerrarVentana(){
-        Window w = SwingUtilities.getWindowAncestor(this);
-        w.setVisible(false);
-    }
+    
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        cerrarVentana();
+        home.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void txtNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyReleased

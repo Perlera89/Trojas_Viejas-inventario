@@ -50,10 +50,10 @@ END$$
 /*Eliminar*/
 Delimiter $$
 CREATE PROCEDURE sp_d_items(
-	 p_item_id INT
+	p_item_id int
 )
 BEGIN
-	DELETE FROM items WHERE (`item_id` = p_item_id);
+	UPDATE items set item_state = 0 WHERE (`item_id` = p_item_id);
 END$$
 
 /*Mostrar*/
@@ -73,20 +73,38 @@ END$$
 /*Encontrar un articulo*/
 Delimiter $$
 CREATE PROCEDURE sp_find_items(
-	search_string VARCHAR (50)
+	search_string VARCHAR (50),
+    p_state INT
 )
 BEGIN
-	SELECT a.item_id,
-			a.item_name,
-            a.item_minimun_amount,
-            a.item_description,
-            (a.item_cat+0)'item_cat',
-            (a.item_tp+0)'item_tp'
-	FROM items AS a
-    WHERE 
-    a.item_name LIKE concat('%',search_string,'%') OR
-    a.item_cat LIKE concat('%',search_string,'%') OR 
-    a.item_tp LIKE concat('%',search_string,'%') ;
+	IF(p_state = 0)
+    THEN
+		SELECT a.item_id,
+				a.item_name,
+				a.item_minimun_amount,
+				a.item_description,
+				(a.item_cat+0)'item_cat',
+				(a.item_tp+0)'item_tp'
+		FROM items AS a
+		WHERE item_state = 0 AND
+		(a.item_name LIKE concat('%',search_string,'%') OR
+		a.item_cat LIKE concat('%',search_string,'%') OR 
+		a.item_tp LIKE concat('%',search_string,'%')) ;    
+    ELSEIF(p_state = 1)
+    THEN
+		SELECT a.item_id,
+				a.item_name,
+				a.item_minimun_amount,
+				a.item_description,
+				(a.item_cat+0)'item_cat',
+				(a.item_tp+0)'item_tp'
+		FROM items AS a
+		WHERE item_state = 1 AND
+		(a.item_name LIKE concat('%',search_string,'%') OR
+		a.item_cat LIKE concat('%',search_string,'%') OR 
+		a.item_tp LIKE concat('%',search_string,'%')) ;        
+    END IF;
+
 END$$
 
 
