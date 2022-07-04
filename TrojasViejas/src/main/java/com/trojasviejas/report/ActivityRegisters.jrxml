@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ba40f3c-228d-4605-9c4f-41d108264f9f">
+	<property name="ireport.zoom" value="1.2100000000000055"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_month" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_year" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[call trojas_viejas_db.sp_r_activityRegisters($P{p_month}, $P{p_year});]]>
+	</queryString>
+	<field name="rgtr_tp_action" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rgtr_current_stock" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rgtr_amount" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rgtr_new_stock" class="java.lang.Integer"/>
+	<field name="rgtr_description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dtl_price_per_unit" class="java.lang.String"/>
+	<field name="item_cat" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_tp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="invc_buy_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rgtr_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="rgtr_tp_action_1" class="java.lang.Integer" resetType="Page" calculation="Count">
+		<variableExpression><![CDATA[$F{rgtr_tp_action}]]></variableExpression>
+	</variable>
+	<variable name="rgtr_tp_action_2" class="java.lang.Integer" resetType="Page" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{rgtr_tp_action}]]></variableExpression>
+	</variable>
+	<variable name="rgtr_amount_1" class="java.lang.Integer" resetType="Page" calculation="Count">
+		<variableExpression><![CDATA[$F{rgtr_amount}]]></variableExpression>
+	</variable>
+	<variable name="rgtr_amount_2" class="java.lang.Integer" resetType="Page" calculation="Count">
+		<variableExpression><![CDATA[$F{rgtr_amount}]]></variableExpression>
+	</variable>
+	<variable name="rgtr_amount_3" class="java.lang.Integer" resetType="Page" calculation="Count">
+		<variableExpression><![CDATA[$F{rgtr_amount}]]></variableExpression>
+	</variable>
+	<variable name="rgtr_amount_4" class="java.lang.Integer" resetType="Page" calculation="Count">
+		<variableExpression><![CDATA[$F{rgtr_amount}]]></variableExpression>
+	</variable>
+	<variable name="rgtr_amount_5" class="java.lang.Integer" resetType="Page" calculation="Count">
+		<variableExpression><![CDATA[$F{rgtr_amount}]]></variableExpression>
+	</variable>
+	<variable name="rgtr_new_stock_1" class="java.lang.Integer" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{rgtr_new_stock}]]></variableExpression>
+	</variable>
+	<variable name="rgtr_current_stock_1" class="java.lang.Integer" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{rgtr_current_stock}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="145" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="752" height="40" uuid="52108242-d795-4609-9d66-58e768e69bdb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema de agua Trojas Viejas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="752" height="20" uuid="b072a54d-918c-46ef-a6fb-7fef571b22cc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Reporte de retiros]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="112" height="79" uuid="6a16490c-f725-44c7-b45e-c620f0f5bb2e"/>
+				<imageExpression><![CDATA["C:\\Users\\Willian\\Desktop\\Proyecto\\Trojas_Viejas-inventario\\TrojasViejas\\src\\main\\resources\\img\\isotipo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="87" width="752" height="58" uuid="f4ed42b1-1cc2-4cf2-9975-d4cb19b1b05d"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="12"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[En la siguiente tabla se detallan los movimientos de material del inventario en el año _____, habiendose realizado un total de _____ retiros; de tipo Entrada y/o Salida.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="455" y="87" width="41" height="20" uuid="670006cc-51b6-48eb-8280-44f1ce32edbb"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_year}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Page">
+				<reportElement x="681" y="87" width="32" height="21" uuid="6609caf3-5081-4d22-b777-9c2902bdd9f3"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{rgtr_tp_action_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="752" height="30" backcolor="#BCDAF9" uuid="9330ca5b-ed37-4811-a812-d8196957f672"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="40" height="30" uuid="8a8d471b-1597-4b5f-8c42-e53f947945b5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Acción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="139" height="30" uuid="15e95542-bcd7-44c6-a36b-536f92ee3b9e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Artículo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="0" width="53" height="30" uuid="bbad4382-4bd1-4e17-bc73-dded0d748d5a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Existencias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="232" y="0" width="30" height="30" uuid="979df16d-502d-4a1c-8b73-956080963e7c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Retiro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="0" width="45" height="30" uuid="e1246b61-5c6e-475b-9a0a-30e4ed2a32c5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[En Inventario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="0" width="243" height="30" uuid="7ade9349-bfe1-4ff7-9bf2-44ecc723fb78"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Motivo de retiro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="550" y="0" width="43" height="30" uuid="107da010-89f9-4d87-9852-b38785cc9e87"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[C/U]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="593" y="0" width="59" height="30" uuid="24306145-6f92-4565-b197-52fe1a657d7e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="652" y="0" width="48" height="30" uuid="7e599829-98ac-4c16-8465-6546a6160eaf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de Compra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="700" y="0" width="52" height="30" uuid="56df7925-eea8-4b1d-b029-51f5b1867445"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de retiro]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="752" height="20" uuid="bab93c1f-77ff-4fd7-b2cc-5fea6e6af9a3"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="40" height="20" uuid="565a21ba-7a01-49f2-bf44-27fbc54ec51c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgtr_tp_action}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="139" height="20" uuid="b6ad445d-5bc6-498e-b736-1fa4c5d89bc1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{item_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="179" y="0" width="53" height="20" uuid="162950d7-79fc-42c6-bdac-aeeb30605643"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgtr_current_stock}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="232" y="0" width="30" height="20" uuid="acd4a106-2db4-4f19-a3fd-ba54f94c01f1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgtr_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="262" y="0" width="45" height="20" uuid="2da7d2fc-d6f2-4436-9e59-410788d4709b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgtr_new_stock}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement x="307" y="0" width="243" height="20" uuid="09ad705d-df9e-40e3-8e22-53f195131350"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="5" spacingAfter="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgtr_description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="550" y="0" width="43" height="20" uuid="abdd64f6-5950-405e-82b8-ee20780d43e8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtl_price_per_unit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="593" y="0" width="59" height="20" uuid="596bef86-5b21-4337-b7dd-0318e1552faa"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{item_tp}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="652" y="0" width="48" height="20" uuid="6e8b0676-be7b-47ab-96e2-37003e1b2eda"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invc_buy_date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="700" y="0" width="52" height="20" uuid="687f5e02-ea07-490d-a121-e0d9c13fc653"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgtr_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="58" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="38" width="365" height="20" uuid="f408a737-1676-486f-b59b-cd9fe31132cb"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Administrador/a: ______________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="669" y="38" width="31" height="20" uuid="4f0d575b-1ff4-43e0-b2c9-bcb8f7daf9f2"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Sello]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="6" width="192" height="20" uuid="9acc7492-8c81-404a-aaac-edb72efd4acc"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Firma: ____________________]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="9" width="752" height="20" uuid="a9b283ce-5b33-4d92-8271-a71f0b9377d9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd / MMMMM / yyyy">
+				<reportElement x="0" y="9" width="192" height="20" uuid="21dc2ca4-2db4-473b-bf15-a99d28b6af1f"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="8" splitType="Stretch"/>
+	</summary>
+</jasperReport>

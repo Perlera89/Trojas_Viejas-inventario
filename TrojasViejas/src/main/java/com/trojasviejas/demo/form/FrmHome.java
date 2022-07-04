@@ -397,7 +397,7 @@ public class FrmHome extends javax.swing.JPanel {
         lblAveragePurchases.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         lblAveragePurchases.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         gaugeChart1.add(lblAveragePurchases);
-        lblAveragePurchases.setBounds(20, 100, 80, 21);
+        lblAveragePurchases.setBounds(20, 100, 80, 22);
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
@@ -464,7 +464,7 @@ public class FrmHome extends javax.swing.JPanel {
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblPurchaseYear3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
                             .addComponent(lblPurchaseYear2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPurchaseYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))
+                            .addComponent(lblPurchaseYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnlCardLayout.createSequentialGroup()
@@ -526,7 +526,7 @@ public class FrmHome extends javax.swing.JPanel {
         lblAverageItems.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         lblAverageItems.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         gaugeChart2.add(lblAverageItems);
-        lblAverageItems.setBounds(20, 100, 80, 21);
+        lblAverageItems.setBounds(20, 100, 80, 22);
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
@@ -593,7 +593,7 @@ public class FrmHome extends javax.swing.JPanel {
                         .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblItemsYear3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
                             .addComponent(lblItemsYear2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblItemsYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))
+                            .addComponent(lblItemsYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
                         .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnlCard1Layout.createSequentialGroup()
@@ -655,7 +655,7 @@ public class FrmHome extends javax.swing.JPanel {
         lblAverageValue.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         lblAverageValue.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         gaugeChart3.add(lblAverageValue);
-        lblAverageValue.setBounds(20, 100, 80, 21);
+        lblAverageValue.setBounds(20, 100, 80, 22);
 
         jLabel78.setBackground(new java.awt.Color(255, 255, 255));
         jLabel78.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
@@ -722,7 +722,7 @@ public class FrmHome extends javax.swing.JPanel {
                         .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblValueYear3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
                             .addComponent(lblValueYear2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblValueYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))
+                            .addComponent(lblValueYear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
                         .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCard11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnlCard11Layout.createSequentialGroup()
@@ -798,6 +798,10 @@ public class FrmHome extends javax.swing.JPanel {
         lblChartTwo.setFont(new java.awt.Font("Norwester", 0, 18)); // NOI18N
         lblChartTwo.setForeground(new java.awt.Color(27, 152, 224));
         lblChartTwo.setText("Grafico de Compras");
+
+        panelShadow2.setAutoscrolls(true);
+
+        barChart.setAutoscrolls(true);
 
         javax.swing.GroupLayout panelShadow2Layout = new javax.swing.GroupLayout(panelShadow2);
         panelShadow2.setLayout(panelShadow2Layout);

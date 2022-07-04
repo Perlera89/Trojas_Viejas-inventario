@@ -98,7 +98,8 @@ public class FrmItems extends javax.swing.JPanel {
             public void delete(ItemModel entity) {
                 if (tblItems.getSelectedRowCount() > 0) {
 
-                    errorMessage.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de eliminar el articulo " + entity.getName() + "?");
+                    errorMessage.showMessage("Eliminar " + entity.getName(), "¿Estas seguro de actualizar el estado del articulo " + entity.getName() + "?\n"
+                            + "No se mostrará en el listado principal de artículos ni al agregar detalles de factura. Posteriormente puede cambiar el estado nuevamente.");
 
                     if (errorMessage.getMessageType() == MessageErrorDialog.MessageType.OK) {
                                     itemDao.changeStateInItem((int)tblItems.getValueAt(tblItems.getSelectedRow(), 0), 0);

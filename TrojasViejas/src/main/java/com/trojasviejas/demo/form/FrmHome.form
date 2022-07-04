@@ -1087,6 +1087,9 @@
               </Properties>
             </Component>
             <Container class="com.trojasviejas.swing.panels.PanelShadow" name="panelShadow2">
+              <Properties>
+                <Property name="autoscrolls" type="boolean" value="true"/>
+              </Properties>
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -1110,6 +1113,9 @@
               </Layout>
               <SubComponents>
                 <Component class="com.trojasviejas.swing.chart.Chart" name="barChart">
+                  <Properties>
+                    <Property name="autoscrolls" type="boolean" value="true"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

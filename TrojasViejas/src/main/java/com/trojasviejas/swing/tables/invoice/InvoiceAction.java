@@ -18,9 +18,14 @@ public class InvoiceAction extends javax.swing.JPanel {
             data.getEvent().view(data.getInvoice());
         });
         
+        btnReport.addActionListener((ActionEvent ae) -> {
+            data.getEvent().report(data.getInvoice());
+        });
+        
         btnImage.addActionListener((ActionEvent ae) -> {
             data.getEvent().image(data.getInvoice());
         });
+        
     }
 
     @Override
@@ -35,24 +40,28 @@ public class InvoiceAction extends javax.swing.JPanel {
     private void initComponents() {
 
         btnDelete = new com.trojasviejas.swing.Buttons.ActionButton();
-        btnEdit = new com.trojasviejas.swing.Buttons.ActionButton();
+        btnReport = new com.trojasviejas.swing.Buttons.ActionButton();
         btnView = new com.trojasviejas.swing.Buttons.ActionButton();
         btnImage = new com.trojasviejas.swing.Buttons.ActionButton();
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete.png"))); // NOI18N
         btnDelete.setText(" ");
+        btnDelete.setToolTipText("Eliminar");
         btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/edit.png"))); // NOI18N
-        btnEdit.setText(" ");
-        btnEdit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/edit.png"))); // NOI18N
+        btnReport.setText(" ");
+        btnReport.setToolTipText("Generar informe");
+        btnReport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/view.png"))); // NOI18N
         btnView.setText(" ");
+        btnView.setToolTipText("Ver detalles de factura");
         btnView.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/imagen.png"))); // NOI18N
         btnImage.setText(" ");
+        btnImage.setToolTipText("Ver factura");
         btnImage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -65,7 +74,7 @@ public class InvoiceAction extends javax.swing.JPanel {
                 .addGap(12, 12, 12)
                 .addComponent(btnImage, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -76,7 +85,7 @@ public class InvoiceAction extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnImage, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -86,8 +95,8 @@ public class InvoiceAction extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.Buttons.ActionButton btnDelete;
-    private com.trojasviejas.swing.Buttons.ActionButton btnEdit;
     private com.trojasviejas.swing.Buttons.ActionButton btnImage;
+    private com.trojasviejas.swing.Buttons.ActionButton btnReport;
     private com.trojasviejas.swing.Buttons.ActionButton btnView;
     // End of variables declaration//GEN-END:variables
 }

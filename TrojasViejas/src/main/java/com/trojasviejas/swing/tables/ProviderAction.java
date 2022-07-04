@@ -40,11 +40,13 @@ public class ProviderAction extends javax.swing.JPanel {
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete.png"))); // NOI18N
         btnDelete.setText(" ");
+        btnDelete.setToolTipText("Eliminar");
         btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/edit.png"))); // NOI18N
         btnEdit.setText(" ");
+        btnEdit.setToolTipText("Editar");
         btnEdit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

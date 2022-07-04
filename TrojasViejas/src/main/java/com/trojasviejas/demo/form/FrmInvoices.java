@@ -38,6 +38,7 @@ public class FrmInvoices extends javax.swing.JPanel {
     //mensajes personalizados
     MessageErrorDialog errorDialogResult = new MessageErrorDialog(new FrmLogin());
     MessageSuccessDialog successDialogResult = new MessageSuccessDialog(new FrmLogin());
+    FrmReport report = new FrmReport();
     private FrmPassword password;
     
     public static Date getDateFormat(String date) {
@@ -151,6 +152,15 @@ public class FrmInvoices extends javax.swing.JPanel {
                 } else {
                     errorDialogResult.showMessage("ERROR", "Seleccione previamente una factura para ver su foto.");
                 }                
+            }
+
+            @Override
+            public void report(InvoicesVM entity) {
+                report.generateRegistersReportByInvoice(
+                        entity.getId(), 
+                        (int)tblInvoices.getValueAt(tblInvoices.getSelectedRow(), 3), 
+                        (int)tblInvoices.getValueAt(tblInvoices.getSelectedRow(), 3) - (int)tblInvoices.getValueAt(tblInvoices.getSelectedRow(), 4), 
+                        (int)tblInvoices.getValueAt(tblInvoices.getSelectedRow(), 4));
             }
             
         };

@@ -74,7 +74,7 @@ com\trojasviejas\swing\fields\MyTextField.class
 com\trojasviejas\demo\form\FrmActivity$3.class
 com\trojasviejas\demo\form\window\WindowItem$7.class
 com\trojasviejas\component\login\MessageErrorDialog$3.class
-com\trojasviejas\demo\form\FrmItems$4$1.class
+com\trojasviejas\component\main\ReportsCard.class
 com\trojasviejas\swing\Buttons\Button$2.class
 com\trojasviejas\demo\form\FrmActivity$2.class
 com\trojasviejas\models\viewmodel\InvoicesVM.class
@@ -118,7 +118,6 @@ com\trojasviejas\demo\form\window\WindowProvider$7.class
 com\trojasviejas\demo\form\FrmInvoices$2.class
 com\trojasviejas\demo\form\FrmInventory$7.class
 com\trojasviejas\component\main\event\IFindFunctions.class
-com\trojasviejas\demo\form\FrmReport$1.class
 com\trojasviejas\swing\Checkbox.class
 com\trojasviejas\component\main\PanelMenu$1.class
 com\trojasviejas\models\entity\UserModel.class
@@ -141,7 +140,7 @@ com\trojasviejas\models\utility\MenuModel.class
 com\trojasviejas\demo\form\window\WindowInvoice$3.class
 com\trojasviejas\swing\shadow\ShadowRenderer.class
 com\trojasviejas\component\login\PanelCover$2.class
-com\trojasviejas\demo\form\FrmReport$2.class
+com\trojasviejas\component\main\ReportsCard$1.class
 com\trojasviejas\component\main\event\IEventMenuSelected.class
 com\trojasviejas\demo\form\FrmInventory$3.class
 com\trojasviejas\swing\fields\LinearTextField$1.class
@@ -154,8 +153,8 @@ com\trojasviejas\swing\ListMenu.class
 com\trojasviejas\swing\blankchart\NiceScale.class
 com\trojasviejas\swing\tables\activity\ActivityTable.class
 com\trojasviejas\swing\shadow\GraphicsUtilities.class
-com\trojasviejas\demo\form\FrmReport$3.class
 com\trojasviejas\demo\form\window\WindowHome.class
+com\trojasviejas\component\main\ReportsCard$2.class
 com\trojasviejas\demo\form\window\WindowHome$2.class
 com\trojasviejas\swing\tables\item\CategoryStatus.class
 com\trojasviejas\component\login\PanelCover.class

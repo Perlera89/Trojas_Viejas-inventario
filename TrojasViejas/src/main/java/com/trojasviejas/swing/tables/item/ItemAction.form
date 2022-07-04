@@ -45,6 +45,7 @@
           <Image iconType="3" name="/icons/delete.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value=" "/>
+        <Property name="toolTipText" type="java.lang.String" value="Eliminar"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
       </Properties>
     </Component>
@@ -54,6 +55,7 @@
           <Image iconType="3" name="/icons/edit.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value=" "/>
+        <Property name="toolTipText" type="java.lang.String" value="Editar"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
       </Properties>
     </Component>

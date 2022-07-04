@@ -116,7 +116,7 @@ public class invoiceP extends javax.swing.JFrame {
         Map parametro = new HashMap();
         parametro.put("parameter1", txtDate.getText());
         
-        String archive = "C:/Users/cb272/Desktop/TrojasViejas/src/main/java/com/trojasviejas/report/Prueba.jasper";
+        String archive = "src/main/java/com/trojasviejas/report/Prueba.jasper";
         try {
             connection = Conexion.getConnection();
             jr = (JasperReport) JRLoader.loadObjectFromFile(archive);
@@ -140,7 +140,7 @@ public class invoiceP extends javax.swing.JFrame {
 //        Map parametro = new HashMap();
 //        parametro.put("parameter1", txtDate.getText());
         
-        String archive = "C:/Users/cb272/Desktop/TrojasViejas/src/main/java/com/trojasviejas/report/inventoriesReport.jasper";
+        String archive = "src/main/java/com/trojasviejas/report/inventoriesReport.jasper";
         try {
             connection = Conexion.getConnection();
             jr = (JasperReport) JRLoader.loadObjectFromFile(archive);
@@ -163,7 +163,7 @@ public class invoiceP extends javax.swing.JFrame {
 //        Map parametro = new HashMap();
 //        parametro.put("parameter1", txtDate.getText());
         
-        String archive = "C:/Users/cb272/Desktop/TrojasViejas/src/main/java/com/trojasviejas/report/itemsReport.jasper";
+        String archive = "src/main/java/com/trojasviejas/report/itemsReport.jasper";
         try {
             connection = Conexion.getConnection();
             jr = (JasperReport) JRLoader.loadObjectFromFile(archive);

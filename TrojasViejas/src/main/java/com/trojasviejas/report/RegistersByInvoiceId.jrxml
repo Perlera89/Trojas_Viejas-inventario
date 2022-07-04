@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0a11eafa-0790-4059-ad01-e3e63253ae39">
+	<property name="ireport.zoom" value="2.143588810000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="118"/>
+	<parameter name="p_id_invoice" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="items" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="usedItems" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="stock" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[call sp_r_invoice_by_id($P{p_id_invoice});]]>
+	</queryString>
+	<field name="rgtr_tp_action" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prov_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="invc_total_amount" class="java.lang.String"/>
+	<field name="rgtr_current_stock" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rgtr_amount" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rgtr_new_stock" class="java.lang.Integer"/>
+	<field name="rgtr_description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dtl_price_per_unit" class="java.lang.String"/>
+	<field name="item_cat" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_tp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="invc_buy_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rgtr_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="rgtr_tp_action_1" class="java.lang.Integer" resetType="Page" calculation="Count">
+		<variableExpression><![CDATA[$F{rgtr_tp_action}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="175" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="752" height="40" uuid="2353bbe7-657e-4bc5-9c53-1e923643b547"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema de agua Trojas Viejas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="752" height="20" uuid="b9f45e53-4467-4c7b-8e25-bf9b594edfcf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Reporte de retiros]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="112" height="79" uuid="cc4afc89-5171-4f69-be47-c4b6a36a5769"/>
+				<imageExpression><![CDATA["C:\\Users\\Willian\\Desktop\\Proyecto\\Trojas_Viejas-inventario\\TrojasViejas\\src\\main\\resources\\img\\isotipo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="87" width="752" height="88" uuid="1c48d6cf-0e51-4450-9647-b301dbaf1b2d"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="12"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[En la siguiente tabla se detallan los movimientos de material del inventario relacionados a la compra realizada el ____________, al proveedor _______________________________________________________, por valor de ___________, habiendose realizado un total de _____ retiros; de tipo Entrada y/o Salida.
+De un total de _____ artículos comprados, han sido utilizados _____ quedando en el inventario _____ artículos.]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="652" y="87" width="79" height="20" uuid="a9c5c279-f7e1-469f-848c-a4254969f1ef"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invc_buy_date}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Page">
+				<reportElement x="0" y="117" width="35" height="20" uuid="4a5cfdc3-a800-4f53-b2b2-4118d2e6d403"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{rgtr_tp_action_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="68" y="107" width="400" height="20" uuid="48eaaca5-224f-44d2-9ea9-2be050dc4f8b"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prov_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="498" y="107" width="66" height="20" uuid="4027fd74-fe25-47d9-9634-728aee75e1d0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invc_total_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="137" width="33" height="20" uuid="28b38e5f-c646-4be3-8392-f370867eeebe"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{items}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="331" y="137" width="32" height="20" uuid="7dcbead6-eb04-4c46-a4a2-44148f72d9ed"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usedItems}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="508" y="137" width="42" height="20" uuid="0a08cc3d-3e6e-4611-826a-f16364e69309"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{stock}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="1" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="752" height="30" backcolor="#BCDAF9" uuid="48f0c144-c04b-4c18-9f35-5e8f153fcf9d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="550" y="0" width="43" height="30" uuid="5d54bcc6-d067-46f1-b9a8-9ba9fa35a80a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[C/U]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="593" y="0" width="59" height="30" uuid="79285210-6277-4fa3-8195-55eb3ca42f2f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="0" width="243" height="30" uuid="d0cbc44a-4a22-43e8-b84a-ac304be04d4c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Motivo de retiro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="700" y="0" width="52" height="30" uuid="79409a2a-5ccf-48c9-8f87-4462028205bd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de retiro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="0" width="45" height="30" uuid="cf3b6a6f-a9d0-483d-975c-01da961a2f89"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[En Inventario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="139" height="30" uuid="f770717a-77aa-4cfa-b40b-7893d6848487"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Artículo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="0" width="53" height="30" uuid="dd7a0eac-e7bf-4761-94b8-3bed7a52b3d0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Existencias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="652" y="0" width="48" height="30" uuid="1864ecaf-71f0-44ce-9e6f-f742493c9890"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de Compra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="40" height="30" uuid="7d91dd69-1c7b-4681-9281-2b0467f83383"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Acción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="232" y="0" width="30" height="30" uuid="2e2567b3-7fc3-418b-9648-5b4d9c1b94ba"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Retiro]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="752" height="24" uuid="167df4f3-b8c9-4400-8a9b-1eb0ca57dbc8"/>
+			</rectangle>
+			<textField>
+				<reportElement x="550" y="0" width="43" height="24" uuid="a6e06c20-27d9-4684-b155-1d9ae89fc766"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtl_price_per_unit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="232" y="0" width="30" height="24" uuid="9253c847-629b-4494-9dfb-aaf9840c423d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgtr_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="262" y="0" width="45" height="24" uuid="d27c6d61-10fa-4e87-bc41-627f11596dd8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgtr_new_stock}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="593" y="0" width="59" height="24" uuid="d9d63f45-c3eb-4bbd-95b5-e8d5390d385c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{item_tp}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="652" y="0" width="48" height="24" uuid="8d9052b8-380e-4b8d-a92e-3fffaabe8eaf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invc_buy_date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="700" y="0" width="52" height="24" uuid="8d04ec48-4279-444d-9a1a-c34e1d6a3bbb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgtr_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="40" height="24" uuid="94fd82c4-e7e8-467c-8922-f438ebc18dc3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgtr_tp_action}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="179" y="0" width="53" height="24" uuid="3d3d1a7e-6b13-471b-8085-883309a3d9ce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgtr_current_stock}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="139" height="24" uuid="c7785daa-710f-4eaa-9eef-2ec81f45f48b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{item_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="307" y="0" width="243" height="24" uuid="50590c0e-9772-4e59-b09f-896f8b9ac677"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgtr_description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="192" height="20" uuid="5f2d0ed4-056a-4cfa-b6ca-2dfaa49b4ed0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Firma: ____________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="42" width="365" height="20" uuid="f4ccb207-5196-4b6c-860f-12e70083289c"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Administrador/a: ______________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="679" y="42" width="31" height="20" uuid="8e2d69f6-2cda-4457-941a-784be266c9f7"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Sello]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="752" height="26" uuid="d8afa391-9019-4e5f-b1dc-9e4331a23fea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd / MMMMM / yyyy">
+				<reportElement x="10" y="0" width="192" height="26" uuid="e8f9fac4-ef8b-43c8-abea-3be0530523ec"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="2" splitType="Stretch"/>
+	</summary>
+</jasperReport>

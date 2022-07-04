@@ -1,30 +1,18 @@
 package com.trojasviejas.demo.form;
 
 import com.trojasviejas.component.login.MessageErrorDialog;
-import com.trojasviejas.component.login.PanelMessage;
 import com.trojasviejas.component.main.FrmPassword;
 import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.data.connectiondb.Conexion;
-import com.trojasviejas.data.dao.ItemDao;
-import static com.trojasviejas.demo.form.FrmMain.getStringSearch;
-import com.trojasviejas.demo.form.window.*;
-import com.trojasviejas.models.utility.*;
-import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import com.trojasviejas.models.entity.ItemModel;
-import com.trojasviejas.models.entity.UserModel;
 import com.trojasviejas.report.invoiceP;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -41,112 +29,98 @@ public class FrmReport extends javax.swing.JPanel {
 
     public FrmReport() {
         setOpaque(false);
-        initComponents();
+        initComponents(); 
+        initCards();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlContainer = new javax.swing.JLayeredPane();
         pnlTable = new com.trojasviejas.swing.panels.PanelBorder();
-        btnRItems = new com.trojasviejas.swing.buttons.Button();
-        btnRInventory = new com.trojasviejas.swing.buttons.Button();
-        btnRInvoice = new com.trojasviejas.swing.buttons.Button();
-        txtDate = new com.trojasviejas.swing.fields.LinearTextField();
+        reportsCard1 = new com.trojasviejas.component.main.ReportsCard();
+        reportsCard2 = new com.trojasviejas.component.main.ReportsCard();
+        reportsCard3 = new com.trojasviejas.component.main.ReportsCard();
+        reportsCard4 = new com.trojasviejas.component.main.ReportsCard();
 
         setBackground(new java.awt.Color(232, 241, 242));
 
-        pnlContainer.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
-
         pnlTable.setBackground(new java.awt.Color(255, 255, 255));
-
-        btnRItems.setBackground(new java.awt.Color(27, 152, 224));
-        btnRItems.setForeground(new java.awt.Color(255, 255, 255));
-        btnRItems.setText("Reporte de Articulos");
-        btnRItems.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRItemsActionPerformed(evt);
-            }
-        });
-
-        btnRInventory.setBackground(new java.awt.Color(27, 152, 224));
-        btnRInventory.setForeground(new java.awt.Color(255, 255, 255));
-        btnRInventory.setText("Reporte de Inventario");
-        btnRInventory.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRInventoryActionPerformed(evt);
-            }
-        });
-
-        btnRInvoice.setBackground(new java.awt.Color(27, 152, 224));
-        btnRInvoice.setForeground(new java.awt.Color(255, 255, 255));
-        btnRInvoice.setText("Facturas");
-        btnRInvoice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRInvoiceActionPerformed(evt);
-            }
-        });
-
-        txtDate.setLabelText("Año");
 
         javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
         pnlTable.setLayout(pnlTableLayout);
         pnlTableLayout.setHorizontalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTableLayout.createSequentialGroup()
-                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnRInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlTableLayout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnRInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRItems, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(40, 40, 40)
-                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE)
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(reportsCard1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reportsCard3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(reportsCard2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reportsCard4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         pnlTableLayout.setVerticalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTableLayout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(btnRItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(btnRInventory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(437, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(reportsCard1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reportsCard2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(reportsCard3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reportsCard4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(161, Short.MAX_VALUE))
         );
+
+        reportsCard1.currentReportWindow = currentReport;
+        reportsCard1.indexReport = 1;
+        reportsCard2.currentReportWindow = currentReport;
+        reportsCard2.indexReport = 2;
+        reportsCard3.currentReportWindow = currentReport;
+        reportsCard3.indexReport = 3;
+        reportsCard4.currentReportWindow = currentReport;
+        reportsCard4.indexReport = 4;
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(pnlContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(20, 20, 20)
+                .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(pnlContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(20, 20, 20))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRItemsActionPerformed
+    private void initCards(){
+        reportsCard1.setData("REPORTE DE INVENTARIO", new ImageIcon(getClass().getResource("/img/r_inventory.png")), false, false);
+        reportsCard2.setData("REPORTE DE ARTÍCULOS", new ImageIcon(getClass().getResource("/img/r_item.png")), false, false);
+        reportsCard3.setData("REPORTE DE FACTURAS", new ImageIcon(getClass().getResource("/img/r_invoice.png")), false, true);
+        reportsCard4.setData("REPORTE DE ENTRADAS y SALIDAS", new ImageIcon(getClass().getResource("/img/r_register.png")), true, true);
+    }
+    public FrmReport currentReport = this;  
+    
+    public void generateReport(int index, String month, int year){
+        switch (index) {
+            case 1 -> generateInventoryReport();
+            case 2 -> generateItemReport();
+            case 3 -> generateInvoiceReport(year);
+            case 4 -> generateRegistersReport(month,year);
+            default -> {}
+        }
+    }
+    
+    private void generateItemReport(){
         Connection connection = null;
         JasperPrint print = null;
         JasperReport jr = null;
@@ -155,7 +129,7 @@ public class FrmReport extends javax.swing.JPanel {
 //        parametro.put("parameter1", txtDate.getText());
         
         //String archive = "C:/Users/cb272/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/itemsReport.jasper";
-        String archive = "C:/Users/Willian/Desktop/Proyecto/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/itemsReport.jasper";
+        String archive = "src/main/java/com/trojasviejas/report/itemsReport.jasper";
         try {
             connection = Conexion.getConnection();
             jr = (JasperReport) JRLoader.loadObjectFromFile(archive);
@@ -168,18 +142,14 @@ public class FrmReport extends javax.swing.JPanel {
 
         JasperViewer jv = new JasperViewer(print, false);
         jv.setVisible(true);
-    }//GEN-LAST:event_btnRItemsActionPerformed
-
-    private void btnRInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRInventoryActionPerformed
-        Connection connection = null;
+    }
+    
+    private void generateInventoryReport(){
+         Connection connection = null;
         JasperPrint print = null;
         JasperReport jr = null;
 
-//        Map parametro = new HashMap();
-//        parametro.put("parameter1", txtDate.getText());
-        
-        //String archive = "C:/Users/cb272/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/inventoriesReport.jasper";
-        String archive = "C:/Users/Willian/Desktop/Proyecto/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/itemsReport.jasper";
+        String archive = "src/main/java/com/trojasviejas/report/inventoriesReport.jasper";
         try {
             connection = Conexion.getConnection();
             jr = (JasperReport) JRLoader.loadObjectFromFile(archive);
@@ -192,18 +162,18 @@ public class FrmReport extends javax.swing.JPanel {
 
         JasperViewer jv = new JasperViewer(print, false);
         jv.setVisible(true);
-    }//GEN-LAST:event_btnRInventoryActionPerformed
-
-    private void btnRInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRInvoiceActionPerformed
+    }
+    
+    private void generateInvoiceReport(int year){
         Connection connection = null;
         JasperPrint print = null;
         JasperReport jr = null;
 
         Map parametro = new HashMap();
-        parametro.put("parameter1", txtDate.getText());
+        parametro.put("parameter1", ""+year);
         
        // String archive = "C:/Users/cb272/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/invoiceReport.jasper";
-        String archive = "C:/Users/Willian/Desktop/Proyecto/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/itemsReport.jasper";
+        String archive = "src/main/java/com/trojasviejas/report/invoiceReport.jasper";
         try {
             connection = Conexion.getConnection();
             jr = (JasperReport) JRLoader.loadObjectFromFile(archive);
@@ -216,20 +186,69 @@ public class FrmReport extends javax.swing.JPanel {
 
         JasperViewer jv = new JasperViewer(print, false);
         jv.setVisible(true);
-        txtDate.setText("");
-    }//GEN-LAST:event_btnRInvoiceActionPerformed
+        reportsCard3.txtYear.setText("");
+    }
+    
+    private void generateRegistersReport(String month, int year){              
+        Connection connection = null;
+        JasperPrint print = null;
+        JasperReport jr = null;
 
+        Map parametro = new HashMap();
+        parametro.put("p_month", month);
+        parametro.put("p_year", year);
+
+        String archive = "src/main/java/com/trojasviejas/report/ActivityRegisters.jasper";
+        try {
+            connection = Conexion.getConnection();
+            jr = (JasperReport) JRLoader.loadObjectFromFile(archive);
+            print = JasperFillManager.fillReport(jr, parametro, connection);
+        } catch (SQLException ex) {
+            Logger.getLogger(invoiceP.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(invoiceP.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        JasperViewer jv = new JasperViewer(print, false);
+        jv.setVisible(true);
+        reportsCard4.txtMonth.setText("");
+        reportsCard4.txtYear.setText("");
+    }
+        public void generateRegistersReportByInvoice(int idInvoice, int items, int usedItems, int stock ){              
+        Connection connection = null;
+        JasperPrint print = null;
+        JasperReport jr = null;
+
+        Map parametro = new HashMap();
+        parametro.put("p_id_invoice", idInvoice);
+        parametro.put("items", items);
+        parametro.put("usedItems", usedItems);
+        parametro.put("stock", stock);
+
+        String archive = "src/main/java/com/trojasviejas/report/RegistersByInvoiceId.jasper";
+        try {
+            connection = Conexion.getConnection();
+            jr = (JasperReport) JRLoader.loadObjectFromFile(archive);
+            print = JasperFillManager.fillReport(jr, parametro, connection);
+        } catch (SQLException ex) {
+            Logger.getLogger(invoiceP.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(invoiceP.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        JasperViewer jv = new JasperViewer(print, false);
+        jv.setVisible(true);
+    }
     public void cerrarVentana(){
         Window w = SwingUtilities.getWindowAncestor(this);
         w.setVisible(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.buttons.Button btnRInventory;
-    private com.trojasviejas.swing.buttons.Button btnRInvoice;
-    private com.trojasviejas.swing.buttons.Button btnRItems;
-    private javax.swing.JLayeredPane pnlContainer;
     private com.trojasviejas.swing.panels.PanelBorder pnlTable;
-    private com.trojasviejas.swing.fields.LinearTextField txtDate;
+    private com.trojasviejas.component.main.ReportsCard reportsCard1;
+    private com.trojasviejas.component.main.ReportsCard reportsCard2;
+    private com.trojasviejas.component.main.ReportsCard reportsCard3;
+    private com.trojasviejas.component.main.ReportsCard reportsCard4;
     // End of variables declaration//GEN-END:variables
 }
