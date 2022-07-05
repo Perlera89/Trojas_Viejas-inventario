@@ -9,6 +9,7 @@
 	<parameter name="p_year" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="logo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[call trojas_viejas_db.sp_r_activityRegisters($P{p_month}, $P{p_year});]]>
 	</queryString>
@@ -87,9 +88,9 @@
 				</textElement>
 				<text><![CDATA[Reporte de retiros]]></text>
 			</staticText>
-			<image>
+			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="112" height="79" uuid="6a16490c-f725-44c7-b45e-c620f0f5bb2e"/>
-				<imageExpression><![CDATA["C:\\Users\\Willian\\Desktop\\Proyecto\\Trojas_Viejas-inventario\\TrojasViejas\\src\\main\\resources\\img\\isotipo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="87" width="752" height="58" uuid="f4ed42b1-1cc2-4cf2-9975-d4cb19b1b05d"/>

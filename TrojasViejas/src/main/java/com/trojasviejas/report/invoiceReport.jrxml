@@ -8,6 +8,7 @@
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
 	<parameter name="parameter1" class="java.lang.String"/>
+	<parameter name="logo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT DISTINCT
 
@@ -64,9 +65,9 @@
 				</textElement>
 				<text><![CDATA[Sistema de agua Trojas Viejas]]></text>
 			</staticText>
-			<image>
+			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="156" height="76" uuid="49052cb0-43e5-4891-a0c2-26dd059bca22"/>
-				<imageExpression><![CDATA["C:\\Users\\Willian\\Desktop\\Proyecto\\Trojas_Viejas-inventario\\TrojasViejas\\src\\main\\resources\\img\\isotipo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="33" width="553" height="20" uuid="e00671b5-0790-44cf-93d3-4c24f45dd09e"/>

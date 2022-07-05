@@ -316,6 +316,7 @@
 		<field name="Tipo" class="java.lang.String"/>
 		<field name="Fecha de compra" class="java.sql.Date"/>
 	</subDataset>
+	<parameter name="logo" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[call sp_r_inventories()]]>
 	</queryString>
@@ -373,9 +374,9 @@
 				</textElement>
 				<text><![CDATA[Reporte de inventario]]></text>
 			</staticText>
-			<image>
+			<image hAlign="Center" vAlign="Middle" isUsingCache="false">
 				<reportElement x="0" y="0" width="156" height="76" uuid="15fb9563-850a-4243-ace6-01b2fe2cb0d0"/>
-				<imageExpression><![CDATA["C:\\Users\\Willian\\Desktop\\Proyecto\\Trojas_Viejas-inventario\\TrojasViejas\\src\\main\\resources\\img\\isotipo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField evaluationTime="Column">
 				<reportElement x="44" y="108" width="39" height="20" uuid="fb0d06a9-f9da-4d93-b7f1-bd020fe33557"/>

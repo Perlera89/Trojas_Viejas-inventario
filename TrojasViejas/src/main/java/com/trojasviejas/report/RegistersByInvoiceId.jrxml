@@ -15,6 +15,7 @@
 	<parameter name="stock" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="logo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[call sp_r_invoice_by_id($P{p_id_invoice});]]>
 	</queryString>
@@ -73,9 +74,9 @@
 				</textElement>
 				<text><![CDATA[Reporte de retiros]]></text>
 			</staticText>
-			<image>
+			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="112" height="79" uuid="cc4afc89-5171-4f69-be47-c4b6a36a5769"/>
-				<imageExpression><![CDATA["C:\\Users\\Willian\\Desktop\\Proyecto\\Trojas_Viejas-inventario\\TrojasViejas\\src\\main\\resources\\img\\isotipo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="87" width="752" height="88" uuid="1c48d6cf-0e51-4450-9647-b301dbaf1b2d"/>

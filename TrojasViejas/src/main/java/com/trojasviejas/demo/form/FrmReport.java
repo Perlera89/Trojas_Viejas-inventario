@@ -125,8 +125,8 @@ public class FrmReport extends javax.swing.JPanel {
         JasperPrint print = null;
         JasperReport jr = null;
 
-//        Map parametro = new HashMap();
-//        parametro.put("parameter1", txtDate.getText());
+       Map parametro = new HashMap();
+       parametro.put("logo", "/img/isotipo.png");
         
         //String archive = "C:/Users/cb272/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/itemsReport.jasper";
         String archive = "src/main/java/com/trojasviejas/report/itemsReport.jasper";
@@ -149,6 +149,9 @@ public class FrmReport extends javax.swing.JPanel {
         JasperPrint print = null;
         JasperReport jr = null;
 
+       Map parametro = new HashMap();
+       parametro.put("logo", "/img/isotipo.png");
+        
         String archive = "src/main/java/com/trojasviejas/report/inventoriesReport.jasper";
         try {
             connection = Conexion.getConnection();
@@ -171,6 +174,7 @@ public class FrmReport extends javax.swing.JPanel {
 
         Map parametro = new HashMap();
         parametro.put("parameter1", ""+year);
+       parametro.put("logo", "/img/isotipo.png");
         
        // String archive = "C:/Users/cb272/Documents/GitHub/Trojas_Viejas-inventario/TrojasViejas/src/main/java/com/trojasviejas/report/invoiceReport.jasper";
         String archive = "src/main/java/com/trojasviejas/report/invoiceReport.jasper";
@@ -197,6 +201,7 @@ public class FrmReport extends javax.swing.JPanel {
         Map parametro = new HashMap();
         parametro.put("p_month", month);
         parametro.put("p_year", year);
+        parametro.put("logo", "/img/isotipo.png");
 
         String archive = "src/main/java/com/trojasviejas/report/ActivityRegisters.jasper";
         try {
@@ -224,6 +229,7 @@ public class FrmReport extends javax.swing.JPanel {
         parametro.put("items", items);
         parametro.put("usedItems", usedItems);
         parametro.put("stock", stock);
+       parametro.put("logo", "/img/isotipo.png");
 
         String archive = "src/main/java/com/trojasviejas/report/RegistersByInvoiceId.jasper";
         try {
