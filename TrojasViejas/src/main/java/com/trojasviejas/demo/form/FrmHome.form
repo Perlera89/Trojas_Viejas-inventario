@@ -60,6 +60,8 @@
                                       <Component id="lblChartTwo" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="lblLineChartYearSelected" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="cbMonthRangeChart2" min="-2" pref="200" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -123,6 +125,8 @@
                               <Component id="lblChartOne" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblChartYearSelected" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="cbMonthRangeChart1" min="-2" pref="200" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -143,10 +147,11 @@
                           <Component id="pnlCard" min="-2" max="-2" attributes="0"/>
                           <Component id="pnlCard11" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblChartOne" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblChartYearSelected" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbMonthRangeChart1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="panelShadow2" min="-2" max="-2" attributes="0"/>
@@ -165,6 +170,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblChartTwo" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblLineChartYearSelected" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbMonthRangeChart2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="panelShadow1" min="-2" max="-2" attributes="0"/>
@@ -1305,6 +1311,44 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="0000"/>
               </Properties>
+            </Component>
+            <Component class="com.trojasviejas.swing.ComboBox" name="cbMonthRangeChart2">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="2">
+                    <StringItem index="0" value="Enero - Junio"/>
+                    <StringItem index="1" value="Julio - Diciembre"/>
+                  </StringArray>
+                </Property>
+                <Property name="selectedIndex" type="int" value="-1"/>
+                <Property name="toolTipText" type="java.lang.String" value="Indica el rango de meses en los que se filtrar&#xe1;n los datos"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="18" style="0"/>
+                </Property>
+                <Property name="labeText" type="java.lang.String" value="Seleccione rango"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbMonthRangeChart2ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="com.trojasviejas.swing.ComboBox" name="cbMonthRangeChart1">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="2">
+                    <StringItem index="0" value="Enero - Junio"/>
+                    <StringItem index="1" value="Julio - Diciembre"/>
+                  </StringArray>
+                </Property>
+                <Property name="selectedIndex" type="int" value="-1"/>
+                <Property name="toolTipText" type="java.lang.String" value="Indica el rango de meses en los que se filtrar&#xe1;n los datos"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="18" style="0"/>
+                </Property>
+                <Property name="labeText" type="java.lang.String" value="Seleccione rango"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbMonthRangeChart1ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

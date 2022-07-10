@@ -5,8 +5,6 @@ import com.trojasviejas.data.dao.DashboardDao;
 import com.trojasviejas.models.utility.InvoicesAverageReport;
 import com.trojasviejas.swing.chart.Chart;
 import com.trojasviejas.swing.chart.ChartModel;
-import com.trojasviejas.swing.chart.GaugeChart;
-import com.trojasviejas.swing.chart.LegendModel;
 import com.trojasviejas.swing.chart.LineChart;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
@@ -28,14 +26,14 @@ public class FrmHome extends javax.swing.JPanel {
         scroll.getViewport().setBackground(Color.white);
         InitGaugeCharts(year);
         init();
-        
-        lblChartYearSelected.setText(""+year);
-        lblLineChartYearSelected.setText(""+year);
+
+        lblChartYearSelected.setText("" + year);
+        lblLineChartYearSelected.setText("" + year);
     }
     //mensajes personalizados
     MessageErrorDialog errorMessage = new MessageErrorDialog(new JFrame());
-    
-        //obteniendo año actual
+
+    //obteniendo año actual
     int year = LocalDateTime.now().getYear();
     //obteniendo el mes actual
     int month = LocalDateTime.now().getMonthValue();
@@ -43,19 +41,18 @@ public class FrmHome extends javax.swing.JPanel {
     DashboardDao dashboardDao = new DashboardDao();
 
     private void InitGaugeCharts(int year) {
-        lblYear.setText(""+year);
+        lblYear.setText("" + year);
 
         //primer año
         setReportDataByYearOneToCard(year);
         //segundo año
-        setReportDataByYearTwoToCard(year-1);
+        setReportDataByYearTwoToCard(year - 1);
         //tercer año
-        setReportDataByYearThreeToCard(year-2);
-        
-        
+        setReportDataByYearThreeToCard(year - 2);
+
         //colocando los promedios de los años anteriores al actual
         setAverages(year);
-        
+
         //Colocando los porcentajes a los graficos si hay un promedio
         //FACTURAS
         setDataToChartOneInCard();
@@ -65,9 +62,9 @@ public class FrmHome extends javax.swing.JPanel {
         setDataToChartThreeInCard();
 
     }
-    
-    private void setReportDataByYearOneToCard(int year){
-              for (var i : dashboardDao.reportPurchases(year)) {
+
+    private void setReportDataByYearOneToCard(int year) {
+        for (var i : dashboardDao.reportPurchases(year)) {
             //total de compras
             lblPurchaseYear1.setText(String.valueOf(year));
             lblAmountPurchaseYear1.setText(String.valueOf(i.getAmountPurchases()));
@@ -77,9 +74,10 @@ public class FrmHome extends javax.swing.JPanel {
             //valor total de las compras
             lblValueYear1.setText(String.valueOf(year));
             lblAmountValueYear1.setText("$" + String.valueOf(i.getValue()));
-        }  
+        }
     }
-    private void setReportDataByYearTwoToCard(int year){
+
+    private void setReportDataByYearTwoToCard(int year) {
         for (var i : dashboardDao.reportPurchases(year)) {
             //total de compras
             lblPurchaseYear2.setText(String.valueOf(year));
@@ -92,8 +90,9 @@ public class FrmHome extends javax.swing.JPanel {
             lblAmountValueYear2.setText("$" + String.valueOf(i.getValue()));
         }
     }
-    private void setReportDataByYearThreeToCard(int year){
-         for (var i : dashboardDao.reportPurchases(year)) {
+
+    private void setReportDataByYearThreeToCard(int year) {
+        for (var i : dashboardDao.reportPurchases(year)) {
             //total de compras
             lblPurchaseYear3.setText(String.valueOf(year));
             lblAmountPurchaseYear3.setText(String.valueOf(i.getAmountPurchases()));
@@ -103,57 +102,65 @@ public class FrmHome extends javax.swing.JPanel {
             //valor total de las compras
             lblValueYear3.setText(String.valueOf(year));
             lblAmountValueYear3.setText("$" + String.valueOf(i.getValue()));
-        } 
+        }
     }
-    
-    private void setDataToChartOneInCard(){
+
+    private void setDataToChartOneInCard() {
         double percentPurchases;
         //si el valor promedio es distinto de 0, entonces hay un promedio en los years anteriores 
         //para obtener el pocentaje
         if (Double.parseDouble(lblAveragePurchases.getText()) > 0) {
             //obteniendo el  porcentaje de las compras del year actual respecto al promedio general por year
-            percentPurchases= Double.parseDouble(lblAmountPurchaseYear1.getText()) / Double.parseDouble(lblAveragePurchases.getText());   
+            percentPurchases = Double.parseDouble(lblAmountPurchaseYear1.getText()) / Double.parseDouble(lblAveragePurchases.getText());
             //como el porcentaje esta entre (0,1) se multiplica por 100, y se elevan al entero mas proximo porque 
             //en el grafico no acepta porcentajes con decimales
-            gaugeChart1.setValueWithAnimation((int)Math.rint(percentPurchases*100));
+            gaugeChart1.setValueWithAnimation((int) Math.rint(percentPurchases * 100));
             //si las compras superan al promedio (pasan del 100%) obtenemos ese valor que sobrepasa y se muestra
-            lblPercentPurchases.setText(overOneHundredPercent(percentPurchases*100));
-        }else{gaugeChart1.setValueWithAnimation(0);}
+            lblPercentPurchases.setText(overOneHundredPercent(percentPurchases * 100));
+        } else {
+            gaugeChart1.setValueWithAnimation(0);
+        }
     }
-    private void setDataToChartTwoInCard(){
+
+    private void setDataToChartTwoInCard() {
         double percentItems;
         if (Double.parseDouble(lblAverageItems.getText()) > 0) {
             //obteniendo el porcentaje de las items del year actual respecto al promedio general por year
-           percentItems= Double.parseDouble(lblAmountItemsYear1.getText()) / Double.parseDouble(lblAverageItems.getText()); 
+            percentItems = Double.parseDouble(lblAmountItemsYear1.getText()) / Double.parseDouble(lblAverageItems.getText());
             //como el porcentaje esta entre (0,1) se multiplica por 100, y se elevan al entero mas proximo porque 
             //en el grafico no acepta porcentajes con decimales
-           gaugeChart2.setValueWithAnimation((int)Math.rint(percentItems*100));
+            gaugeChart2.setValueWithAnimation((int) Math.rint(percentItems * 100));
             //si el total de items superan al promedio (pasan del 100%) obtenemos ese valor que sobrepasa y se muestra
-           lblPercentItems.setText(overOneHundredPercent(percentItems*100));
-        }else{gaugeChart2.setValueWithAnimation(0);}
+            lblPercentItems.setText(overOneHundredPercent(percentItems * 100));
+        } else {
+            gaugeChart2.setValueWithAnimation(0);
+        }
     }
-    private void setDataToChartThreeInCard(){
-         if(getValueWithOutDollarSymbol(lblAverageValue.getText()) > 0){
+
+    private void setDataToChartThreeInCard() {
+        if (getValueWithOutDollarSymbol(lblAverageValue.getText()) > 0) {
             //obteniendo el porcentaje de las valor total del year actual respecto al promedio general por year
-            String percent3= formatNumber.format(getValueWithOutDollarSymbol(lblAmountValueYear1.getText()) / getValueWithOutDollarSymbol(lblAverageValue.getText()));
+            String percent3 = formatNumber.format(getValueWithOutDollarSymbol(lblAmountValueYear1.getText()) / getValueWithOutDollarSymbol(lblAverageValue.getText()));
             //como el porcentaje esta entre (0,1) se multiplica por 100, y se elevan al entero mas proximo porque 
             //en el grafico no acepta porcentajes con decimales
-            gaugeChart3.setValueWithAnimation((int)Math.rint(Double.parseDouble(percent3)*100));
+            gaugeChart3.setValueWithAnimation((int) Math.rint(Double.parseDouble(percent3) * 100));
             //si el valor total del year actual superan al promedio (pasan del 100%) obtenemos ese valor que sobrepasa y se muestra
-            lblPercentValues.setText(overOneHundredPercent(Double.parseDouble(percent3)*100));
-        }else{gaugeChart3.setValueWithAnimation(0);}
+            lblPercentValues.setText(overOneHundredPercent(Double.parseDouble(percent3) * 100));
+        } else {
+            gaugeChart3.setValueWithAnimation(0);
+        }
     }
-    
+
     DecimalFormat formatNumber = new DecimalFormat("0.00");
     int purchases = 0;
     int items = 0;
     double value = 0;
 
     private void setAverages(int year) {
-       DashboardDao averageDao = new DashboardDao();
+        DashboardDao averageDao = new DashboardDao();
 
-       //getAverage() retorna un array con los years en los que hay registros de facturas
-       //getYears() retorna la lista de years menores al year actual en los que hay registros
+        //getAverage() retorna un array con los years en los que hay registros de facturas
+        //getYears() retorna la lista de years menores al year actual en los que hay registros
         ArrayList<InvoicesAverageReport> averages = averageDao.getAverages(averageDao.getYears(year));
         int amountYears = averages.size();
 
@@ -170,39 +177,35 @@ public class FrmHome extends javax.swing.JPanel {
                 value += i.getValue();
             }
 
-            for (int i = 0; i < 1;i++) {
+            for (int i = 0; i < 1; i++) {
                 lblAveragePurchases.setText(String.valueOf(formatNumber.format(purchases / (double) amountYears)));
                 lblAverageItems.setText(String.valueOf(formatNumber.format(items / (double) amountYears)));
                 lblAverageValue.setText("$" + String.valueOf(formatNumber.format(value / (double) amountYears)));
             }
-        }
-        else{
+        } else {
             //si no hay datos en years anteriores al actual los promedios
             lblAverageItems.setText("0");
             lblAveragePurchases.setText("0");
             lblAverageValue.setText("$0");
             // y de los promedios dependen los graficos de los card, que tambien se vuelven 0
         }
-        
 
-        
     }
 
-    private String overOneHundredPercent(Double percent){
+    private String overOneHundredPercent(Double percent) {
         String valuePercent = " ";
         if (percent > 100.0) {
-            valuePercent  = "+"+String.valueOf(formatNumber.format(percent -100))+"%";
+            valuePercent = "+" + String.valueOf(formatNumber.format(percent - 100)) + "%";
         }
         return valuePercent;
     }
-    
-    private double getValueWithOutDollarSymbol(String values){
+
+    private double getValueWithOutDollarSymbol(String values) {
         return Double.parseDouble(values.substring(1, values.length()));
     }
-    
 
-    private void init() {     
-        
+    private void init() {
+
         barChart.addLegend("Entradas", new Color(12, 84, 175), new Color(0, 108, 247));
         barChart.addLegend("Artículos de entrada", new Color(54, 4, 143), new Color(104, 49, 200));
         barChart.addLegend("Salidas", new Color(5, 125, 0), new Color(95, 209, 69));
@@ -215,83 +218,93 @@ public class FrmHome extends javax.swing.JPanel {
         lineChart.addLegend("Artículos", new Color(54, 4, 143), new Color(104, 49, 200));
         lineChart.addLegend("Costo", new Color(5, 125, 0), new Color(95, 209, 69));
         //lineChart.addLegend("Costo", new Color(186, 37, 37), new Color(241, 100, 120));
-        setDatatoChartTwo();
+        setDatatoChartTwo(month, year);
         lineChart.start();
     }
-    
-    private void setDatatoChartOne(){  
-        for (var i : dashboardDao.getDataCharI(month,year)) {
-          barChart.addData(new ChartModel(
-                  i.getMonth().toString(), 
-                  new double[]{
-                      i.getEntries(), 
-                      i.getAmountEntries(), 
-                      i.getOutputs(), 
-                      i.getAmountOutPuts()}));          
-        }
-        
-    }
-    private void setDatatoChartTwo(){
 
-        for (var i : dashboardDao.getDataCharII(month,year)) {
-          lineChart.addData(new ChartModel(
-                  i.getMonth().toString(), 
-                  new double[]{
-                      i.getAmountPurchases(), 
-                      i.getAmountItems(),
-                      i.getValue()}));          
+    private void setDatatoChartOne() {
+        for (var i : dashboardDao.getDataCharI(month, year)) {
+            barChart.addData(new ChartModel(
+                    i.getMonth().toString(),
+                    new double[]{
+                        i.getEntries(),
+                        i.getAmountEntries(),
+                        i.getOutputs(),
+                        i.getAmountOutPuts()}));
         }
+
     }
 
-    public void reloadData(){
-       InitGaugeCharts(year);
-       updateChart(barChart,year);
-       updateLineChart(lineChart,year);      
+    private void setDatatoChartTwo(int _month, int _year) {
+
+        for (var i : dashboardDao.getDataCharII(_month, _year)) {
+            lineChart.addData(new ChartModel(
+                    i.getMonth().toString(),
+                    new double[]{
+                        i.getAmountPurchases(),
+                        i.getAmountItems(),
+                        i.getValue()}));
+        }
     }
-    
-    private void updateChart(Chart chart, int year){
-        lblChartYearSelected.setText(""+year);
+
+    public void reloadData() {
+        InitGaugeCharts(year);
+        updateChart(barChart, year, 0);
+        updateLineChart(lineChart, year, 0);
+        cbMonthRangeChart1.setSelectedIndex(-1);
+        cbMonthRangeChart2.setSelectedIndex(-1);
+    }
+
+    private void updateChart(Chart chart, int year, int month) {
+        lblChartYearSelected.setText("" + year);
         int _year = LocalDateTime.now().getYear();
-        int _month =  LocalDateTime.now().getMonthValue();
-        
-        if (year < _year) {
-            _month = 12;
+        int _month = LocalDateTime.now().getMonthValue();
+        if (month == 0) {
+            if (year < _year) {
+                _month = 12;
+            }
+        } else {
+            _month = month;
         }
         int index = 0;
-        for (var i : dashboardDao.getDataCharI(_month,year)) {
-            chart.updateChart(index,new ChartModel(
-                i.getMonth().toString(),
-                new double[]{
-                    i.getEntries(),
-                    i.getAmountEntries(),
-                    i.getOutputs(),
-                    i.getAmountOutPuts()}));
-        index++;
+        for (var i : dashboardDao.getDataCharI(_month, year)) {
+            chart.updateChart(index, new ChartModel(
+                    i.getMonth().toString(),
+                    new double[]{
+                        i.getEntries(),
+                        i.getAmountEntries(),
+                        i.getOutputs(),
+                        i.getAmountOutPuts()}));
+            index++;
         }
         barChart.start();
     }
-    
-    private void updateLineChart(LineChart chart, int year){
-        lblLineChartYearSelected.setText(""+year);
+
+    private void updateLineChart(LineChart chart, int year, int month) {
+        lblLineChartYearSelected.setText("" + year);
         int _year = LocalDateTime.now().getYear();
-        int _month =  LocalDateTime.now().getMonthValue();
-        
-        if (year < _year) {
-            _month = 12;
+        int _month = LocalDateTime.now().getMonthValue();
+        if (month == 0) {
+            if (year < _year) {
+                _month = 12;
+            }
+        } else {
+            _month = month;
         }
+
         int index = 0;
-        for (var i : dashboardDao.getDataCharII(_month,year)) {
-            chart.updateLineChart(index,new ChartModel(
-                  i.getMonth().toString(), 
-                  new double[]{
-                      i.getAmountPurchases(), 
-                      i.getAmountItems(),
-                      i.getValue()})); 
-        index++;
+        for (var i : dashboardDao.getDataCharII(_month, year)) {
+            chart.updateLineChart(index, new ChartModel(
+                    i.getMonth().toString(),
+                    new double[]{
+                        i.getAmountPurchases(),
+                        i.getAmountItems(),
+                        i.getValue()}));
+            index++;
         }
         lineChart.start();
     }
-    
+
     public void filterByStringSearch(String busqueda) {
 
         try {
@@ -301,14 +314,16 @@ public class FrmHome extends javax.swing.JPanel {
             //System.out.println(yearSelected);
             year = yearSelected;
             InitGaugeCharts(year);
-            updateChart(barChart, year);
-            updateLineChart(lineChart, year);
+            updateChart(barChart, year, 0);
+            updateLineChart(lineChart, year, 0);
+            cbMonthRangeChart1.setSelectedIndex(-1);
+            cbMonthRangeChart2.setSelectedIndex(-1);
 
         } catch (Exception ex) {
-            errorMessage.showMessage("Error","Formato de busqueda no valido" + ex.toString());
+            errorMessage.showMessage("Error", "Formato de busqueda no valido" + ex.toString());
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -375,6 +390,8 @@ public class FrmHome extends javax.swing.JPanel {
         lblYear = new javax.swing.JLabel();
         lblChartYearSelected = new javax.swing.JLabel();
         lblLineChartYearSelected = new javax.swing.JLabel();
+        cbMonthRangeChart2 = new com.trojasviejas.swing.ComboBox();
+        cbMonthRangeChart1 = new com.trojasviejas.swing.ComboBox();
 
         setBackground(new java.awt.Color(232, 241, 242));
 
@@ -888,6 +905,28 @@ public class FrmHome extends javax.swing.JPanel {
         lblLineChartYearSelected.setForeground(new java.awt.Color(27, 152, 224));
         lblLineChartYearSelected.setText("0000");
 
+        cbMonthRangeChart2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Enero - Junio", "Julio - Diciembre" }));
+        cbMonthRangeChart2.setSelectedIndex(-1);
+        cbMonthRangeChart2.setToolTipText("Indica el rango de meses en los que se filtrarán los datos");
+        cbMonthRangeChart2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        cbMonthRangeChart2.setLabeText("Seleccione rango");
+        cbMonthRangeChart2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMonthRangeChart2ActionPerformed(evt);
+            }
+        });
+
+        cbMonthRangeChart1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Enero - Junio", "Julio - Diciembre" }));
+        cbMonthRangeChart1.setSelectedIndex(-1);
+        cbMonthRangeChart1.setToolTipText("Indica el rango de meses en los que se filtrarán los datos");
+        cbMonthRangeChart1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        cbMonthRangeChart1.setLabeText("Seleccione rango");
+        cbMonthRangeChart1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMonthRangeChart1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBgLayout = new javax.swing.GroupLayout(pnlBg);
         pnlBg.setLayout(pnlBgLayout);
         pnlBgLayout.setHorizontalGroup(
@@ -901,6 +940,8 @@ public class FrmHome extends javax.swing.JPanel {
                                 .addComponent(lblChartTwo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblLineChartYearSelected)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbMonthRangeChart2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(pnlBgLayout.createSequentialGroup()
                                 .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -953,6 +994,8 @@ public class FrmHome extends javax.swing.JPanel {
                         .addComponent(lblChartOne)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblChartYearSelected)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbMonthRangeChart1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnlBgLayout.setVerticalGroup(
@@ -967,10 +1010,11 @@ public class FrmHome extends javax.swing.JPanel {
                     .addComponent(pnlCard1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlCard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlCard11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(22, 22, 22)
                 .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblChartOne)
-                    .addComponent(lblChartYearSelected))
+                    .addComponent(lblChartYearSelected)
+                    .addComponent(cbMonthRangeChart1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(panelShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -986,7 +1030,8 @@ public class FrmHome extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(pnlBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblChartTwo)
-                    .addComponent(lblLineChartYearSelected))
+                    .addComponent(lblLineChartYearSelected)
+                    .addComponent(cbMonthRangeChart2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(panelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1014,9 +1059,31 @@ public class FrmHome extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cbMonthRangeChart2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMonthRangeChart2ActionPerformed
+        if (cbMonthRangeChart2.getSelectedIndex() != -1) {
+            if (cbMonthRangeChart2.getSelectedIndex() == 0) {
+                updateLineChart(lineChart, year, 6);
+            } else {
+                updateLineChart(lineChart, year, 12);
+            }
+        }
+    }//GEN-LAST:event_cbMonthRangeChart2ActionPerformed
+
+    private void cbMonthRangeChart1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMonthRangeChart1ActionPerformed
+        if (cbMonthRangeChart1.getSelectedIndex() != -1) {
+            if (cbMonthRangeChart1.getSelectedIndex() == 0) {
+                updateChart(barChart, year, 6);
+            } else {
+                updateChart(barChart, year, 12);
+            }
+        }
+    }//GEN-LAST:event_cbMonthRangeChart1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.chart.Chart barChart;
+    private com.trojasviejas.swing.ComboBox cbMonthRangeChart1;
+    private com.trojasviejas.swing.ComboBox cbMonthRangeChart2;
     private com.trojasviejas.swing.chart.GaugeChart gaugeChart1;
     private com.trojasviejas.swing.chart.GaugeChart gaugeChart2;
     private com.trojasviejas.swing.chart.GaugeChart gaugeChart3;

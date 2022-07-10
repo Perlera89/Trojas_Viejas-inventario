@@ -99,8 +99,8 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
                 } 
             }
         });
-        
-        setForm(new FrmHome());
+        currentForm = new FrmHome();
+        setForm(currentForm);
     }
     
     private void setForm(JComponent component){
