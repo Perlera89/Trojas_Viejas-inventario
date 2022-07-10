@@ -10,6 +10,7 @@ import com.trojasviejas.swing.scroll.ScrollBar;
 import javax.swing.*;
 import java.awt.*;
 import com.trojasviejas.data.dao.InvoicesDao;
+import com.trojasviejas.data.dao.ReportDao;
 import com.trojasviejas.models.viewmodel.InvoicesVM;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class FrmInvoices extends javax.swing.JPanel {
     //mensajes personalizados
     MessageErrorDialog errorDialogResult = new MessageErrorDialog(new FrmLogin());
     MessageSuccessDialog successDialogResult = new MessageSuccessDialog(new FrmLogin());
-    FrmReport report = new FrmReport();
+    ReportDao reportDao = new ReportDao();
     private FrmPassword password;
     
     public static Date getDateFormat(String date) {
@@ -144,6 +145,7 @@ public class FrmInvoices extends javax.swing.JPanel {
                         //ImageIcon mIcono = new ImageIcon(img.getScaledInstance(frm.getWidth(), lblImagen.getHeight(), 0));
 
                         frmImage.lblPurchaseImage.setIcon(image);
+                        frmImage.idImage = entity.getId();
                         frmImage.setVisible(true);                       
                     }else{
                         errorDialogResult.showMessage("ERROR", "Las facturas con un proveedor tipo DONANTE no tienen foto.");                       
@@ -156,7 +158,7 @@ public class FrmInvoices extends javax.swing.JPanel {
 
             @Override
             public void report(InvoicesVM entity) {
-                report.generateRegistersReportByInvoice(
+                reportDao.generateRegistersReportByInvoice(
                         entity.getId(), 
                         (int)tblInvoices.getValueAt(tblInvoices.getSelectedRow(), 3), 
                         (int)tblInvoices.getValueAt(tblInvoices.getSelectedRow(), 3) - (int)tblInvoices.getValueAt(tblInvoices.getSelectedRow(), 4), 

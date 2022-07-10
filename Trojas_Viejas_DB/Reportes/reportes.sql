@@ -150,5 +150,13 @@ BEGIN
     END
 $$
 
+DELIMITER $$
+CREATE PROCEDURE sp_r_invoice_image(
+	p_idInvoice INT
+)
+BEGIN
+SELECT a.invc_picture FROM invoices AS a WHERE invc_id = p_idInvoice;
+END$$
+
 
 

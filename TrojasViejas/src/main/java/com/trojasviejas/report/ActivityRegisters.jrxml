@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ba40f3c-228d-4605-9c4f-41d108264f9f">
-	<property name="ireport.zoom" value="1.2100000000000055"/>
+	<property name="ireport.zoom" value="1.331000000000014"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="p_month" class="java.lang.String">
@@ -9,7 +9,7 @@
 	<parameter name="p_year" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="logo" class="java.io.InputStream"/>
 	<queryString>
 		<![CDATA[call trojas_viejas_db.sp_r_activityRegisters($P{p_month}, $P{p_year});]]>
 	</queryString>
@@ -202,20 +202,20 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="24" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="752" height="20" uuid="bab93c1f-77ff-4fd7-b2cc-5fea6e6af9a3"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="752" height="24" uuid="84f2438c-ba29-4dde-a0ac-ab1388cd9282"/>
 			</rectangle>
 			<textField>
-				<reportElement x="0" y="0" width="40" height="20" uuid="565a21ba-7a01-49f2-bf44-27fbc54ec51c"/>
+				<reportElement x="0" y="0" width="40" height="24" uuid="565a21ba-7a01-49f2-bf44-27fbc54ec51c"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="7"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{rgtr_tp_action}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="40" y="0" width="139" height="20" uuid="b6ad445d-5bc6-498e-b736-1fa4c5d89bc1"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="40" y="0" width="139" height="23" isPrintWhenDetailOverflows="true" uuid="b6ad445d-5bc6-498e-b736-1fa4c5d89bc1"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 					<paragraph leftIndent="3"/>
@@ -223,36 +223,36 @@
 				<textFieldExpression><![CDATA[$F{item_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="179" y="0" width="53" height="20" uuid="162950d7-79fc-42c6-bdac-aeeb30605643"/>
+				<reportElement x="179" y="0" width="53" height="24" uuid="162950d7-79fc-42c6-bdac-aeeb30605643"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{rgtr_current_stock}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="232" y="0" width="30" height="20" uuid="acd4a106-2db4-4f19-a3fd-ba54f94c01f1"/>
+				<reportElement x="232" y="0" width="30" height="24" uuid="acd4a106-2db4-4f19-a3fd-ba54f94c01f1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{rgtr_amount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="262" y="0" width="45" height="20" uuid="2da7d2fc-d6f2-4436-9e59-410788d4709b"/>
+				<reportElement x="262" y="0" width="45" height="24" uuid="2da7d2fc-d6f2-4436-9e59-410788d4709b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{rgtr_new_stock}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement x="307" y="0" width="243" height="20" uuid="09ad705d-df9e-40e3-8e22-53f195131350"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement x="307" y="0" width="243" height="23" isPrintWhenDetailOverflows="true" uuid="09ad705d-df9e-40e3-8e22-53f195131350"/>
+				<textElement verticalAlignment="Top">
 					<font fontName="Arial" size="8"/>
-					<paragraph leftIndent="5" spacingAfter="5"/>
+					<paragraph leftIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{rgtr_description}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="550" y="0" width="43" height="20" uuid="abdd64f6-5950-405e-82b8-ee20780d43e8"/>
+				<reportElement x="550" y="0" width="43" height="24" uuid="abdd64f6-5950-405e-82b8-ee20780d43e8"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 					<paragraph leftIndent="3"/>
@@ -260,7 +260,7 @@
 				<textFieldExpression><![CDATA[$F{dtl_price_per_unit}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="593" y="0" width="59" height="20" uuid="596bef86-5b21-4337-b7dd-0318e1552faa"/>
+				<reportElement x="593" y="0" width="59" height="24" uuid="596bef86-5b21-4337-b7dd-0318e1552faa"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="7"/>
 					<paragraph leftIndent="3"/>
@@ -268,14 +268,14 @@
 				<textFieldExpression><![CDATA[$F{item_tp}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="652" y="0" width="48" height="20" uuid="6e8b0676-be7b-47ab-96e2-37003e1b2eda"/>
+				<reportElement x="652" y="0" width="48" height="24" uuid="6e8b0676-be7b-47ab-96e2-37003e1b2eda"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invc_buy_date}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="700" y="0" width="52" height="20" uuid="687f5e02-ea07-490d-a121-e0d9c13fc653"/>
+				<reportElement x="700" y="0" width="52" height="24" uuid="687f5e02-ea07-490d-a121-e0d9c13fc653"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>

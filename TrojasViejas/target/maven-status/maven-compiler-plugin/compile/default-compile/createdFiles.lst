@@ -184,6 +184,7 @@ com\trojasviejas\swing\blankchart\BlankPlotChart.class
 com\trojasviejas\demo\form\window\WindowActivity.class
 com\trojasviejas\demo\form\FrmItems$7.class
 com\trojasviejas\component\login\MessageSuccessDialog$3.class
+com\trojasviejas\demo\form\FrmImage$3.class
 com\trojasviejas\report\invoiceP$2.class
 com\trojasviejas\swing\ComboBox$ComboUI$ArrowButton.class
 com\trojasviejas\models\entity\ActivityModel.class

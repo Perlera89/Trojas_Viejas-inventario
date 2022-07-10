@@ -316,7 +316,7 @@
 		<field name="Tipo" class="java.lang.String"/>
 		<field name="Fecha de compra" class="java.sql.Date"/>
 	</subDataset>
-	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="logo" class="java.io.InputStream"/>
 	<queryString language="SQL">
 		<![CDATA[call sp_r_inventories()]]>
 	</queryString>

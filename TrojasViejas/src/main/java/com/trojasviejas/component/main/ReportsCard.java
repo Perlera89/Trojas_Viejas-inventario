@@ -6,6 +6,7 @@ package com.trojasviejas.component.main;
 
 import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.demo.form.FrmReport;
+import com.trojasviejas.models.utility.ReportCardModel;
 import javax.swing.Icon;
 import javax.swing.JFrame;
 
@@ -134,9 +135,7 @@ public class ReportsCard extends javax.swing.JPanel {
    
     private String month;
     private int year;
-    
-    public FrmReport currentReportWindow;
-    
+    public FrmReport currentReportWindow;  
     public int indexReport = 0;
      
     MessageErrorDialog errorMessage = new MessageErrorDialog(new JFrame());
@@ -197,11 +196,11 @@ public class ReportsCard extends javax.swing.JPanel {
             evt.consume();
     }//GEN-LAST:event_txtYearKeyTyped
 
-    public void setData(String title, Icon icon, boolean month, boolean year){
-        lblReportCardHeader.setText(title);
-        lblIcon.setIcon(icon);
-        txtMonth.setEnabled(month);
-        txtYear.setEnabled(year);
+    public void setData(ReportCardModel data){
+        lblReportCardHeader.setText(data.getTitle());
+        lblIcon.setIcon(data.getIcon());
+        txtMonth.setEnabled(data.isMonth());
+        txtYear.setEnabled(data.isYear());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

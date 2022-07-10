@@ -7,7 +7,7 @@
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
-	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="logo" class="java.io.InputStream"/>
 	<queryString language="SQL">
 		<![CDATA[call sp_r_items()]]>
 	</queryString>
@@ -141,7 +141,7 @@
 				<text><![CDATA[Firma: ____________________]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="5" y="49" width="365" height="20" uuid="2f42dc15-f9df-4cb8-8204-76a9877661ab"/>
+				<reportElement x="5" y="49" width="383" height="20" uuid="2f42dc15-f9df-4cb8-8204-76a9877661ab"/>
 				<textElement>
 					<font fontName="Arial" size="12"/>
 				</textElement>

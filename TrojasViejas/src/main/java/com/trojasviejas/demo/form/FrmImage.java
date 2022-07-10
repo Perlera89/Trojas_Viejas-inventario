@@ -1,5 +1,7 @@
 package com.trojasviejas.demo.form;
 
+import com.trojasviejas.data.dao.ReportDao;
+
 
 public class FrmImage extends javax.swing.JFrame {
 
@@ -7,6 +9,7 @@ public class FrmImage extends javax.swing.JFrame {
         initComponents();
     }
 
+    public int idImage;
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -17,6 +20,7 @@ public class FrmImage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lblEncabezado = new javax.swing.JLabel();
         panelBorder2 = new com.trojasviejas.swing.panels.PanelBorder();
+        btnPrintImage = new com.trojasviejas.swing.buttons.Button();
         pnlScrollContainer = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         lblPurchaseImage = new javax.swing.JLabel();
@@ -71,15 +75,30 @@ public class FrmImage extends javax.swing.JFrame {
 
         panelBorder2.setBackground(new java.awt.Color(232, 241, 242));
 
+        btnPrintImage.setBackground(new java.awt.Color(27, 152, 224));
+        btnPrintImage.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrintImage.setText("Imprimir");
+        btnPrintImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintImageActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBorder2Layout = new javax.swing.GroupLayout(panelBorder2);
         panelBorder2.setLayout(panelBorder2Layout);
         panelBorder2Layout.setHorizontalGroup(
             panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnPrintImage, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         panelBorder2Layout.setVerticalGroup(
             panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70, Short.MAX_VALUE)
+            .addGroup(panelBorder2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnPrintImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pnlScrollContainer.setBackground(new java.awt.Color(255, 255, 255));
@@ -95,14 +114,14 @@ public class FrmImage extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblPurchaseImage, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                .addComponent(lblPurchaseImage, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblPurchaseImage, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                .addComponent(lblPurchaseImage, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -114,10 +133,7 @@ public class FrmImage extends javax.swing.JFrame {
             pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelBorder2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(pnlContainerLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(pnlScrollContainer)
-                .addGap(0, 0, 0))
+            .addComponent(pnlScrollContainer)
         );
         pnlContainerLayout.setVerticalGroup(
             pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,6 +162,11 @@ public class FrmImage extends javax.swing.JFrame {
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void btnPrintImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintImageActionPerformed
+        ReportDao reportDao = new ReportDao();
+        reportDao.printInvoiceImage(idImage);
+    }//GEN-LAST:event_btnPrintImageActionPerformed
 
     public static void main() {
         /* Set the Nimbus look and feel */
@@ -181,6 +202,9 @@ public class FrmImage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.Buttons.ActionButton btnClose;
+    private com.trojasviejas.swing.buttons.Button btnPrintImage;
+    private com.trojasviejas.swing.buttons.Button btnRInvoice;
+    private com.trojasviejas.swing.buttons.Button btnRInvoice1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     public javax.swing.JLabel lblEncabezado;
