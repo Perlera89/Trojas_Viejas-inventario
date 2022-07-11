@@ -6,6 +6,7 @@ import com.trojasviejas.demo.form.FrmItems;
 import com.trojasviejas.models.entity.ItemModel;
 import com.trojasviejas.models.utility.CategoryType;
 import com.trojasviejas.models.utility.ItemType;
+import com.trojasviejas.swing.fields.LinearTextField;
 import com.trojasviejas.swing.scroll.ScrollBar;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -281,6 +282,7 @@ public class WindowItem extends javax.swing.JPanel {
     }//GEN-LAST:event_cbbCategoryActionPerformed
 
     private void txtNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyReleased
+        charCounter(txtName, 50);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtAmount.requestFocus();
         }
@@ -307,11 +309,19 @@ public class WindowItem extends javax.swing.JPanel {
     }//GEN-LAST:event_cbbItemTypeKeyReleased
 
     private void txtDescriptionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescriptionKeyReleased
+        if (255  < txtDescription.getText().length()) {
+            txtDescription.setText(txtDescription.getText().substring(0, txtDescription.getText().length() - 1));
+        }
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             btnAdd.doClick();
         }
     }//GEN-LAST:event_txtDescriptionKeyReleased
 
+        private void charCounter(LinearTextField txtField, int max){
+        if (max  < txtField.getText().length()) {
+            txtField.setText(txtField.getText().substring(0, txtField.getText().length() - 1));
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.buttons.Button btnAdd;

@@ -38,7 +38,6 @@ com\trojasviejas\demo\form\window\WindowActivity$1.class
 com\trojasviejas\demo\form\window\WindowInventory$4.class
 com\trojasviejas\swing\chart\LineChart$2.class
 com\trojasviejas\demo\form\FrmActivity$5.class
-com\trojasviejas\report\invoiceP$1.class
 com\trojasviejas\swing\chart\GaugeChart$1.class
 com\trojasviejas\demo\form\FrmItems$8.class
 com\trojasviejas\demo\form\FrmInvoices$3.class
@@ -60,7 +59,6 @@ com\trojasviejas\demo\form\FrmInvoices$1$1.class
 com\trojasviejas\demo\form\window\WindowInventory$6.class
 com\trojasviejas\swing\Buttons\ActionButton.class
 com\trojasviejas\swing\blankchart\SeriesSize.class
-com\trojasviejas\report\invoiceP$3.class
 com\trojasviejas\demo\form\FrmImage$2.class
 com\trojasviejas\demo\form\window\WindowInvoice$9.class
 com\trojasviejas\component\main\event\IUserEventAction.class
@@ -98,12 +96,12 @@ com\trojasviejas\swing\fields\LinearTextField.class
 com\trojasviejas\swing\blankchart\BlankPlotChartRender.class
 com\trojasviejas\component\main\PanelHeader$3.class
 com\trojasviejas\component\main\FrmPassword$2.class
-com\trojasviejas\report\AbrirReporte.class
 com\trojasviejas\demo\form\FrmProviders$3.class
 com\trojasviejas\demo\form\window\WindowProvider$6.class
 com\trojasviejas\models\utility\ProviderActionModel.class
 com\trojasviejas\demo\form\window\WindowHome$1.class
 com\trojasviejas\demo\form\FrmInventory$8.class
+com\trojasviejas\demo\form\FrmHome$2.class
 com\trojasviejas\models\utility\Months.class
 com\trojasviejas\demo\form\FrmDetails$10.class
 com\trojasviejas\demo\form\window\WindowInventory$3.class
@@ -178,14 +176,12 @@ com\trojasviejas\swing\chart\LegendItem.class
 com\trojasviejas\swing\ListMenu$1.class
 com\trojasviejas\swing\tables\inventory\InventoryTable.class
 com\trojasviejas\demo\form\window\WindowHome$4.class
-com\trojasviejas\report\invoiceP.class
 com\trojasviejas\data\dao\DashboardDao.class
 com\trojasviejas\swing\blankchart\BlankPlotChart.class
 com\trojasviejas\demo\form\window\WindowActivity.class
 com\trojasviejas\demo\form\FrmItems$7.class
 com\trojasviejas\component\login\MessageSuccessDialog$3.class
 com\trojasviejas\demo\form\FrmImage$3.class
-com\trojasviejas\report\invoiceP$2.class
 com\trojasviejas\swing\ComboBox$ComboUI$ArrowButton.class
 com\trojasviejas\models\entity\ActivityModel.class
 com\trojasviejas\swing\chart\LineChart$1.class
@@ -206,6 +202,7 @@ com\trojasviejas\swing\scroll\ModernScrollBarUI.class
 com\trojasviejas\demo\form\FrmProviders$7.class
 com\trojasviejas\swing\Buttons\ButtonOutline.class
 com\trojasviejas\swing\MenuItem.class
+com\trojasviejas\demo\form\FrmHome$1.class
 com\trojasviejas\demo\form\FrmDetails$7.class
 com\trojasviejas\models\entity\InvoiceDetailsModel.class
 com\trojasviejas\demo\form\window\WindowItem$8.class
@@ -236,14 +233,12 @@ com\trojasviejas\swing\panels\PanelRound.class
 com\trojasviejas\demo\form\FrmDetails$9.class
 com\trojasviejas\demo\form\window\WindowInvoice$8.class
 com\trojasviejas\swing\chart\LineChart.class
-com\trojasviejas\demo\form\FrmInventory$9.class
 com\trojasviejas\demo\form\FrmProviders$5.class
 com\trojasviejas\swing\ComboBox$ComboUI.class
 com\trojasviejas\demo\form\FrmItems$5.class
 com\trojasviejas\models\utility\UserActionModel.class
 com\trojasviejas\swing\tables\item\ItemAction.class
 com\trojasviejas\demo\form\window\WindowInventory$8.class
-com\trojasviejas\report\invoiceP$4.class
 com\trojasviejas\models\utility\MenuModel$MenuType.class
 com\trojasviejas\component\login\MessageSuccessDialog$MessageType.class
 com\trojasviejas\component\login\PanelLogin.class
@@ -269,8 +264,10 @@ com\trojasviejas\demo\form\window\WindowItem$6.class
 com\trojasviejas\swing\tables\detail\DetailTable.class
 com\trojasviejas\demo\form\FrmLogin$9.class
 com\trojasviejas\swing\tables\ProvidersTable$1.class
+com\trojasviejas\data\dao\ReportDao.class
 com\trojasviejas\demo\form\FrmInvoices.class
 com\trojasviejas\demo\form\FrmDetails$6.class
+com\trojasviejas\demo\form\window\WindowActivity$8.class
 com\trojasviejas\demo\form\window\WindowInventory$11.class
 com\trojasviejas\swing\chart\Chart.class
 com\trojasviejas\component\login\MessageErrorDialog$1.class
@@ -306,6 +303,7 @@ com\trojasviejas\swing\Buttons\Button.class
 com\trojasviejas\demo\form\FrmDetails$2.class
 com\trojasviejas\swing\CategoryCellStatus.class
 com\trojasviejas\demo\form\window\WindowActivity$5.class
+com\trojasviejas\models\utility\ReportCardModel.class
 com\trojasviejas\swing\blankchart\BlankPlotChart$1.class
 com\trojasviejas\demo\form\window\WindowItem$2.class
 com\trojasviejas\demo\form\FrmInventory.class

@@ -1,5 +1,7 @@
 package com.trojasviejas.data.dao;
 
+import com.trojasviejas.component.login.MessageErrorDialog;
+import com.trojasviejas.component.login.MessageSuccessDialog;
 import com.trojasviejas.data.Hash;
 import com.trojasviejas.data.connectiondb.Conexion;
 import com.trojasviejas.demo.form.FrmMain;
@@ -12,9 +14,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import java.text.DecimalFormat;
-import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 
 public class UserDao {
+    
+    MessageErrorDialog errorMessage = new MessageErrorDialog(new JFrame());
+    MessageSuccessDialog successMessage = new MessageSuccessDialog(new JFrame());
 
     public ArrayList<UserModel> ListUser() throws SQLException {
         UserModel user = null;
@@ -25,7 +30,7 @@ public class UserDao {
         ArrayList<UserModel> users = null;
 
         connection = Conexion.getConnection();
-        users = new ArrayList<UserModel>();
+        users = new ArrayList<>();
 
         query = connection.prepareCall("{call sp_s_users}");
         result = query.executeQuery();
@@ -131,19 +136,19 @@ public class UserDao {
             result = query.executeUpdate();
 
             if (result == 1) {
-                JOptionPane.showMessageDialog(null, "Actualizado exitosamente.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                successMessage.showMessage("ÉXITO", "Actualizado exitosamente.");
             } else {
-                JOptionPane.showMessageDialog(null, "Contraseña no coincide.", "Error", JOptionPane.ERROR_MESSAGE);
+                errorMessage.showMessage("ERROR", "Contraseña no coincide.");
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se han podido actualizar sus datos. \n" + ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            errorMessage.showMessage("ERROR", "No se han podido actualizar sus datos. \n" + ex.toString());
         } finally {
             try {
                 Conexion.close(query);
                 Conexion.close(connection);
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+                errorMessage.showMessage("ERROR","No se ha cerrado la conexión");
             }
         }
     }

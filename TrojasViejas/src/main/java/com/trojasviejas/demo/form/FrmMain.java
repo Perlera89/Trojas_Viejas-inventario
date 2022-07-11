@@ -1,13 +1,10 @@
 package com.trojasviejas.demo.form;
 
-import com.trojasviejas.component.main.PanelHeader;
 import com.trojasviejas.component.main.event.IEventMenuSelected;
 import com.trojasviejas.component.main.event.IFindFunctions;
 import com.trojasviejas.models.viewmodel.LoginVM;
-import com.trojasviejas.swing.scroll.ScrollBar;
 import java.awt.*;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 
 public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
     
@@ -185,7 +182,7 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
          
         FrmActivity activity = (FrmActivity)currentForm;
         //llama al metodo en la entidad que ejecuta la busqueda
-        activity.runSearch(stringSearch);
+        activity.filterByStringSearch(stringSearch);
         //hara que se muestren los datos, y los contadores udaran la informacion de la busqueda para ;os filtros
         activity.showActivityRegistersFilterBy("ALL");
        

@@ -107,6 +107,7 @@ public class FrmImage extends javax.swing.JFrame {
 
         lblPurchaseImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPurchaseImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblPurchaseImage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -203,8 +204,6 @@ public class FrmImage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.Buttons.ActionButton btnClose;
     private com.trojasviejas.swing.buttons.Button btnPrintImage;
-    private com.trojasviejas.swing.buttons.Button btnRInvoice;
-    private com.trojasviejas.swing.buttons.Button btnRInvoice1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     public javax.swing.JLabel lblEncabezado;

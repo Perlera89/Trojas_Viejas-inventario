@@ -1,11 +1,14 @@
 package com.trojasviejas.demo.form;
 
-import com.toedter.calendar.JCalendar;
+
 import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.component.login.MessageSuccessDialog;
 import com.trojasviejas.data.dao.InvoiceDetailsDao;
 import com.trojasviejas.data.dao.InvoicesDao;
 import com.trojasviejas.data.dao.ItemDao;
+import com.trojasviejas.demo.form.window.WindowHome;
+import com.trojasviejas.demo.form.window.WindowInvoice;
+import com.trojasviejas.demo.form.window.WindowType;
 import com.trojasviejas.models.entity.InvoiceDetailsModel;
 import com.trojasviejas.models.entity.InvoicesModel;
 import com.trojasviejas.models.entity.ItemModel;
@@ -13,9 +16,7 @@ import com.trojasviejas.swing.scroll.ScrollBar;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Date;
-import java.text.Format;
 import java.util.ArrayList;
-import java.util.Formatter;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -196,24 +197,24 @@ public class FrmDetails extends javax.swing.JFrame {
         pnlDataLayout.setHorizontalGroup(
             pnlDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDataLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(40, 40, 40)
                 .addGroup(pnlDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlDataLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlDataLayout.createSequentialGroup()
                         .addGroup(pnlDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(lblProvider, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(42, 42, 42)
+                            .addComponent(lblProvider, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
+                            .addComponent(lblPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(60, 60, 60)
                         .addGroup(pnlDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addComponent(lblBuyDate, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(30, Short.MAX_VALUE))
-                    .addGroup(pnlDataLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(40, 40, 40))))
         );
         pnlDataLayout.setVerticalGroup(
             pnlDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,7 +231,7 @@ public class FrmDetails extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addGap(20, 20, 20)
                         .addComponent(lblPrice))
-                    .addGroup(pnlDataLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDataLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
@@ -398,7 +399,7 @@ public class FrmDetails extends javax.swing.JFrame {
         pnlBoxesContainerLayout.setVerticalGroup(
             pnlBoxesContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBoxesContainerLayout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlBoxesContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(cbbItems, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -505,16 +506,18 @@ public class FrmDetails extends javax.swing.JFrame {
             .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelBorder3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlContainerLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlContainerLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addGap(56, 56, 56)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnlButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlBoxesContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlTable1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlContainerLayout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addGroup(pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(pnlBoxesContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlTable1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pnlData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(50, 50, 50))
         );
         pnlContainerLayout.setVerticalGroup(
@@ -658,13 +661,14 @@ public class FrmDetails extends javax.swing.JFrame {
 
         //verificar que hallan detalles agregados
         if (detailTable.getRowCount()>0) {
-            double pricePurchase = Double.parseDouble(lblPrice.getText().substring(1));
-            double detailsTotal = Double.parseDouble(lblTotal.getText().substring(1));
+            Double pricePurchase = Double.parseDouble(lblPrice.getText().substring(1));
+            Double detailsTotal = Double.parseDouble(lblTotal.getText().substring(1));
             //verificar si el precio de la factura es igual a la sumatoria de los subtotales
-            if (pricePurchase==detailsTotal) {
+            if (pricePurchase.equals(detailsTotal)) {
                 //saveInvoice guarda la factura y retorna el id de la ultima agregada
                 //y saveDetails guarda los detalles a esa ultma factura
-                saveInvoice(pricePurchase);
+                if(saveInvoice(detailsTotal)){
+                saveInvoice(detailsTotal);
                 int lastIdInvoice = getLastIdInvoice();
                 //System.out.println("Ultima factura: "+ lastIdInvoice);
                 saveDetails(lastIdInvoice);
@@ -674,6 +678,17 @@ public class FrmDetails extends javax.swing.JFrame {
                 successMessage.showMessage("ÉXITO", "La factura y detalles registrados exitosamente.");
                 idInvoice = 0;
                 this.dispose();
+                }else{
+                            WindowInvoice invoice = new WindowInvoice();
+                            invoice.cbbProvider.addItem(lblProvider.getText());
+                            invoice.ids = new int[1];
+                            invoice.ids[0] = idProvider;
+                            invoice.txtTotal.setText(lblPrice.getText().substring(1));
+                            invoice.txtDate.setDate(dateInvoice);
+                            invoice.frmInvoice = formInvoices;
+                            WindowHome.main(WindowType.INVOICE, invoice, false);
+                            this.dispose();
+                }
             }else{
                 errorMessage.showMessage("ERROR", "El precio total de la factura no es igual a la sumatoria "
                         + "de los subtotales de los detales.");
@@ -704,7 +719,7 @@ public class FrmDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCUKeyReleased
     
     //registrará la factura y retornará el id de la ultima factura creada
-    private void saveInvoice(double price){
+    private Boolean saveInvoice(Double price){
         
         InvoicesDao invoiceDao = new InvoicesDao();
         InvoicesModel invoice = new InvoicesModel();
@@ -712,8 +727,7 @@ public class FrmDetails extends javax.swing.JFrame {
         invoice.setBuyDate(dateInvoice);
         invoice.setPicture(rutaByte);
         invoice.setFkProv(idProvider);
-        invoiceDao.AddInvoice(invoice);
-
+        return  invoiceDao.AddInvoice(invoice);
     }
     
     private int getLastIdInvoice(){
@@ -752,12 +766,14 @@ public class FrmDetails extends javax.swing.JFrame {
                 if (cbbItems.getSelectedItem()!=null) {
                     int amount = Integer.parseInt(txtAmount.getText());
                     if (amount > 0) {
-                        double pricePerUnit = Double.parseDouble(txtCU.getText());
+                        Double pricePerUnit = Double.parseDouble(txtCU.getText());
                         String item = txtItem.getText();
+                        Double subtotal = (double)amount * pricePerUnit;
 
                         detailTable.addRow(new Object[]{
-                            idSelected, amount, item, "$"+pricePerUnit, "$"+amount * pricePerUnit, idInvoice
+                            idSelected, amount, item, "$"+pricePerUnit, "$"+subtotal, idInvoice
                         });
+                        //System.out.println(""+((double)amount * pricePerUnit));
                         //sumando los subtotales
                         lblTotal.setText("$"+updateTotal());
                         cleanDataInBoxes(); 
@@ -783,7 +799,7 @@ public class FrmDetails extends javax.swing.JFrame {
     }
     
     private double updateTotal(){
-        double total = 0.0;
+        Double total = 0.0;
         for (int i = 0; i < detailTable.getRowCount(); i++) {
             String subtotal = detailTable.getValueAt(i, 4).toString();
             total += Double.parseDouble(subtotal.substring(1));
@@ -801,7 +817,7 @@ public class FrmDetails extends javax.swing.JFrame {
             try {
 
                 int amount = Integer.parseInt(txtAmount.getText());
-                double pricePerUnit = Double.parseDouble(txtCU.getText());
+                Double pricePerUnit = Double.parseDouble(txtCU.getText());
                 String item = txtItem.getText();
                 //si no se ha seleccionado un item no importa, pues como ya se ha agregado uno, si no lo 
                 //cambia se toma el actual

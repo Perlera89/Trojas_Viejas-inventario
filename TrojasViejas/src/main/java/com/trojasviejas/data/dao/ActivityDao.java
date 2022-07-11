@@ -1,6 +1,7 @@
 package com.trojasviejas.data.dao;
 
 import com.trojasviejas.component.login.MessageErrorDialog;
+import com.trojasviejas.component.login.MessageSuccessDialog;
 import com.trojasviejas.data.connectiondb.Conexion;
 import com.trojasviejas.models.viewmodel.ActivityVM;
 import com.trojasviejas.models.entity.ActivityModel;
@@ -21,6 +22,7 @@ public class ActivityDao{
         
         //Mensajes personalizados
         MessageErrorDialog message = new MessageErrorDialog(new JFrame());
+        MessageSuccessDialog successMessage = new MessageSuccessDialog(new JFrame());
         
     public ArrayList<ActivityVM> list() {
 
@@ -102,7 +104,7 @@ public class ActivityDao{
 
             //ejecutando y almacenando el resultado de la consulta
             query.execute();
-           message.showMessage("ÉXITO", "Se ha registrado un retiro de tipo: "+register.getTypeAction()+" exitosamente.");
+           successMessage.showMessage("ÉXITO", "Se ha registrado un retiro de tipo: "+register.getTypeAction()+" exitosamente.");
 
         } catch (SQLException e) {
                 message.showMessage("ERROR", "Ha ocurrido un error al registrar un retiro de tipo: "+register.getTypeAction()+". \n" + e.toString());
@@ -137,7 +139,7 @@ public class ActivityDao{
             //ejecutando y almacenando el resultado de la consulta
             query.execute();
 
-            message.showMessage("ÉXITO", "El registro de actividad se ha actualizado exitosamente.");
+            successMessage.showMessage("ÉXITO", "El registro de actividad se ha actualizado exitosamente.");
 
         } catch (SQLException e) {
                         message.showMessage("ERROR", "Ha ocurrido un error al actualizar la descripcion del registro. \n" + e.toString());

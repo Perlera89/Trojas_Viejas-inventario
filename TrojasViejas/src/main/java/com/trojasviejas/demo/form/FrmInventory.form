@@ -298,7 +298,6 @@
             <Property name="labeText" type="java.lang.String" value="Elija existencia"/>
           </Properties>
           <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbbStockItemStateChanged"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbbStockActionPerformed"/>
           </Events>
         </Component>

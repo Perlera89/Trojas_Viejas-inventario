@@ -2,31 +2,22 @@ package com.trojasviejas.demo.form.window;
 
 import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.component.login.MessageSuccessDialog;
-import com.trojasviejas.data.dao.InvoicesDao;
 import com.trojasviejas.data.dao.ProviderDao;
 import com.trojasviejas.demo.form.FrmDetails;
 import com.trojasviejas.demo.form.FrmInvoices;
 import com.trojasviejas.demo.form.FrmLogin;
-import com.trojasviejas.models.entity.InvoicesModel;
 import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.ProviderType;
 import java.awt.Color;
-//import java.awt.Font;
 import java.awt.Image;
-import java.awt.Window;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-//import java.time.LocalDate;
-//import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
-//import net.miginfocom.layout.LinkHandler;
 
 public class WindowInvoice extends javax.swing.JPanel {
 
@@ -54,7 +45,7 @@ public class WindowInvoice extends javax.swing.JPanel {
     }
     
 
-    int[] ids = null;
+    public int[] ids = null;
     ProviderDao invDao = null;
     ArrayList<ProviderModel> invA = null;
     public void CargarComboBox(String name) {

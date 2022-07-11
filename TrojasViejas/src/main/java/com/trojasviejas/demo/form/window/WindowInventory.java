@@ -4,7 +4,6 @@ import com.trojasviejas.data.dao.ActivityDao;
 import com.trojasviejas.demo.form.FrmInventory;
 import com.trojasviejas.models.entity.ActivityModel;
 import com.trojasviejas.models.utility.ActionType;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -502,6 +501,9 @@ public class WindowInventory extends javax.swing.JFrame {
     }//GEN-LAST:event_cbbActionTypeActionPerformed
 
     private void txtDescriptionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescriptionKeyReleased
+        if (255  < txtDescription.getText().length()) {
+            txtDescription.setText(txtDescription.getText().substring(0, txtDescription.getText().length() - 1));
+        }
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             btnAdd.doClick();
         }

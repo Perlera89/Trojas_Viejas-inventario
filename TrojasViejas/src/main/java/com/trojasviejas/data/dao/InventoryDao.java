@@ -1,5 +1,7 @@
 package com.trojasviejas.data.dao;
 
+import com.trojasviejas.component.login.MessageErrorDialog;
+import com.trojasviejas.component.login.MessageSuccessDialog;
 import com.trojasviejas.data.connectiondb.Conexion;
 import com.trojasviejas.models.utility.CategoryType;
 import com.trojasviejas.models.utility.ItemType;
@@ -9,13 +11,14 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 
 public class InventoryDao{
 
     //variable para almacenar para la conexion
     Connection connection = null;
-    
+    MessageErrorDialog errorMessage = new MessageErrorDialog(new JFrame());
+    MessageSuccessDialog successMessage = new MessageSuccessDialog(new JFrame());
 
     public ArrayList<InventoryVM> list() {
         
@@ -51,31 +54,18 @@ public class InventoryDao{
                 
                 inventories.add(inventory);
                 
-                
-//                System.out.println(
-//                  inventory.getId()+" "
-//                 +inventory.getAmount()+" "
-//                 +inventory.getItem()+" "
-//                 +inventory.getStock()+" "
-//                 +inventory.getPricePerUnit()+" "
-//                 +inventory.getMinimunAmount()+" "
-//                 +inventory.getCategory()+" "
-//                 +inventory.getType()+" "
-//                 +inventory.getBuyDate()+" \n"
-//                  
-//                );
             }
             
         
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se ha podido mostrar el inventario. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            errorMessage.showMessage("ERROR", "No se ha podido mostrar el inventario. \n" + e.toString());
         } finally {
             try {
                 Conexion.close(result);
                 Conexion.close(query);
                 Conexion.close(connection);
             } catch (SQLException ex) {
-               JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+               errorMessage.showMessage("ERROR", "No se ha cerrado la conexión");
             }
             
         }
@@ -121,32 +111,18 @@ public class InventoryDao{
                 inventory.setBuyDate(result.getDate("invc_buy_date"));
                 
                 inventories.add(inventory);
-                
-                
-//                System.out.println(
-//                  inventory.getId()+" "
-//                 +inventory.getAmount()+" "
-//                 +inventory.getItem()+" "
-//                 +inventory.getStock()+" "
-//                 +inventory.getPricePerUnit()+" "
-//                 +inventory.getMinimunAmount()+" "
-//                 +inventory.getCategory()+" "
-//                 +inventory.getType()+" "
-//                 +inventory.getBuyDate()+" \n"
-//                  
-//                );
             }
             
         
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se ha podido mostrar el inventario. \n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            errorMessage.showMessage("ERROR", "No se ha podido mostrar el inventario. \n" + e.toString());
         } finally {
             try {
                 Conexion.close(result);
                 Conexion.close(query);
                 Conexion.close(connection);
             } catch (SQLException ex) {
-               JOptionPane.showMessageDialog(null, "No se ha cerrado la conexión", "Error", JOptionPane.ERROR_MESSAGE);
+               errorMessage.showMessage("ERROR","No se ha cerrado la conexión");
             }
             
         }

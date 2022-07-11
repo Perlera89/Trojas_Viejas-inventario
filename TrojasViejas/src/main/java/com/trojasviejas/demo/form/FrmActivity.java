@@ -83,8 +83,7 @@ public class FrmActivity extends javax.swing.JPanel {
     }
     //Array De busqueda
     ArrayList<ActivityVM> listFound = null;
-
-    public void runSearch(String _search) {
+    public void filterByStringSearch(String _search) {
         //resetendo el array de busqueda
         listFound = null;
         if (!_search.isBlank() || !_search.isEmpty()) {
@@ -149,6 +148,9 @@ public class FrmActivity extends javax.swing.JPanel {
         if (listFound != null) {
             activity = listFound;
         }
+        
+        modelo = (DefaultTableModel) tblActivity.getModel();
+        
         if (!activity.isEmpty()) {
             //MOSTRAR TODOS LOS DATOS
             switch (tipo_filtro) {
@@ -162,10 +164,12 @@ public class FrmActivity extends javax.swing.JPanel {
                         }
 
                         //AGREGANDO LA FILA A LA TABLA
-                        add_rows_to_table(i);
+                        modelo.addRow(add_rows_to_model(i));
                         //Sumando los registros de actividades
                         countRegisters++;
                     }
+                    tblActivity.setModel(modelo);
+                    break;
                 }
 
                 //FILTRAR LAAS FILAS POR LA ACCION DE ENTRADA
@@ -176,10 +180,12 @@ public class FrmActivity extends javax.swing.JPanel {
                             //contando los registros de tipo entrada
                             countEntries++;
                             //AGREGANDO LA FILA A LA TABLA
-                            add_rows_to_table(i);
+                            modelo.addRow(add_rows_to_model(i));
                             countRegisters++;
                         }
                     }
+                    tblActivity.setModel(modelo);
+                    break;
                 }
                 //FILTRAR LAS FILAS POR LA CATEGORIA DE ACCESORIOS
                 case "SALIDA" -> {
@@ -190,20 +196,22 @@ public class FrmActivity extends javax.swing.JPanel {
                             countOutputs++;
 
                             //AGREGANDO LA FILA A LA TABLA 
-                            add_rows_to_table(i);
+                            modelo.addRow(add_rows_to_model(i));
                             countRegisters++;
                         }
                     }
-
+                      tblActivity.setModel(modelo);
+                      break;
                 }
                 default -> {
+                        break;
                 }
             }
             //ACTUALIZANDO LOS CONTADORES
-            initCard();
+            updateCardsValues();
         } else {
             //ACTUALIZANDO LOS CONTADORES
-            initCard();
+            updateCardsValues();
         }
 
     }
@@ -211,9 +219,9 @@ public class FrmActivity extends javax.swing.JPanel {
     //formato para la fecha
     SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
 
-    private void add_rows_to_table(ActivityVM register) {
+    private Object[] add_rows_to_model(ActivityVM register) {
         //AGREGANDO FILA A  lA TABLA
-        tblActivity.addRow(new Object[]{
+       return new Object[]{
             register.getId(),
             register.getTypeAction(),
             register.getItem(),
@@ -226,10 +234,16 @@ public class FrmActivity extends javax.swing.JPanel {
             register.getType(),
             formatDate.format(register.getBuyDate()),
             formatDate.format(register.getDate())
-        });
+        };
+    }
+    
+    private void updateCardsValues() {
+        pnlCard1.updateValue(""+countRegisters);
+        pnlCard2.updateValue(""+countEntries);
+        pnlCard3.updateValue(""+countOutputs);
     }
 
-        DefaultTableModel modelo = null;
+    DefaultTableModel modelo = null;
     int filas[] = null;
     int index;
     //Método para limpiar la tabla
@@ -445,7 +459,7 @@ public class FrmActivity extends javax.swing.JPanel {
             case "ENTRADA" ->
                 showActivityRegistersFilterBy(ActionType.ENTRADA.toString());
             case "SEARCH" ->
-                runSearch(getStringSearch());
+                filterByStringSearch(getStringSearch());
             default -> {
                 showActivityRegistersFilterBy("ALL");
             }

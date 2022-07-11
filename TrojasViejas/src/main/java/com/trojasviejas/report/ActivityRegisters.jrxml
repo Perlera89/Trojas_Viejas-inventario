@@ -86,7 +86,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
-				<text><![CDATA[Reporte de retiros]]></text>
+				<text><![CDATA[Reporte de Entrads y Salidas]]></text>
 			</staticText>
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="112" height="79" uuid="6a16490c-f725-44c7-b45e-c620f0f5bb2e"/>

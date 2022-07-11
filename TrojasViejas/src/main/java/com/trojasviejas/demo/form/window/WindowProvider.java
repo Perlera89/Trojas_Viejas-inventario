@@ -5,6 +5,7 @@ import com.trojasviejas.data.dao.ProviderDao;
 import com.trojasviejas.demo.form.FrmProviders;
 import com.trojasviejas.models.entity.ProviderModel;
 import com.trojasviejas.models.utility.ProviderType;
+import com.trojasviejas.swing.fields.LinearTextField;
 import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 
@@ -106,7 +107,7 @@ public class WindowProvider extends javax.swing.JPanel {
 
         btnAdd.setBackground(new java.awt.Color(0, 184, 82));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
-        btnAdd.setText("Agregar");
+        btnAdd.setText("Guardar");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddActionPerformed(evt);
@@ -127,14 +128,14 @@ public class WindowProvider extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(64, Short.MAX_VALUE)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbbType, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(84, 84, 84)
+                    .addComponent(cbbType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -143,7 +144,7 @@ public class WindowProvider extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
+                .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,7 +160,7 @@ public class WindowProvider extends javax.swing.JPanel {
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addGap(54, 54, 54))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -231,24 +232,28 @@ public class WindowProvider extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void txtNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyReleased
+        charCounter(this.txtName, 50);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtPhone.requestFocus();
         }
     }//GEN-LAST:event_txtNameKeyReleased
 
     private void txtPhoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneKeyReleased
-         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        charCounter(this.txtPhone, 20); 
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtEmail.requestFocus();
         }
     }//GEN-LAST:event_txtPhoneKeyReleased
 
     private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
+        charCounter(this.txtEmail, 50);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtAddress.requestFocus();
         }
     }//GEN-LAST:event_txtEmailKeyReleased
 
     private void txtAddressKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAddressKeyReleased
+        charCounter(this.txtAddress, 255);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             cbbType.requestFocus();
             cbbType.showPopup();
@@ -261,6 +266,12 @@ public class WindowProvider extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbbTypeKeyReleased
 
+    
+    private void charCounter(LinearTextField txtField, int max){
+        if (max  < txtField.getText().length()) {
+            txtField.setText(txtField.getText().substring(0, txtField.getText().length() - 1));
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.buttons.Button btnAdd;

@@ -3,13 +3,9 @@ package com.trojasviejas.demo.form.window;
 import com.trojasviejas.data.dao.ActivityDao;
 import com.trojasviejas.demo.form.FrmActivity;
 import com.trojasviejas.models.entity.ActivityModel;
-import com.trojasviejas.models.utility.ActionType;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.util.Calendar;
-import java.util.Date;
 import javax.swing.*;
 import javax.swing.BorderFactory;
 import java.awt.Color;
@@ -179,6 +175,11 @@ public class WindowActivity extends javax.swing.JFrame {
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 txtDescriptionMousePressed(evt);
+            }
+        });
+        txtDescription.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDescriptionKeyReleased(evt);
             }
         });
         scroll.setViewportView(txtDescription);
@@ -467,6 +468,12 @@ public class WindowActivity extends javax.swing.JFrame {
             txtDescription.setBorder(BorderFactory.createLineBorder(new Color(3,155,216), 0));
         }
     }//GEN-LAST:event_txtDescriptionMousePressed
+
+    private void txtDescriptionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescriptionKeyReleased
+        if (255  < txtDescription.getText().length()) {
+            txtDescription.setText(txtDescription.getText().substring(0, txtDescription.getText().length() - 1));
+        }
+    }//GEN-LAST:event_txtDescriptionKeyReleased
 
     public static void main(WindowActivity updateRegister) {
         /* Set the Nimbus look and feel */

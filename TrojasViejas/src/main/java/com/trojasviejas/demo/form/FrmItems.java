@@ -1,7 +1,6 @@
 package com.trojasviejas.demo.form;
 
 import com.trojasviejas.component.login.MessageErrorDialog;
-import com.trojasviejas.component.login.PanelMessage;
 import com.trojasviejas.component.main.FrmPassword;
 import com.trojasviejas.component.main.event.IItemEventAction;
 import com.trojasviejas.data.dao.ItemDao;
@@ -13,10 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import com.trojasviejas.models.entity.ItemModel;
-import com.trojasviejas.models.entity.UserModel;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmItems extends javax.swing.JPanel {
@@ -128,30 +124,8 @@ public class FrmItems extends javax.swing.JPanel {
 
     }
 
-    DefaultTableModel modelo = null;
-    int filas[] = null;
-    int index;
-    //Método para limpiar la tabla
-    private void clearRowsInTable() {
-        try {
-            modelo = (DefaultTableModel) tblItems.getModel();
-
-            tblItems.selectAll();
-
-            filas = tblItems.getSelectedRows();
-            index = filas.length - 1;
-            for (int i = 0; i < filas.length; i++) {
-                modelo.removeRow(index);
-                index--;
-            }
-        } catch (Exception e) {
-            errorMessage.showMessage("Error", "Error al limpiar la tabla.");
-        }
-    }
-
-    //METODO BUSAR
+        //METODO BUSAR
     ArrayList<ItemModel> listFound = null;
-
     public void filterByStringSearch(String search_string) {
 
         //habilitados
@@ -181,6 +155,8 @@ public class FrmItems extends javax.swing.JPanel {
     
     ItemDao itemDao = new ItemDao();
     ArrayList<ItemModel> items = null;
+    ArrayList<Object> itemsFiltered = null;
+    
     public void showItems(String tipo_filtro, IItemEventAction eventAction) {
         //Reseteando los contadores     
         contador_item = 0;
@@ -194,6 +170,8 @@ public class FrmItems extends javax.swing.JPanel {
         if (listFound != null) {
             items = listFound;
         }
+        
+        modelo = (DefaultTableModel) tblItems.getModel();
 
         if (!items.isEmpty()) {
             //Mostrar todos los datos
@@ -208,9 +186,11 @@ public class FrmItems extends javax.swing.JPanel {
                         }
 
                         //Agregando la fila a la tabla y los botones de acciones
-                        add_rows_to_table(item, eventAction);
+                        modelo.addRow(add_rows_to_model(item, eventAction));
                         contador_item++;
                     }
+                    tblItems.setModel(modelo);
+                    break;
                 }
 
                 //Filtrar filas por categoría de "HERRAMIENTAS"
@@ -220,10 +200,12 @@ public class FrmItems extends javax.swing.JPanel {
                             contador_tools++;
 
                             //Agregando la fila a la tabla y los botones
-                            add_rows_to_table(item, eventAction);
+                            modelo.addRow(add_rows_to_model(item, eventAction));
                             contador_item++;
                         }
                     }
+                    tblItems.setModel(modelo);
+                    break;
                 }
                 //filtrar las filas por la categoria de "ACCESORIOS"
                 case "ACCESORIOS" -> {
@@ -232,32 +214,44 @@ public class FrmItems extends javax.swing.JPanel {
                             contador_accesories++;
 
                             //Agregando la fila a la tabla y los botones de acciones
-                            add_rows_to_table(item, eventAction);
+                            modelo.addRow(add_rows_to_model(item, eventAction));
                             contador_item++;
                         }
                     }
+                    tblItems.setModel(modelo);
+                    break;
                 }
                 default -> {
+                        break;
                 }
             }
 
-            initCard();
+            updateCardsValues();
+            
         } else {
-            initCard();
+            updateCardsValues();
         }
 
     }
 
-    private void add_rows_to_table(ItemModel item, IItemEventAction eventAction) {
+    ItemModel itemModel = null;
+    private Object[] add_rows_to_model(ItemModel item, IItemEventAction eventAction) {
         //Agregando fila a la tabla
-        tblItems.addRow(new ItemModel(
+        itemModel = new ItemModel(
                 item.getIdItem(),
                 item.getName(),
                 item.getMinimunAmount(),
                 item.getDescription(),
                 item.getCategory(),
-                item.getType()
-        ).toRowTable(eventAction));
+                item.getType());
+        
+        return itemModel.toRowTable(eventAction);
+    }
+    
+    private void updateCardsValues() {
+        pnlCardCountItems.updateValue("" + contador_item);
+        pnlCardCountCategory1.updateValue("" + contador_tools);
+        pnlCardCountCategory2.updateValue("" + contador_accesories);
     }
 
     public void reloadChoosedFilter() {
@@ -272,6 +266,27 @@ public class FrmItems extends javax.swing.JPanel {
         }else{
             listFound = itemDao.ListItems(1);
             showItems(filter, f_eventAction);
+        }
+    }
+    
+    DefaultTableModel modelo = null;
+    int filas[] = null;
+    int index;
+    //Método para limpiar la tabla
+    private void clearRowsInTable() {
+        try {
+            modelo = (DefaultTableModel) tblItems.getModel();
+
+            tblItems.selectAll();
+
+            filas = tblItems.getSelectedRows();
+            index = filas.length - 1;
+            for (int i = 0; i < filas.length; i++) {
+                modelo.removeRow(index);
+                index--;
+            }
+        } catch (Exception e) {
+            errorMessage.showMessage("Error", "Error al limpiar la tabla.");
         }
     }
 

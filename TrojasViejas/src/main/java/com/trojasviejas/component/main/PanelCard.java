@@ -36,6 +36,10 @@ public class PanelCard extends javax.swing.JPanel {
         lblValues.setText(data.getValues());
     }
     
+    public void updateValue(String data) {
+        lblValues.setText(data);
+    }
+    
     public Color getColor1() {
         return color1;
     }
