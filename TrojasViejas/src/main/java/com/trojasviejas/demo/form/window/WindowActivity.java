@@ -18,6 +18,7 @@ public class WindowActivity extends javax.swing.JFrame {
         
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
+        setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
         initMoving(this);
         txtDescription.requestFocus();
     }

@@ -162,7 +162,7 @@ public class InvoicesDao {
 
         Connection connection = null;
         CallableStatement query = null;
-        Boolean validatePicture = true;
+        Boolean validatePicture = false;
 
         try {
             connection = Conexion.getConnection();
@@ -173,8 +173,9 @@ public class InvoicesDao {
             query.setInt(4, invM.getFkProv());
             query.execute();
             
-
+            validatePicture = true;
         } catch (Exception e) {
+            validatePicture = false;
             try {
                 PacketTooBigException pk = (PacketTooBigException) e;
                 validatePicture = false;
@@ -203,7 +204,7 @@ public class InvoicesDao {
 
         try {
             connection = Conexion.getConnection();
-            query = connection.prepareCall("call sp_d_invoices(?)");
+            query = connection.prepareCall("{call sp_d_invoices(?)}");
 
             query.setInt(1, id);
             query.execute();

@@ -1,12 +1,14 @@
 package com.trojasviejas.demo.form;
 
 import com.trojasviejas.data.dao.ReportDao;
+import javax.swing.ImageIcon;
 
 
 public class FrmImage extends javax.swing.JFrame {
 
     public FrmImage() {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
     }
 
     public int idImage;

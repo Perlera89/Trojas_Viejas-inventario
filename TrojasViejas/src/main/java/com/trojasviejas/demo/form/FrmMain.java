@@ -4,6 +4,7 @@ import com.trojasviejas.component.main.event.IEventMenuSelected;
 import com.trojasviejas.component.main.event.IFindFunctions;
 import com.trojasviejas.models.viewmodel.LoginVM;
 import java.awt.*;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
 public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
@@ -24,6 +25,7 @@ public class FrmMain extends javax.swing.JFrame implements IFindFunctions{
 
     public FrmMain() {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
         setBackground(new Color(0, 0, 0, 0));
         
         pnlMenu.initWinButton(this, pnlContainer);

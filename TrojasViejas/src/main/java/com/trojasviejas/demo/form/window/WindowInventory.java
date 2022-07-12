@@ -1,5 +1,6 @@
 package com.trojasviejas.demo.form.window;
 
+import com.trojasviejas.component.login.MessageErrorDialog;
 import com.trojasviejas.data.dao.ActivityDao;
 import com.trojasviejas.demo.form.FrmInventory;
 import com.trojasviejas.models.entity.ActivityModel;
@@ -22,6 +23,7 @@ public class WindowInventory extends javax.swing.JFrame {
         
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
+        setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
         initMoving(this);
         currentDate();
         setDataToCombobox();
@@ -449,11 +451,7 @@ public class WindowInventory extends javax.swing.JFrame {
             this.dispose();
 
         }else{
-            JOptionPane.showMessageDialog(
-                    null, 
-                    "Los retiros de valor nulo no son válidos.", 
-                    "Valor no válido",
-                    JOptionPane.ERROR_MESSAGE);
+            new MessageErrorDialog(new JFrame()).showMessage("ERROR", "Los retiros de valor nulo no son válidos.");
         }
     }//GEN-LAST:event_btnAddActionPerformed
 

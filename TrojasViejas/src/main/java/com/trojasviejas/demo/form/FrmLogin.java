@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import net.miginfocom.swing.MigLayout;
@@ -40,6 +41,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
     public FrmLogin() {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
         init();
     }
 

@@ -14,7 +14,6 @@ import com.trojasviejas.data.dao.ReportDao;
 import com.trojasviejas.models.viewmodel.InvoicesVM;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -80,17 +79,15 @@ public class FrmInvoices extends javax.swing.JPanel {
                         password.setVisible(true);
                         password.toFront();
                         InvoicesDao item = new InvoicesDao();
-                        ArrayList<Object> selectedtRow = new ArrayList<>();
-                        selectedtRow.addAll(Arrays.asList(entity.toRowTable(this)));
                         password.addEventButtonOK(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent ae) {
                                 if (FrmMain.login.getPassword().equals(password.getInputCode())) {
-                                    item.DeleteInvoice(Integer.parseInt(selectedtRow.get(0).toString()));
+                                    item.DeleteInvoice(entity.getId());
                                     password.setVisible(false);
                                     listFound = null;
                                     showInvoices("ALL", f_eventAction);
-
+                                    initCard();
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta. \n", "Error", JOptionPane.ERROR_MESSAGE);
                                 }
@@ -272,7 +269,6 @@ public class FrmInvoices extends javax.swing.JPanel {
                         amount_items += i.getAmountItems();
                         sumTotals += Double.parseDouble(i.getTotalAmount());
                     }
-                    //paintInvoicesWithZeroStock();
                     initCard();
                 }
             }

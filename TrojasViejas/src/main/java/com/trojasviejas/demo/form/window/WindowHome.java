@@ -13,6 +13,7 @@ public class WindowHome extends javax.swing.JFrame {
     public WindowHome(WindowType type, JComponent component, boolean isUpdate) {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
+        setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
         initMoving(this);
 
         //items = new WindowItem();

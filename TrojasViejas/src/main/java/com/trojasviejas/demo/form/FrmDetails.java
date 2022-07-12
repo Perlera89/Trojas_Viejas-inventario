@@ -25,6 +25,7 @@ public class FrmDetails extends javax.swing.JFrame {
     public FrmDetails(int _idInvoice) {
         initComponents();
         setBackground(new Color(0,0,0,0));
+        setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
         initTableData();
         setLocationRelativeTo(null);
         idInvoice = _idInvoice;
@@ -414,7 +415,7 @@ public class FrmDetails extends javax.swing.JFrame {
 
         pnlButtons.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnUpdate.setBackground(new java.awt.Color(0, 184, 82));
+        btnUpdate.setBackground(new java.awt.Color(0, 100, 148));
         btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/update.png"))); // NOI18N
         btnUpdate.setText("Actualizar");
@@ -434,9 +435,9 @@ public class FrmDetails extends javax.swing.JFrame {
             }
         });
 
-        btnFinish.setBackground(new java.awt.Color(255, 5, 0));
+        btnFinish.setBackground(new java.awt.Color(0, 184, 82));
         btnFinish.setForeground(new java.awt.Color(255, 255, 255));
-        btnFinish.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/exit.png"))); // NOI18N
+        btnFinish.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/finish.png"))); // NOI18N
         btnFinish.setText("Finalizar");
         btnFinish.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -668,7 +669,6 @@ public class FrmDetails extends javax.swing.JFrame {
                 //saveInvoice guarda la factura y retorna el id de la ultima agregada
                 //y saveDetails guarda los detalles a esa ultma factura
                 if(saveInvoice(detailsTotal)){
-                saveInvoice(detailsTotal);
                 int lastIdInvoice = getLastIdInvoice();
                 //System.out.println("Ultima factura: "+ lastIdInvoice);
                 saveDetails(lastIdInvoice);
