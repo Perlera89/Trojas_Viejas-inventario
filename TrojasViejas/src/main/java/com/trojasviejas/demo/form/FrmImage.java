@@ -22,7 +22,7 @@ public class FrmImage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lblEncabezado = new javax.swing.JLabel();
         panelBorder2 = new com.trojasviejas.swing.panels.PanelBorder();
-        btnPrintImage = new com.trojasviejas.swing.buttons.Button();
+        btnPrintImage = new com.trojasviejas.swing.Buttons.Button();
         pnlScrollContainer = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         lblPurchaseImage = new javax.swing.JLabel();
@@ -205,7 +205,7 @@ public class FrmImage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.Buttons.ActionButton btnClose;
-    private com.trojasviejas.swing.buttons.Button btnPrintImage;
+    private com.trojasviejas.swing.Buttons.Button btnPrintImage;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     public javax.swing.JLabel lblEncabezado;

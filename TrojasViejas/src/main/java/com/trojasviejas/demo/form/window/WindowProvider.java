@@ -54,8 +54,8 @@ public class WindowProvider extends javax.swing.JPanel {
         txtEmail = new com.trojasviejas.swing.fields.LinearTextField();
         txtPhone = new com.trojasviejas.swing.fields.LinearTextField();
         txtAddress = new com.trojasviejas.swing.fields.LinearTextField();
-        btnAdd = new com.trojasviejas.swing.buttons.Button();
-        btnCancel = new com.trojasviejas.swing.buttons.Button();
+        btnAdd = new com.trojasviejas.swing.Buttons.Button();
+        btnCancel = new com.trojasviejas.swing.Buttons.Button();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -274,8 +274,8 @@ public class WindowProvider extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.buttons.Button btnAdd;
-    private com.trojasviejas.swing.buttons.Button btnCancel;
+    private com.trojasviejas.swing.Buttons.Button btnAdd;
+    private com.trojasviejas.swing.Buttons.Button btnCancel;
     public com.trojasviejas.swing.ComboBox cbbType;
     public com.trojasviejas.swing.fields.LinearTextField txtAddress;
     public com.trojasviejas.swing.fields.LinearTextField txtEmail;

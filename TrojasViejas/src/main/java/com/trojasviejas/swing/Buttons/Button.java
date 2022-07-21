@@ -1,4 +1,4 @@
-package com.trojasviejas.swing.buttons;
+package com.trojasviejas.swing.Buttons;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;

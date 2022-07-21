@@ -24,7 +24,7 @@ public class FrmSetting extends javax.swing.JPanel {
         pnlContainer = new javax.swing.JLayeredPane();
         pnlTable = new com.trojasviejas.swing.panels.PanelBorder();
         pnlUser = new com.trojasviejas.swing.panels.PanelBorder();
-        btnUpdate = new com.trojasviejas.swing.buttons.Button();
+        btnUpdate = new com.trojasviejas.swing.Buttons.Button();
         lblUser = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtUser = new com.trojasviejas.swing.fields.MyTextField();
@@ -233,7 +233,7 @@ public class FrmSetting extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.buttons.Button btnUpdate;
+    private com.trojasviejas.swing.Buttons.Button btnUpdate;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

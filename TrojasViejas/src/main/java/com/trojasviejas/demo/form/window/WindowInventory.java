@@ -64,8 +64,8 @@ public class WindowInventory extends javax.swing.JFrame {
         lblEncabezado = new javax.swing.JLabel();
         panelBorder2 = new com.trojasviejas.swing.panels.PanelBorder();
         jPanel1 = new javax.swing.JPanel();
-        btnAdd = new com.trojasviejas.swing.buttons.Button();
-        btnCancel = new com.trojasviejas.swing.buttons.Button();
+        btnAdd = new com.trojasviejas.swing.Buttons.Button();
+        btnCancel = new com.trojasviejas.swing.Buttons.Button();
         scroll = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
         cbbActionType = new com.trojasviejas.swing.ComboBox();
@@ -598,8 +598,8 @@ public class WindowInventory extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.buttons.Button btnAdd;
-    private com.trojasviejas.swing.buttons.Button btnCancel;
+    private com.trojasviejas.swing.Buttons.Button btnAdd;
+    private com.trojasviejas.swing.Buttons.Button btnCancel;
     private com.trojasviejas.swing.Buttons.ActionButton btnClose;
     public com.trojasviejas.swing.ComboBox cbbActionType;
     private javax.swing.JLabel jLabel1;

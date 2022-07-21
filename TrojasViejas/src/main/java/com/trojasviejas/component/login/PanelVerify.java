@@ -53,8 +53,8 @@ public class PanelVerify extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtCode = new com.trojasviejas.swing.fields.MyTextField();
-        btnCancel = new com.trojasviejas.swing.buttons.ButtonOutline();
-        btnOk = new com.trojasviejas.swing.buttons.ButtonOutline();
+        btnCancel = new com.trojasviejas.swing.Buttons.ButtonOutline();
+        btnOk = new com.trojasviejas.swing.Buttons.ButtonOutline();
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 28)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(63, 63, 63));
@@ -143,8 +143,8 @@ public class PanelVerify extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.buttons.ButtonOutline btnCancel;
-    private com.trojasviejas.swing.buttons.ButtonOutline btnOk;
+    private com.trojasviejas.swing.Buttons.ButtonOutline btnCancel;
+    private com.trojasviejas.swing.Buttons.ButtonOutline btnOk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private com.trojasviejas.swing.panels.PanelRound panelRound1;

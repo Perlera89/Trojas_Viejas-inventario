@@ -74,9 +74,9 @@ public class WindowInvoice extends javax.swing.JPanel {
     private void initComponents() {
 
         txtTotal = new com.trojasviejas.swing.fields.LinearTextField();
-        btnAdd = new com.trojasviejas.swing.buttons.Button();
-        btnCancel = new com.trojasviejas.swing.buttons.Button();
-        lblRuta = new com.trojasviejas.swing.buttons.ButtonOutline();
+        btnAdd = new com.trojasviejas.swing.Buttons.Button();
+        btnCancel = new com.trojasviejas.swing.Buttons.Button();
+        lblRuta = new com.trojasviejas.swing.Buttons.ButtonOutline();
         txtDate = new com.toedter.calendar.JDateChooser();
         lblImagen = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
@@ -409,12 +409,12 @@ public class WindowInvoice extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.buttons.Button btnAdd;
+    private com.trojasviejas.swing.Buttons.Button btnAdd;
     private javax.swing.JButton btnBuscar;
-    private com.trojasviejas.swing.buttons.Button btnCancel;
+    private com.trojasviejas.swing.Buttons.Button btnCancel;
     public com.trojasviejas.swing.ComboBox cbbProvider;
     private javax.swing.JLabel lblImagen;
-    public com.trojasviejas.swing.buttons.ButtonOutline lblRuta;
+    public com.trojasviejas.swing.Buttons.ButtonOutline lblRuta;
     public com.toedter.calendar.JDateChooser txtDate;
     public com.trojasviejas.swing.fields.LinearTextField txtProvider;
     public com.trojasviejas.swing.fields.LinearTextField txtTotal;

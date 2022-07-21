@@ -1,4 +1,4 @@
-package com.trojasviejas.swing.buttons;
+package com.trojasviejas.swing.Buttons;
 
 import java.awt.*;
 import java.awt.event.*;

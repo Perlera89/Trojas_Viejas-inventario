@@ -4,13 +4,14 @@ DELIMITER $$
 CREATE PROCEDURE sp_r_inventories()
 BEGIN
 	SELECT #indice
-            b.dtl_amount,#Comprado
-			c.item_name,#Nombre
-            a.inventory_stock,#Existencias
-            CONCAT('$',b.dtl_price_per_unit)`dtl_price_per_unit`,#C/U
-            c.item_cat,#Categoría
-            c.item_tp,#Tipo
-            d.invc_buy_date#Fecha de compra
+			b.dtl_amount`No.`,
+            b.dtl_amount`Comprado`,#Comprado
+			c.item_name`Artículo`,#Nombre
+            a.inventory_stock`Existencias`,#Existencias
+            b.dtl_price_per_unit `C/U`,#C/U
+            c.item_cat`Categoría`,#Categoría
+            c.item_tp`Tipo`,#Tipo
+            d.invc_buy_date`Fecha de compra`#Fecha de compra
     FROM inventories AS a
     INNER JOIN invoice_details AS b ON a.inventory_invc_dtl_id_fk = b.dtl_id
     INNER JOIN items AS c ON b.dtl_item_id_fk = c.item_id

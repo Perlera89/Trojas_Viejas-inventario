@@ -106,12 +106,12 @@ public class FrmDetails extends javax.swing.JFrame {
         txtAmount = new com.trojasviejas.swing.fields.MyTextField();
         txtItem = new com.trojasviejas.swing.fields.MyTextField();
         txtCU = new com.trojasviejas.swing.fields.MyTextField();
-        btnAdd = new com.trojasviejas.swing.buttons.Button();
-        btnSearch = new com.trojasviejas.swing.buttons.Button();
+        btnAdd = new com.trojasviejas.swing.Buttons.Button();
+        btnSearch = new com.trojasviejas.swing.Buttons.Button();
         pnlButtons = new javax.swing.JPanel();
-        btnUpdate = new com.trojasviejas.swing.buttons.Button();
-        btnDelete = new com.trojasviejas.swing.buttons.Button();
-        btnFinish = new com.trojasviejas.swing.buttons.Button();
+        btnUpdate = new com.trojasviejas.swing.Buttons.Button();
+        btnDelete = new com.trojasviejas.swing.Buttons.Button();
+        btnFinish = new com.trojasviejas.swing.Buttons.Button();
         jPanel1 = new javax.swing.JPanel();
         lblTotal = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -949,12 +949,12 @@ public class FrmDetails extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.buttons.Button btnAdd;
+    private com.trojasviejas.swing.Buttons.Button btnAdd;
     private com.trojasviejas.swing.Buttons.ActionButton btnClose;
-    private com.trojasviejas.swing.buttons.Button btnDelete;
-    private com.trojasviejas.swing.buttons.Button btnFinish;
-    private com.trojasviejas.swing.buttons.Button btnSearch;
-    private com.trojasviejas.swing.buttons.Button btnUpdate;
+    private com.trojasviejas.swing.Buttons.Button btnDelete;
+    private com.trojasviejas.swing.Buttons.Button btnFinish;
+    private com.trojasviejas.swing.Buttons.Button btnSearch;
+    private com.trojasviejas.swing.Buttons.Button btnUpdate;
     private com.trojasviejas.swing.ComboBox cbbItems;
     private com.trojasviejas.swing.tables.detail.DetailTable detailTable;
     private javax.swing.JLabel jLabel1;

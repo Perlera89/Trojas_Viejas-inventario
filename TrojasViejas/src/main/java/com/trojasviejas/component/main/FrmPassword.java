@@ -44,8 +44,8 @@ public class FrmPassword extends javax.swing.JFrame {
         panelRound1 = new com.trojasviejas.swing.panels.PanelRound();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnCancel = new com.trojasviejas.swing.buttons.ButtonOutline();
-        btnOk = new com.trojasviejas.swing.buttons.ButtonOutline();
+        btnCancel = new com.trojasviejas.swing.Buttons.ButtonOutline();
+        btnOk = new com.trojasviejas.swing.Buttons.ButtonOutline();
         txtCode = new com.trojasviejas.swing.fields.MyPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -194,8 +194,8 @@ public class FrmPassword extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.buttons.ButtonOutline btnCancel;
-    private com.trojasviejas.swing.buttons.ButtonOutline btnOk;
+    private com.trojasviejas.swing.Buttons.ButtonOutline btnCancel;
+    private com.trojasviejas.swing.Buttons.ButtonOutline btnOk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

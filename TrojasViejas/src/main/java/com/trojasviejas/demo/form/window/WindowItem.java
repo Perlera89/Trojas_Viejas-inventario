@@ -64,8 +64,8 @@ public class WindowItem extends javax.swing.JPanel {
         txtName = new com.trojasviejas.swing.fields.LinearTextField();
         cbbCategory = new com.trojasviejas.swing.ComboBox();
         txtAmount = new com.trojasviejas.swing.fields.LinearTextField();
-        btnAdd = new com.trojasviejas.swing.buttons.Button();
-        btnCancel = new com.trojasviejas.swing.buttons.Button();
+        btnAdd = new com.trojasviejas.swing.Buttons.Button();
+        btnCancel = new com.trojasviejas.swing.Buttons.Button();
         scroll = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
         cbbItemType = new com.trojasviejas.swing.ComboBox();
@@ -324,8 +324,8 @@ public class WindowItem extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.buttons.Button btnAdd;
-    private com.trojasviejas.swing.buttons.Button btnCancel;
+    private com.trojasviejas.swing.Buttons.Button btnAdd;
+    private com.trojasviejas.swing.Buttons.Button btnCancel;
     public com.trojasviejas.swing.ComboBox cbbCategory;
     public com.trojasviejas.swing.ComboBox cbbItemType;
     private javax.swing.JScrollPane scroll;

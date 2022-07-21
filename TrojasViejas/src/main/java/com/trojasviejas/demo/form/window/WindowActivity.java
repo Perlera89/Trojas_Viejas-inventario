@@ -56,8 +56,8 @@ public class WindowActivity extends javax.swing.JFrame {
         lblEncabezado = new javax.swing.JLabel();
         panelBorder2 = new com.trojasviejas.swing.panels.PanelBorder();
         jPanel1 = new javax.swing.JPanel();
-        btnAdd = new com.trojasviejas.swing.buttons.Button();
-        btnCancel = new com.trojasviejas.swing.buttons.Button();
+        btnAdd = new com.trojasviejas.swing.Buttons.Button();
+        btnCancel = new com.trojasviejas.swing.Buttons.Button();
         scroll = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
         panelShadow1 = new com.trojasviejas.swing.panels.PanelShadow();
@@ -514,8 +514,8 @@ public class WindowActivity extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.buttons.Button btnAdd;
-    private com.trojasviejas.swing.buttons.Button btnCancel;
+    private com.trojasviejas.swing.Buttons.Button btnAdd;
+    private com.trojasviejas.swing.Buttons.Button btnCancel;
     private com.trojasviejas.swing.Buttons.ActionButton btnClose;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

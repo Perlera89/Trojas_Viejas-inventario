@@ -2,7 +2,7 @@ package com.trojasviejas.component.login;
 
 import com.trojasviejas.models.entity.UserModel;
 import com.trojasviejas.models.viewmodel.LoginVM;
-import com.trojasviejas.swing.buttons.Button;
+import com.trojasviejas.swing.Buttons.Button;
 import com.trojasviejas.swing.fields.MyPasswordField;
 import com.trojasviejas.swing.fields.MyTextField;
 import java.awt.Color;

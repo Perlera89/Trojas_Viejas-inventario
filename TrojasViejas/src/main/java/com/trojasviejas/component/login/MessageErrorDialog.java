@@ -107,8 +107,8 @@ public class MessageErrorDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         backgroundDialog1 = new com.trojasviejas.swing.BackgroundDialog();
-        btnOk = new com.trojasviejas.swing.buttons.ButtonCustom();
-        btnCancel = new com.trojasviejas.swing.buttons.ButtonCustom();
+        btnOk = new com.trojasviejas.swing.Buttons.ButtonCustom();
+        btnCancel = new com.trojasviejas.swing.Buttons.ButtonCustom();
         jLabel1 = new javax.swing.JLabel();
         lblTitle = new javax.swing.JLabel();
         lblContent = new javax.swing.JTextPane();
@@ -217,8 +217,8 @@ public class MessageErrorDialog extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.trojasviejas.swing.BackgroundDialog backgroundDialog1;
-    private com.trojasviejas.swing.buttons.ButtonCustom btnCancel;
-    private com.trojasviejas.swing.buttons.ButtonCustom btnOk;
+    private com.trojasviejas.swing.Buttons.ButtonCustom btnCancel;
+    private com.trojasviejas.swing.Buttons.ButtonCustom btnOk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextPane lblContent;
     private javax.swing.JLabel lblTitle;

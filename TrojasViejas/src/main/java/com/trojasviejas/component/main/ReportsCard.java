@@ -38,7 +38,7 @@ public class ReportsCard extends javax.swing.JPanel {
         panelShadow1 = new com.trojasviejas.swing.panels.PanelShadow();
         lblReportCardHeader = new javax.swing.JLabel();
         lblIcon = new javax.swing.JLabel();
-        btnRInvoice = new com.trojasviejas.swing.buttons.Button();
+        btnRInvoice = new com.trojasviejas.swing.Buttons.Button();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(27, 152, 224), 1, true));
@@ -161,9 +161,9 @@ public class ReportsCard extends javax.swing.JPanel {
         switch (indexReport) {
             case 1 -> currentReportWindow.generateReport(indexReport, month, year);
             case 2 -> currentReportWindow.generateReport(indexReport, month, year);
-            case 3 -> verifyDataForInvoice(); 
+            case 3 -> verifyDataForInvoice();
             case 4 -> verifyDataForRegister();
-            default ->{}
+            default -> {}
         }
     }//GEN-LAST:event_btnRInvoiceActionPerformed
 
@@ -204,7 +204,7 @@ public class ReportsCard extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.trojasviejas.swing.buttons.Button btnRInvoice;
+    private com.trojasviejas.swing.Buttons.Button btnRInvoice;
     private javax.swing.JLabel jLabel1;
     public javax.swing.JLabel lblIcon;
     public javax.swing.JLabel lblReportCardHeader;

@@ -1,8 +1,8 @@
 package com.trojasviejas.component.login;
 
 import com.trojasviejas.demo.form.FrmLogin;
-import com.trojasviejas.swing.buttons.Button;
-import com.trojasviejas.swing.buttons.ButtonOutline;
+import com.trojasviejas.swing.Buttons.Button;
+import com.trojasviejas.swing.Buttons.ButtonOutline;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GradientPaint;
